@@ -1,5 +1,6 @@
 "use strict";
 var core_1 = require("@angular/core");
+var services_1 = require('./services');
 var AppComponent = (function () {
     function AppComponent() {
         this.counter = 16;
@@ -23,6 +24,7 @@ var AppComponent = (function () {
         core_1.Component({
             selector: "my-app",
             templateUrl: "app.component.html",
+            providers: [services_1.EverliveProvider, services_1.UsersService]
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

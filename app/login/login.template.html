@@ -1,6 +1,6 @@
 <StackLayout>
-    <TextField hint="Username" autocorrect="false" ></TextField>
-    <TextField hint="Password" secure="true" ></TextField>
+    <TextField hint="Username" autocorrect="false" [(ngModel)]="username" ></TextField>
+    <TextField hint="Password" secure="true" [(ngModel)]="password" ></TextField>
 
     <Button text="Login" (tap)="login()" ></Button>
     <Button text="Signup"></Button>
