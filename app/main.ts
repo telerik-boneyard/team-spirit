@@ -8,6 +8,7 @@ import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angula
 import { AppComponent } from "./app.component";
 import { LoginComponent } from './login/login.component'
 import { UserDetailsComponent } from './user-details/user-details.component';
+import { UpcomingEventsComponent } from './events';
 
 import { UserResolver } from './resolvers'
 
@@ -17,7 +18,8 @@ const routes = [
     { path: 'user-details', component: UserDetailsComponent, resolve: {
         user: UserResolver
     }},
-    { path: 'login', component: LoginComponent }
+    { path: 'login', component: LoginComponent },
+    { path: 'upcoming-events', component: UpcomingEventsComponent }
 ];
 
 @NgModule({
@@ -25,7 +27,8 @@ const routes = [
         SIDEDRAWER_DIRECTIVES,
         AppComponent, 
         LoginComponent,
-        UserDetailsComponent
+        UserDetailsComponent,
+        UpcomingEventsComponent
     ],
     bootstrap: [AppComponent],
     imports: [
