@@ -20,6 +20,9 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.signup = function () {
         var _this = this;
+        if (this.user.password !== this.user.confirmPassword) {
+            return console.error('Both passwords do not match');
+        }
         this._usersService.register(this.user.username, this.user.password)
             .then(function () { return _this.changeView(false); })
             .catch(function (e) { return console.error(e.message); });

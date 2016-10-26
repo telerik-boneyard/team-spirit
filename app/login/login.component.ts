@@ -27,6 +27,10 @@ export class LoginComponent {
     }
 
     signup() {
+        if (this.user.password !== this.user.confirmPassword) {
+            return console.error('Both passwords do not match');
+        }
+
         this._usersService.register(this.user.username, this.user.password)
             .then(() => this.changeView(false))
             .catch((e: Error) => console.error(e.message));

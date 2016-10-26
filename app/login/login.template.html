@@ -1,6 +1,7 @@
 <StackLayout>
     <TextField hint="Username" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
     <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
+    <TextField *ngIf="isSignupView" hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
 
     <StackLayout *ngIf="!isSignupView">
         <Button text="Login" (tap)="login()" ></Button>
