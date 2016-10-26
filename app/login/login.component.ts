@@ -1,4 +1,5 @@
 import { Component } from '@angular/core'
+import { RouterExtensions } from 'nativescript-angular/router'
 import { UsersService } from '../services'
 import { User } from '../shared'
 
@@ -11,8 +12,9 @@ export class LoginComponent {
     isSignupView: boolean = false;
 
     constructor(
-        private _usersService: UsersService
-    ) {}
+        private _usersService: UsersService,
+        private _routerExtensions: RouterExtensions
+    ) { }
 
     changeView(signupView: boolean) {
         this.user.username = '';
@@ -22,13 +24,22 @@ export class LoginComponent {
 
     login() {
         this._usersService.login(this.user.username, this.user.password)
-            .then(() => console.log('LOGGED IN'))
-            .catch((e: Error) => console.error(e.message));
+            .then(() => {
+                console.log('LOGGED IN')
+                this._routerExtensions.navigate(['/upcoming-events']);
+            })
+            .catch((e: Error) => {
+                console.error(e.message)
+            });
     }
 
     signup() {
         this._usersService.register(this.user.username, this.user.password)
-            .then(() => this.changeView(false))
-            .catch((e: Error) => console.error(e.message));
+            .then((res) => {
+                this.changeView(false)
+            })
+            .catch((e: Error) => {
+                console.error(e.message)
+            });
     }
-} 
+}
