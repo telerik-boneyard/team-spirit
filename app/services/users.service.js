@@ -9,6 +9,9 @@ var UsersService = (function () {
     UsersService.prototype.login = function (username, password) {
         return this._users.login(username, password);
     };
+    UsersService.prototype.register = function (username, password) {
+        return this._users.register(username, password, null);
+    };
     UsersService = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [everlive_provider_service_1.EverliveProvider])

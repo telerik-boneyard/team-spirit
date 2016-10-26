@@ -1,5 +1,6 @@
 // this import should be first in order to load some required settings (like globals and reflect-metadata)
 import { platformNativeScriptDynamic, NativeScriptModule } from "nativescript-angular/platform";
+import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { NgModule } from "@angular/core";
 
@@ -15,6 +16,7 @@ const routes = [
     declarations: [AppComponent, LoginComponent],
     bootstrap: [AppComponent],
     imports: [
+        NativeScriptFormsModule,
         NativeScriptModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes)

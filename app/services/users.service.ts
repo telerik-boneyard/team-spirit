@@ -15,4 +15,8 @@ export class UsersService {
     login(username: string, password: string) {
         return this._users.login(username, password);
     }
+
+    register(username: string, password: string) {
+        return this._users.register(username, password, null);
+    }
 }

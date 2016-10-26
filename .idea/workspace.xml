@@ -3,6 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="58a4ba21-09cb-4bc3-b13c-7570a2fead8d" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.component.ts" afterPath="$PROJECT_DIR$/app/app.component.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/login/login.component.ts" afterPath="$PROJECT_DIR$/app/login/login.component.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/login/login.template.html" afterPath="$PROJECT_DIR$/app/login/login.template.html" />
     </list>
     <ignored path="team-spirit.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,9 +30,11 @@
       <file leaf-file-name="users.service.ts" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/services/users.service.ts">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="40">
-              <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-              <folding />
+            <state relative-caret-position="120">
+              <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding>
+                <element signature="e#0#42#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -125,12 +129,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1477474586982</updated>
-      <workItem from="1477474588172" duration="481000" />
+      <workItem from="1477474588172" duration="571000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="481000" />
+    <option name="totallyTimeSpent" value="571000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="1917" y="25" width="1926" height="1178" extended-state="0" />
@@ -172,9 +176,11 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/services/users.service.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="40">
-          <caret line="2" column="0" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
-          <folding />
+        <state relative-caret-position="120">
+          <caret line="6" column="0" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#42#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

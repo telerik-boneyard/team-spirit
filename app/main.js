@@ -1,6 +1,7 @@
 "use strict";
 // this import should be first in order to load some required settings (like globals and reflect-metadata)
 var platform_1 = require("nativescript-angular/platform");
+var forms_1 = require("nativescript-angular/forms");
 var router_1 = require("nativescript-angular/router");
 var core_1 = require("@angular/core");
 var app_component_1 = require("./app.component");
@@ -17,6 +18,7 @@ var AppComponentModule = (function () {
             declarations: [app_component_1.AppComponent, login_component_1.LoginComponent],
             bootstrap: [app_component_1.AppComponent],
             imports: [
+                forms_1.NativeScriptFormsModule,
                 platform_1.NativeScriptModule,
                 router_1.NativeScriptRouterModule,
                 router_1.NativeScriptRouterModule.forRoot(routes)
