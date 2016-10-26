@@ -9,6 +9,8 @@ var LoginComponent = (function () {
         this._routerExtensions = _routerExtensions;
         this.user = new shared_1.User();
         this.isSignupView = false;
+        this.user.username = 'georgip';
+        this.user.password = 'qweqwe';
     }
     LoginComponent.prototype.changeView = function (signupView) {
         this.user.username = '';

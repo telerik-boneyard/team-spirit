@@ -13,6 +13,9 @@ var EverliveProvider = (function () {
         enumerable: true,
         configurable: true
     });
+    EverliveProvider.prototype.getNewQuery = function () {
+        return new everlive_sdk_1.default.Query();
+    };
     EverliveProvider = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])

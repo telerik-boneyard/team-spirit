@@ -14,7 +14,10 @@ export class LoginComponent {
     constructor(
         private _usersService: UsersService,
         private _routerExtensions: RouterExtensions
-    ) { }
+    ) {
+        this.user.username = 'georgip';
+        this.user.password = 'qweqwe';
+    }
 
     changeView(signupView: boolean) {
         this.user.username = '';
