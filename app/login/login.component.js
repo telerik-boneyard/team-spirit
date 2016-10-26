@@ -1,10 +1,12 @@
 "use strict";
 var core_1 = require('@angular/core');
+var router_1 = require('nativescript-angular/router');
 var services_1 = require('../services');
 var shared_1 = require('../shared');
 var LoginComponent = (function () {
-    function LoginComponent(_usersService) {
+    function LoginComponent(_usersService, _routerExtensions) {
         this._usersService = _usersService;
+        this._routerExtensions = _routerExtensions;
         this.user = new shared_1.User();
         this.isSignupView = false;
     }
@@ -14,22 +16,32 @@ var LoginComponent = (function () {
         this.isSignupView = signupView;
     };
     LoginComponent.prototype.login = function () {
+        var _this = this;
         this._usersService.login(this.user.username, this.user.password)
-            .then(function () { return console.log('LOGGED IN'); })
-            .catch(function (e) { return console.error(e.message); });
+            .then(function () {
+            console.log('LOGGED IN');
+            _this._routerExtensions.navigate(['/upcoming-events']);
+        })
+            .catch(function (e) {
+            console.error(e.message);
+        });
     };
     LoginComponent.prototype.signup = function () {
         var _this = this;
         this._usersService.register(this.user.username, this.user.password)
-            .then(function () { return _this.changeView(false); })
-            .catch(function (e) { return console.error(e.message); });
+            .then(function (res) {
+            _this.changeView(false);
+        })
+            .catch(function (e) {
+            console.error(e.message);
+        });
     };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'login',
             templateUrl: 'login/login.template.html'
         }), 
-        __metadata('design:paramtypes', [services_1.UsersService])
+        __metadata('design:paramtypes', [services_1.UsersService, router_1.RouterExtensions])
     ], LoginComponent);
     return LoginComponent;
 }());

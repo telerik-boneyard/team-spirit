@@ -6,16 +6,18 @@ var router_1 = require("nativescript-angular/router");
 var core_1 = require("@angular/core");
 var app_component_1 = require("./app.component");
 var login_component_1 = require('./login/login.component');
+var events_1 = require('./events');
 var routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
-    { path: 'login', component: login_component_1.LoginComponent }
+    { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'upcoming-events', component: events_1.UpcomingEventsComponent }
 ];
 var AppComponentModule = (function () {
     function AppComponentModule() {
     }
     AppComponentModule = __decorate([
         core_1.NgModule({
-            declarations: [app_component_1.AppComponent, login_component_1.LoginComponent],
+            declarations: [app_component_1.AppComponent, login_component_1.LoginComponent, events_1.UpcomingEventsComponent],
             bootstrap: [app_component_1.AppComponent],
             imports: [
                 forms_1.NativeScriptFormsModule,
