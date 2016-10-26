@@ -1,12 +1,11 @@
 "use strict";
 var core_1 = require('@angular/core');
 var services_1 = require('../services');
-var shared_1 = require('../shared');
 var LoginComponent = (function () {
     function LoginComponent(_usersService) {
         this._usersService = _usersService;
-        this.user = new shared_1.User();
         this.isSignupView = false;
+        this.user = {};
     }
     LoginComponent.prototype.changeView = function (signupView) {
         this.user.username = '';

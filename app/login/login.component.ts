@@ -7,12 +7,14 @@ import { User } from '../shared'
     templateUrl: 'login/login.template.html'
 })
 export class LoginComponent {
-    user: User = new User();
+    user: {username?: string, password?: string, confirmPassword?: string};
     isSignupView: boolean = false;
 
     constructor(
         private _usersService: UsersService
-    ) {}
+    ) {
+        this.user = {};
+    }
 
     changeView(signupView: boolean) {
         this.user.username = '';

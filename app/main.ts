@@ -3,17 +3,30 @@ import { platformNativeScriptDynamic, NativeScriptModule } from "nativescript-an
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { NgModule } from "@angular/core";
+import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
 import { LoginComponent } from './login/login.component'
+import { UserDetailsComponent } from './user-details/user-details.component';
+
+import { UserResolver } from './resolvers'
 
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
+    // { path: 'event/:eventId', component: EventDetailsComponent },
+    { path: 'user-details', component: UserDetailsComponent, resolve: {
+        user: UserResolver
+    }},
     { path: 'login', component: LoginComponent }
 ];
 
 @NgModule({
-    declarations: [AppComponent, LoginComponent],
+    declarations: [
+        SIDEDRAWER_DIRECTIVES,
+        AppComponent, 
+        LoginComponent,
+        UserDetailsComponent
+    ],
     bootstrap: [AppComponent],
     imports: [
         NativeScriptFormsModule,
