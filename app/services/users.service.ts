@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { EverliveProvider } from './everlive-provider.service';
 import { Users } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Users';
 import { User } from '../shared'
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UsersService {
@@ -48,6 +48,6 @@ export class UsersService {
     }
 
     logout() {
-        return this._users.logout();
+        return this._users.logout().then(r => r, e => e);
     }
 }
