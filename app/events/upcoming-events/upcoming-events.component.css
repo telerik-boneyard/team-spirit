@@ -1,5 +1,31 @@
+.main-container {
+  height: 640;
+  background-color: #ffffff;
+}
 
+.list-events {
+  height: 640;
+}
 
-* {
-    background-color: white;
+.event-name,
+.event-date-wrp,
+.event-description {
+  margin: 10 30;
+}
+
+.event-name {
+  font-size: 30;
+  color: #F4550F;
+}
+
+.event-date-wrp {
+  horizontal-align: stretch;
+}
+
+.event-date {
+  horizontal-align: left;
+}
+
+.event-remaining-time {
+  horizontal-align: right;
 }

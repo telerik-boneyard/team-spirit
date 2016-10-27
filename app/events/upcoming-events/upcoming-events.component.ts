@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Page } from 'ui/page'
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
@@ -12,11 +13,15 @@ export class UpcomingEventsComponent implements OnInit {
     events: Event[];
     dateFormat = 'MMM dd, yyyy, hh:mm a';
 
-    constructor(private _eventsService: EventsService) {
+    constructor(
+        private _eventsService: EventsService,
+        private _page: Page
+    ) {
 
     }
 
     ngOnInit() {
+        this._page.actionBarHidden = false;
         this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
@@ -37,7 +42,7 @@ export class UpcomingEventsComponent implements OnInit {
     getRemainingTime(event: Event) {
         let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);
-        
+
         if (!eventDate) {
             return 'TBD';
         }
