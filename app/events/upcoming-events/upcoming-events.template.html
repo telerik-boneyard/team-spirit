@@ -3,18 +3,15 @@
         <template let-event="item">
             <StackLayout>
                 <Label [text]="event.Name" class="event-name"></Label>
-                <StackLayout orientation="horizontal" class="event-date-wrp">
-                    <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" class="event-date"></Label>
-                    <Label [text]="getRemainingTime(event)" class="event-remaining-time"></Label>
-                </StackLayout>
-                <StackLayout orientation="horizontal">
-                    <!--<Image style="width: 45; height: 45" src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Minimize-RoundedBlack-512.png"></Image>-->
-                    <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
-                    <StackLayout class="event-description">
-                        <Label [text]="event.Description"></Label>
-                        <Label [text]="(event.Organizer.DisplayName || event.Organizer.Username)"></Label>
-                        <Label *ngIf="event.Group" [text]="' | ' + event.Group"></Label>
-                    </StackLayout>
+                <GridLayout columns="*, 100" class="event-date-wrp">
+                    <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date"></Label>
+                    <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
+                </GridLayout>
+                <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
+                <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
+                <StackLayout orientation="horizontal" class="event-organiser">
+                    <Label [text]="event.Organizer.DisplayName + ' | '"></Label>
+                    <Label [text]="event.Group"></Label>
                 </StackLayout>
             </StackLayout>
         </template>
