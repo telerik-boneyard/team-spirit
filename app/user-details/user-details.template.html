@@ -1,6 +1,10 @@
+<Button text="<" [nsRouterLink]="['/upcoming-events']" clearHistory="true"></Button>
 <StackLayout *ngIf="user">
-    <Image src="{{user.ProfilePicture}}"></Image>
-    <Label text="Username: {{user.Username}}"></Label>
+    <Image style="height: 200" src="{{user.ProfilePicture}}"></Image>
+    <StackLayout orientation="horizontal">
+        <Label text="Username:"></Label>
+        <Label text="{{user.Username}}"></Label>
+    </StackLayout>
     <StackLayout orientation="horizontal">
         <Label text="Display Name:"></Label>
         <TextField [(ngModel)]="user.DisplayName"></TextField>
@@ -9,5 +13,7 @@
         <Label text="Email:"></Label>
         <TextField [(ngModel)]="user.Email"></TextField>
     </StackLayout>
-    <Button text="Save" (tap)="save()"></Button>
+    <StackLayout>
+        <Button text="Save" (tap)="save()"></Button>
+    </StackLayout>
 </StackLayout>

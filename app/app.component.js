@@ -6,18 +6,21 @@ var AppComponent = (function () {
     function AppComponent(usersService, routerExtensions) {
         this.usersService = usersService;
         this.routerExtensions = routerExtensions;
-        this.loggedIn = this.usersService.loggedIn();
+        this.loggedIn = false;
     }
     AppComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.loggedIn.subscribe(function (logged) {
+        this.usersService.loggedIn().subscribe(function (logged) {
             if (logged) {
                 _this.routerExtensions.navigate(['upcoming-events']);
             }
+            _this.loggedIn = logged;
         });
     };
     AppComponent.prototype.logout = function () {
         this.usersService.logout();
+        this.loggedIn = false;
+        //TODO: Stop drawer from showing and close it
         this.routerExtensions.navigate(['login']);
     };
     AppComponent = __decorate([

@@ -4,7 +4,12 @@ var core_1 = require('@angular/core');
 var shared_1 = require('../shared');
 var EverliveProvider = (function () {
     function EverliveProvider() {
-        this._everlive = new everlive_sdk_1.default(shared_1.constants.appId);
+        this._everlive = new everlive_sdk_1.default({
+            appId: shared_1.constants.appId,
+            authentication: {
+                persist: true
+            }
+        });
     }
     Object.defineProperty(EverliveProvider.prototype, "get", {
         get: function () {
