@@ -39,6 +39,10 @@ export class EventsService {
                 OrganizerId: {
                     TargetTypeName: 'Users',
                     ReturnAs: 'Organizer'
+                },
+                Image: {
+                    'ReturnAs': 'ImageUrl',
+                    'SingleField': 'Uri'
                 }
             });
         }

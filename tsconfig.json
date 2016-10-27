@@ -10,7 +10,6 @@
     },
     "exclude": [
         "node_modules",
-        "platforms",
-        "everlive-js-sdk"
+        "platforms"
     ]
 }

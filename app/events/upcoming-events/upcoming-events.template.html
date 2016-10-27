@@ -4,12 +4,13 @@
         <StackLayout>
             <Label [text]="event.Name"></Label>
             <StackLayout orientation="horizontal">
-                <Label [text]="getEventDate(event) | date:dateFormat | uppercase"></Label>
+                <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase"></Label>
                 <Label [text]="getRemainingTime(event)"></Label>
             </StackLayout>
             <Label [text]="event.Description"></Label>
             <StackLayout orientation="horizontal">
-                <Image style="width: 45; height: 45" src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Minimize-RoundedBlack-512.png"></Image>
+                <!--<Image style="width: 45; height: 45" src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Minimize-RoundedBlack-512.png"></Image>-->
+                <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
                 <Label [text]="event.Organizer.DisplayName + ' | '"></Label>
                 <Label [text]="event.Group"></Label>
             </StackLayout>

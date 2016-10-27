@@ -5,7 +5,8 @@ import { Event } from '../../shared/models';
 
 @Component({
     selector: 'upcoming-events',
-    templateUrl: 'events/upcoming-events/upcoming-events.template.html'
+    templateUrl: 'events/upcoming-events/upcoming-events.template.html',
+    styleUrls: [ 'events/upcoming-events/upcoming-events.component.css' ]
 })
 export class UpcomingEventsComponent implements OnInit {
     events: Event[];
