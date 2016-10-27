@@ -8,6 +8,21 @@ import { Event } from '../shared/models';
 @Injectable()
 export class EventsService {
     private _data: Data<Event>;
+    private _eventExpandExpression: any = {
+        GroupId: {
+            TargetTypeName: 'Groups',
+            SingleField: 'Name',
+            ReturnAs: 'Group'
+        },
+        OrganizerId: {
+            TargetTypeName: 'Users',
+            ReturnAs: 'Organizer'
+        },
+        Image: {
+            'ReturnAs': 'ImageUrl',
+            'SingleField': 'Uri'
+        }
+    };
     
     constructor(private _elProvider: EverliveProvider) {
         this._data = this._elProvider.get.data('Events');
@@ -15,6 +30,10 @@ export class EventsService {
 
     getAll() {
         return this._getWithFilter(this._elProvider.getNewQuery());
+    }
+
+    getById(eventId: string) {
+        return this._data.expand(this._eventExpandExpression).getById(eventId).then(r => r.result);
     }
 
     getUpcoming() {
@@ -30,21 +49,7 @@ export class EventsService {
 
     private _getWithFilter(query: Query, expand = true) {
         if (expand) {
-            query.expand({
-                GroupId: {
-                    TargetTypeName: 'Groups',
-                    SingleField: 'Name',
-                    ReturnAs: 'Group'
-                },
-                OrganizerId: {
-                    TargetTypeName: 'Users',
-                    ReturnAs: 'Organizer'
-                },
-                Image: {
-                    'ReturnAs': 'ImageUrl',
-                    'SingleField': 'Uri'
-                }
-            });
+            query.expand(this._eventExpandExpression);
         }
 
         return this._data.get(query).then(r => r.result);

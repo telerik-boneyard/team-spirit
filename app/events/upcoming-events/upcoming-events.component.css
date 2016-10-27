@@ -25,14 +25,6 @@
   color: #F4550F;
 }
 
-.event-date-wrp {
-  horizontal-align: stretch;
-}
-
-.event-date {
-  horizontal-align: left;
-}
-
 .event-remaining-time {
   horizontal-align: right;
 }

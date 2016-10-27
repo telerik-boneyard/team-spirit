@@ -12,11 +12,10 @@ import { UpcomingEventsComponent, EventDetailsComponent } from './events';
 
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
-    // { path: 'event/:eventId', component: EventDetailsComponent },
     { path: 'user-details', component: UserDetailsComponent },
     { path: 'login', component: LoginComponent },
     { path: 'events/upcoming', component: UpcomingEventsComponent },
-    { path: 'events/:eventId', component: EventDetailsComponent }
+    { path: 'events/:id', component: EventDetailsComponent }
 ];
 
 @NgModule({

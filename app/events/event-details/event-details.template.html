@@ -1,3 +1,17 @@
-<StackLayout>
+<StackLayout *ngIf="event">
     <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
+    <Label [text]="getRating()"></Label>
+    
+    <Button text="Register" (tap)="register()"></Button>
+
+    <StackLayout orientation="horizontal">
+        <StackLayout style="width: 130"> <!-- remove inline style -->
+            <Label [text]="'DATE'"></Label>
+            <Label *ngIf="getDate()" [text]="getDate() | date:dateFormat"></Label>
+            <Label *ngIf="!getDate()" [text]="'TBD'"></Label>
+        </StackLayout>
+        <Image style="width: 30; height: 30" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
+    </StackLayout>
+
+    <Label [text]="'DESCRIPTION'"></Label>
 </StackLayout>

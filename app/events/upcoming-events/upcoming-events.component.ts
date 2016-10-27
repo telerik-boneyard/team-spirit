@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Page } from 'ui/page'
+import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
@@ -7,7 +8,7 @@ import { Event } from '../../shared/models';
 @Component({
     selector: 'upcoming-events',
     templateUrl: 'events/upcoming-events/upcoming-events.template.html',
-    styleUrls: [ 'events/upcoming-events/upcoming-events.component.css' ]
+    styleUrls: ['events/upcoming-events/upcoming-events.component.css']
 })
 export class UpcomingEventsComponent implements OnInit {
     events: Event[];
@@ -15,9 +16,9 @@ export class UpcomingEventsComponent implements OnInit {
 
     constructor(
         private _eventsService: EventsService,
+        private _routerExtensions: RouterExtensions,
         private _page: Page
     ) {
-
     }
 
     ngOnInit() {
@@ -25,7 +26,7 @@ export class UpcomingEventsComponent implements OnInit {
         this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
-                // this.handleError(events.map(e => {return{ date: e.EventDate, opts: e.EventDateChoices }}));
+                // this.handleError(events);
             }, this.handleError);
     }
 
@@ -59,7 +60,10 @@ export class UpcomingEventsComponent implements OnInit {
     }
 
     showDetails(event: any) {
-        console.log('show details clicked');
+        let clickedEvent = this.events[event.index];
+        this._routerExtensions.navigate(['/events/:id', {
+            id: clickedEvent.Id
+        }]);
     }
 
     handleError(error) {
