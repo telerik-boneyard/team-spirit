@@ -1,10 +1,10 @@
-<RadSideDrawer exampleTitle toggleNavButton>
-    <StackLayout tkDrawerContent [hidden]="loggedIn | async" >
+<RadSideDrawer exampleTitle toggleNavButton #drawer>
+    <StackLayout tkDrawerContent>
         <StackLayout class="sideTitleStackLayout">
             <Label text="Navigation Menu"></Label>
         </StackLayout>
         <StackLayout class="sideStackLayout">
-            <Button text="Events"></Button>
+            <Button text="Events" [nsRouterLink]="['upcoming-events']"></Button>
             <Button text="History"></Button>
             <Button text="Groups"></Button>
 

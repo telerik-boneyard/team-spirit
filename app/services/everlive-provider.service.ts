@@ -7,7 +7,12 @@ export class EverliveProvider {
     private _everlive: Everlive;
 
     constructor() {
-        this._everlive = new Everlive(constants.appId);
+        this._everlive = new Everlive({
+            appId: constants.appId,
+            authentication: {
+                persist: true
+            }
+        });
     }
 
     get get(): Everlive {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
@@ -7,16 +8,21 @@ import { Event } from '../../shared/models';
 @Component({
     selector: 'upcoming-events',
     templateUrl: 'events/upcoming-events/upcoming-events.template.html',
-    styleUrls: [ 'events/upcoming-events/upcoming-events.component.css' ]
+    styleUrls: ['events/upcoming-events/upcoming-events.component.css']
 })
 export class UpcomingEventsComponent implements OnInit {
     events: Event[];
     dateFormat = 'MMM dd, yyyy, hh:mm a';
 
-    constructor(private _eventsService: EventsService, private _routerExtensions: RouterExtensions) {
+    constructor(
+        private _eventsService: EventsService,
+        private _routerExtensions: RouterExtensions,
+        private _page: Page
+    ) {
     }
 
     ngOnInit() {
+        this._page.actionBarHidden = false;
         this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
@@ -37,7 +43,7 @@ export class UpcomingEventsComponent implements OnInit {
     getRemainingTime(event: Event) {
         let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);
-        
+
         if (!eventDate) {
             return 'TBD';
         }
