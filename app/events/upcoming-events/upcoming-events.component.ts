@@ -16,10 +16,10 @@ export class UpcomingEventsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._eventsService.getAll()
+        this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
-                this.handleError(events[0]);
+                // this.handleError(events.map(e => {return{ date: e.EventDate, opts: e.EventDateChoices }}));
             }, this.handleError);
     }
 
@@ -28,8 +28,6 @@ export class UpcomingEventsComponent implements OnInit {
 
         if (event.EventDate) {
             date = new Date(event.EventDate);
-        } else {
-            date = new Date(event.EventDateChoices[0]); // TODO: fix
         }
 
         return date;
@@ -38,12 +36,17 @@ export class UpcomingEventsComponent implements OnInit {
     getRemainingTime(event: Event) {
         let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);
+        
+        if (!eventDate) {
+            return 'TBD';
+        }
+
         let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);
 
         if (days > 0) {
             return days + ' Days';
         } else if (days < 0) {
-            return days + ' Days ago';
+            return Math.abs(days) + ' Days ago';
         } else {
             return 'TODAY';
         }

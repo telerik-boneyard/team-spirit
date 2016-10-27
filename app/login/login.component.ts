@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
         private _page: Page
     ) {
         this.user = {};
+        this.user.username = 'georgip';
+        this.user.password = 'qweqwe';
     }
 
     ngOnInit() {
