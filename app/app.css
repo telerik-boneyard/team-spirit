@@ -8,12 +8,13 @@ ActionBar {
   color: #ffffff;
 }
 
-button, label {
-  horizontal-align: center;
-}
-
 button {
   font-size: 20;
+}
+
+.button-action {
+  background-color: #F4550F;
+  color: #ffffff;
 }
 
 .title {
