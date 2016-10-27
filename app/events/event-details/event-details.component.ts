@@ -28,6 +28,8 @@ export class EventDetailsComponent {
     }
 
     getDate() {
-        return this.event.EventDate || 'TBD';
+        if (this.event.EventDate) {
+            return new Date(this.event.EventDate);
+        }
     }
 }
