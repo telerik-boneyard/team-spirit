@@ -3,11 +3,11 @@
     <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
 
     <StackLayout *ngIf="!isSignupView">
-        <Button text="Login" (tap)="login()" ></Button>
-        <Button text="Signup" (tap)="changeView(true)"></Button>
+        <Button text="Log in" (tap)="login()" ></Button>
+        <Button text="Sign Up" (tap)="changeView(true)"></Button>
     </StackLayout>
     <StackLayout *ngIf="isSignupView">
-        <Button text="Signup" (tap)="signup()" ></Button>
-        <Button text="Login" (tap)="changeView(false)"></Button>
+        <Button text="Sign Up" (tap)="signup()" ></Button>
+        <Button text="Log in" (tap)="changeView(false)"></Button>
     </StackLayout>
 </StackLayout>

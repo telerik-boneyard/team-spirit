@@ -1,19 +1,35 @@
-﻿button, label, stack-layout {
-    horizontal-align: center;    
+﻿Page {
+  background-color: #ffffff;
+  font-size: 16;
+}
+
+ActionBar {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+button, label {
+  horizontal-align: center;
 }
 
 button {
-    font-size: 36;
+  font-size: 20;
 }
 
 .title {
-    font-size: 30;
-    margin: 20;
+  font-size: 30;
+  margin: 20;
 }
 
 .message {
-    font-size: 20;
-    color: #284848;
-    text-align: center;
-    margin: 0 20;
-} 
+  font-size: 20;
+  color: #284848;
+  text-align: center;
+  margin: 0 20;
+}
+
+text-field {
+  padding: 20 4;
+  margin-bottom: 20;
+  font-size: 16;
+}
