@@ -1,49 +1,54 @@
-<StackLayout *ngIf="event">
-    <!--<Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>-->
-    <Label [text]="getRating()"></Label>
-    
-    <Button [text]="getRegisterBtnText()" (tap)="register()" [disabled]="alreadyRegistered"></Button>
-
-    <StackLayout orientation="horizontal">
-        <StackLayout style="width: 130"> <!-- remove inline style -->
-            <Label [text]="'DATE'"></Label>
-            <Label *ngIf="getDate()" [text]="getDate() | date:dateFormat"></Label>
-            <Label *ngIf="!getDate()" [text]="'TBD'"></Label>
-        </StackLayout>
-        <Image style="width: 30; height: 30" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
-    </StackLayout>
-
-    <Label [text]="'DESCRIPTION'"></Label>
-    <Label [text]="event.Description"></Label>
-
-    <StackLayout orientation="horizontal">
-        <StackLayout>
-            <Label [text]="'LOCATION'"></Label>
-            <Label [text]="event.Location"></Label>
-        </StackLayout>
-        <Image style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
-    </StackLayout>
-
-    <Label [text]="'GROUP'"></Label>
-    <Label [text]="event.Group"></Label>
-
-    <Label [text]="'ORGANIZER'"></Label>
-    <Label [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
-
-    <Label [text]="'REGISTERED PARTICIPANTS'"></Label>
-    
-    <ListView *ngIf="registeredUsers.length > 0" [items]="registeredUsers.slice(0, 3)">
-        <template let-item="item">
-            <StackLayout orientation="horizontal">
-                <Image *ngIf="item.Image" style="width: 15; height: 15" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
-            </StackLayout>
-        </template>
-    </ListView>
+<StackLayout>
+    <StackLayout *ngIf="event">
+        <!--<Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>-->
+        <Label [text]="getRating()"></Label>
         
-    <StackLayout *ngIf="registeredUsers.length > 0" orientation="horizontal">
-        <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
-        <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
+        <Button [text]="getRegisterBtnText()" (tap)="register()" [disabled]="alreadyRegistered"></Button>
+
+        <StackLayout orientation="horizontal">
+            <StackLayout style="width: 130"> <!-- remove inline style -->
+                <Label [text]="'DATE'"></Label>
+                <Label *ngIf="getDate()" [text]="getDate() | date:dateFormat"></Label>
+                <Label *ngIf="!getDate()" [text]="'TBD'"></Label>
+            </StackLayout>
+            <Image style="width: 30; height: 30" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
+        </StackLayout>
+
+        <Label [text]="'DESCRIPTION'"></Label>
+        <Label [text]="event.Description"></Label>
+
+        <StackLayout orientation="horizontal">
+            <StackLayout>
+                <Label [text]="'LOCATION'"></Label>
+                <Label [text]="event.Location"></Label>
+            </StackLayout>
+            <Image style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
+        </StackLayout>
+
+        <Label [text]="'GROUP'"></Label>
+        <Label [text]="event.Group"></Label>
+
+        <Label [text]="'ORGANIZER'"></Label>
+        <Label [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
+
+        <Label [text]="'REGISTERED PARTICIPANTS'"></Label>
+        
+        <ListView *ngIf="registeredUsers.length > 0" [items]="registeredUsers.slice(0, 3)">
+            <template let-item="item">
+                <StackLayout orientation="horizontal">
+                    <Image *ngIf="item.Image" style="width: 15; height: 15" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
+                </StackLayout>
+            </template>
+        </ListView>
+            
+        <StackLayout *ngIf="registeredUsers.length > 0" orientation="horizontal">
+            <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
+            <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
+        </StackLayout>
+
+        <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event yet.'"></Label>
     </StackLayout>
 
-    <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event yet.'"></Label>
+    <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+
 </StackLayout>

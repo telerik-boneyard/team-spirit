@@ -11,7 +11,7 @@ import { Event } from '../../shared/models';
     styleUrls: ['events/upcoming-events/upcoming-events.component.css']
 })
 export class UpcomingEventsComponent implements OnInit {
-    events: Event[];
+    events: Event[] = [];
     dateFormat = 'MMM dd, yyyy, hh:mm a';
 
     constructor(
