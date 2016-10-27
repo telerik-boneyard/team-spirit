@@ -7,7 +7,10 @@ var UserDetailsComponent = (function () {
     }
     UserDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this._usersService.currentUser().then(function (u) { return _this.user = _this.originalUser = u; }).catch(function (e) { return console.error(e.message); });
+        this._usersService.currentUser().then(function (u) { return _this.user = u; }).catch(function (e) { return console.error(e.message); });
+    };
+    UserDetailsComponent.prototype.save = function () {
+        this._usersService.updateUser(this.user);
     };
     UserDetailsComponent = __decorate([
         core_1.Component({

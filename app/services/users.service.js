@@ -2,6 +2,7 @@
 var core_1 = require('@angular/core');
 var everlive_provider_service_1 = require('./everlive-provider.service');
 var shared_1 = require('../shared');
+var Observable_1 = require('rxjs/Observable');
 var UsersService = (function () {
     function UsersService(_everliveProvider) {
         this._everliveProvider = _everliveProvider;
@@ -21,6 +22,19 @@ var UsersService = (function () {
                 ));
             }).catch(reject);
         });
+    };
+    UsersService.prototype.loggedIn = function () {
+        var _this = this;
+        var promise = new Promise(function (resolve) {
+            return _this._users.currentUser().then(function (u) { return resolve(!!u); }).catch(function () { return resolve(false); });
+        });
+        return Observable_1.Observable.fromPromise(promise);
+    };
+    UsersService.prototype.updateUser = function (user) {
+        return this._users.update(user, { Username: user.Username });
+    };
+    UsersService.prototype.logout = function () {
+        return this._users.logout();
     };
     UsersService = __decorate([
         core_1.Injectable(), 

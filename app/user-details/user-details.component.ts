@@ -7,14 +7,17 @@ import { UsersService } from '../services'
     templateUrl: 'user-details/user-details.template.html'
 })
 export class UserDetailsComponent implements OnInit {
-    private originalUser: User;
     private user: User;
 
     constructor(
-        private _usersService: UsersService
+        private _usersService: UsersService,
     ) {} 
 
     ngOnInit() {
-        this._usersService.currentUser().then(u => this.user = this.originalUser = u).catch(e => console.error(e.message));
+        this._usersService.currentUser().then(u => this.user = u).catch(e => console.error(e.message));
+    }
+
+    save() {
+        this._usersService.updateUser(this.user);
     }
 }
