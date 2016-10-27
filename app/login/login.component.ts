@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
-        this._page.backgroundImage = 'res://bg_login';
+        this._page.backgroundImage = 'res://background';
     }
 
     changeView(signupView: boolean) {

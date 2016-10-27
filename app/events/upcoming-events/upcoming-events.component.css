@@ -9,11 +9,18 @@
 
 .event-name,
 .event-date-wrp,
-.event-description {
+.event-description,
+.event-organiser {
   margin: 10 30;
 }
 
+.event-date-wrp,
+.event-organiser {
+  color: #ADADAD;
+}
+
 .event-name {
+  margin-bottom: 0;
   font-size: 30;
   color: #F4550F;
 }
@@ -28,4 +35,8 @@
 
 .event-remaining-time {
   horizontal-align: right;
+}
+
+.event-organiser {
+  margin-bottom: 20;
 }
