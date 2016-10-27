@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { EverliveProvider } from './everlive-provider.service';
 import { Users } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Users';
 import { User } from '../shared'
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class UsersService {
@@ -32,5 +33,21 @@ export class UsersService {
                 ));
             }).catch(reject);
         });
+    }
+
+    loggedIn(): Observable<boolean> {
+        const promise = new Promise<boolean>(resolve => {
+            return this._users.currentUser().then(u => resolve(!!u)).catch(() => resolve(false));
+        });
+
+        return Observable.fromPromise(promise);
+    }
+
+    updateUser(user: User) {
+        return this._users.update(user, {Username: user.Username})
+    }
+
+    logout() {
+        return this._users.logout();
     }
 }

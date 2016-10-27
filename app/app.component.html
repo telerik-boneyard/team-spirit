@@ -1,10 +1,16 @@
 <RadSideDrawer exampleTitle toggleNavButton>
-    <StackLayout tkDrawerContent>
+    <StackLayout tkDrawerContent [hidden]="loggedIn | async" >
         <StackLayout class="sideTitleStackLayout">
             <Label text="Navigation Menu"></Label>
         </StackLayout>
         <StackLayout class="sideStackLayout">
+            <Button text="Events"></Button>
+            <Button text="History"></Button>
+            <Button text="Groups"></Button>
+
             <Button text="Profile" [nsRouterLink]="['user-details']"></Button>
+            <Button text="Settings"></Button>
+            <Button text="Logout" (tap)="logout()"></Button>
         </StackLayout>
     </StackLayout>
     <StackLayout tkMainContent>
