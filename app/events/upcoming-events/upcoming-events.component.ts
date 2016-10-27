@@ -1,25 +1,31 @@
 import { Component, OnInit } from '@angular/core';
+import { Page } from 'ui/page'
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
 
 @Component({
     selector: 'upcoming-events',
-    templateUrl: 'events/upcoming-events/upcoming-events.template.html'
+    templateUrl: 'events/upcoming-events/upcoming-events.template.html',
+    styleUrls: [ 'events/upcoming-events/upcoming-events.component.css' ]
 })
 export class UpcomingEventsComponent implements OnInit {
     events: Event[];
     dateFormat = 'MMM dd, yyyy, hh:mm a';
 
-    constructor(private _eventsService: EventsService) {
+    constructor(
+        private _eventsService: EventsService,
+        private _page: Page
+    ) {
 
     }
 
     ngOnInit() {
-        this._eventsService.getAll()
+        this._page.actionBarHidden = false;
+        this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
-                this.handleError(events[0]);
+                // this.handleError(events.map(e => {return{ date: e.EventDate, opts: e.EventDateChoices }}));
             }, this.handleError);
     }
 
@@ -28,8 +34,6 @@ export class UpcomingEventsComponent implements OnInit {
 
         if (event.EventDate) {
             date = new Date(event.EventDate);
-        } else {
-            date = new Date(event.EventDateChoices[0]); // TODO: fix
         }
 
         return date;
@@ -38,12 +42,17 @@ export class UpcomingEventsComponent implements OnInit {
     getRemainingTime(event: Event) {
         let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);
+
+        if (!eventDate) {
+            return 'TBD';
+        }
+
         let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);
 
         if (days > 0) {
             return days + ' Days';
         } else if (days < 0) {
-            return days + ' Days ago';
+            return Math.abs(days) + ' Days ago';
         } else {
             return 'TODAY';
         }

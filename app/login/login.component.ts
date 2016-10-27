@@ -19,6 +19,8 @@ export class LoginComponent implements OnInit {
         private _page: Page
     ) {
         this.user = {};
+        this.user.username = 'georgip';
+        this.user.password = 'qweqwe';
     }
 
     ngOnInit() {
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
         this._usersService.login(this.user.username, this.user.password)
             .then(() => {
                 console.log('LOGGED IN')
-                this._routerExtensions.navigate(['upcoming-events']);
+                this._routerExtensions.navigate(['events/upcoming']);
             })
             .catch((e: Error) => {
                 console.error(e.message)
@@ -45,7 +47,7 @@ export class LoginComponent implements OnInit {
 
     signup() {
         if (this.user.password !== this.user.confirmPassword) {
-            return console.error('Both passwords do not match');
+            return console.error('Passwords do not match');
         }
 
         this._usersService.register(this.user.username, this.user.password)

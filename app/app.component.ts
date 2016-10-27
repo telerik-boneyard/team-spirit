@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this.usersService.loggedIn().subscribe(logged => {
             if (logged) {
-                this.routerExtensions.navigate(['upcoming-events']);
+                this.routerExtensions.navigate(['events/upcoming']);
             }
 
             this.loggedIn = logged;
