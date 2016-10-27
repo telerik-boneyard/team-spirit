@@ -26,6 +26,7 @@ export class UsersService {
         return new Promise<User>((resolve, reject) => {
             this._users.currentUser().then(u => {
                 return resolve(new User(
+                    u.result.Id,
                     u.result.Username,
                     u.result.DisplayName,
                     u.result.Email,

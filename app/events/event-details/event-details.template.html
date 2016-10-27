@@ -1,8 +1,8 @@
 <StackLayout *ngIf="event">
-    <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
+    <!--<Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>-->
     <Label [text]="getRating()"></Label>
     
-    <Button text="Register" (tap)="register()"></Button>
+    <Button [text]="getRegisterBtnText()" (tap)="register()" [disabled]="alreadyRegistered"></Button>
 
     <StackLayout orientation="horizontal">
         <StackLayout style="width: 130"> <!-- remove inline style -->
@@ -14,4 +14,36 @@
     </StackLayout>
 
     <Label [text]="'DESCRIPTION'"></Label>
+    <Label [text]="event.Description"></Label>
+
+    <StackLayout orientation="horizontal">
+        <StackLayout>
+            <Label [text]="'LOCATION'"></Label>
+            <Label [text]="event.Location"></Label>
+        </StackLayout>
+        <Image style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
+    </StackLayout>
+
+    <Label [text]="'GROUP'"></Label>
+    <Label [text]="event.Group"></Label>
+
+    <Label [text]="'ORGANIZER'"></Label>
+    <Label [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
+
+    <Label [text]="'REGISTERED PARTICIPANTS'"></Label>
+    
+    <ListView *ngIf="registeredUsers.length > 0" [items]="registeredUsers.slice(0, 3)">
+        <template let-item="item">
+            <StackLayout orientation="horizontal">
+                <Image *ngIf="item.Image" style="width: 15; height: 15" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
+            </StackLayout>
+        </template>
+    </ListView>
+        
+    <StackLayout *ngIf="registeredUsers.length > 0" orientation="horizontal">
+        <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
+        <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
+    </StackLayout>
+
+    <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event yet.'"></Label>
 </StackLayout>

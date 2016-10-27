@@ -4,4 +4,5 @@ export class Event extends ItemModel {
     Name: string;
     EventDate?: Date;
     EventDateChoices?: Date[];
+    LocationURL: string;
 }

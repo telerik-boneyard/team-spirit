@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { EverliveProvider, UsersService, EventsService } from './services';
+import { EverliveProvider, UsersService, EventsService, EventRegistrationsService } from './services';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Observable } from 'rxjs/Observable';
 import { RadSideDrawer } from 'nativescript-telerik-ui/sidedrawer'
@@ -7,7 +7,7 @@ import { RadSideDrawer } from 'nativescript-telerik-ui/sidedrawer'
 @Component({
     selector: 'my-app',
     templateUrl: 'app.component.html',
-    providers: [EverliveProvider, UsersService, EventsService]
+    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService]
 })
 export class AppComponent implements OnInit {
     private loggedIn: boolean = false;

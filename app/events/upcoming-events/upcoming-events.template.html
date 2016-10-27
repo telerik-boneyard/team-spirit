@@ -7,7 +7,7 @@
                     <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date"></Label>
                     <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
                 </GridLayout>
-                <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
+                <!--<Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>-->
                 <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
                 <StackLayout orientation="horizontal" class="event-organiser">
                     <Label [text]="event.Organizer.DisplayName + ' | '"></Label>

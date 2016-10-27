@@ -3,6 +3,8 @@ import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive
 import { Query } from '../../node_modules/everlive-sdk/dist/declarations/everlive/query/Query';
 
 import { EverliveProvider } from './everlive-provider.service';
+import { EventRegistrationsService } from './event-registrations.service';
+import { UsersService } from './users.service';
 import { Event } from '../shared/models';
 
 @Injectable()
@@ -24,8 +26,11 @@ export class EventsService {
         }
     };
     
-    constructor(private _elProvider: EverliveProvider) {
-        this._data = this._elProvider.get.data('Events');
+    constructor(
+        private _elProvider: EverliveProvider,
+        private _registrationsService: EventRegistrationsService,
+        private _usersService: UsersService) {
+            this._data = this._elProvider.get.data('Events');
     }
 
     getAll() {
@@ -45,6 +50,23 @@ export class EventsService {
             ]
         });
         return this._getWithFilter(query);
+    }
+
+    getParticipants(eventId: string) {
+        return this._registrationsService.getParticipants(eventId);
+    }
+
+    registerForEvent(eventId: string) {
+        this._usersService.currentUser()
+            .then(u => {
+                return this._registrationsService.create(eventId, u.Id);
+            })
+            .then(resp => {
+                console.log('====== ' + JSON.stringify(resp));
+                return resp;
+            }, err => {
+                console.log('------ ' + JSON.stringify(err));
+            });
     }
 
     private _getWithFilter(query: Query, expand = true) {
