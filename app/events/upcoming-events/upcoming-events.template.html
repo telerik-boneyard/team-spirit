@@ -9,9 +9,9 @@
             </StackLayout>
             <Label [text]="event.Description"></Label>
             <StackLayout orientation="horizontal">
-                <!--<Image style="width: 45; height: 45" src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Minimize-RoundedBlack-512.png"></Image>-->
-                <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
-                <Label [text]="event.Organizer.DisplayName + ' | '"></Label>
+                <Image style="width: 45; height: 45" src="https://cdn1.iconfinder.com/data/icons/rounded-black-basic-ui/139/Minimize-RoundedBlack-512.png"></Image>
+                <!--<Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>-->
+                <Label [text]="(event.Organizer.DisplayName || event.Organizer.Username) + ' | '"></Label>
                 <Label [text]="event.Group"></Label>
             </StackLayout>
         </StackLayout>

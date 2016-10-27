@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
@@ -12,15 +13,14 @@ export class UpcomingEventsComponent implements OnInit {
     events: Event[];
     dateFormat = 'MMM dd, yyyy, hh:mm a';
 
-    constructor(private _eventsService: EventsService) {
-
+    constructor(private _eventsService: EventsService, private _routerExtensions: RouterExtensions) {
     }
 
     ngOnInit() {
         this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
-                // this.handleError(events.map(e => {return{ date: e.EventDate, opts: e.EventDateChoices }}));
+                // this.handleError(events);
             }, this.handleError);
     }
 
@@ -54,7 +54,10 @@ export class UpcomingEventsComponent implements OnInit {
     }
 
     showDetails(event: any) {
-        console.log('show details clicked');
+        let clickedEvent = this.events[event.index];
+        this._routerExtensions.navigate(['/events/:id', {
+            id: clickedEvent.Id
+        }]);
     }
 
     handleError(error) {
