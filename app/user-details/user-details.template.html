@@ -1,0 +1,13 @@
+<StackLayout *ngIf="user">
+    <Image src="{{user.ProfilePicture}}"></Image>
+    <Label text="Username: {{user.Username}}"></Label>
+    <StackLayout orientation="horizontal">
+        <Label text="Display Name:"></Label>
+        <TextField [(ngModel)]="user.DisplayName"></TextField>
+    </StackLayout>
+    <StackLayout orientation="horizontal">
+        <Label text="Email:"></Label>
+        <TextField [(ngModel)]="user.Email"></TextField>
+    </StackLayout>
+    <Button text="Save" (tap)=></Button>
+</StackLayout>

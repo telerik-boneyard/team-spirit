@@ -1,3 +1,13 @@
-<StackLayout>
-    <router-outlet></router-outlet>
-</StackLayout>
+<RadSideDrawer exampleTitle toggleNavButton>
+    <StackLayout tkDrawerContent>
+        <StackLayout class="sideTitleStackLayout">
+            <Label text="Navigation Menu"></Label>
+        </StackLayout>
+        <StackLayout class="sideStackLayout">
+            <Button text="Profile" [nsRouterLink]="['user-details']"></Button>
+        </StackLayout>
+    </StackLayout>
+    <StackLayout tkMainContent>
+        <router-outlet></router-outlet>
+    </StackLayout>
+</RadSideDrawer>

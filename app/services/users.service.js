@@ -1,6 +1,7 @@
 "use strict";
 var core_1 = require('@angular/core');
 var everlive_provider_service_1 = require('./everlive-provider.service');
+var shared_1 = require('../shared');
 var UsersService = (function () {
     function UsersService(_everliveProvider) {
         this._everliveProvider = _everliveProvider;
@@ -11,6 +12,15 @@ var UsersService = (function () {
     };
     UsersService.prototype.register = function (username, password) {
         return this._users.register(username, password, null);
+    };
+    UsersService.prototype.currentUser = function () {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            _this._users.currentUser().then(function (u) {
+                return resolve(new shared_1.User(u.result.Username, u.result.DisplayName, u.result.Email, '' //TODO:
+                ));
+            }).catch(reject);
+        });
     };
     UsersService = __decorate([
         core_1.Injectable(), 

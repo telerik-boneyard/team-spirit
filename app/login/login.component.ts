@@ -10,7 +10,7 @@ import { User } from '../shared'
     styleUrls: ['login/login.component.css']
 })
 export class LoginComponent implements OnInit {
-    user: User = new User();
+    user: {username?: string, password?: string, confirmPassword?: string};
     isSignupView: boolean = false;
 
     constructor(
@@ -18,8 +18,7 @@ export class LoginComponent implements OnInit {
         private _routerExtensions: RouterExtensions,
         private _page: Page
     ) {
-        this.user.username = 'georgip';
-        this.user.password = 'qweqwe';
+        this.user = {};
     }
 
     ngOnInit() {
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit {
         this._usersService.login(this.user.username, this.user.password)
             .then(() => {
                 console.log('LOGGED IN')
-                this._routerExtensions.navigate(['/upcoming-events']);
+                this._routerExtensions.navigate(['user-details']);
             })
             .catch((e: Error) => {
                 console.error(e.message)
@@ -45,6 +44,10 @@ export class LoginComponent implements OnInit {
     }
 
     signup() {
+        if (this.user.password !== this.user.confirmPassword) {
+            return console.error('Both passwords do not match');
+        }
+
         this._usersService.register(this.user.username, this.user.password)
             .then((res) => {
                 this.changeView(false)

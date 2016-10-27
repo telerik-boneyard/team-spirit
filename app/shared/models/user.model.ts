@@ -1,4 +1,12 @@
+import { constants } from '../shared';
+
 export class User {
-    username: string;
-    password: string;
+    constructor(
+        public Username: string,
+        public DisplayName: string,
+        public Email: string,
+        public ProfilePicture: string
+    ) {
+        this.ProfilePicture = ProfilePicture || constants.emptyImage;
+    }
 }
