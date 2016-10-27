@@ -17,6 +17,11 @@ button {
   margin-bottom: 20;
 }
 
+.logo {
+  width: 560;
+  margin-bottom: 30;
+}
+
 .initial-label {
   color: #ffffff;
   horizontal-align: center;
