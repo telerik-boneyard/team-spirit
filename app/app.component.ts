@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from "@angular/core";
 import { EverliveProvider, UsersService, EventsService, EventRegistrationsService } from './services';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Observable } from 'rxjs/Observable';
-import { RadSideDrawer } from 'nativescript-telerik-ui/sidedrawer'
+import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular'
 
 @Component({
     selector: 'my-app',
@@ -11,11 +11,13 @@ import { RadSideDrawer } from 'nativescript-telerik-ui/sidedrawer'
 })
 export class AppComponent implements OnInit {
     private loggedIn: boolean = false;
+    @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
     constructor(
         private usersService: UsersService,
         private routerExtensions: RouterExtensions
-    ) {}
+    ) {
+    }
 
     ngOnInit() {
         this.usersService.loggedIn().subscribe(logged => {
@@ -25,6 +27,10 @@ export class AppComponent implements OnInit {
 
             this.loggedIn = logged;
         });
+    }
+
+    closeDrawer() {
+        this.drawer.sideDrawer.closeDrawer();
     }
 
     logout() {

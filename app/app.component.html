@@ -4,13 +4,13 @@
             <Label text="Navigation Menu"></Label>
         </StackLayout>
         <StackLayout class="sideStackLayout">
-            <Button text="Events" [nsRouterLink]="['events/upcoming']"></Button>
-            <Button text="History"></Button>
-            <Button text="Groups"></Button>
+            <Button text="Events" [nsRouterLink]="['events/upcoming']" (tap)="closeDrawer()"></Button>
+            <Button text="History" (tap)="closeDrawer()"></Button>
+            <Button text="Groups" (tap)="closeDrawer()"></Button>
 
-            <Button text="Profile" [nsRouterLink]="['user-details']"></Button>
-            <Button text="Settings"></Button>
-            <Button text="Logout" (tap)="logout()"></Button>
+            <Button text="Profile" [nsRouterLink]="['user-details']" (tap)="closeDrawer()"></Button>
+            <Button text="Settings" (tap)="closeDrawer()"></Button>
+            <Button text="Logout" (tap)="logout()" (tap)="closeDrawer()"></Button>
         </StackLayout>
     </StackLayout>
     <StackLayout tkMainContent>

@@ -21,8 +21,7 @@
     "nativescript-angular": "1.1.0",
     "nativescript-telerik-ui": "^1.4.1",
     "reflect-metadata": "~0.1.8",
-    "tns-core-modules": "2.3.0",
-    "everlive-sdk": "C:\\Work\\everlive-js-sdk"
+    "tns-core-modules": "2.3.0"
   },
   "devDependencies": {
     "babel-traverse": "6.18.0",
