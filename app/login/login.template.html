@@ -1,14 +1,18 @@
-<StackLayout>
+<StackLayout class="main-container">
     <TextField hint="Username" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
     <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
     <TextField *ngIf="isSignupView" hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
 
     <StackLayout *ngIf="!isSignupView">
-        <Button text="Log in" (tap)="login()" ></Button>
-        <Button text="Sign Up" (tap)="changeView(true)"></Button>
+        <Button text="Log in" (tap)="login()" class="button-action"></Button>
+        <StackLayout (tap)="changeView(true)" class="initial-button">
+            <Label text="Don't have an account yet? Sign up" class="initial-button-label"></Label>
+        </StackLayout>
     </StackLayout>
     <StackLayout *ngIf="isSignupView">
-        <Button text="Sign Up" (tap)="signup()" ></Button>
-        <Button text="Log in" (tap)="changeView(false)"></Button>
+        <Button text="Sign Up" (tap)="signup()" class="button-action"></Button>
+        <StackLayout (tap)="changeView(false)" class="initial-button">
+            <Label text="Back to login" class="initial-button-label"></Label>
+        </StackLayout>
     </StackLayout>
 </StackLayout>
