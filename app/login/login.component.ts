@@ -1,21 +1,29 @@
-import { Component } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router'
+import { Page } from 'ui/page'
 import { UsersService } from '../services'
 import { User } from '../shared'
 
 @Component({
     selector: 'login',
-    templateUrl: 'login/login.template.html'
+    templateUrl: 'login/login.template.html',
+    styleUrls: ['login/login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
     user: {username?: string, password?: string, confirmPassword?: string};
     isSignupView: boolean = false;
 
     constructor(
         private _usersService: UsersService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _page: Page
     ) {
         this.user = {};
+    }
+
+    ngOnInit() {
+        this._page.actionBarHidden = true;
+        this._page.backgroundImage = 'res://bg_login';
     }
 
     changeView(signupView: boolean) {

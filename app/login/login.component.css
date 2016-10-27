@@ -1,0 +1,17 @@
+stack-layout {
+  margin-left: 30;
+  margin-right: 30;
+  padding-bottom: 15;
+}
+
+button, text-field {
+  margin-left: 16;
+  margin-right: 16;
+  margin-bottom: 10;
+}
+
+text-field {
+  border-color: #ffffff;
+  color: #ffffff;
+  placeholder-color: #ffffff;
+}

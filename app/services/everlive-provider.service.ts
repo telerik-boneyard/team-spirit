@@ -13,4 +13,8 @@ export class EverliveProvider {
     get get(): Everlive {
         return this._everlive;
     }
+
+    getNewQuery() {
+        return new Everlive.Query();
+    }
 }

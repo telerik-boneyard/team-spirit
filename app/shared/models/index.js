@@ -2,6 +2,7 @@
 function __export(m) {
     for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
 }
-__export(require('./constants'));
-__export(require('./models'));
+__export(require('./event.model'));
+__export(require('./user.model'));
+__export(require('./item.model'));
 //# sourceMappingURL=index.js.map
