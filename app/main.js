@@ -8,14 +8,13 @@ var angular_1 = require('nativescript-telerik-ui/sidedrawer/angular');
 var app_component_1 = require("./app.component");
 var login_component_1 = require('./login/login.component');
 var user_details_component_1 = require('./user-details/user-details.component');
-var resolvers_1 = require('./resolvers');
+var events_1 = require('./events');
 var routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
     // { path: 'event/:eventId', component: EventDetailsComponent },
-    { path: 'user-details', component: user_details_component_1.UserDetailsComponent, resolve: {
-            user: resolvers_1.UserResolver
-        } },
-    { path: 'login', component: login_component_1.LoginComponent }
+    { path: 'user-details', component: user_details_component_1.UserDetailsComponent },
+    { path: 'login', component: login_component_1.LoginComponent },
+    { path: 'upcoming-events', component: events_1.UpcomingEventsComponent }
 ];
 var AppComponentModule = (function () {
     function AppComponentModule() {
@@ -26,7 +25,8 @@ var AppComponentModule = (function () {
                 angular_1.SIDEDRAWER_DIRECTIVES,
                 app_component_1.AppComponent,
                 login_component_1.LoginComponent,
-                user_details_component_1.UserDetailsComponent
+                user_details_component_1.UserDetailsComponent,
+                events_1.UpcomingEventsComponent
             ],
             bootstrap: [app_component_1.AppComponent],
             imports: [

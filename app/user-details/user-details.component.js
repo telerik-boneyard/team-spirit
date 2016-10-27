@@ -1,19 +1,20 @@
 "use strict";
 var core_1 = require('@angular/core');
-var router_1 = require('@angular/router');
+var services_1 = require('../services');
 var UserDetailsComponent = (function () {
-    function UserDetailsComponent(route) {
-        this.route = route;
+    function UserDetailsComponent(_usersService) {
+        this._usersService = _usersService;
     }
     UserDetailsComponent.prototype.ngOnInit = function () {
-        this.user = this.route.snapshot.data['user'];
+        var _this = this;
+        this._usersService.currentUser().then(function (u) { return _this.user = _this.originalUser = u; }).catch(function (e) { return console.error(e.message); });
     };
     UserDetailsComponent = __decorate([
         core_1.Component({
             selector: 'user-details',
             templateUrl: 'user-details/user-details.template.html'
         }), 
-        __metadata('design:paramtypes', [router_1.ActivatedRoute])
+        __metadata('design:paramtypes', [services_1.UsersService])
     ], UserDetailsComponent);
     return UserDetailsComponent;
 }());

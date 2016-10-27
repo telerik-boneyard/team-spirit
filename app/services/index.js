@@ -4,4 +4,5 @@ function __export(m) {
 }
 __export(require('./everlive-provider.service'));
 __export(require('./users.service'));
+__export(require('./events.service'));
 //# sourceMappingURL=index.js.map

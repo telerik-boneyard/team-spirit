@@ -10,14 +10,10 @@ import { LoginComponent } from './login/login.component'
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { UpcomingEventsComponent } from './events';
 
-import { UserResolver } from './resolvers'
-
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
     // { path: 'event/:eventId', component: EventDetailsComponent },
-    { path: 'user-details', component: UserDetailsComponent, resolve: {
-        user: UserResolver
-    }},
+    { path: 'user-details', component: UserDetailsComponent },
     { path: 'login', component: LoginComponent },
     { path: 'upcoming-events', component: UpcomingEventsComponent }
 ];
@@ -38,6 +34,7 @@ const routes = [
         NativeScriptRouterModule.forRoot(routes)
     ],
 })
-class AppComponentModule {}
+class AppComponentModule {
+}
 
 platformNativeScriptDynamic().bootstrapModule(AppComponentModule);

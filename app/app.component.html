@@ -1,6 +1,11 @@
-<RadSideDrawer toggleNavButton>
+<RadSideDrawer exampleTitle toggleNavButton>
     <StackLayout tkDrawerContent>
-        <Label>gda</Label>
+        <StackLayout class="sideTitleStackLayout">
+            <Label text="Navigation Menu"></Label>
+        </StackLayout>
+        <StackLayout class="sideStackLayout">
+            <Button text="Profile" [nsRouterLink]="['user-details']"></Button>
+        </StackLayout>
     </StackLayout>
     <StackLayout tkMainContent>
         <router-outlet></router-outlet>
