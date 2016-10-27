@@ -1,4 +1,4 @@
-import { constants } from '../shared';
+import { constants } from '../';
 
 export class User {
     constructor(

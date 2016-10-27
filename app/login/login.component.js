@@ -3,20 +3,17 @@ var core_1 = require('@angular/core');
 var router_1 = require('nativescript-angular/router');
 var page_1 = require('ui/page');
 var services_1 = require('../services');
-var shared_1 = require('../shared');
 var LoginComponent = (function () {
-    function LoginComponent(_usersService, _routerExtensions, page) {
+    function LoginComponent(_usersService, _routerExtensions, _page) {
         this._usersService = _usersService;
         this._routerExtensions = _routerExtensions;
-        this.page = page;
-        this.user = new shared_1.User();
+        this._page = _page;
         this.isSignupView = false;
-        this.user.username = 'georgip';
-        this.user.password = 'qweqwe';
+        this.user = {};
     }
     LoginComponent.prototype.ngOnInit = function () {
-        this.page.actionBarHidden = true;
-        this.page.backgroundImage = 'res://bg_login';
+        this._page.actionBarHidden = true;
+        this._page.backgroundImage = 'res://bg_login';
     };
     LoginComponent.prototype.changeView = function (signupView) {
         this.user.username = '';
@@ -28,7 +25,7 @@ var LoginComponent = (function () {
         this._usersService.login(this.user.username, this.user.password)
             .then(function () {
             console.log('LOGGED IN');
-            _this._routerExtensions.navigate(['/upcoming-events']);
+            _this._routerExtensions.navigate(['upcoming-events']);
         })
             .catch(function (e) {
             console.error(e.message);
@@ -36,6 +33,9 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.signup = function () {
         var _this = this;
+        if (this.user.password !== this.user.confirmPassword) {
+            return console.error('Both passwords do not match');
+        }
         this._usersService.register(this.user.username, this.user.password)
             .then(function (res) {
             _this.changeView(false);
