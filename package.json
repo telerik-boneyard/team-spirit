@@ -1,4 +1,6 @@
 {
+  "name": "teamup",
+  "version": "0.0.1",
   "description": "NativeScript Application",
   "license": "SEE LICENSE IN <your-license-filename>",
   "readme": "NativeScript Application",
@@ -20,7 +22,8 @@
     "@angular/router": "3.1.0",
     "nativescript-angular": "1.1.0",
     "reflect-metadata": "~0.1.8",
-    "tns-core-modules": "2.3.0"
+    "tns-core-modules": "2.3.0",
+    "everlive-sdk": "C:\\Work\\everlive-js-sdk"
   },
   "devDependencies": {
     "babel-traverse": "6.18.0",
