@@ -1,6 +1,6 @@
 <StackLayout>
     <StackLayout *ngIf="event">
-        <Image *ngIf="event.Image" src="{{event.ImageUrl}}"></Image>
+        <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
         <Label [text]="getRating()"></Label>
         
         <Button [text]="getRegisterBtnText()" (tap)="register()" [disabled]="alreadyRegistered"></Button>

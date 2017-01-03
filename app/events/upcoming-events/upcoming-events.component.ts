@@ -4,6 +4,7 @@ import { Page } from 'ui/page';
 
 import { EventsService } from '../../services';
 import { Event } from '../../shared/models';
+import { utilities } from '../../shared';
 
 @Component({
     selector: 'upcoming-events',
@@ -26,7 +27,6 @@ export class UpcomingEventsComponent implements OnInit {
         this._eventsService.getUpcoming()
             .then(events => {
                 this.events = events;
-                // this.handleError(events);
             }, this.handleError);
     }
 
@@ -38,6 +38,10 @@ export class UpcomingEventsComponent implements OnInit {
         }
 
         return date;
+    }
+
+    getResizedImageUrl(rawUrl: string): string {
+        return utilities.getAsResizeUrl(rawUrl);
     }
 
     getRemainingTime(event: Event) {

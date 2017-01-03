@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Data';
-import { Query } from '../../node_modules/everlive-sdk/dist/declarations/everlive/query/Query';
 
 import { EverliveProvider } from './everlive-provider.service';
 import { EventRegistration } from '../shared/models';
@@ -22,7 +21,7 @@ export class EventRegistrationsService {
     };
     
     constructor(private _elProvider: EverliveProvider) {
-        this._data = this._elProvider.get.data('EventRegistrations');
+        this._data = this._elProvider.get.data<EventRegistration>('EventRegistrations');
     }
 
     getParticipants(eventId: string): any {

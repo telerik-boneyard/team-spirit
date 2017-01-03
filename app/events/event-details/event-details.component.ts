@@ -4,10 +4,12 @@ import * as utils from 'utils/utils';
 
 import { EventsService, UsersService } from '../../services';
 import { Event, User } from '../../shared/models';
+import { utilities } from '../../shared';
 
 @Component({
     selector: 'event-details',
-    templateUrl: 'events/event-details/event-details.template.html'
+    templateUrl: 'events/event-details/event-details.template.html',
+    styleUrls: [ 'events/event-details/event-details.component.css' ]
 })
 export class EventDetailsComponent implements OnInit {
     event: Event;
@@ -35,9 +37,16 @@ export class EventDetailsComponent implements OnInit {
                 })
                 .then(currentUser => {
                     this.alreadyRegistered = this.registeredUsers.filter(u => u.Id === currentUser.Id).length > 0;
+                })
+                .catch(e => {
+                    alert('An error occured: ' + JSON.stringify(e));
                 });
         });
 
+    }
+
+    getResizedImageUrl(rawUrl: string): string {
+        return utilities.getAsResizeUrl(rawUrl);
     }
 
     getRegisterBtnText() {
@@ -49,6 +58,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     getRating() {
+        // TODO
         return `Rating: 4.98 out of 5`;
     }
 

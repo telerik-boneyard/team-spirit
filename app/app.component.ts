@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { EverliveProvider, UsersService, EventsService, EventRegistrationsService } from './services';
 import { RouterExtensions } from 'nativescript-angular/router'
-import { Observable } from 'rxjs/Observable';
 import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular'
 
 @Component({

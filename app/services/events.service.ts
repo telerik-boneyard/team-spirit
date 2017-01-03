@@ -21,16 +21,17 @@ export class EventsService {
             ReturnAs: 'Organizer'
         },
         Image: {
-            'ReturnAs': 'ImageUrl',
-            'SingleField': 'Uri'
+            ReturnAs: 'ImageUrl',
+            SingleField: 'Uri'
         }
     };
     
     constructor(
         private _elProvider: EverliveProvider,
         private _registrationsService: EventRegistrationsService,
-        private _usersService: UsersService) {
-            this._data = this._elProvider.get.data('Events');
+        private _usersService: UsersService
+    ) {
+        this._data = this._elProvider.get.data<Event>('Events');
     }
 
     getAll() {
@@ -38,7 +39,9 @@ export class EventsService {
     }
 
     getById(eventId: string) {
-        return this._data.expand(this._eventExpandExpression).getById(eventId).then(r => r.result);
+        return this._data.expand(this._eventExpandExpression)
+            .getById(eventId)
+            .then(r => r.result);
     }
 
     getUpcoming() {

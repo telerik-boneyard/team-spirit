@@ -6,7 +6,7 @@
   "nativescript": {
     "id": "org.nativescript.teamspirit",
     "tns-android": {
-      "version": "2.3.0"
+      "version": "2.4.1"
     }
   },
   "dependencies": {
@@ -21,7 +21,8 @@
     "nativescript-angular": "1.1.0",
     "nativescript-telerik-ui": "^1.4.1",
     "reflect-metadata": "~0.1.8",
-    "tns-core-modules": "2.3.0"
+    "tns-core-modules": "2.4.4",
+    "rxjs": "5.0.2"
   },
   "devDependencies": {
     "babel-traverse": "6.18.0",

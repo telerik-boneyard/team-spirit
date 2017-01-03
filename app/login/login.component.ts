@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router'
 import { Page } from 'ui/page'
 import { UsersService } from '../services'
-import { User } from '../shared'
 
 @Component({
     selector: 'login',
@@ -35,11 +34,11 @@ export class LoginComponent implements OnInit {
     login() {
         this._usersService.login(this.user.username, this.user.password)
             .then(() => {
-                console.log('LOGGED IN')
+                console.log('LOGGED IN');
                 this._routerExtensions.navigate(['events/upcoming']);
             })
             .catch((e: Error) => {
-                console.error(e.message)
+                console.error(e.message);
             });
     }
 

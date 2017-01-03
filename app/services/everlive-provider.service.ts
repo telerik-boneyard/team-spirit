@@ -1,6 +1,6 @@
-import Everlive from 'everlive-sdk'
-import { Injectable } from '@angular/core'
-import { constants } from '../shared'
+import Everlive from 'everlive-sdk';
+import { Injectable } from '@angular/core';
+import { constants } from '../shared';
 
 @Injectable()
 export class EverliveProvider {
