@@ -45,14 +45,22 @@ export class EventsService {
     }
 
     getUpcoming() {
-        let query = this._elProvider.getNewQuery();
-        query.where({
+        let filter = {
             $or: [
                 { EventDate: { $gte: new Date().toISOString() } },
                 { EventDate: { $exists: false } }
             ]
-        });
-        return this._getWithFilter(query);
+        };
+        return this._getWithFilter(filter);
+    }
+
+    getPast() {
+        let filter = {
+            $or: [
+                { EventDate: { $lt: new Date().toISOString() } }
+            ]
+        };
+        return this._getWithFilter(filter);
     }
 
     getParticipants(eventId: string) {
@@ -72,7 +80,10 @@ export class EventsService {
             // });
     }
 
-    private _getWithFilter(query: Query, expand = true) {
+    private _getWithFilter(filter: any, expand = true) {
+        let query = this._elProvider.getNewQuery();
+        query.where(filter);
+
         if (expand) {
             query.expand(this._eventExpandExpression);
         }
