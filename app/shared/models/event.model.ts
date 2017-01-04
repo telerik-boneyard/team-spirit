@@ -5,6 +5,7 @@ export class Event extends ItemModel {
     EventDate?: string;
     EventDateChoices?: string[];
     LocationURL: string;
+    LocationName: string;
     Image?: string;
     ImageUrl?: string;
 }

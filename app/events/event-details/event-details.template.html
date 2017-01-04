@@ -20,7 +20,7 @@
         <StackLayout orientation="horizontal">
             <StackLayout>
                 <Label [text]="'LOCATION'"></Label>
-                <Label [text]="event.Location"></Label>
+                <Label [text]="event.LocationName"></Label>
             </StackLayout>
             <Image style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
         </StackLayout>
@@ -46,7 +46,7 @@
             <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
         </StackLayout>
 
-        <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event yet.'"></Label>
+        <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
     </StackLayout>
 
     <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
