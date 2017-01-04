@@ -7,9 +7,9 @@ export class User extends ItemModel {
         public Username: string,
         public DisplayName: string,
         public Email: string,
-        public ProfilePicture: string
+        public ImageUrl: string
     ) {
         super();
-        this.ProfilePicture = ProfilePicture || constants.emptyImage;
+        this.ImageUrl = ImageUrl || constants.emptyImage;
     }
 }

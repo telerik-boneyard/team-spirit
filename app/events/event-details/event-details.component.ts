@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
 
 import { EventsService, UsersService } from '../../services';
 import { Event, User } from '../../shared/models';
 import { utilities } from '../../shared';
+import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 
 @Component({
     selector: 'event-details',
@@ -13,15 +15,20 @@ import { utilities } from '../../shared';
 })
 export class EventDetailsComponent implements OnInit {
     event: Event;
-    dateFormat = 'MMM dd, yyyy, hh:mm a';
+    dateFormat = utilities.dateFormat;
     registeredUsers: User[] = [];
     remainingUsersCount: number = 0;
     alreadyRegistered = false;
 
+    private _currentUser: User;
+
     constructor(
         private _route: ActivatedRoute,
         private _eventsService: EventsService,
-        private _usersService: UsersService) { }
+        private _usersService: UsersService,
+        private _modalService: ModalDialogService,
+        private _vcRef: ViewContainerRef
+    ) { }
 
     ngOnInit() {
         this._route.params.subscribe(p => {
@@ -30,12 +37,13 @@ export class EventDetailsComponent implements OnInit {
                     this.event = event;
                     return this._eventsService.getParticipants(this.event.Id);
                 })
-                .then((participants: User[]) => {
+                .then((participants) => {
                     this.registeredUsers = participants;
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                     return this._usersService.currentUser();
                 })
                 .then(currentUser => {
+                    this._currentUser = currentUser;
                     this.alreadyRegistered = this.registeredUsers.filter(u => u.Id === currentUser.Id).length > 0;
                 })
                 .catch(e => {
@@ -69,12 +77,59 @@ export class EventDetailsComponent implements OnInit {
     }
 
     register() {
-        if (!this.alreadyRegistered) {
-            this._eventsService.registerForEvent(this.event.Id);
+        if (this.alreadyRegistered) {
+            return;
         }
+
+        let registrationPromise: Promise<any>;
+
+        if (this.event.EventDate) {
+            registrationPromise = this._eventsService.registerForEvent(this.event.Id, [0]);
+        } else {
+            registrationPromise = this._openPopupAndRegister();
+        }
+            
+        registrationPromise.then((didRegister) => {
+            if (didRegister) { // would be false if user closed modal
+                this.alreadyRegistered = true;
+                this._usersService.getById(this._currentUser.Id, {
+                    Image: {
+                        ReturnAs: 'ImageUrl',
+                        SingleField: 'Uri'
+                    }
+                })
+                .then(user => {
+                    this.registeredUsers.unshift(user);
+                });
+            }
+        })
+        .catch((err) => {
+            console.log('event registration error: ' + JSON.stringify(err));
+        });
     }
 
     showLocation() {
         utils.openUrl(this.event.LocationURL);
+    }
+
+    private _openPopupAndRegister() {
+        let opts: ModalDialogOptions = {
+            context: {
+                availableDates: this.event.EventDateChoices
+            },
+            fullscreen: true,
+            viewContainerRef: this._vcRef
+        };
+
+        return this._modalService.showModal(EventRegistrationModalComponent, opts)
+            .then((dateChoices: number[]) => {
+                if (dateChoices && dateChoices.length) {
+                    console.log('register called with: ' + JSON.stringify(dateChoices));
+                    return this._eventsService.registerForEvent(this.event.Id, dateChoices);
+                } else {
+                    console.log('Dialog closed');
+                    return Promise.resolve(false);
+                }
+            });
     }
 }

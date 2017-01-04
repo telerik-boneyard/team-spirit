@@ -15,8 +15,7 @@ export class AppComponent implements OnInit {
     constructor(
         private usersService: UsersService,
         private routerExtensions: RouterExtensions
-    ) {
-    }
+    ) { }
 
     ngOnInit() {
         this.usersService.loggedIn().subscribe(logged => {

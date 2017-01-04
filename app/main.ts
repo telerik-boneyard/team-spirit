@@ -8,7 +8,7 @@ import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angula
 import { AppComponent } from "./app.component";
 import { LoginComponent } from './login/login.component'
 import { UserDetailsComponent } from './user-details/user-details.component';
-import { UpcomingEventsComponent, EventDetailsComponent } from './events';
+import { UpcomingEventsComponent, EventDetailsComponent, EventRegistrationModalComponent } from './events';
 
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
@@ -25,7 +25,11 @@ const routes = [
         LoginComponent,
         UserDetailsComponent,
         UpcomingEventsComponent,
-        EventDetailsComponent
+        EventDetailsComponent,
+        EventRegistrationModalComponent
+    ],
+    entryComponents: [
+        EventRegistrationModalComponent
     ],
     bootstrap: [AppComponent],
     imports: [

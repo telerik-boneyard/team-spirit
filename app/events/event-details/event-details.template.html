@@ -3,7 +3,7 @@
         <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
         <Label [text]="getRating()"></Label>
         
-        <Button [text]="getRegisterBtnText()" (tap)="register()" [disabled]="alreadyRegistered"></Button>
+        <Button [text]="getRegisterBtnText()" (tap)="register()"></Button>
 
         <StackLayout orientation="horizontal">
             <StackLayout style="width: 130"> <!-- remove inline style -->
@@ -36,7 +36,7 @@
         <ListView *ngIf="registeredUsers.length > 0" [items]="registeredUsers.slice(0, 3)">
             <template let-item="item">
                 <StackLayout orientation="horizontal">
-                    <Image *ngIf="item.Image" style="width: 15; height: 15" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
+                    <Image *ngIf="item.ImageUrl" style="width: 15; height: 15; display: inline-block;" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
                 </StackLayout>
             </template>
         </ListView>

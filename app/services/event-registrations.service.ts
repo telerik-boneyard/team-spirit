@@ -7,7 +7,7 @@ import { EventRegistration } from '../shared/models';
 @Injectable()
 export class EventRegistrationsService {
     private _data: Data<EventRegistration>;
-    private expandExp = {
+    private readonly expandExp = {
         UserId: {
             TargetTypeName: 'Users',
             ReturnAs: 'User',
@@ -24,7 +24,7 @@ export class EventRegistrationsService {
         this._data = this._elProvider.get.data<EventRegistration>('EventRegistrations');
     }
 
-    getParticipants(eventId: string): any {
+    getParticipants(eventId: string) {
         let query: any = this._elProvider.getNewQuery();
         query.where().eq('EventId', eventId);
         query.expand(this.expandExp);
@@ -32,14 +32,13 @@ export class EventRegistrationsService {
         return this._data.get(query).then(r => r.result.map(r => r.User));
     }
 
-    create(eventId: string, userId: string) {
-        let params = {
-            queryStringParams: {
-                eventId,
-                userId,
-                userChoices: [0]
-            }
+    create(eventId: string, userId: string, dateChoices: number[]) {
+        let queryStringParams = {
+            eventId,
+            userId,
+            userChoices: JSON.stringify(dateChoices)
         };
-        return this._elProvider.get.businessLogic.invokeCloudFunction('registerForEvent', params, null, null);
+        
+        return this._elProvider.get.businessLogic.invokeCloudFunction('registerForEvent', { queryStringParams });
     }
 }

@@ -59,17 +59,17 @@ export class EventsService {
         return this._registrationsService.getParticipants(eventId);
     }
 
-    registerForEvent(eventId: string) {
-        this._usersService.currentUser()
+    registerForEvent(eventId: string, dateChoices: number[]) {
+        return this._usersService.currentUser()
             .then(u => {
-                return this._registrationsService.create(eventId, u.Id);
-            })
-            .then(resp => {
-                console.log('====== ' + JSON.stringify(resp));
-                return resp;
-            }, err => {
-                console.log('------ ' + JSON.stringify(err));
+                return this._registrationsService.create(eventId, u.Id, dateChoices);
             });
+            // .then(resp => {
+            //     console.log('====== ' + JSON.stringify(resp));
+            //     return resp;
+            // }, err => {
+            //     console.log('------ ' + JSON.stringify(err));
+            // });
     }
 
     private _getWithFilter(query: Query, expand = true) {

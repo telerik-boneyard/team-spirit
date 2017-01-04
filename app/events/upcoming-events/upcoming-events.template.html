@@ -1,6 +1,6 @@
 <StackLayout>
     <StackLayout *ngIf="events.length" class="main-container">
-        <ListView [items]="events" (itemTap)="showDetails($event)" class="list-events">
+        <ListView [items]="events" (itemTap)="showDetails($event)" class="list-events"  separatorColor="gray">
             <template let-event="item">
                 <StackLayout>
                     <Label [text]="event.Name" class="event-name"></Label>
