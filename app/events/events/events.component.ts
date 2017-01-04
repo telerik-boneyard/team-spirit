@@ -7,11 +7,11 @@ import { Event } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
-    selector: 'upcoming-events',
-    templateUrl: 'events/upcoming-events/upcoming-events.template.html',
-    styleUrls: ['events/upcoming-events/upcoming-events.component.css']
+    selector: 'events',
+    templateUrl: 'events/events/events.template.html',
+    styleUrls: ['events/events/events.component.css']
 })
-export class UpcomingEventsComponent implements OnInit {
+export class EventsComponent implements OnInit {
     upcomingEvents: Promise<Event[]>;
     pastEvents: Promise<Event[]>;
     dateFormat = 'MMM dd, yyyy, hh:mm a';

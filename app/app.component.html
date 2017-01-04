@@ -1,16 +1,10 @@
 <RadSideDrawer exampleTitle toggleNavButton #drawer>
     <StackLayout tkDrawerContent>
-        <StackLayout class="sideTitleStackLayout">
-            <Label text="Navigation Menu"></Label>
-        </StackLayout>
         <StackLayout class="sideStackLayout">
-            <Button text="Events" [nsRouterLink]="['events/upcoming']" (tap)="closeDrawer()"></Button>
-            <Button text="History" (tap)="closeDrawer()"></Button>
+            <Button text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
             <Button text="Groups" (tap)="closeDrawer()"></Button>
-
-            <Button text="Profile" [nsRouterLink]="['user-details']" (tap)="closeDrawer()"></Button>
-            <Button text="Settings" (tap)="closeDrawer()"></Button>
-            <Button text="Logout" (tap)="logout()" (tap)="closeDrawer()"></Button>
+            <Button text="My Profile" [nsRouterLink]="['user-details']" (tap)="closeDrawer()"></Button>
+            <Button text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
         </StackLayout>
     </StackLayout>
     <StackLayout tkMainContent>
