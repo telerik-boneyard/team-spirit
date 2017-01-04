@@ -78,12 +78,10 @@ export class EventsService {
             .then(u => {
                 return this._registrationsService.create(eventId, u.Id, dateChoices);
             });
-            // .then(resp => {
-            //     console.log('====== ' + JSON.stringify(resp));
-            //     return resp;
-            // }, err => {
-            //     console.log('------ ' + JSON.stringify(err));
-            // });
+    }
+
+    isPastEvent(event: Event): boolean {
+        return event.EventDate && new Date(event.EventDate) < new Date();
     }
 
     private _getWithFilter(filter: any, expand = true) {

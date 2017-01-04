@@ -19,6 +19,7 @@ export class EventDetailsComponent implements OnInit {
     registeredUsers: User[] = [];
     remainingUsersCount: number = 0;
     alreadyRegistered = false;
+    isPastEvent = false;
 
     private _currentUser: User;
 
@@ -35,6 +36,7 @@ export class EventDetailsComponent implements OnInit {
             this._eventsService.getById(p['id'])
                 .then((event) => {
                     this.event = event;
+                    this.isPastEvent = this._eventsService.isPastEvent(this.event);
                     return this._eventsService.getParticipants(this.event.Id);
                 })
                 .then((participants) => {
@@ -50,7 +52,6 @@ export class EventDetailsComponent implements OnInit {
                     alert('An error occured: ' + JSON.stringify(e));
                 });
         });
-
     }
 
     getResizedImageUrl(rawUrl: string): string {
