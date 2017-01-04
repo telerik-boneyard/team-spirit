@@ -9,6 +9,7 @@
             <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
             <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
             <StackLayout orientation="horizontal" class="event-organiser">
+                <Image *ngIf="event.Organizer.ImageUrl" src="{{event.Organizer.ImageUrl}}" style="width: 15; height: 15;"></Image> <!-- remove inline style -->
                 <Label [text]="event.Organizer.DisplayName + ' | '"></Label>
                 <Label [text]="event.Group"></Label>
             </StackLayout>

@@ -18,7 +18,13 @@ export class EventsService {
         },
         OrganizerId: {
             TargetTypeName: 'Users',
-            ReturnAs: 'Organizer'
+            ReturnAs: 'Organizer',
+            Expand: {
+                Image: {
+                    ReturnAs: 'ImageUrl',
+                    SingleField: 'Uri'
+                }
+            }
         },
         Image: {
             ReturnAs: 'ImageUrl',
