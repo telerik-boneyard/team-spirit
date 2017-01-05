@@ -1,0 +1,35 @@
+<StackLayout>
+    <TextField hint="Name" [(ngModel)]="event.Name" returnKeyType="next"></TextField>
+    <TextField hint="Location Name" [(ngModel)]="event.LocationName" returnKeyType="next"></TextField>
+    <TextField hint="Location URL" [(ngModel)]="event.LocationURL" keyboardType="url" returnKeyType="next"></TextField>
+    <TextView hint="Description" [(ngModel)]="event.Description" [editable]="true" returnKeyType="next"></TextView>
+    
+    <StackLayout>
+        <Label text="Groups you are a member of:"></Label>
+        <ListView [items]="userGroups">
+            <template let-group="item">
+                <Label [text]="group.Name" (tap)="selectGroup(group)" class="group" [ngClass]="{ 'active': group._selected }"></Label>
+            </template>
+        </ListView>
+    </StackLayout>
+
+    <StackLayout orientation="horizontal" (tap)="toggleOpenForRegistration()">
+        <Switch [(ngModel)]="event.OpenForRegistration"></Switch>
+        <Label text="Open for Registration"></Label>
+    </StackLayout>
+
+    <StackLayout>
+        <Label text="Date options:"></Label>
+        <ListView [items]="dateOptions" class="list-events">
+            <template let-date="item" let-ind="index">
+                <Label class="date-item" [text]="date | date:dateFormat" (tap)="removeDateOption(ind)"></Label>
+            </template>
+        </ListView>
+    </StackLayout>
+    
+    <StackLayout orientation="horizontal">
+        <DatePicker style="width: 200" #datePicker (loaded)="configureDatePicker(datePicker)" [(ngModel)]="newEventDate" verticalAlignment="center"></DatePicker>
+        <TimePicker #timePicker></TimePicker>
+    </StackLayout>
+    <Button text="Add date option" (tap)="onAddDateOption(datePicker, timePicker)"></Button>
+</StackLayout>

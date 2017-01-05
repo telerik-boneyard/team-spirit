@@ -1,0 +1,10 @@
+<StackLayout>
+    <!--<ActionBarExtension>
+        <ActionItem>
+            <Label text="Create Event"></Label>
+        </ActionItem>
+    </ActionBarExtension>-->
+    <editable-event [event]="newEvent"></editable-event>
+    <Button text="Create" (tap)="onCreate()" class="button-action"></Button>
+    <Button text="Cancel" (tap)="onCancel()" class="button-action"></Button>
+</StackLayout>

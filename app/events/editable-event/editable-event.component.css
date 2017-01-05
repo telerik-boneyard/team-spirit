@@ -1,0 +1,16 @@
+TextField, TextView {
+    /*border-width: 1;*/
+    margin: 0;
+}
+
+.date-item {
+    font-size: 12;
+}
+
+DatePicker, TimePicker {
+    height: 150;
+}
+
+.group.active {
+    color: red;
+}

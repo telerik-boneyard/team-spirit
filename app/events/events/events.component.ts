@@ -23,7 +23,7 @@ export class EventsComponent implements OnInit {
     ) { }
 
     onAdd() {
-        console.log('add called');
+        this._routerExtensions.navigate(['/events/add']);
     }
 
     ngOnInit() {
@@ -33,9 +33,7 @@ export class EventsComponent implements OnInit {
     }
 
     showDetails(event: Event) { // UPDATED - remove this comment when this works
-        this._routerExtensions.navigate(['/events/:id', {
-            id: event.Id
-        }]);
+        this._routerExtensions.navigate([`/events/${event.Id}`]);
     }
 
     handleError(error) {

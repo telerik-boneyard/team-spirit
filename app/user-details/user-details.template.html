@@ -1,19 +1,21 @@
-<Button text="<" [nsRouterLink]="['/events']" clearHistory="true"></Button>
-<StackLayout *ngIf="user">
-    <Image style="height: 200" src="{{user.ImageUrl}}"></Image>
-    <StackLayout orientation="horizontal">
-        <Label text="Username:"></Label>
-        <Label text="{{user.Username}}"></Label>
-    </StackLayout>
-    <StackLayout orientation="horizontal">
-        <Label text="Display Name:"></Label>
-        <TextField [(ngModel)]="user.DisplayName"></TextField>
-    </StackLayout>
-    <StackLayout orientation="horizontal">
-        <Label text="Email:"></Label>
-        <TextField [(ngModel)]="user.Email"></TextField>
-    </StackLayout>
-    <StackLayout>
-        <Button text="Save" (tap)="save()"></Button>
+<StackLayout>
+    <Button text="<" [nsRouterLink]="['/events']" clearHistory="true"></Button>
+    <StackLayout *ngIf="user">
+        <Image style="height: 200" src="{{user.ImageUrl}}"></Image>
+        <StackLayout orientation="horizontal">
+            <Label text="Username:"></Label>
+            <Label text="{{user.Username}}"></Label>
+        </StackLayout>
+        <StackLayout orientation="horizontal">
+            <Label text="Display Name:"></Label>
+            <TextField [(ngModel)]="user.DisplayName"></TextField>
+        </StackLayout>
+        <StackLayout orientation="horizontal">
+            <Label text="Email:"></Label>
+            <TextField [(ngModel)]="user.Email" keyboardType="email"></TextField>
+        </StackLayout>
+        <StackLayout>
+            <Button text="Save" (tap)="save()"></Button>
+        </StackLayout>
     </StackLayout>
 </StackLayout>

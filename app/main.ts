@@ -13,7 +13,8 @@ import {
     EventDetailsComponent,
     EventRegistrationModalComponent,
     EventListComponent,
-    AddEventComponent
+    AddEventComponent,
+    EditableEventComponent
 } from './events';
 
 const routes = [
@@ -21,8 +22,8 @@ const routes = [
     { path: 'user-details', component: UserDetailsComponent },
     { path: 'login', component: LoginComponent },
     { path: 'events', component: EventsComponent },
-    { path: 'events/:id', component: EventDetailsComponent },
-    { path: 'events/add', component: AddEventComponent }
+    { path: 'events/add', component: AddEventComponent },
+    { path: 'events/:id', component: EventDetailsComponent }
 ];
 
 @NgModule({
@@ -35,7 +36,8 @@ const routes = [
         EventDetailsComponent,
         EventRegistrationModalComponent,
         EventListComponent,
-        AddEventComponent
+        AddEventComponent,
+        EditableEventComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent

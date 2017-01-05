@@ -5,3 +5,9 @@ export function getAsResizeUrl (rawUrl: string, opts = { width: 500, height: 275
 }
 
 export const dateFormat = 'MMM dd, yyyy, hh:mm a';
+
+export const eventMandatoryFields = [ 'OrganizerId', 'LocationName', 'Name', 'GroupId' ];
+
+export function isNonemptyString (str: any) {
+    return (typeof str === 'string') && str !== '';
+};

@@ -1,5 +1,8 @@
-import Everlive from 'everlive-sdk';
 import { Injectable } from '@angular/core';
+import Everlive from 'everlive-sdk';
+import { Item } from '../../node_modules/everlive-sdk/dist/declarations/everlive/interfaces/Item';
+
+
 import { constants } from '../shared';
 
 @Injectable()
@@ -17,6 +20,10 @@ export class EverliveProvider {
 
     get get(): Everlive {
         return this._everlive;
+    }
+
+    getData<T extends Item>(collectionName: string) {
+        return this._everlive.data<T>(collectionName);
     }
 
     getNewQuery() {

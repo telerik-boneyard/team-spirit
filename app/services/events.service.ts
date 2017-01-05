@@ -40,8 +40,12 @@ export class EventsService {
         this._data = this._elProvider.get.data<Event>('Events');
     }
 
+    create(event: Event) {
+        return this._data.create(event);
+    }
+
     getAll() {
-        return this._getWithFilter(this._elProvider.getNewQuery());
+        return this._getWithFilter({});
     }
 
     getById(eventId: string) {
@@ -66,7 +70,7 @@ export class EventsService {
                 { EventDate: { $lt: new Date().toISOString() } }
             ]
         };
-        return this._getWithFilter(filter);
+        return this._getWithFilter(filter, true, [ { field: 'EventDate' } ]);
     }
 
     getParticipants(eventId: string) {
@@ -84,9 +88,21 @@ export class EventsService {
         return event.EventDate && new Date(event.EventDate) < new Date();
     }
 
-    private _getWithFilter(filter: any, expand = true) {
+    private _getWithFilter(filter: any, expand = true, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
+
+        if (sorting) {
+            if (!Array.isArray(sorting)) {
+                sorting = [sorting];
+            }
+            sorting.forEach(sortType => {
+                let sortFunc = sortType.desc ? query.order : query.orderDesc;
+                sortFunc.call(query, sortType.field);
+            });
+        } else {
+            query.order('EventDate');
+        }
 
         if (expand) {
             query.expand(this._eventExpandExpression);

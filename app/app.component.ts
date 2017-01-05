@@ -1,12 +1,19 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { EverliveProvider, UsersService, EventsService, EventRegistrationsService } from './services';
 import { RouterExtensions } from 'nativescript-angular/router'
 import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular'
+import {
+    EverliveProvider,
+    UsersService,
+    EventsService,
+    EventRegistrationsService,
+    AlertService,
+    GroupsService
+} from './services';
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app.component.html',
-    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService]
+    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService, AlertService, GroupsService]
 })
 export class AppComponent implements OnInit {
     private loggedIn: boolean = false;
