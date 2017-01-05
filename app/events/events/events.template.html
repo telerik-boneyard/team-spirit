@@ -1,4 +1,13 @@
 <StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="Events"></Label>
+        </ActionItem>
+        <ActionItem (tap)="onAdd()"
+            ios.systemIcon="4" android.systemIcon="ic_menu_add"
+            ios.position="right">
+        </ActionItem>
+    </ActionBarExtension>
     <TabView #tabview [selectedIndex]="tabindex" sdkExampleTitle sdkToggleNavButton>
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list [events]="upcomingEvents | async" (onEventTap)="showDetails($event)"></event-list>

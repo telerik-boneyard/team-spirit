@@ -1,4 +1,4 @@
-import { Component, OnInit, NgZone, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
@@ -52,6 +52,14 @@ export class EventDetailsComponent implements OnInit {
                     alert('An error occured: ' + JSON.stringify(e));
                 });
         });
+    }
+
+    onEdit() {
+        console.log('edit clicked');
+    }
+
+    canEdit() {
+        return true;
     }
 
     getResizedImageUrl(rawUrl: string): string {

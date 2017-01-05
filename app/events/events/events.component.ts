@@ -20,7 +20,10 @@ export class EventsComponent implements OnInit {
         private _eventsService: EventsService,
         private _routerExtensions: RouterExtensions,
         private _page: Page
-    ) {
+    ) { }
+
+    onAdd() {
+        console.log('add called');
     }
 
     ngOnInit() {

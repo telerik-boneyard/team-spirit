@@ -8,14 +8,21 @@ import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angula
 import { AppComponent } from "./app.component";
 import { LoginComponent } from './login/login.component'
 import { UserDetailsComponent } from './user-details/user-details.component';
-import { EventsComponent, EventDetailsComponent, EventRegistrationModalComponent, EventListComponent } from './events';
+import { 
+    EventsComponent,
+    EventDetailsComponent,
+    EventRegistrationModalComponent,
+    EventListComponent,
+    AddEventComponent
+} from './events';
 
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
     { path: 'user-details', component: UserDetailsComponent },
     { path: 'login', component: LoginComponent },
     { path: 'events', component: EventsComponent },
-    { path: 'events/:id', component: EventDetailsComponent }
+    { path: 'events/:id', component: EventDetailsComponent },
+    { path: 'events/add', component: AddEventComponent }
 ];
 
 @NgModule({
@@ -27,7 +34,8 @@ const routes = [
         EventsComponent,
         EventDetailsComponent,
         EventRegistrationModalComponent,
-        EventListComponent
+        EventListComponent,
+        AddEventComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent

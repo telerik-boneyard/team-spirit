@@ -1,4 +1,13 @@
 <StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="event && event.Name"></Label>
+        </ActionItem>
+        <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
+            ios.systemIcon="2" android.systemIcon="ic_menu_edit"
+            ios.position="right">
+        </ActionItem>
+    </ActionBarExtension>
     <StackLayout *ngIf="event">
         <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
         <Label [text]="getRating()"></Label>

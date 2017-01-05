@@ -31,6 +31,18 @@ export class AppComponent implements OnInit {
         this.drawer.sideDrawer.closeDrawer();
     }
 
+    openDrawer() {
+        this.drawer.sideDrawer.showDrawer();
+    }
+
+    toggleDrawer() {
+        if (this.drawer.sideDrawer.getIsOpen()) {
+            this.closeDrawer();
+        } else {
+            this.openDrawer();
+        }
+    }
+
     logout() {
         this.usersService.logout();
         this.loggedIn = false;

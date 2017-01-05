@@ -19,7 +19,6 @@ export class EventRegistrationModalComponent {
                 isSelected: false
             };
         });
-        console.log('date choices: ' + JSON.stringify(this.availableDates));
     }
     
     closeModal(isCancelling) {
