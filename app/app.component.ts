@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
-import { RouterExtensions } from 'nativescript-angular/router'
-import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular'
+import { RouterExtensions } from 'nativescript-angular/router';
+import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular';
 import * as application from 'application';
 
 import {

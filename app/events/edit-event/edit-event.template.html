@@ -1,0 +1,10 @@
+<StackLayout>
+    <ActionBarExtension>
+        <ActionItem
+            ios.systemIcon="3"
+            android.systemIcon="ic_menu_save"
+            (tap)="save()">
+        </ActionItem>
+    </ActionBarExtension>
+    <editable-event *ngIf="event" [event]="event"></editable-event>
+</StackLayout>

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
-// import { ActivatedRoute } from '@angular/router';
-// import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
-// import * as utils from 'utils/utils';
 
 import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
 import { Event } from '../../shared/models';
-// import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 
 @Component({
     selector: 'add-event',

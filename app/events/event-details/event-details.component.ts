@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
 
@@ -28,7 +29,8 @@ export class EventDetailsComponent implements OnInit {
         private _eventsService: EventsService,
         private _usersService: UsersService,
         private _modalService: ModalDialogService,
-        private _vcRef: ViewContainerRef
+        private _vcRef: ViewContainerRef,
+        private _routerExtensions: RouterExtensions
     ) { }
 
     ngOnInit() {
@@ -55,7 +57,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        console.log('edit clicked');
+        this._routerExtensions.navigate([`/events/edit/${this.event.Id}`]);
     }
 
     canEdit() {

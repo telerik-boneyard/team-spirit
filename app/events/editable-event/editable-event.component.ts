@@ -1,14 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { DatePicker } from "ui/date-picker";
 import { TimePicker } from "ui/time-picker";
-// import { ActivatedRoute } from '@angular/router';
-// import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
-// import * as utils from 'utils/utils';
 
 import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
 import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
-// import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 
 @Component({
     selector: 'editable-event',
@@ -23,6 +19,9 @@ export class EditableEventComponent implements OnInit{
     newEventDate: Date;
     dateOptions: Date[] = [];
     userGroups: Group[];
+    
+    private _isEdit: boolean = false;
+    @ViewChild('datePicker') private _datePicker: DatePicker;
 
     constructor(
         private _eventService: EventsService,
@@ -32,23 +31,20 @@ export class EditableEventComponent implements OnInit{
     ) { }
 
     ngOnInit() {
-        this.event.OpenForRegistration = true;
+        if (typeof this.event.OpenForRegistration !== 'boolean') {
+            this.event.OpenForRegistration = true;
+        }
         this._getCurrentUserGroups().then(groups => {
             this.userGroups = groups;
+            this._markSelectedGroupIfPresent(this.event, this.userGroups);
         });
+        this._handleEventDatesIfPresent(this.event);
+        this._isEdit = this.event.Id !== undefined;
+        this._configureDatePicker(this._datePicker);
     }
 
     toggleOpenForRegistration() {
         this.event.OpenForRegistration = !this.event.OpenForRegistration;
-    }
-
-    configureDatePicker(picker: DatePicker) {
-        let now = new Date();
-        let oneYear = 31536000000;
-
-        picker.date = now;
-        picker.minDate = now;
-        picker.maxDate = new Date(now.getTime() + (oneYear * 5));
     }
 
     onAddDateOption(datePicker: DatePicker, timePicker: TimePicker): void {
@@ -56,14 +52,17 @@ export class EditableEventComponent implements OnInit{
         date.setHours(timePicker.hour, timePicker.minute, 0, 0);
         if (this._isDuplicateDate(date)) {
             return this._showError('Date already added');
-        } else if (date <= new Date()) {
+        } else if (!this._isEdit && date <= new Date()) {
             return this._showError('Date is in the past');
         }
-        this._addDateOptionToEvent(date);
+        
+        let clone = new Date(date.getTime());
+        this._addDateOptionToEvent(clone);
     }
 
     removeDateOption(optIndex: number) {
         this.dateOptions.splice(optIndex, 1);
+        this._applyDateOptionsToEvent();
     }
 
     selectGroup(group: Group) {
@@ -78,15 +77,29 @@ export class EditableEventComponent implements OnInit{
     }
 
     private _addDateOptionToEvent(date: Date) {
-        let clone = new Date(date.getTime());
-        this.dateOptions.push(clone);
+        this.dateOptions.push(date);
+        this._applyDateOptionsToEvent();
+    }
 
+    private _applyDateOptionsToEvent() {
         if (this.dateOptions.length === 1) {
+            let clone = new Date(this.dateOptions[0]);
             this.event.EventDate = clone.toISOString();
             this.event.EventDateChoices = undefined;
         } else {
             this.event.EventDateChoices = this.dateOptions.map(d => d.toISOString());
             this.event.EventDate = undefined;
+        }
+    }
+
+    private _configureDatePicker(picker: DatePicker) {
+        let now = new Date();
+        let oneYear = 31536000000;
+
+        picker.date = now;
+        if (!this._isEdit) {
+            picker.minDate = now;
+            picker.maxDate = new Date(now.getTime() + (oneYear * 5));
         }
     }
 
@@ -99,5 +112,20 @@ export class EditableEventComponent implements OnInit{
             .then(user => {
                 return this._groupsService.getGroupsByUserId(user.Id);
             });
+    }
+
+    private _handleEventDatesIfPresent(event: Event) {
+        if (event.EventDate) {
+            this.dateOptions = [new Date(event.EventDate)];
+        } else if (event.EventDateChoices) {
+            this.dateOptions = event.EventDateChoices.map(d => new Date(d));
+        }
+    }
+
+    private _markSelectedGroupIfPresent(event: Event, userGroups: Group[]) {
+        let evGroup = userGroups.filter(g => g.Id === event.GroupId)[0];
+        if (evGroup) {
+            this.selectGroup(evGroup);
+        }
     }
 }

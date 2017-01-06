@@ -28,7 +28,7 @@
     </StackLayout>
     
     <StackLayout orientation="horizontal">
-        <DatePicker style="width: 200" #datePicker (loaded)="configureDatePicker(datePicker)" [(ngModel)]="newEventDate" verticalAlignment="center"></DatePicker>
+        <DatePicker style="width: 200" #datePicker [(ngModel)]="newEventDate" verticalAlignment="center"></DatePicker>
         <TimePicker #timePicker></TimePicker>
     </StackLayout>
     <Button text="Add date option" (tap)="onAddDateOption(datePicker, timePicker)"></Button>
