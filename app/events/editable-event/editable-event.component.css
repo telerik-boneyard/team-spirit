@@ -8,7 +8,7 @@ TextField, TextView {
 }
 
 DatePicker, TimePicker {
-    height: 150;
+    height: 100;
 }
 
 .group.active {

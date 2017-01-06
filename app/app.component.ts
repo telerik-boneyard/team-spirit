@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { RouterExtensions } from 'nativescript-angular/router'
 import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular'
+import * as application from 'application';
+
 import {
     EverliveProvider,
     UsersService,
@@ -31,6 +33,13 @@ export class AppComponent implements OnInit {
             }
 
             this.loggedIn = logged;
+        });
+
+        application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {
+            if (this.routerExtensions.canGoBack()) {
+                args.cancel = true;
+                this.routerExtensions.back();
+            }
         });
     }
 

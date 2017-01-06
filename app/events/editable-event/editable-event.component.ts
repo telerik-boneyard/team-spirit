@@ -67,7 +67,6 @@ export class EditableEventComponent implements OnInit{
     }
 
     selectGroup(group: Group) {
-        console.log('selected group: ' + JSON.stringify(group.Name));
         this.event.GroupId = group.Id;
         this.userGroups.forEach((g: any) => g._selected = g.Id === group.Id);
     }

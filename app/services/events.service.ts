@@ -6,6 +6,7 @@ import { EverliveProvider } from './everlive-provider.service';
 import { EventRegistrationsService } from './event-registrations.service';
 import { UsersService } from './users.service';
 import { Event } from '../shared/models';
+import { utilities } from '../shared';
 
 @Injectable()
 export class EventsService {
@@ -86,6 +87,19 @@ export class EventsService {
 
     isPastEvent(event: Event): boolean {
         return event.EventDate && new Date(event.EventDate) < new Date();
+    }
+
+    validateEvent(event: Event): string {
+        let errorMsg: string;
+
+        for (let fieldName of utilities.eventMandatoryFields) {
+            if (!utilities.isNonemptyString(event[fieldName])) {
+                errorMsg = `The field ${fieldName} is invalid`;
+                break;
+            }
+        }
+        
+        return errorMsg;
     }
 
     private _getWithFilter(filter: any, expand = true, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {

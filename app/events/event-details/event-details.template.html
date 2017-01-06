@@ -31,7 +31,7 @@
                 <Label [text]="'LOCATION'"></Label>
                 <Label [text]="event.LocationName"></Label>
             </StackLayout>
-            <Image style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
+            <Image *ngIf="event.LocationURL" style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
         </StackLayout>
 
         <Label [text]="'GROUP'"></Label>
