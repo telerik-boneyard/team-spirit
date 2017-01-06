@@ -16,7 +16,7 @@ export class AddEventComponent {
         private _eventService: EventsService,
         private _alertService: AlertService,
         private _usersService: UsersService,
-        private _router: RouterExtensions
+        private _routerExtensions: RouterExtensions
     ) {
         this.newEvent = new Event();
     }
@@ -35,12 +35,12 @@ export class AddEventComponent {
                 return this._eventService.create(this.newEvent);
             })
             .then((res) => {
-                this._router.navigate(['/events']);
+                this._routerExtensions.navigate(['/events']);
             })
             .catch(err => this._alertService.showError(err.message));
     }
 
-    onCancel() {
-        this._router.back();
-    }
+    // onCancel() {
+    //     this._routerExtensions.back();
+    // }
 }

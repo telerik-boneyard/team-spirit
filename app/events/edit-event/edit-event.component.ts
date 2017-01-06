@@ -25,11 +25,34 @@ export class EditEventComponent implements OnInit {
             this._eventsService.getById(p['id'])
                 .then((event: Event) => {
                     this.event = event;
+                }, (err) => {
+                    this._alertsService.showError(err.message);
                 });
         });
     }
 
     save() {
+        this._alertsService.askConfirmation('Save all changes?')
+            .then(() => {
+                return this._validateAndUpdate();
+            }, () => {
+                console.log('cancelled update');
+            });
+    }
+
+    delete() {
+        this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
+            .then(() => {
+                return this._eventsService.deleteById(this.event.Id);
+            })
+            .then(() => {
+                this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`);
+            }, (err) => {
+                this._alertsService.showError(err.message);
+            });
+    }
+
+    private _validateAndUpdate() {
         let validationErr = this._eventsService.validateEvent(this.event);
         if (validationErr) {
             return this._alertsService.showError(validationErr);

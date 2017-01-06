@@ -1,5 +1,13 @@
 <StackLayout>
     <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="event && event.Name"></Label>
+        </ActionItem>
+        <ActionItem
+            ios.systemIcon="16"
+            android.systemIcon="ic_menu_delete"
+            (tap)="delete()">
+        </ActionItem>
         <ActionItem
             ios.systemIcon="3"
             android.systemIcon="ic_menu_save"

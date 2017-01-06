@@ -106,6 +106,10 @@ export class EventsService {
         return this._data.updateSingle(event);
     }
 
+    deleteById(eventId: string) {
+        return this._data.destroySingle(eventId);
+    }
+
     private _getWithFilter(filter: any, expand = true, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
