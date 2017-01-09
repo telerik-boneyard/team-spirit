@@ -11,7 +11,7 @@ export class EventListComponent {
     dateFormat: string = utilities.dateFormat;
     
     @Input() events: Event[];
-    @Output() onEventTap: EventEmitter<any> = new EventEmitter();
+    @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
 
     eventTap(event: any) {
         let clickedEvent = this.events[event.index];

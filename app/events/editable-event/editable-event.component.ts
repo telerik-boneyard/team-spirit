@@ -110,7 +110,7 @@ export class EditableEventComponent implements OnInit{
     private _getCurrentUserGroups() {
         return this._usersService.currentUser()
             .then(user => {
-                return this._groupsService.getGroupsByUserId(user.Id);
+                return this._groupsService.getUserGroups(user.Id);
             });
     }
 

@@ -5,7 +5,7 @@
     <StackLayout tkDrawerContent>
         <StackLayout class="sideStackLayout">
             <Button text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
-            <Button text="Groups" (tap)="closeDrawer()"></Button>
+            <Button text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
             <Button text="My Profile" [nsRouterLink]="['user-details']" (tap)="closeDrawer()"></Button>
             <Button text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
         </StackLayout>

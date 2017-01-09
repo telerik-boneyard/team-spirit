@@ -1,0 +1,13 @@
+<StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="Groups"></Label>
+        </ActionItem>
+        <ActionItem (tap)="onAdd()"
+            ios.systemIcon="4" android.systemIcon="ic_menu_add"
+            ios.position="right">
+        </ActionItem>
+    </ActionBarExtension>
+    <group-list *ngIf="groups" [groups]="groups" (onGroupTap)="selectGroup($event)"></group-list>
+    <ActivityIndicator [busy]="!groups" [visibility]="groups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</StackLayout>

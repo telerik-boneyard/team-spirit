@@ -8,10 +8,17 @@ import { Group, GroupMembership } from '../shared/models';
 export class GroupsService {
     private _membershipsData: Data<GroupMembership>;
     private _groupsData: Data<Group>;
-    private _expandMemberships: any = {
+    private readonly _expandMemberships: any = {
         GroupId: {
             TargetTypeName: 'Groups',
             ReturnAs: 'Group'
+        }
+    };
+    private readonly _groupImageExpand: any = {
+        Image: {
+            TargetTypeName: 'Files',
+            SingleField: 'Uri',
+            ReturnAs: 'ImageUrl'
         }
     };
     
@@ -22,13 +29,14 @@ export class GroupsService {
         this._groupsData = this._elProvider.getData<Group>('Groups');
     }
 
-    getGroupsByFilter(filter: any) {
-        let query = this._elProvider.getNewQuery();
-        query.where(filter);
-        return this._groupsData.get(query);
+    getNonPrivate() {
+        let filter = {
+            IsPublic: true
+        };
+        return this._getGroupsByFilter(filter);
     }
     
-    getGroupsByUserId(userId: string) {
+    getUserGroups(userId: string) {
         let query = this._elProvider.getNewQuery();
         query.where({ UserId: userId });
         query.expand(this._expandMemberships);
@@ -36,9 +44,10 @@ export class GroupsService {
         return this._membershipsData.get(query).then(r => r.result.map(gm => gm.Group));
     }
 
-    private _getGroupsFilterByMemberships(groupMemberships: GroupMembership[]) {
-        return this.getGroupsByFilter({
-            Id: { $in: groupMemberships.map(gr => gr.GroupId) }
-        });
+    private _getGroupsByFilter(filter: any) {
+        let query = this._elProvider.getNewQuery();
+        query.where(filter);
+        query.expand(this._groupImageExpand);
+        return this._groupsData.get(query).then(res => res.result);
     }
 }
