@@ -1,0 +1,12 @@
+<StackLayout>
+    <TextField hint="Name" [(ngModel)]="group.Name" returnKeyType="next"></TextField>
+    <StackLayout orientation="horizontal">
+        <Label text="Requires Approval:"></Label>
+        <Switch [(ngModel)]="group.RequiresApproval"></Switch>
+    </StackLayout>
+    <StackLayout orientation="horizontal">
+        <Label text="Group is Public:"></Label>
+        <Switch [(ngModel)]="group.IsPublic"></Switch>
+    </StackLayout>
+    <TextView hint="Description" [(ngModel)]="group.Description" [editable]="true" returnKeyType="next"></TextView>
+</StackLayout>

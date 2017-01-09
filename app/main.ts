@@ -18,7 +18,13 @@ import {
     EditEventComponent
 } from './events';
 
-import { GroupsComponent, GroupListComponent } from './groups';
+import {
+    GroupsComponent,
+    GroupListComponent,
+    EditableGroupComponent,
+    EditGroupComponent,
+    GroupDetailsComponent
+} from './groups';
 
 const routes = [
     { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
@@ -28,7 +34,9 @@ const routes = [
     { path: 'events/add', component: AddEventComponent },
     { path: 'events/:id', component: EventDetailsComponent },
     { path: 'events/edit/:id', component: EditEventComponent },
-    { path: 'groups', component: GroupsComponent }
+    { path: 'groups', component: GroupsComponent },
+    { path: 'groups/:id', component: GroupDetailsComponent },
+    { path: 'groups/edit/:id', component: EditGroupComponent }
 ];
 
 @NgModule({
@@ -45,7 +53,10 @@ const routes = [
         EditableEventComponent,
         EditEventComponent,
         GroupsComponent,
-        GroupListComponent
+        GroupListComponent,
+        EditableGroupComponent,
+        EditGroupComponent,
+        GroupDetailsComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent

@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-// import { RouterExtensions } from 'nativescript-angular/router';
-// import { Page } from 'ui/page';
+import { RouterExtensions } from 'nativescript-angular/router';
 
 import { GroupsService, AlertService } from '../../services';
 import { Group } from '../../shared/models';
-// import { utilities } from '../../shared';
 
 @Component({
     selector: 'groups',
@@ -16,6 +14,7 @@ export class GroupsComponent implements OnInit {
 
     constructor(
         private _groupsService: GroupsService,
+        private _routerExtensions: RouterExtensions,
         private _alertService: AlertService
     ) {}
     
@@ -29,6 +28,6 @@ export class GroupsComponent implements OnInit {
     }
 
     selectGroup(group: Group) {
-        console.log('selected group: ' + JSON.stringify(group));
+        this._routerExtensions.navigate([`/groups/${group.Id}`]);
     }
 }

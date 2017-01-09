@@ -43,7 +43,7 @@ export class EventListComponent {
         let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);
 
         if (days > 0) {
-            return days + ' Days';
+            return days + ' days left';
         } else if (days < 0) {
             return Math.abs(days) + ' Days ago';
         } else {

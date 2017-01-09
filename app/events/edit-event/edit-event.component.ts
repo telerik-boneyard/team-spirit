@@ -32,12 +32,26 @@ export class EditEventComponent implements OnInit {
     }
 
     save() {
+        let validationErr = this._eventsService.validateEvent(this.event);
+        if (validationErr) {
+            return this._alertsService.showError(validationErr);
+        }
+
         this._alertsService.askConfirmation('Save all changes?')
             .then(() => {
-                return this._validateAndUpdate();
-            }, () => {
-                console.log('cancelled update');
-            });
+                return this._eventsService.update(this.event)
+            })
+            .then(() => {
+                return this._alertsService.showSuccess(`Group "${this.event.Name}" updated!`);
+            })
+            .then((res) => {
+                this._routerExtensions.navigate([`/events/${this.event.Id}`]);
+            })
+            .catch(err => {
+                if (err) {
+                    this._alertsService.showError(err.message);
+                }
+            });;
     }
 
     delete() {
@@ -46,23 +60,15 @@ export class EditEventComponent implements OnInit {
                 return this._eventsService.deleteById(this.event.Id);
             })
             .then(() => {
-                this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`);
-            }, (err) => {
-                this._alertsService.showError(err.message);
-            });
-    }
-
-    private _validateAndUpdate() {
-        let validationErr = this._eventsService.validateEvent(this.event);
-        if (validationErr) {
-            return this._alertsService.showError(validationErr);
-        }
-        this._eventsService.update(this.event)
-            .then((res) => {
-                this._routerExtensions.navigate([`/events/${this.event.Id}`]);
+                return this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`)
             })
-            .catch((err) => {
-                this._alertsService.showError(err.message);
+            .then(() => {
+                this._routerExtensions.navigate(['/events']);
+            })
+            .catch(err => {
+                if (err) {
+                    this._alertsService.showError(err.message);
+                }
             });
     }
 }

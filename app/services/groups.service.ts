@@ -3,6 +3,7 @@ import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive
 
 import { EverliveProvider } from './';
 import { Group, GroupMembership } from '../shared/models';
+import { utilities } from '../shared';
 
 @Injectable()
 export class GroupsService {
@@ -29,6 +30,10 @@ export class GroupsService {
         this._groupsData = this._elProvider.getData<Group>('Groups');
     }
 
+    getById(id: string) {
+        return this._groupsData.getById(id).then(r => r.result);
+    }
+
     getNonPrivate() {
         let filter = {
             IsPublic: true
@@ -42,6 +47,25 @@ export class GroupsService {
         query.expand(this._expandMemberships);
         
         return this._membershipsData.get(query).then(r => r.result.map(gm => gm.Group));
+    }
+
+    update(group: Group) {
+        delete (<any>group).ImageUrl; // sanitize expanded field
+        return this._groupsData.destroySingle(group).then(r => r.result);
+    }
+
+    delete(id: string) {
+        return this._groupsData.destroySingle(id).then(r => r.result);
+    }
+
+    validateGroupEntry(group: Group) {
+        let errMsg: string = null;
+
+        if (!utilities.isNonemptyString(group.Name)) {
+            errMsg = 'Group name is invalid';
+        }
+
+        return errMsg;
     }
 
     private _getGroupsByFilter(filter: any) {

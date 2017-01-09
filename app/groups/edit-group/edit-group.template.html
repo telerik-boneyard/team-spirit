@@ -1,0 +1,18 @@
+<StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="group && group.Name"></Label>
+        </ActionItem>
+        <ActionItem
+            ios.systemIcon="16"
+            android.systemIcon="ic_menu_delete"
+            (tap)="delete()">
+        </ActionItem>
+        <ActionItem
+            ios.systemIcon="3"
+            android.systemIcon="ic_menu_save"
+            (tap)="save()">
+        </ActionItem>
+    </ActionBarExtension>
+    <editable-group *ngIf="group" [group]="group"></editable-group>
+</StackLayout>
