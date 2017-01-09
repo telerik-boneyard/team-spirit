@@ -1,3 +1,28 @@
-<StackLayout>
-    <Label [text]="group && group.Name"></Label>
+<StackLayout class="ctnr">
+    <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="group && group.Name"></Label>
+        </ActionItem>
+        <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
+            ios.systemIcon="2" android.systemIcon="ic_menu_edit"
+            ios.position="right">
+        </ActionItem>
+    </ActionBarExtension>
+    <StackLayout *ngIf="group">
+        <Image *ngIf="group.ImageUrl" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
+        
+        <Label [text]="group && group.Name"></Label>
+
+        <StackLayout orientation="horizontal">
+            <Label text="Requires Approval:"></Label>
+            <Label [text]="group.RequiresApproval"></Label>
+        </StackLayout>
+
+        <StackLayout orientation="horizontal">
+            <Label text="Group is Public:"></Label>
+            <Label [text]="group.IsPublic"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 </StackLayout>

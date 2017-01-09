@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RouterExtensions } from 'nativescript-angular/router';
 
-import { GroupsService, AlertService } from '../../services';
+import { GroupsService, AlertService, EverliveProvider } from '../../services';
 import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -16,6 +17,8 @@ export class GroupDetailsComponent implements OnInit {
     constructor(
         private _activatedRoute: ActivatedRoute,
         private _alertsService: AlertService,
+        private _everliveProvider: EverliveProvider,
+        private _routerExtensions: RouterExtensions,
         private _groupsService: GroupsService
     ) {}
 
@@ -28,5 +31,17 @@ export class GroupDetailsComponent implements OnInit {
                     this._alertsService.showError(err.message);
                 });
         });
+    }
+
+    getResizedImageUrl(rawUrl: string) {
+        return utilities.getAsResizeUrl(rawUrl);
+    }
+
+    canEdit() {
+        return true;
+    }
+
+    onEdit() {
+        this._routerExtensions.navigateByUrl(`groups/edit/${this.group.Id}`);
     }
 }

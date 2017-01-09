@@ -30,7 +30,10 @@ export class GroupsService {
         this._groupsData = this._elProvider.getData<Group>('Groups');
     }
 
-    getById(id: string) {
+    getById(id: string, expand = true) {
+        if (expand) {
+            this._groupsData.expand(this._groupImageExpand);
+        }
         return this._groupsData.getById(id).then(r => r.result);
     }
 
