@@ -11,7 +11,7 @@ import { utilities } from '../shared';
 @Injectable()
 export class EventsService {
     private _data: Data<Event>;
-    private _eventExpandExpression: any = {
+    private readonly _eventExpandExpression: any = {
         GroupId: {
             TargetTypeName: 'Groups',
             SingleField: 'Name',
@@ -56,10 +56,16 @@ export class EventsService {
     }
 
     getUpcoming() {
-        let filter = {
-            $or: [
+        let registrationFilter = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
+        let dateFilter = [
                 { EventDate: { $gte: new Date().toISOString() } },
                 { EventDate: { $exists: false } }
+            ];
+            
+        let filter = {
+            $and: [
+                { $or: registrationFilter },
+                { $or: dateFilter }
             ]
         };
         return this._getWithFilter(filter);
@@ -71,7 +77,7 @@ export class EventsService {
                 { EventDate: { $lt: new Date().toISOString() } }
             ]
         };
-        return this._getWithFilter(filter, true, [ { field: 'EventDate' } ]);
+        return this._getWithFilter(filter, true, { field: 'EventDate', desc: true });
     }
 
     getParticipants(eventId: string) {
@@ -98,11 +104,16 @@ export class EventsService {
                 break;
             }
         }
+
+        if (!event.EventDate && (!event.EventDateChoices || event.EventDateChoices.length === 0)) {
+            errorMsg = 'Must specify at least one event date option.';
+        }
         
         return errorMsg;
     }
 
     update(event: Event) {
+        this._clearExpandedFields(event);
         return this._data.updateSingle(event);
     }
 
@@ -110,24 +121,27 @@ export class EventsService {
         return this._data.destroySingle(eventId);
     }
 
-    private _getWithFilter(filter: any, expand = true, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {
+    private _clearExpandedFields(event: any) {
+        delete event.Group;
+        delete event.Organizer;
+        delete event.ImageUrl;
+    }
+
+    private _getWithFilter(filter: any, expand: any = true, sorting?: { field: string, desc?: boolean }|Array<{ field: string, desc?: boolean }>) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
+        
+        sorting = sorting || [{ field: 'EventDate' }];
+        sorting = [].concat(sorting);
+        sorting.forEach(sortType => {
+            let sortFunc = sortType.desc ? query.orderDesc : query.order;
+            sortFunc.call(query, sortType.field);
+        });
 
-        if (sorting) {
-            if (!Array.isArray(sorting)) {
-                sorting = [sorting];
-            }
-            sorting.forEach(sortType => {
-                let sortFunc = sortType.desc ? query.order : query.orderDesc;
-                sortFunc.call(query, sortType.field);
-            });
-        } else {
-            query.order('EventDate');
-        }
-
-        if (expand) {
+        if (expand === true) {
             query.expand(this._eventExpandExpression);
+        } else {
+            query.expand(expand);
         }
 
         return this._data.get(query).then(r => r.result);

@@ -135,10 +135,8 @@ export class EventDetailsComponent implements OnInit {
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
             .then((dateChoices: number[]) => {
                 if (dateChoices && dateChoices.length) {
-                    console.log('register called with: ' + JSON.stringify(dateChoices));
                     return this._eventsService.registerForEvent(this.event.Id, dateChoices);
                 } else {
-                    console.log('Dialog closed');
                     return Promise.resolve(false);
                 }
             });
