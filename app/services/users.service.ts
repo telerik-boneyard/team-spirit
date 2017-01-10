@@ -3,12 +3,12 @@ import { EverliveProvider } from './everlive-provider.service';
 import { Users } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Users';
 import { User as ServerUser } from '../../node_modules/everlive-sdk/dist/declarations/everlive/interfaces/User';
 import { User } from '../shared'
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable()
 export class UsersService {
     private _users: Users;
-    private _isLoggedInSubj: Subject<boolean>;
+    private _isLoggedInSubj: BehaviorSubject<boolean>;
     private _imageExpandExp = {
         Image: {
             SingleField: 'Uri',
@@ -21,7 +21,7 @@ export class UsersService {
         private _everliveProvider: EverliveProvider
     ) {
         this._users = this._everliveProvider.get.users;
-        this._isLoggedInSubj = new Subject<boolean>();
+        this._isLoggedInSubj = new BehaviorSubject<boolean>(false);
         this.currentUser().then(u => this._isLoggedInSubj.next(!!u));
     }
 
@@ -79,6 +79,6 @@ export class UsersService {
         if (!user) {
             return null;
         }
-        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl);
+        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone);
     }
 }

@@ -7,7 +7,8 @@ export class User extends ItemModel {
         public Username: string,
         public DisplayName: string,
         public Email: string,
-        public ImageUrl: string
+        public ImageUrl: string,
+        public Phone: string
     ) {
         super();
         this.ImageUrl = ImageUrl || constants.emptyImage;

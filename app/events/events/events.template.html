@@ -3,7 +3,7 @@
         <ActionItem>
             <Label text="Events"></Label>
         </ActionItem>
-        <ActionItem (tap)="onAdd()"
+        <ActionItem (tap)="onAdd()" *ngIf="canAdd"
             ios.systemIcon="4" android.systemIcon="ic_menu_add"
             ios.position="right">
         </ActionItem>

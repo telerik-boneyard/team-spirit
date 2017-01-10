@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
-import { EventsService } from '../../services';
+import { EventsService, UsersService } from '../../services';
 import { Event } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -14,9 +14,11 @@ import { utilities } from '../../shared';
 export class EventsComponent implements OnInit {
     upcomingEvents: Promise<Event[]>;
     pastEvents: Promise<Event[]>;
-    dateFormat = 'MMM dd, yyyy, hh:mm a';
+    dateFormat: string = utilities.dateFormat;
+    canAdd: boolean = false;
 
     constructor(
+        private _usersService: UsersService,
         private _eventsService: EventsService,
         private _routerExtensions: RouterExtensions,
         private _page: Page
@@ -30,13 +32,10 @@ export class EventsComponent implements OnInit {
         this._page.actionBarHidden = false;
         this.upcomingEvents = this._eventsService.getUpcoming();
         this.pastEvents = this._eventsService.getPast();
+        this._usersService.currentUser().then(user => this.canAdd = !!user);
     }
 
     showDetails(event: Event) { // UPDATED - remove this comment when this works
         this._routerExtensions.navigate([`/events/${event.Id}`]);
-    }
-
-    handleError(error) {
-        console.log(JSON.stringify(error));
     }
 }

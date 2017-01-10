@@ -1,30 +1,51 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterExtensions } from 'nativescript-angular/router';
 
-import { User } from '../../shared';
-import { UsersService } from '../../services';
+import { User, Group } from '../../shared';
+import { utilities } from '../../shared';
+import {
+    UsersService,
+    GroupsService,
+    AlertService
+} from '../../services';
 
 @Component({
     selector: 'user-details',
-    templateUrl: 'users/user-details/user-details.template.html'
+    templateUrl: 'users/user-details/user-details.template.html',
+    styleUrls: [ 'users/user-details/user-details.component.css' ]
 })
 export class UserDetailsComponent implements OnInit {
     user: User;
+    userGroups: Group[] = [];
 
     constructor(
+        private _routerExtensions: RouterExtensions,
         private _usersService: UsersService,
+        private _alertsService: AlertService,
+        private _groupsService: GroupsService
     ) {} 
 
     ngOnInit() {
         this._usersService.currentUser()
             .then(u => this.user = u)
-            .catch(e => console.error(e.message));
+            .then(() => this._groupsService.getUserGroups(this.user.Id))
+            .then(groups => this.userGroups = groups)
+            .catch(e => this._alertsService.showError(e && e.message));
     }
 
-    save() {
-        this._usersService.updateUser(this.user);
+    onEdit() {
+        this._routerExtensions.navigateByUrl('user/edit');
     }
 
-    getResizedImageUrl(rawUrl: string) {
+    getResizedImageUrl() {
+        return utilities.getAsResizeUrl(this.user.ImageUrl, { width: 250, height: 250 });
+    }
 
+    getUserDisplayName() {
+        return this.user && (this.user.DisplayName || this.user.Username);
+    }
+
+    getRemainingGroupsText() {
+        return ` and ${this.userGroups.length - 1} more`;
     }
 }

@@ -4,6 +4,7 @@
 <RadSideDrawer exampleTitle toggleNavButton #drawer>
     <StackLayout tkDrawerContent>
         <StackLayout class="sideStackLayout">
+            <Button *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['login']" (tap)="closeDrawer()"></Button>
             <Button text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
             <Button *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
             <Button *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user-details']" (tap)="closeDrawer()"></Button>

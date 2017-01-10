@@ -35,7 +35,6 @@ export class AppComponent implements OnInit {
             }
 
             this.loggedIn = isLoggedIn;
-            console.log(`logged: ${this.loggedIn}`);
         });
 
         application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {

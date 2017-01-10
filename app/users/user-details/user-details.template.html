@@ -1,21 +1,37 @@
-<StackLayout>
-    <!--<Button text="<" [nsRouterLink]="['/events']" clearHistory="true"></Button>-->
-    <StackLayout *ngIf="user">
-        <Image src="{{user.ImageUrl}}"></Image>
-        <StackLayout orientation="horizontal">
-            <Label text="Username:"></Label>
-            <Label text="{{user.Username}}"></Label>
+<StackLayout class="cntnr">
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="My Profile"></Label>
+        </ActionItem>
+        <ActionItem (tap)="onEdit()"
+            ios.systemIcon="2" android.systemIcon="ic_menu_edit"
+            ios.position="right">
+        </ActionItem>
+    </ActionBarExtension>
+    
+    <!-- this should go inside container below,
+         just cant make the styling work right now -->
+    <Image *ngIf="user" class="user-image" src="{{getResizedImageUrl()}}"></Image>
+    
+    <StackLayout *ngIf="user" class="user-info-cnt" [style.zIndex]="-555">
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Name"></Label>
+            <Label class="user-info-value" [text]="getUserDisplayName()"></Label>
         </StackLayout>
-        <StackLayout orientation="horizontal">
-            <Label text="Display Name:"></Label>
-            <TextField [(ngModel)]="user.DisplayName"></TextField>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Phone"></Label>
+            <Label class="user-info-value" [text]="user.Phone"></Label>
         </StackLayout>
-        <StackLayout orientation="horizontal">
-            <Label text="Email:"></Label>
-            <TextField [(ngModel)]="user.Email" keyboardType="email"></TextField>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Email"></Label>
+            <Label class="user-info-value" [text]="user.Email"></Label>
         </StackLayout>
-        <StackLayout>
-            <Button text="Save" (tap)="save()"></Button>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Membership"></Label>
+            <StackLayout orientation="horizontal">
+                <Label *ngIf="userGroups.length" class="user-info-value" [text]="userGroups[0].Name"></Label>
+                <Label *ngIf="userGroups.length > 1" class="user-info-value" [text]="getRemainingGroupsText()"></Label>
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 

@@ -1,0 +1,32 @@
+.cntnr {
+    background-color: #F4550F;
+    height: 100%;
+    padding: 15%;
+}
+
+.user-image {
+    width: 125;
+    height: 125;
+    border-radius: 100%;
+    border-width: 1;
+    border-color: #fff;
+    transform: translateY(65);
+}
+
+.user-label {
+    text-transform: uppercase;
+    color: #F4550F;
+}
+
+.user-info-cnt {
+    padding: 65% 15% 0% 15%;
+    background-color: #fff;
+}
+
+.user-info-block {
+    margin: 10 0;
+}
+
+.user-info-value {
+    color: #000;
+}
