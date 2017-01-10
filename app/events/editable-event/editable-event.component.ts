@@ -85,10 +85,10 @@ export class EditableEventComponent implements OnInit{
         if (this.dateOptions.length === 1) {
             let clone = new Date(this.dateOptions[0]);
             this.event.EventDate = clone.toISOString();
-            this.event.EventDateChoices = undefined;
+            this.event.EventDateChoices = null;
         } else {
             this.event.EventDateChoices = this.dateOptions.map(d => d.toISOString());
-            this.event.EventDate = undefined;
+            this.event.EventDate = null;
         }
     }
 

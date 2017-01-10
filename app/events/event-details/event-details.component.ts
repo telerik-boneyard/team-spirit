@@ -4,7 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
 
-import { EventsService, UsersService } from '../../services';
+import { EventsService, UsersService, AlertService } from '../../services';
 import { Event, User } from '../../shared/models';
 import { utilities } from '../../shared';
 import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
@@ -26,6 +26,7 @@ export class EventDetailsComponent implements OnInit {
 
     constructor(
         private _route: ActivatedRoute,
+        private _alertsService: AlertService,
         private _eventsService: EventsService,
         private _usersService: UsersService,
         private _modalService: ModalDialogService,
@@ -35,24 +36,25 @@ export class EventDetailsComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.subscribe(p => {
-            this._eventsService.getById(p['id'])
+            let eventId = p['id'];
+            this._eventsService.getById(eventId)
                 .then((event) => {
                     this.event = event;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
-                    return this._eventsService.getParticipants(this.event.Id);
+                })
+                .catch(this._onError);
+
+            this._usersService.currentUser()
+                .then(currentUser => {
+                    this._currentUser = currentUser;
+                    return this._eventsService.getParticipants(eventId);
                 })
                 .then((participants) => {
                     this.registeredUsers = participants;
+                    this.alreadyRegistered = this.registeredUsers.filter(u => u.Id === this._currentUser.Id).length > 0;
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
-                    return this._usersService.currentUser();
                 })
-                .then(currentUser => {
-                    this._currentUser = currentUser;
-                    this.alreadyRegistered = this.registeredUsers.filter(u => u.Id === currentUser.Id).length > 0;
-                })
-                .catch(e => {
-                    alert('An error occured: ' + JSON.stringify(e));
-                });
+                .catch(this._onError);
         });
     }
 
@@ -66,14 +68,6 @@ export class EventDetailsComponent implements OnInit {
 
     getResizedImageUrl(rawUrl: string): string {
         return utilities.getAsResizeUrl(rawUrl);
-    }
-
-    getRegisterBtnText() {
-        if (this.alreadyRegistered) {
-            return 'Already Registered';
-        } else {
-            return 'Register';
-        }
     }
 
     getRating() {
@@ -103,20 +97,10 @@ export class EventDetailsComponent implements OnInit {
         registrationPromise.then((didRegister) => {
             if (didRegister) { // would be false if user closed modal
                 this.alreadyRegistered = true;
-                this._usersService.getById(this._currentUser.Id, {
-                    Image: {
-                        ReturnAs: 'ImageUrl',
-                        SingleField: 'Uri'
-                    }
-                })
-                .then(user => {
-                    this.registeredUsers.unshift(user);
-                });
+                this.registeredUsers.unshift(this._currentUser);
             }
         })
-        .catch((err) => {
-            console.log('event registration error: ' + JSON.stringify(err));
-        });
+        .catch(this._onError);
     }
 
     showLocation() {
@@ -140,5 +124,11 @@ export class EventDetailsComponent implements OnInit {
                     return Promise.resolve(false);
                 }
             });
+    }
+
+    private _onError(err) {
+        if (err) {
+            this._alertsService.showError(err && err.message);
+        }
     }
 }

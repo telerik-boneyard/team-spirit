@@ -59,7 +59,8 @@ export class EventsService {
         let registrationFilter = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
         let dateFilter = [
                 { EventDate: { $gte: new Date().toISOString() } },
-                { EventDate: { $exists: false } }
+                { EventDate: { $exists: false } },
+                { EventDate: null }
             ];
             
         let filter = {

@@ -12,7 +12,7 @@
         <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
         <Label [text]="getRating()"></Label>
         
-        <Button *ngIf="!isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" [text]="getRegisterBtnText()" (tap)="register()"></Button>
+        <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()"></Button>
 
         <StackLayout orientation="horizontal">
             <StackLayout style="width: 130"> <!-- remove inline style -->

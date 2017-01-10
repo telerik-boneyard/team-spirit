@@ -15,7 +15,7 @@ export class UsersService {
             ReturnAs: 'ImageUrl'
         }
     };
-    private _currUserPrm: Promise<User>;
+    private _currUserCache: Promise<User>;
 
     constructor(
         private _everliveProvider: EverliveProvider
@@ -29,7 +29,7 @@ export class UsersService {
         return this._users.login(username, password)
             .then((resp) => {
                 this._isLoggedInSubj.next(true);
-                this._currUserPrm = null;
+                this._currUserCache = null;
                 return resp;
             });
     }
@@ -39,13 +39,13 @@ export class UsersService {
     }
 
     currentUser(reCache = false) {
-        if (!this._currUserPrm || reCache) {
+        if (!this._currUserCache || reCache) {
             console.log('making request for curr user');
-            this._currUserPrm = this._users.expand(this._imageExpandExp)
+            this._currUserCache = this._users.expand(this._imageExpandExp)
                 .currentUser()
                 .then(u => this._serverUserToUserModel(u.result));
         }
-        return this._currUserPrm;
+        return this._currUserCache;
     }
 
     isLoggedIn(): Observable<boolean> {
@@ -53,14 +53,17 @@ export class UsersService {
     }
 
     updateUser(user: User) {
-        return this._users.updateSingle(user);
+        let updatePromise = this._users.updateSingle(user);
+        // dont chain so returned promise doesnt have the cache clearing
+        updatePromise.then(() => this._currUserCache = null);
+        return updatePromise;
     }
 
     logout() {
         return this._users.logout().then(r => r, e => e)
             .then((resp) => {
                 this._isLoggedInSubj.next(false);
-                this._currUserPrm = null;
+                this._currUserCache = null;
                 return resp;
             });
     }

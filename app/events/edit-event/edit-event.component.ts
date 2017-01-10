@@ -39,7 +39,7 @@ export class EditEventComponent implements OnInit {
 
         this._alertsService.askConfirmation('Save all changes?')
             .then(() => {
-                return this._eventsService.update(this.event)
+                return this._eventsService.update(this.event);
             })
             .then(() => {
                 return this._alertsService.showSuccess(`Group "${this.event.Name}" updated!`);
