@@ -6,8 +6,8 @@ import { NgModule } from "@angular/core";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
-import { LoginComponent } from './login/login.component'
-import { UserDetailsComponent } from './user-details/user-details.component';
+import { LoginComponent } from './users'
+import { UserDetailsComponent } from './users';
 import { 
     EventsComponent,
     EventDetailsComponent,

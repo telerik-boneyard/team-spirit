@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
-import { RouterExtensions } from 'nativescript-angular/router'
-import { Page } from 'ui/page'
-import { UsersService } from '../services'
+import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
+import { UsersService } from '../../services';
 
 @Component({
     selector: 'login',
-    templateUrl: 'login/login.template.html',
-    styleUrls: ['login/login.component.css']
+    templateUrl: 'users/login/login.template.html',
+    styleUrls: ['users/login/login.component.css']
 })
 export class LoginComponent implements OnInit {
     user: {username?: string, password?: string, confirmPassword?: string};

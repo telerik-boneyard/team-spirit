@@ -18,7 +18,7 @@ import {
     providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService, AlertService, GroupsService]
 })
 export class AppComponent implements OnInit {
-    private loggedIn: boolean = false;
+    loggedIn: boolean = false;
     @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
     constructor(
@@ -27,12 +27,15 @@ export class AppComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.usersService.loggedIn().subscribe(logged => {
-            if (logged) {
+        this.usersService.isLoggedIn().subscribe(isLoggedIn => {
+            if (isLoggedIn) {
                 this.routerExtensions.navigate(['events']);
+            } else {
+                this.routerExtensions.navigate(['login']);
             }
 
-            this.loggedIn = logged;
+            this.loggedIn = isLoggedIn;
+            console.log(`logged: ${this.loggedIn}`);
         });
 
         application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {
@@ -61,8 +64,8 @@ export class AppComponent implements OnInit {
 
     logout() {
         this.usersService.logout();
-        this.loggedIn = false;
+        // this.loggedIn = false;
         //TODO: Stop drawer from showing and close it
-        this.routerExtensions.navigate(['login']);
+        // this.routerExtensions.navigate(['login']);
     }
 }
