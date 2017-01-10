@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { GroupsService, AlertService } from '../../services';
+import { GroupsService, AlertService, UsersService } from '../../services';
 import { Group } from '../../shared/models';
 
 @Component({
@@ -13,21 +13,30 @@ export class GroupsComponent implements OnInit {
     groups: Group[];
 
     constructor(
+        private _usersService: UsersService,
         private _groupsService: GroupsService,
         private _routerExtensions: RouterExtensions,
         private _alertService: AlertService
     ) {}
     
     ngOnInit() {
-        this._groupsService.getNonPrivate().then(groups => {
-            this.groups = groups;
-        })
-        .catch((err) => {
-            this._alertService.showError(err.message);
-        });
+        this._usersService.currentUser()
+            .then(user => {
+                return this._groupsService.getAllVisible(user.Id);
+            })
+            .then(groups => {
+                this.groups = groups;
+            })
+            .catch((err) => {
+                this._alertService.showError(err.message);
+            });
     }
 
     selectGroup(group: Group) {
         this._routerExtensions.navigate([`/groups/${group.Id}`]);
+    }
+
+    onAdd() {
+        this._routerExtensions.navigateByUrl('/groups/add');
     }
 }

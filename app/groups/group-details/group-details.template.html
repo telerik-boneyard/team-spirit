@@ -15,13 +15,16 @@
 
         <StackLayout orientation="horizontal">
             <Label text="Requires Approval:"></Label>
-            <Label [text]="group.RequiresApproval"></Label>
+            <Label [text]="!!group.RequiresApproval"></Label>
         </StackLayout>
 
         <StackLayout orientation="horizontal">
             <Label text="Group is Public:"></Label>
-            <Label [text]="group.IsPublic"></Label>
+            <Label [text]="!!group.IsPublic"></Label>
         </StackLayout>
+
+        <Button *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
+        <Button *ngIf="hasJoined" [text]="'Leave'" (tap)="onLeave()"></Button>
     </StackLayout>
 
     <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>

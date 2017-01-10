@@ -1,0 +1,9 @@
+<StackLayout class="ctnr">
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="Create Group"></Label>
+        </ActionItem>
+        <ActionItem ios.systemIcon="9" android.systemIcon="ic_menu_mark" (tap)="onCreate()"></ActionItem>
+    </ActionBarExtension>
+    <editable-group [group]="group"></editable-group>
+</StackLayout>

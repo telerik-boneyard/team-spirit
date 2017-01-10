@@ -23,7 +23,8 @@ import {
     GroupListComponent,
     EditableGroupComponent,
     EditGroupComponent,
-    GroupDetailsComponent
+    GroupDetailsComponent,
+    AddGroupComponent
 } from './groups';
 
 const routes = [
@@ -35,6 +36,7 @@ const routes = [
     { path: 'events/:id', component: EventDetailsComponent },
     { path: 'events/edit/:id', component: EditEventComponent },
     { path: 'groups', component: GroupsComponent },
+    { path: 'groups/add', component: AddGroupComponent },
     { path: 'groups/:id', component: GroupDetailsComponent },
     { path: 'groups/edit/:id', component: EditGroupComponent }
 ];
@@ -56,7 +58,8 @@ const routes = [
         GroupListComponent,
         EditableGroupComponent,
         EditGroupComponent,
-        GroupDetailsComponent
+        GroupDetailsComponent,
+        AddGroupComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent
