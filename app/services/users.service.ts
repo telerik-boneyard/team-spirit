@@ -9,6 +9,13 @@ import { Observable, Subject } from 'rxjs';
 export class UsersService {
     private _users: Users;
     private _isLoggedInSubj: Subject<boolean>;
+    private _imageExpandExp = {
+        Image: {
+            SingleField: 'Uri',
+            ReturnAs: 'ImageUrl'
+        }
+    };
+    private _currUserPrm: Promise<User>;
 
     constructor(
         private _everliveProvider: EverliveProvider
@@ -22,6 +29,7 @@ export class UsersService {
         return this._users.login(username, password)
             .then((resp) => {
                 this._isLoggedInSubj.next(true);
+                this._currUserPrm = null;
                 return resp;
             });
     }
@@ -30,11 +38,14 @@ export class UsersService {
         return this._users.register(username, password, null);
     }
 
-    currentUser() {
-        return this._users.currentUser()
-            .then(u => {
-                return this._serverUserToUserModel(u.result);
-            });
+    currentUser(reCache = false) {
+        if (!this._currUserPrm || reCache) {
+            console.log('making request for curr user');
+            this._currUserPrm = this._users.expand(this._imageExpandExp)
+                .currentUser()
+                .then(u => this._serverUserToUserModel(u.result));
+        }
+        return this._currUserPrm;
     }
 
     isLoggedIn(): Observable<boolean> {
@@ -49,6 +60,7 @@ export class UsersService {
         return this._users.logout().then(r => r, e => e)
             .then((resp) => {
                 this._isLoggedInSubj.next(false);
+                this._currUserPrm = null;
                 return resp;
             });
     }

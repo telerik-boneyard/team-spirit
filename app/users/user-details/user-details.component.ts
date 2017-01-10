@@ -16,10 +16,7 @@ export class UserDetailsComponent implements OnInit {
 
     ngOnInit() {
         this._usersService.currentUser()
-            .then(u => {
-                this.user = u;
-                console.log('user: ' + JSON.stringify(u));
-            })
+            .then(u => this.user = u)
             .catch(e => console.error(e.message));
     }
 

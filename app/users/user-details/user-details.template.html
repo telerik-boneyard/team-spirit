@@ -1,5 +1,5 @@
 <StackLayout>
-    <Button text="<" [nsRouterLink]="['/events']" clearHistory="true"></Button>
+    <!--<Button text="<" [nsRouterLink]="['/events']" clearHistory="true"></Button>-->
     <StackLayout *ngIf="user">
         <Image src="{{user.ImageUrl}}"></Image>
         <StackLayout orientation="horizontal">
@@ -18,4 +18,6 @@
             <Button text="Save" (tap)="save()"></Button>
         </StackLayout>
     </StackLayout>
+
+    <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 </StackLayout>
