@@ -11,9 +11,9 @@
     
     <!-- this should go inside container below,
          just cant make the styling work right now -->
-    <Image *ngIf="user" class="user-image" src="{{getResizedImageUrl()}}"></Image>
+    <Image *ngIf="user" class="user-image" src="{{getResizedImageUrl()}}" [style.zIndex]="1"></Image>
     
-    <StackLayout *ngIf="user" class="user-info-cnt" [style.zIndex]="-555">
+    <StackLayout *ngIf="user" class="user-info-cnt">
         <StackLayout class="user-info-block">
             <Label class="user-label" text="Name"></Label>
             <Label class="user-info-value" [text]="getUserDisplayName()"></Label>

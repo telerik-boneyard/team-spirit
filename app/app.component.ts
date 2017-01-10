@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
             if (isLoggedIn) {
                 this.routerExtensions.navigate(['events']);
             } else {
-                this.routerExtensions.navigate(['login']);
+                this.routerExtensions.navigate(['user/login']);
             }
 
             this.loggedIn = isLoggedIn;
@@ -63,8 +63,5 @@ export class AppComponent implements OnInit {
 
     logout() {
         this.usersService.logout();
-        // this.loggedIn = false;
-        //TODO: Stop drawer from showing and close it
-        // this.routerExtensions.navigate(['login']);
     }
 }

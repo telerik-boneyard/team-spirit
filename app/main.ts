@@ -6,7 +6,7 @@ import { NgModule } from "@angular/core";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
-import { UserDetailsComponent, LoginComponent } from './users';
+import { UserDetailsComponent, LoginComponent, EditUserComponent } from './users';
 import { 
     EventsComponent,
     EventDetailsComponent,
@@ -27,9 +27,10 @@ import {
 } from './groups';
 
 const routes = [
-    { path: '', redirectTo: 'login', terminal: true, pathMatch: 'full' },
-    { path: 'user-details', component: UserDetailsComponent },
-    { path: 'login', component: LoginComponent },
+    { path: '', redirectTo: 'user/login', terminal: true, pathMatch: 'full' },
+    { path: 'user', component: UserDetailsComponent },
+    { path: 'user/edit', component: EditUserComponent },
+    { path: 'user/login', component: LoginComponent },
 
     { path: 'events', component: EventsComponent },
     { path: 'events/add', component: AddEventComponent },
@@ -60,7 +61,8 @@ const routes = [
         EditableGroupComponent,
         EditGroupComponent,
         GroupDetailsComponent,
-        AddGroupComponent
+        AddGroupComponent,
+        EditUserComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent

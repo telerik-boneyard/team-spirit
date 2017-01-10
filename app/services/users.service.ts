@@ -53,7 +53,7 @@ export class UsersService {
     }
 
     updateUser(user: User) {
-        return this._users.update(user, { Username: user.Username });
+        return this._users.updateSingle(user);
     }
 
     logout() {

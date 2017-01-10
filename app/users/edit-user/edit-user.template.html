@@ -1,0 +1,35 @@
+<StackLayout class="cntnr">
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="Edit Profile"></Label>
+        </ActionItem>
+        <ActionItem
+            ios.systemIcon="3"
+            android.systemIcon="ic_menu_save"
+            (tap)="save()">
+        </ActionItem>
+    </ActionBarExtension>
+    
+    <!--<Image *ngIf="user" class="user-image" src="{{getResizedImageUrl()}}"></Image>-->
+    
+    <StackLayout *ngIf="user" class="user-info-cnt">
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Name"></Label>
+            <TextField class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
+        </StackLayout>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Username"></Label>
+            <TextField class="user-info-editable-value" [(ngModel)]="user.Username"></TextField>
+        </StackLayout>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Phone"></Label>
+            <TextField class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
+        </StackLayout>
+        <StackLayout class="user-info-block">
+            <Label class="user-label" text="Email"></Label>
+            <TextField class="user-info-editable-value" [(ngModel)]="user.Email" keyboardType="email"></TextField>
+        </StackLayout>
+    </StackLayout>
+
+    <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</StackLayout>
