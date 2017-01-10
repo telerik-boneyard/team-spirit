@@ -48,7 +48,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     canEdit() {
-        return true;
+        return this.group && this._currentUser && this.group.Owner === this._currentUser.Id;
     }
 
     onEdit() {

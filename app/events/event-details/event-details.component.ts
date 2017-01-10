@@ -61,7 +61,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     canEdit() {
-        return true;
+        return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
     }
 
     getResizedImageUrl(rawUrl: string): string {
