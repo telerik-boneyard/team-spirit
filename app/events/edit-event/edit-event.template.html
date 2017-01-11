@@ -1,7 +1,8 @@
 <StackLayout>
     <ActionBarExtension>
+        <NavigationButton ios.systemIcon="1" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem>
-            <Label [text]="event && event.Name"></Label>
+            <Label text="Edit Event"></Label>
         </ActionItem>
         <ActionItem
             ios.systemIcon="16"
@@ -9,7 +10,7 @@
             (tap)="delete()">
         </ActionItem>
         <ActionItem
-            ios.systemIcon="3"
+            ios.systemIcon="0"
             android.systemIcon="ic_menu_save"
             (tap)="save()">
         </ActionItem>

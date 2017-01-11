@@ -71,4 +71,8 @@ export class EditEventComponent implements OnInit {
                 }
             });
     }
+
+    onCancel() {
+        this._routerExtensions.back();
+    }
 }

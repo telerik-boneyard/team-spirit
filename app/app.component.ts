@@ -1,8 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NavigationEnd } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { RadSideDrawerComponent } from 'nativescript-telerik-ui/sidedrawer/angular';
 import * as application from 'application';
 
+import { utilities } from './shared';
 import {
     EverliveProvider,
     UsersService,
@@ -19,28 +21,37 @@ import {
 })
 export class AppComponent implements OnInit {
     loggedIn: boolean = false;
+    disableDrawer: boolean = false;
+    
     @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
     constructor(
-        private usersService: UsersService,
-        private routerExtensions: RouterExtensions
+        private _usersService: UsersService,
+        private _routerExtensions: RouterExtensions
     ) { }
 
     ngOnInit() {
-        this.usersService.isLoggedIn().subscribe(isLoggedIn => {
-            if (isLoggedIn) {
-                this.routerExtensions.navigate(['events']);
-            } else {
-                this.routerExtensions.navigate(['user/login']);
-            }
-
+        this._usersService.isLoggedIn().subscribe(isLoggedIn => {
             this.loggedIn = isLoggedIn;
+
+            if (this.loggedIn) {
+                this._routerExtensions.navigate(['events']);
+            } else {
+                this._routerExtensions.navigate(['user/login']);
+            }
+        });
+
+        this._routerExtensions.router.events.subscribe((ev) => {
+            if (ev instanceof NavigationEnd) {
+                this.disableDrawer = utilities.shouldDisableDrawer(ev.url);
+                this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
+            }
         });
 
         application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {
-            if (this.routerExtensions.canGoBack()) {
+            if (this._routerExtensions.canGoBack()) {
                 args.cancel = true;
-                this.routerExtensions.back();
+                this._routerExtensions.back();
             }
         });
     }
@@ -49,19 +60,11 @@ export class AppComponent implements OnInit {
         this.drawer.sideDrawer.closeDrawer();
     }
 
-    openDrawer() {
-        this.drawer.sideDrawer.showDrawer();
-    }
-
     toggleDrawer() {
-        if (this.drawer.sideDrawer.getIsOpen()) {
-            this.closeDrawer();
-        } else {
-            this.openDrawer();
-        }
+        this.drawer.sideDrawer.toggleDrawerState();
     }
 
     logout() {
-        this.usersService.logout();
+        this._usersService.logout();
     }
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
-import { UsersService } from '../../services';
+import { UsersService, AlertService } from '../../services';
 
 @Component({
     selector: 'login',
@@ -14,6 +14,7 @@ export class LoginComponent implements OnInit {
 
     constructor(
         private _usersService: UsersService,
+        private _alertsService: AlertService,
         private _routerExtensions: RouterExtensions,
         private _page: Page
     ) {
@@ -34,25 +35,24 @@ export class LoginComponent implements OnInit {
     login() {
         this._usersService.login(this.user.username, this.user.password)
             .then(() => {
-                console.log('LOGGED IN');
-                this._routerExtensions.navigate(['events']);
+                this._routerExtensions.navigateByUrl('events');
             })
-            .catch((e: Error) => {
-                console.error(e.message);
+            .catch((e) => {
+                this._alertsService.showError(e && e.message);
             });
     }
 
     signup() {
         if (this.user.password !== this.user.confirmPassword) {
-            return console.error('Passwords do not match');
+            return this._alertsService.showError('Passwords do not match');
         }
 
         this._usersService.register(this.user.username, this.user.password)
             .then((res) => {
                 this.changeView(false)
             })
-            .catch((e: Error) => {
-                console.error(e.message)
+            .catch((e) => {
+                this._alertsService.showError(e && e.message);
             });
     }
 }

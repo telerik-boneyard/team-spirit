@@ -1,7 +1,7 @@
 <ActionBar title="">
-    <NavigationButton ios.systemIcon="18" android.systemIcon="ic_menu_sort_by_size" (tap)="toggleDrawer()"></NavigationButton>
+    <NavigationButton *ngIf="!disableDrawer" ios.systemIcon="18" android.systemIcon="ic_menu_sort_by_size" (tap)="toggleDrawer()"></NavigationButton>
 </ActionBar>
-<RadSideDrawer exampleTitle toggleNavButton #drawer>
+<RadSideDrawer #drawer>
     <StackLayout tkDrawerContent>
         <StackLayout class="sideStackLayout">
             <Button *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Button>

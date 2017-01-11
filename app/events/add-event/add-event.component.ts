@@ -40,7 +40,7 @@ export class AddEventComponent {
             .catch(err => this._alertService.showError(err.message));
     }
 
-    // onCancel() {
-    //     this._routerExtensions.back();
-    // }
+    onCancel() {
+        this._routerExtensions.back();
+    }
 }

@@ -73,7 +73,7 @@ const routes = [
         NativeScriptModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(routes)
-    ],
+    ]
 })
 class AppComponentModule {
 }

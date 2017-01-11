@@ -1,9 +1,10 @@
 <StackLayout class="main">
     <ActionBarExtension>
+        <NavigationButton ios.systemIcon="1" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem>
-            <Label text="Create Event"></Label>
+            <Label text="New Event"></Label>
         </ActionItem>
-        <ActionItem ios.systemIcon="9" android.systemIcon="btn_check_buttonless_on" (tap)="onCreate()"></ActionItem>
+        <ActionItem ios.systemIcon="0" android.systemIcon="btn_check_buttonless_on" (tap)="onCreate()"></ActionItem>
     </ActionBarExtension>
     <editable-event [event]="newEvent"></editable-event>
 </StackLayout>
