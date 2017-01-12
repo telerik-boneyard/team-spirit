@@ -1,13 +1,11 @@
-<ListView *ngIf="groups" [items]="groups" (itemTap)="groupTap($event)" separatorColor="gray">
+<ListView *ngIf="groups" [items]="groups" (itemTap)="groupTap($event)">
     <template let-group="item">
-        <StackLayout style="height: 250">
-            <Image *ngIf="group.ImageUrl" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
+        <StackLayout orientation="horizontal" class="group">
+            <Image *ngIf="group.ImageUrl" class="group-image" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
 
-            <Label [text]="group.Name"></Label>
-            
             <StackLayout>
-                <Label text="Description:"></Label>
-                <Label [text]="group.Description"></Label>
+                <Label [text]="group.Name" class="group-name"></Label>
+                <Label [text]="group.Description" [textWrap]="true"></Label>
             </StackLayout>
         </StackLayout>
     </template>

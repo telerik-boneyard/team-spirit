@@ -1,3 +1,8 @@
 .cntnr {
+    /*height: 100%;*/
     background-color: #fff;
+}
+
+.tab-item {
+    padding: 10 20;
 }

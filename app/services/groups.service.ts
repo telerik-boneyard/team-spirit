@@ -59,6 +59,12 @@ export class GroupsService {
                 return this._mergeGroups(publicAndOwnedGroups, userGroups);
             });
     }
+
+    getPublicGroups() {
+        let filter = { IsPublic: true };
+        return this._getGroupsByFilter(filter);
+
+    }
     
     getUserGroups(userId: string) {
         let query = this._elProvider.getNewQuery();

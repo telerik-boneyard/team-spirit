@@ -23,6 +23,6 @@ export class GroupListComponent {
     }
 
     getResizedImageUrl(imageUrl: string) {
-        return utilities.getAsResizeUrl(imageUrl);
+        return utilities.getAsResizeUrl(imageUrl, { width: 50, height: 50 });
     }
 }

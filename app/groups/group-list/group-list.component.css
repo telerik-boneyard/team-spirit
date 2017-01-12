@@ -1,4 +1,13 @@
-Image {
-    height: 275;
-    width: 500;
+.group-image {
+    width: 50;
+    height: 50;
+    margin-right: 10;
+}
+
+.group {
+    padding: 10 0;
+}
+
+.group-name {
+    color: #000;
 }
