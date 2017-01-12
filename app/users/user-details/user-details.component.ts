@@ -17,6 +17,7 @@ import {
 export class UserDetailsComponent implements OnInit {
     user: User;
     userGroups: Group[] = [];
+    membershipExpanded = false;
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -47,5 +48,13 @@ export class UserDetailsComponent implements OnInit {
 
     getRemainingGroupsText() {
         return ` and ${this.userGroups.length - 1} more`;
+    }
+
+    toggleExpandedMembership() {
+        this.membershipExpanded = !this.membershipExpanded;
+    }
+
+    getAllMembershipNames() {
+        return this.userGroups.map(g => g.Name).join(', ');
     }
 }

@@ -32,3 +32,9 @@
 .event-organiser {
   margin-bottom: 20;
 }
+
+.user-image {
+  border-radius: 100%;
+  width: 30;
+  height: 30;
+}

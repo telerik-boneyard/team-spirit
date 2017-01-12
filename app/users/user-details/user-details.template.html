@@ -28,10 +28,11 @@
         </StackLayout>
         <StackLayout class="user-info-block">
             <Label class="user-label" text="Membership"></Label>
-            <StackLayout orientation="horizontal">
+            <StackLayout *ngIf="!membershipExpanded" orientation="horizontal">
                 <Label *ngIf="userGroups.length" class="user-info-value" [text]="userGroups[0].Name"></Label>
-                <Label *ngIf="userGroups.length > 1" class="user-info-value" [text]="getRemainingGroupsText()"></Label>
+                <Label *ngIf="userGroups.length > 1" class="user-info-value expandable" [text]="getRemainingGroupsText()" (tap)="toggleExpandedMembership()"></Label>
             </StackLayout>
+            <Label class="user-info-value" *ngIf="membershipExpanded" [text]="getAllMembershipNames()" (tap)="toggleExpandedMembership()" [textWrap]="true"></Label>
         </StackLayout>
     </StackLayout>
 

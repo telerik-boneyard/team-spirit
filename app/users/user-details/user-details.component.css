@@ -30,3 +30,7 @@
 .user-info-value {
     color: #000;
 }
+
+.expandable {
+    text-decoration: underline;
+}

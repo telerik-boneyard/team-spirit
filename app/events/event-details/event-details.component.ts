@@ -21,6 +21,7 @@ export class EventDetailsComponent implements OnInit {
     remainingUsersCount: number = 0;
     alreadyRegistered = false;
     isPastEvent = false;
+    registeredUsersExpanded = false;
 
     private _currentUser: User;
 
@@ -105,6 +106,18 @@ export class EventDetailsComponent implements OnInit {
 
     showLocation() {
         utils.openUrl(this.event.LocationURL);
+    }
+
+    toggleExpandedUsers() {
+        this.registeredUsersExpanded = !this.registeredUsersExpanded;
+    }
+
+    collapseExpandedUsers() {
+        this.registeredUsersExpanded = false;
+    }
+
+    getAllRegisteredUserNames() {
+        return this.registeredUsers.map(u => u.DisplayName || u.Username).join(', ');
     }
 
     private _openPopupAndRegister() {
