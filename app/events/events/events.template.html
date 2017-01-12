@@ -1,4 +1,4 @@
-<StackLayout>
+<StackLayout class="cntnr">
     <ActionBarExtension>
         <ActionItem>
             <Label text="Events"></Label>
@@ -8,7 +8,7 @@
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
-    <TabView #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list [events]="upcomingEvents | async" (onEventTap)="showDetails($event)"></event-list>
         </StackLayout>
@@ -16,4 +16,6 @@
             <event-list [events]="pastEvents | async" (onEventTap)="showDetails($event)"></event-list>
         </StackLayout>
     </TabView>
+
+    <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 </StackLayout>

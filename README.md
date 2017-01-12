@@ -12,8 +12,8 @@ New user flow:
 
 Screens:
 -	Groups screen
-        - All groups
-        - My groups
+    - All groups
+    - My groups
 -	Group details screen
     - Name
     - Image

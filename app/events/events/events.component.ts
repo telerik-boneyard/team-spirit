@@ -14,6 +14,7 @@ import { utilities } from '../../shared';
 export class EventsComponent implements OnInit {
     upcomingEvents: Promise<Event[]>;
     pastEvents: Promise<Event[]>;
+    initialized: boolean;
     dateFormat: string = utilities.dateFormat;
     canAdd: boolean = false;
 
@@ -32,10 +33,12 @@ export class EventsComponent implements OnInit {
         this._page.actionBarHidden = false;
         this.upcomingEvents = this._eventsService.getUpcoming();
         this.pastEvents = this._eventsService.getPast();
+        Promise.all([this.upcomingEvents, this.pastEvents])
+            .then(() => this.initialized = true, () => this.initialized = false);
         this._usersService.currentUser().then(user => this.canAdd = !!user);
     }
 
-    showDetails(event: Event) { // UPDATED - remove this comment when this works
+    showDetails(event: Event) {
         this._routerExtensions.navigate([`/events/${event.Id}`]);
     }
 }
