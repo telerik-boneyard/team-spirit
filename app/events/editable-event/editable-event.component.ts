@@ -1,9 +1,9 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { DatePicker } from "ui/date-picker";
-import { TimePicker } from "ui/time-picker";
+import { Component, Input, OnInit, ViewContainerRef, Type } from '@angular/core';
+import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 
 import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
-import { Event, Group } from '../../shared/models';
+import { ListPickerModalComponent, DateTimePickerModalComponent } from '../../shared';
+import { Event, Group, User } from '../../shared';
 import { utilities } from '../../shared';
 
 @Component({
@@ -15,19 +15,20 @@ export class EditableEventComponent implements OnInit{
     @Input() event: Event;
 
     dateFormat: string = utilities.dateFormat;
-    singleDate: boolean = true;
-    newEventDate: Date;
     dateOptions: Date[] = [];
     userGroups: Group[];
+    currentUser: User;
+    selectedGroup: Group;
     
     private _isEdit: boolean = false;
-    @ViewChild('datePicker') private _datePicker: DatePicker;
 
     constructor(
-        private _eventService: EventsService,
+        private _modalService: ModalDialogService,
         private _groupsService: GroupsService,
+        private _eventService: EventsService,
         private _usersService: UsersService,
-        private _alertService: AlertService
+        private _alertService: AlertService,
+        private _vcRef: ViewContainerRef
     ) { }
 
     ngOnInit() {
@@ -40,22 +41,21 @@ export class EditableEventComponent implements OnInit{
         });
         this._handleEventDatesIfPresent(this.event);
         this._isEdit = this.event.Id !== undefined;
-        this._configureDatePicker(this._datePicker);
+    }
+
+    getSelectDateText() {
+        return this.dateOptions.length ? 'Add date option' : 'Select date';
+    }
+
+    getResizedImageUrl(rawUrl: string) {
+        return utilities.getAsResizeUrl(rawUrl, { width: 120, height: 120 });
     }
 
     toggleOpenForRegistration() {
         this.event.OpenForRegistration = !this.event.OpenForRegistration;
     }
 
-    onAddDateOption(datePicker: DatePicker, timePicker: TimePicker): void {
-        let date = datePicker.date;
-        date.setHours(timePicker.hour, timePicker.minute, 0, 0);
-        if (this._isDuplicateDate(date)) {
-            return this._showError('Date already added');
-        } else if (!this._isEdit && date <= new Date()) {
-            return this._showError('Date is in the past');
-        }
-        
+    onAddDateOption(date: Date) {
         let clone = new Date(date.getTime());
         this._addDateOptionToEvent(clone);
     }
@@ -65,9 +65,64 @@ export class EditableEventComponent implements OnInit{
         this._applyDateOptionsToEvent();
     }
 
+    onSelectGroup() {
+        this._openGroupModal()
+            .then((selectedIndex: number) => {
+                this.selectGroup(this.userGroups[selectedIndex]);
+            }, err => err); // ignore rejection (when user clicks back and closes)
+    }
+
+    onSelectDate() {
+        this._openDateModal()
+            .then((newDateOption: Date) => {
+                this.onAddDateOption(newDateOption);
+            }, err => err); // ignore rejection (when user clicks back and closes)
+    }
+
     selectGroup(group: Group) {
         this.event.GroupId = group.Id;
-        this.userGroups.forEach((g: any) => g._selected = g.Id === group.Id);
+        this.selectedGroup = group;
+    }
+
+    getSelectedGroupName() {
+        let name = this.selectedGroup && this.selectedGroup.Name;
+        return name ? name : 'Select Group';
+    }
+
+    private _validateDateOption(date: Date) {
+        if (this._isDuplicateDate(date)) {
+            return 'Date already added';
+        } else if (!this._isEdit && date <= new Date()) {
+            return 'Date is in the past';
+        }
+    }
+
+    private _openModal(ctx: any, componentClass: Type<any>) {
+        let opts: ModalDialogOptions = {
+            context: ctx,
+            fullscreen: true,
+            viewContainerRef: this._vcRef
+        };
+
+        return this._modalService.showModal(componentClass, opts)
+            .then(result => result ? result : Promise.reject(null));
+    }
+
+    private _openGroupModal() {
+        let selectedIndex = utilities.findIndex(this.userGroups, g => g.Id === this.event.GroupId);
+        let ctx = {
+            items: this.userGroups.map(g => g.Name),
+            selectedIndex 
+        };
+        return this._openModal(ctx, ListPickerModalComponent);
+    }
+
+    private _openDateModal() {
+        let ctx = {
+            isEdit: this._isEdit,
+            validator: this._validateDateOption.bind(this)
+        };
+        return this._openModal(ctx, DateTimePickerModalComponent);
     }
 
     private _isDuplicateDate(date: Date) {
@@ -92,17 +147,6 @@ export class EditableEventComponent implements OnInit{
         }
     }
 
-    private _configureDatePicker(picker: DatePicker) {
-        let now = new Date();
-        let oneYear = 31536000000;
-
-        picker.date = now;
-        if (!this._isEdit) {
-            picker.minDate = now;
-            picker.maxDate = new Date(now.getTime() + (oneYear * 5));
-        }
-    }
-
     private _showError(msg: string) {
         this._alertService.showError(msg);
     }
@@ -110,6 +154,7 @@ export class EditableEventComponent implements OnInit{
     private _getCurrentUserGroups() {
         return this._usersService.currentUser()
             .then(user => {
+                this.currentUser = user;
                 return this._groupsService.getUserGroups(user.Id);
             });
     }
@@ -123,7 +168,7 @@ export class EditableEventComponent implements OnInit{
     }
 
     private _markSelectedGroupIfPresent(event: Event, userGroups: Group[]) {
-        let evGroup = userGroups.filter(g => g.Id === event.GroupId)[0];
+        let evGroup = utilities.find(this.userGroups, g => g.Id === event.GroupId);
         if (evGroup) {
             this.selectGroup(evGroup);
         }

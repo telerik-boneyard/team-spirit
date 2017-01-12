@@ -1,0 +1,13 @@
+.cntnr {
+    background-color: #fff;
+    height: 100%;
+}
+
+DatePicker {
+    width: 200;
+}
+
+DatePicker, TimePicker {
+    margin-top: 150;
+    height: 150;
+}

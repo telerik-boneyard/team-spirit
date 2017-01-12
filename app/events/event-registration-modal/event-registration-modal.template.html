@@ -1,13 +1,12 @@
-<StackLayout class="event-registration-modal">
-    <ListView [items]="availableDates">
-        <template let-item="item">
-            <StackLayout orientation="horizontal">
-                <Switch [(ngModel)]="item.isSelected"></Switch>
-                <Label [text]="item.value | date:dateFormat"></Label>
-            </StackLayout>
-        </template>
-    </ListView>
-
-    <Button [text]="'Submit'" (tap)="closeModal()"></Button>
-    <Button [text]="'Cancel'" (tap)="closeModal(true)"></Button>
+<StackLayout>
+    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)">
+        <ListView [items]="availableDates">
+            <template let-option="item">
+                <StackLayout orientation="horizontal">
+                    <Switch [(ngModel)]="option.isSelected"></Switch>
+                    <Label [text]="option.value | date:dateFormat"></Label>
+                </StackLayout>
+            </template>
+        </ListView>
+    </app-modal>
 </StackLayout>

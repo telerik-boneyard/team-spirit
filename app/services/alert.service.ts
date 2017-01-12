@@ -12,16 +12,16 @@ export class AlertService {
         return this._showMessage(message, 'Error');
     }
 
+    showInfo(message: string) {
+        return this._showMessage(message, 'You could try...');
+    }
+
     askConfirmation(message: string) {
         return this._showMessage(message, 'Are you sure?', 'I\'m sure', 'Cancel')
-            .then(confirmed => {
-                return confirmed ? Promise.resolve() : Promise.reject(null);
-            });
+            .then(conf => conf ? Promise.resolve() : Promise.reject(null));
     }
 
     private _showMessage (message: string, title: string, okButtonText: string = 'Ok', cancelButtonText?: string): Promise<any> {
-        let alertData: any = {};
-
         return dialogs.confirm({
             title,
             message,

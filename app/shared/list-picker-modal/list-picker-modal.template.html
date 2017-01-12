@@ -1,0 +1,10 @@
+<StackLayout class="cntnr">
+    <!-- TODO: use app-modal -->
+    
+    <ListPicker #picker [items]="availableOptions"
+                [selectedIndex]="selectedIndex"
+                (selectedIndexChange)="selectedIndexChanged(picker.selectedIndex)">
+    </ListPicker>
+
+    <Button class="button-action" (tap)="onDone()" text="Select"></Button>
+</StackLayout>

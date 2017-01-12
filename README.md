@@ -1,5 +1,47 @@
 # Team Spirit
 
+## Meeting notes
+
+New user flow:
+1.	Registration
+2.	Events screen (empty screen, says that you need to join a group first, link to groups screen)
+3.	Groups screen (open on All Groups)
+4.	Browse all groups or search for a group by name
+5.	Click on a group to go to group details
+6.	Join the group
+
+Screens:
+-	Groups screen
+        - All groups
+        - My groups
+-	Group details screen
+    - Name
+    - Image
+    - Buttons
+        - Join/leave btn
+        - Go to events
+    - Info
+        - Description
+        - Requires approval
+        - Members
+-	A screen that shows poll results for event
+    - Accessed from the event details screen
+    - Shows how many users voted for each option
+
+Images:
+We must use placeholder images for missing Event, Group or User images.
+
+
+
+Features for vNext:
+-	Invite to group
+-	Invite to event
+-	A way to send message to all registered for event (maybe chat?)
+-	Show who’s next to organize the event and notify him/her
+-	Confirm that you are going to event even if you didn’t opt for the date
+-	Unregister for event if something urgent comes up
+
+
 ## TODO:
 
 Login/register with BS

@@ -51,7 +51,7 @@ export class EventDetailsComponent implements OnInit {
                 })
                 .then((participants) => {
                     this.registeredUsers = participants;
-                    this.alreadyRegistered = this.registeredUsers.filter(u => u.Id === this._currentUser.Id).length > 0;
+                    this.alreadyRegistered = this.registeredUsers.some(u => u.Id === this._currentUser.Id);
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
                 .catch(this._onError);
@@ -68,11 +68,6 @@ export class EventDetailsComponent implements OnInit {
 
     getResizedImageUrl(rawUrl: string): string {
         return utilities.getAsResizeUrl(rawUrl);
-    }
-
-    getRating() {
-        // TODO
-        return `Rating: 4.98 out of 5`;
     }
 
     getDate() {

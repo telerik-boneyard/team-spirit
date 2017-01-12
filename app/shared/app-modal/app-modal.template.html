@@ -1,0 +1,7 @@
+<StackLayout class="modal-cntnr">
+    <ng-content></ng-content>
+    <StackLayout class="controls-wrapper">
+        <Button class="button-action" [text]="'Submit'" (tap)="onOk()"></Button>
+        <Button class="button-action" [text]="'Cancel'" (tap)="onCancel()"></Button>
+    </StackLayout>
+</StackLayout>

@@ -15,3 +15,19 @@ export function isNonemptyString (str: any) {
 export function shouldDisableDrawer (activeRouteUrl: string) {
     return constants.disabledDawerRoutes.some(r => !activeRouteUrl.indexOf(r));
 };
+
+export function find<T> (arr: T[], predicate: (item: T) => any): T {
+    for (let item of arr) {
+        if (predicate(item)) {
+            return item;
+        }
+    }
+};
+
+export function findIndex<T> (arr: T[], predicate: (item: T) => any): number {
+    for (let i = 0; i < arr.length; i++) {
+        if (predicate(arr[i])) {
+            return i;
+        }
+    }
+};

@@ -1,5 +1,4 @@
-TextField, TextView {
-    /*border-width: 1;*/
+/*TextField, TextView {
     margin: 0;
 }
 
@@ -13,4 +12,73 @@ DatePicker, TimePicker {
 
 .group.active {
     color: red;
+}*/
+
+.cntnr {
+    height: 100%;
+    background-color: #fff;
+}
+
+.info-cntnr {
+    padding: 15;
+    margin-top: 20;
+}
+
+.label-field-pair {
+    margin: 10 0;
+}
+
+.label-field-pair .label {
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 15;
+    margin-left: 5;
+}
+
+.label-field-pair .field {
+    color: #000;
+    padding: 0 0 15 5;
+}
+
+.user-image {
+    border-radius: 100%;
+    width: 30;
+    height: 30;
+}
+
+.user {
+    border-width: 0;
+    border: none;
+    border-bottom-width: 1;
+    border-color: #888;
+    padding-bottom: 5;
+
+    margin-bottom: 30; /* TODO: remove */
+}
+
+.user .label {
+    margin-bottom: 5;
+}
+
+.user .user-label {
+    margin-top: 5;
+    margin-left: 5;
+    color: #000;
+}
+
+.group {
+    border-width: 0;
+    border-bottom-width: 1;
+    border-color: #888;
+
+    margin-bottom: 15; /* TODO: remove */
+}
+
+.with-popup .field {
+    /*content: '>';*/
+    /*color: red;*/
+}
+
+.with-popup .field.not-selected {
+    /*color: red;*/
 }

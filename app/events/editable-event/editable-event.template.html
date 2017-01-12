@@ -1,35 +1,54 @@
-<StackLayout>
-    <TextField hint="Name" [(ngModel)]="event.Name" returnKeyType="next"></TextField>
-    <TextField hint="Location Name" [(ngModel)]="event.LocationName" returnKeyType="next"></TextField>
-    <TextField hint="Location URL" [(ngModel)]="event.LocationURL" keyboardType="url" returnKeyType="next"></TextField>
-    <TextView hint="Description" [(ngModel)]="event.Description" [editable]="true" returnKeyType="next"></TextView>
-    
-    <StackLayout>
-        <Label text="Groups you are a member of:"></Label>
-        <ListView [items]="userGroups">
-            <template let-group="item">
-                <Label [text]="group.Name" (tap)="selectGroup(group)" class="group" [ngClass]="{ 'active': group._selected }"></Label>
-            </template>
-        </ListView>
-    </StackLayout>
+<ScrollView class="cntnr">
+    <StackLayout class="info-cntnr">
+        <StackLayout class="label-field-pair">
+            <Label class="label" text="Name"></Label>
+            <TextField class="field" [(ngModel)]="event.Name"></TextField>
+        </StackLayout>
 
-    <StackLayout orientation="horizontal" (tap)="toggleOpenForRegistration()">
-        <Switch [(ngModel)]="event.OpenForRegistration"></Switch>
-        <Label text="Open for Registration"></Label>
-    </StackLayout>
+        <StackLayout class="label-field-pair">
+            <Label class="label" text="Description"></Label>
+            <TextView class="field" [(ngModel)]="event.Description" [editable]="true"></TextView>
+        </StackLayout>
 
-    <StackLayout>
-        <Label text="Date options:"></Label>
-        <ListView [items]="dateOptions" class="list-events">
-            <template let-date="item" let-ind="index">
-                <Label class="date-item" [text]="date | date:dateFormat" (tap)="removeDateOption(ind)"></Label>
-            </template>
-        </ListView>
+        <StackLayout class="label-field-pair group with-popup">
+            <Label class="label" text="Group"></Label>
+            <Label class="field" (tap)="onSelectGroup()" [text]="getSelectedGroupName()" [ngClass]="{ 'not-selected': !event.GroupId }"></Label>
+        </StackLayout>
+
+        <StackLayout class="label-field-pair">
+            <Label class="label" text="Location Name"></Label>
+            <TextField class="field" [(ngModel)]="event.LocationName"></TextField>
+        </StackLayout>
+
+        <StackLayout class="label-field-pair">
+            <Label class="label" text="Location Url"></Label>
+            <TextField class="field" [(ngModel)]="event.LocationURL" keyboardType="url"></TextField>
+        </StackLayout>
+
+        <StackLayout class="label-field-pair date with-popup">
+            <Label class="label" text="Event Date"></Label>
+            <ListView *ngIf="dateOptions && dateOptions.length" [items]="dateOptions" separatorColor="transparent">
+                <template let-date="item" let-ind="index">
+                    <StackLayout oriention="horizontal">
+                        <Image style="width: 20; height: 20;" src="res://remove_iocn" (tap)="removeDateOption(ind)"></Image>
+                        <Label class="field" [text]="date | date:dateFormat"></Label>
+                    </StackLayout>
+                </template>
+            </ListView>
+            <Label [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
+        </StackLayout>
+
+        <StackLayout *ngIf="currentUser" class="label-field-pair user">
+            <Label class="label" text="Organizer"></Label>
+            <StackLayout orientation="horizontal">
+                <Image class="user-image" src="{{getResizedImageUrl(currentUser.ImageUrl)}}"></Image>
+                <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
+            </StackLayout>
+        </StackLayout>
+
+        <StackLayout class="label-field-pair" orientation="horizontal" (tap)="toggleOpenForRegistration()">
+            <Switch [(ngModel)]="event.OpenForRegistration"></Switch>
+            <Label text="Open for Registration"></Label>
+        </StackLayout>
     </StackLayout>
-    
-    <StackLayout orientation="horizontal">
-        <DatePicker style="width: 200" #datePicker [(ngModel)]="newEventDate" verticalAlignment="center"></DatePicker>
-        <TimePicker #timePicker></TimePicker>
-    </StackLayout>
-    <Button text="Add date option" (tap)="onAddDateOption(datePicker, timePicker)"></Button>
-</StackLayout>
+</ScrollView>

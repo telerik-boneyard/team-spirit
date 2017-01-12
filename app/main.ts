@@ -7,6 +7,13 @@ import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angula
 
 import { AppComponent } from "./app.component";
 import { UserDetailsComponent, LoginComponent, EditUserComponent } from './users';
+
+import {
+    AppModalComponent,
+    DateTimePickerModalComponent,
+    ListPickerModalComponent
+} from './shared';
+
 import { 
     EventsComponent,
     EventDetailsComponent,
@@ -23,11 +30,12 @@ import {
     EditableGroupComponent,
     EditGroupComponent,
     GroupDetailsComponent,
-    AddGroupComponent
+    AddGroupComponent    
 } from './groups';
 
 const routes = [
     { path: '', redirectTo: 'user/login', terminal: true, pathMatch: 'full' },
+    
     { path: 'user', component: UserDetailsComponent },
     { path: 'user/edit', component: EditUserComponent },
     { path: 'user/login', component: LoginComponent },
@@ -62,10 +70,15 @@ const routes = [
         EditGroupComponent,
         GroupDetailsComponent,
         AddGroupComponent,
-        EditUserComponent
+        EditUserComponent,
+        AppModalComponent,
+        ListPickerModalComponent,
+        DateTimePickerModalComponent
     ],
     entryComponents: [
-        EventRegistrationModalComponent
+        EventRegistrationModalComponent,
+        ListPickerModalComponent,
+        DateTimePickerModalComponent
     ],
     bootstrap: [AppComponent],
     imports: [
