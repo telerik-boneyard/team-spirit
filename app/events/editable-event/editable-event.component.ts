@@ -105,7 +105,7 @@ export class EditableEventComponent implements OnInit{
         };
 
         return this._modalService.showModal(componentClass, opts)
-            .then(result => result ? result : Promise.reject(null));
+            .then(result => (result !== undefined) ? result : Promise.reject(null));
     }
 
     private _openGroupModal() {

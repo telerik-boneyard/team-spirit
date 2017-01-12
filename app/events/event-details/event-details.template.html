@@ -1,4 +1,4 @@
-<StackLayout>
+<ScrollView class="cntnr">
     <ActionBarExtension>
         <ActionItem>
             <Label [text]="event && event.Name"></Label>
@@ -8,54 +8,64 @@
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
+    
     <StackLayout *ngIf="event">
         <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
-        <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="button-action"></Button>
+    
+        <StackLayout class="info-container">
+            <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="button-action"></Button>
 
-        <StackLayout orientation="horizontal">
-            <StackLayout style="width: 130"> <!-- remove inline style -->
-                <Label [text]="'DATE'"></Label>
-                <Label *ngIf="getDate()" [text]="getDate() | date:dateFormat"></Label>
-                <Label *ngIf="!getDate()" [text]="'TBD'"></Label>
-            </StackLayout>
-            <Image style="width: 30; height: 30" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
-        </StackLayout>
-
-        <Label [text]="'DESCRIPTION'"></Label>
-        <Label [text]="event.Description"></Label>
-
-        <StackLayout orientation="horizontal">
-            <StackLayout>
-                <Label [text]="'LOCATION'"></Label>
-                <Label [text]="event.LocationName"></Label>
-            </StackLayout>
-            <Image *ngIf="event.LocationURL" style="width: 30; height: 30" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
-        </StackLayout>
-
-        <Label [text]="'GROUP'"></Label>
-        <Label [text]="event.Group"></Label>
-
-        <Label [text]="'ORGANIZER'"></Label>
-        <Label [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
-
-        <Label [text]="'REGISTERED PARTICIPANTS'"></Label>
-        
-        <ListView *ngIf="registeredUsers.length > 0" [items]="registeredUsers.slice(0, 3)">
-            <template let-item="item">
+            <StackLayout class="info-wrapper">
                 <StackLayout orientation="horizontal">
-                    <Image *ngIf="item.ImageUrl" style="width: 15; height: 15; display: inline-block;" src="{{item.ImageUrl}}"></Image> <!-- remove inline style -->
+                    <Label class="info-label" text="Date"></Label>
+                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)"></Label>
+                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
                 </StackLayout>
-            </template>
-        </ListView>
-            
-        <StackLayout *ngIf="registeredUsers.length > 0" orientation="horizontal">
-            <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
-            <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
-        </StackLayout>
+                
+                <Label *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
+                <Label *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
+            </StackLayout>
 
-        <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
+            <StackLayout class="info-wrapper">
+                <Label class="info-label" text="Description"></Label>
+                <Label [text]="event.Description" [textWrap]="true"></Label>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" class="info-wrapper">
+                <StackLayout>
+                    <Label class="info-label" text="Location"></Label>
+                    <Label [text]="event.LocationName"></Label>
+                </StackLayout>
+                <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
+            </StackLayout>
+
+            <StackLayout class="info-wrapper">
+                <Label class="info-label" text="Group"></Label>
+                <Label [text]="event.Group"></Label>
+            </StackLayout>
+
+            <StackLayout class="info-wrapper">
+                <Label class="info-label" text="Organizer"></Label>
+                <Label [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
+            </StackLayout>
+
+            <StackLayout class="info-wrapper no-separator">
+                <Label class="info-label" text="Registered Participants"></Label>
+                
+                <WrapLayout *ngIf="registeredUsers.length > 0" orientation="horizontal">
+                    <Image *ngFor="let user of registeredUsers.slice(0, 3)" class="user-image" src="{{getResizedImageUrl(user.ImageUrl, true)}}"></Image>
+                    <StackLayout orientation="horizontal">
+                        <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
+                        <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
+                    </StackLayout>
+                </WrapLayout>
+                
+                <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
+            </StackLayout>
+
+        </StackLayout>
     </StackLayout>
 
     <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
-</StackLayout>
+</ScrollView>

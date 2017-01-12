@@ -1,3 +1,49 @@
+.cntnr {
+    height: 100%;
+    background-color: #fff;
+}
+
+.info-container {
+    padding: 15;
+}
+
+.info-wrapper {
+    margin: 15 0 0 0;
+    padding-bottom: 15;
+    
+    border-width: 0;
+    border-bottom-width: 2;
+    border-color: #ccc;
+}
+
+.info-wrapper.no-separator {
+    border-width: 0;
+}
+
+.button-action {
+    text-transform: capitalize;
+}
+
+.info-wrapper .info-label {
+    color: #F4550F;
+    text-transform: uppercase;
+}
+
+.user-image {
+    width: 30;
+    height: 30;
+    border-radius: 100%;
+}
+
+.info-icon {
+    width: 25;
+    height: 25;
+}
+
 Label {
-    color: white;
+    color: #000;
+}
+
+.tbd {
+    margin-left: 5;
 }

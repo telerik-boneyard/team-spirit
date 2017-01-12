@@ -42,7 +42,7 @@ export class EventDetailsComponent implements OnInit {
                     this.event = event;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
                 })
-                .catch(this._onError);
+                .catch(this._onError.bind(this));
 
             this._usersService.currentUser()
                 .then(currentUser => {
@@ -54,7 +54,7 @@ export class EventDetailsComponent implements OnInit {
                     this.alreadyRegistered = this.registeredUsers.some(u => u.Id === this._currentUser.Id);
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
-                .catch(this._onError);
+                .catch(this._onError.bind(this));
         });
     }
 
@@ -66,8 +66,13 @@ export class EventDetailsComponent implements OnInit {
         return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
     }
 
-    getResizedImageUrl(rawUrl: string): string {
-        return utilities.getAsResizeUrl(rawUrl);
+    getResizedImageUrl(rawUrl: string, userImage = false): string {
+        let dims: any = { width: 750, height: 400 };
+
+        if (userImage) {
+            dims = { width: 60, height: 60 };
+        }
+        return utilities.getAsResizeUrl(rawUrl, dims);
     }
 
     getDate() {
@@ -95,7 +100,7 @@ export class EventDetailsComponent implements OnInit {
                 this.registeredUsers.unshift(this._currentUser);
             }
         })
-        .catch(this._onError);
+        .catch(this._onError.bind(this));
     }
 
     showLocation() {
