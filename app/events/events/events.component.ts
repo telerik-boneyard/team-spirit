@@ -50,8 +50,8 @@ export class EventsComponent implements OnInit {
                 return Promise.all([prm1, prm2]);
             })
             .then((events) => {
-                this.pastEvents = [];// events[0];
-                this.upcomingEvents = []; // events[1];
+                this.pastEvents = events[0];
+                this.upcomingEvents = events[1];
                 this.initialized = true;
             })
             .catch(err => this._alertsService.showError(err.message));
