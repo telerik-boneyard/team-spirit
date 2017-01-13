@@ -1,36 +1,22 @@
-.main-container {
-  height: 640;
-  margin-left: 40;
-  margin-right: 40;
-  padding-bottom: 15;
-  vertical-align: center;
-}
-
-text-field {
-  border-width: 0 0 1 0;
+TextField {
+  margin-bottom: 20;
   border-color: #ffffff;
   color: #ffffff;
   placeholder-color: #ffffff;
 }
 
-button {
-  margin-bottom: 20;
+.main-container {
+  margin-left: 30;
+  margin-right: 30;
+  vertical-align: center;
 }
 
 .logo {
   width: 560;
+  margin-top: 20;
   margin-bottom: 30;
 }
 
-.initial-label {
-  color: #ffffff;
-  horizontal-align: center;
-  margin-bottom: 80;
-}
-
-.initial-button {
-  color: #ffffff;
-  height: 35;
-  horizontal-align: center;
-  vertical-align: center;
+.btn {
+  margin-bottom: 10;
 }

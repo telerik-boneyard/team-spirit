@@ -1,27 +1,26 @@
 <ScrollView class="cntnr">
     <ActionBarExtension>
         <ActionItem>
-            <Label [text]="event && event.Name"></Label>
+            <Label [text]="event && event.Name" textWrap="true"></Label>
         </ActionItem>
         <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
             ios.systemIcon="2" android.systemIcon="ic_menu_edit"
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
-    
+
     <StackLayout *ngIf="event">
         <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
-    
+
         <StackLayout class="info-container">
-            <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="button-action"></Button>
+            <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Button>
 
             <StackLayout class="info-wrapper">
-                <StackLayout orientation="horizontal">
-                    <Label class="info-label" text="Date"></Label>
-                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)"></Label>
-                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png"></Image> <!-- remove inline style -->
-                </StackLayout>
-                
+                <GridLayout columns="auto, auto, *">
+                    <Label class="info-label" text="Date" col="0"></Label>
+                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1"></Label>
+                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png" col="2"></Image> <!-- remove inline style -->
+                </GridLayout>
                 <Label *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
                 <Label *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
             </StackLayout>
@@ -31,12 +30,12 @@
                 <Label [text]="event.Description" [textWrap]="true"></Label>
             </StackLayout>
 
-            <StackLayout orientation="horizontal" class="info-wrapper">
-                <StackLayout>
-                    <Label class="info-label" text="Location"></Label>
-                    <Label [text]="event.LocationName" [textWrap]="true"></Label>
-                </StackLayout>
-                <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
+            <StackLayout class="info-wrapper">
+                <GridLayout columns="auto, *">
+                    <Label class="info-label" text="Location" col="0"></Label>
+                    <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png" col="1"></Image> <!-- remove inline style -->
+                </GridLayout>
+                <Label [text]="event.LocationName" [textWrap]="true"></Label>
             </StackLayout>
 
             <StackLayout class="info-wrapper">
@@ -51,15 +50,15 @@
 
             <StackLayout class="info-wrapper no-separator">
                 <Label class="info-label" text="Registered Participants"></Label>
-                
+
                 <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" orientation="horizontal">
                     <Image *ngFor="let user of registeredUsers.slice(0, 3)" class="user-image" src="{{getResizedImageUrl(user.ImageUrl, true)}}"></Image>
                     <StackLayout orientation="horizontal" (tap)="toggleExpandedUsers()" class="expandable">
                         <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
-                        <Label [text]="(registeredUsers.length === 1 ? ' is' : ' are') + ' going.'"></Label>
+                        <Label [text]="(registeredUsers.length === 1 ? 'is' : 'are') + ' going'"></Label>
                     </StackLayout>
                 </WrapLayout>
-                
+
                 <Label *ngIf="registeredUsersExpanded" (tap)="collapseExpandedUsers()" [text]="getAllRegisteredUserNames()" [textWrap]="true"></Label>
                 <Label *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
             </StackLayout>

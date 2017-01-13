@@ -1,10 +1,10 @@
 <StackLayout>
     <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)">
         <ListView [items]="availableDates">
-            <template let-option="item">
-                <StackLayout orientation="horizontal">
-                    <Switch [(ngModel)]="option.isSelected"></Switch>
-                    <Label [text]="option.value | date:dateFormat"></Label>
+            <template let-option="item" class="form">
+                <StackLayout orientation="horizontal" class="input-field switch-field">
+                    <Switch class="switch" [(ngModel)]="option.isSelected"></Switch>
+                    <Label class="label" [text]="option.value | date:dateFormat"></Label>
                 </StackLayout>
             </template>
         </ListView>

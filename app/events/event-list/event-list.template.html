@@ -1,18 +1,18 @@
 <ListView [items]="events" (itemTap)="eventTap($event)" class="list-events" separatorColor="gray">
     <template let-event="item">
         <StackLayout>
-            <Label [text]="event.Name" class="event-name"></Label>
-            <GridLayout columns="*, 100" class="event-date-wrp">
-                <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date"></Label>
+            <Label [text]="event.Name" textWrap="true" class="event-name"></Label>
+            <GridLayout columns="auto, *" class="event-date-wrp">
+                <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date" textWrap="true"></Label>
                 <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
             </GridLayout>
             <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
             <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
-            <StackLayout orientation="horizontal" class="event-organiser">
-                <Image *ngIf="event.Organizer.ImageUrl" src="{{event.Organizer.ImageUrl}}" class="user-image"></Image>
-                <Label [text]="event.Organizer.DisplayName + ' | '"></Label>
-                <Label [text]="event.Group"></Label>
-            </StackLayout>
+            <GridLayout columns="auto, auto, *" class="event-organiser">
+                <Image *ngIf="event.Organizer.ImageUrl" src="{{event.Organizer.ImageUrl}}" class="user-image" col="0"></Image>
+                <Label [text]="event.Organizer.DisplayName + ' | '" col="1" textWrap="true" class="user-name"></Label>
+                <Label [text]="event.Group" col="2" class="group"></Label>
+            </GridLayout>
         </StackLayout>
     </template>
 </ListView>

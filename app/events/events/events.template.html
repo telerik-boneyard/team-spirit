@@ -8,7 +8,7 @@
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
-    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton>
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
             

@@ -1,12 +1,14 @@
 .modal-cntnr {
-    background-color: #fff;
-    margin-top: 30%;
-    width: 75%;
-    padding: 35 20;
-
-    border-radius: 10%;
+  background-color: #fff;
+  margin-top: 30%;
+  width: 90%;
+  padding: 35 20;
 }
 
 .controls-wrapper {
-    margin-top: 25;
+  margin-top: 25;
+}
+
+.btn-small {
+  color: #888;
 }

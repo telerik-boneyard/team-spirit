@@ -1,20 +1,20 @@
-<StackLayout class="main-container">
-    <Image
-      src="res://logo"
-      class="logo"></Image>
-    <TextField hint="Username" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
-    <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
-    <TextField *ngIf="isSignupView" hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
+<StackLayout class="form main-container">
+    <Image src="res://logo" class="logo"></Image>
+    <StackLayout class="input-field">
+        <TextField hint="Username" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
+    </StackLayout>
+    <StackLayout class="input-field">
+        <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
+    </StackLayout>
+    <StackLayout class="input-field" *ngIf="isSignupView">
+        <TextField hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
+    </StackLayout>
     <StackLayout *ngIf="!isSignupView">
-        <Button text="Log in" (tap)="login()" class="button-action"></Button>
-        <StackLayout (tap)="changeView(true)" class="initial-button">
-            <Label text="Don't have an account yet? Sign up" class="initial-button-label"></Label>
-        </StackLayout>
+        <Button text="Log in" (tap)="login()" class="btn btn-primary"></Button>
+        <Button text="Don't have an account yet? Sign up" (tap)="changeView(true)" class="btn btn-small"></Button>
     </StackLayout>
     <StackLayout *ngIf="isSignupView">
-        <Button text="Sign Up" (tap)="signup()" class="button-action"></Button>
-        <StackLayout (tap)="changeView(false)" class="initial-button">
-            <Label text="Back to login" class="initial-button-label"></Label>
-        </StackLayout>
+        <Button text="Sign Up" (tap)="signup()" class="btn btn-primary"></Button>
+        <Button text="Back to login" (tap)="changeView(false)" class="btn btn-small"></Button>
     </StackLayout>
 </StackLayout>
