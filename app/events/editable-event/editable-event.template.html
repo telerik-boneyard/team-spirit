@@ -1,31 +1,31 @@
 <ScrollView class="cntnr">
-    <StackLayout class="info-cntnr">
-        <StackLayout class="label-field-pair">
+    <StackLayout class="form info-cntnr">
+        <StackLayout class="input-field">
             <Label class="label" text="Name"></Label>
             <TextField class="field" [(ngModel)]="event.Name"></TextField>
         </StackLayout>
 
-        <StackLayout class="label-field-pair">
+        <StackLayout class="input-field">
             <Label class="label" text="Description"></Label>
             <TextView class="field" [(ngModel)]="event.Description" [editable]="true"></TextView>
         </StackLayout>
 
-        <StackLayout class="label-field-pair group with-popup">
+        <StackLayout class="input-field group with-popup">
             <Label class="label" text="Group"></Label>
             <Label class="field" (tap)="onSelectGroup()" [text]="getSelectedGroupName()" [ngClass]="{ 'not-selected': !event.GroupId }"></Label>
         </StackLayout>
 
-        <StackLayout class="label-field-pair">
+        <StackLayout class="input-field">
             <Label class="label" text="Location Name"></Label>
             <TextView class="field" [(ngModel)]="event.LocationName" [editable]="true"></TextView>
         </StackLayout>
 
-        <StackLayout class="label-field-pair">
+        <StackLayout class="input-field">
             <Label class="label" text="Location Url"></Label>
             <TextField class="field" [(ngModel)]="event.LocationURL" keyboardType="url"></TextField>
         </StackLayout>
 
-        <StackLayout class="label-field-pair date with-popup">
+        <StackLayout class="input-field date with-popup">
             <Label class="label" text="Event Date"></Label>
             <StackLayout orientation="horizontal" *ngFor="let date of dateOptions; let ind = index">
                 <Label class="field" [text]="date | date:dateFormat"></Label>
@@ -34,7 +34,7 @@
             <Label [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
         </StackLayout>
 
-        <StackLayout *ngIf="currentUser" class="label-field-pair user">
+        <StackLayout *ngIf="currentUser" class="input-field user">
             <Label class="label" text="Organizer"></Label>
             <StackLayout orientation="horizontal">
                 <Image class="user-image" src="{{getResizedImageUrl(currentUser.ImageUrl)}}"></Image>
@@ -42,9 +42,9 @@
             </StackLayout>
         </StackLayout>
 
-        <StackLayout class="label-field-pair" orientation="horizontal" (tap)="toggleOpenForRegistration()">
-            <Switch [(ngModel)]="event.OpenForRegistration"></Switch>
-            <Label text="Open for Registration"></Label>
+        <StackLayout class="input-field switch-field" orientation="horizontal" (tap)="toggleOpenForRegistration()">
+            <Switch class="switch" [(ngModel)]="event.OpenForRegistration"></Switch>
+            <Label class="label" text="Open for Registration"></Label>
         </StackLayout>
     </StackLayout>
 </ScrollView>

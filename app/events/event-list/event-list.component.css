@@ -1,6 +1,6 @@
 .main-container {
   height: 640;
-  background-color: #ffffff;
+  background-color: #fff;
 }
 
 .list-events {
@@ -16,12 +16,13 @@
 
 .event-date-wrp,
 .event-organiser {
+  font-size: 14;
   color: #ADADAD;
 }
 
 .event-name {
   margin-bottom: 0;
-  font-size: 30;
+  font-size: 28;
   color: #F4550F;
 }
 
@@ -33,8 +34,15 @@
   margin-bottom: 20;
 }
 
+.user-image,
+.user-name,
+.group {
+  vertical-align: middle;
+}
+
 .user-image {
-  border-radius: 100%;
   width: 30;
   height: 30;
+  margin-right: 10;
+  border-radius: 50%;
 }
