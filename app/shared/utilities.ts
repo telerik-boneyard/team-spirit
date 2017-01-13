@@ -1,8 +1,11 @@
 import { constants } from './';
 
 export function getAsResizeUrl (rawUrl: string, opts = { width: 500, height: 275 }) {
+    if (rawUrl === null) {
+        rawUrl = constants.emptyImage;
+    }
     return `https://bs1.cdn.telerik.com/image/v1/${constants.appId}/resize=w:${opts.width},h:${opts.height},fill:cover/${rawUrl}`;
-}
+};
 
 export const dateFormat = 'MMM dd, yyyy, hh:mm a';
 
@@ -30,4 +33,6 @@ export function findIndex<T> (arr: T[], predicate: (item: T) => any): number {
             return i;
         }
     }
+
+    return -1;
 };

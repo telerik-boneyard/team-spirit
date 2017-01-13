@@ -1,12 +1,12 @@
-<ListView *ngIf="groups" [items]="groups" (itemTap)="groupTap($event)">
+<ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)">
     <template let-group="item">
-        <StackLayout orientation="horizontal" class="group">
-            <Image *ngIf="group.ImageUrl" class="group-image" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
+        <GridLayout columns="50, 200, auto" rows="auto, auto">
+            <Image rowSpan="2" row="0" col="0" *ngIf="group.ImageUrl" class="group-image" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
 
-            <StackLayout>
-                <Label [text]="group.Name" class="group-name"></Label>
-                <Label [text]="group.Description" [textWrap]="true"></Label>
-            </StackLayout>
-        </StackLayout>
+            <Label row="0" col="1" [text]="group.Name" class="group-name"></Label>
+            <Label row="1" col="1" [text]="getSubtext(group)"></Label>
+
+            <Label *ngIf="!areUserGroups" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
+        </GridLayout>
     </template>
 </ListView>

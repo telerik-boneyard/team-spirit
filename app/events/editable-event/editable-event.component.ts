@@ -86,7 +86,7 @@ export class EditableEventComponent implements OnInit{
 
     getSelectedGroupName() {
         let name = this.selectedGroup && this.selectedGroup.Name;
-        return name ? name : 'Select Group';
+        return name ? name : '';
     }
 
     private _validateDateOption(date: Date) {

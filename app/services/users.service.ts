@@ -40,7 +40,6 @@ export class UsersService {
 
     currentUser(reCache = false) {
         if (!this._currUserCache || reCache) {
-            console.log('making request for curr user');
             this._currUserCache = this._users.expand(this._imageExpandExp)
                 .currentUser()
                 .then(u => this._serverUserToUserModel(u.result));

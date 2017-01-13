@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     login() {
         this._usersService.login(this.user.username, this.user.password)
             .then(() => {
-                this._routerExtensions.navigateByUrl('events');
+                this._routerExtensions.navigate(['events', { clearHistory: true }]);
             })
             .catch((e) => {
                 this._alertsService.showError(e && e.message);

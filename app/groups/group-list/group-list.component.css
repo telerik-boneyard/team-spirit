@@ -11,3 +11,17 @@
 .group-name {
     color: #000;
 }
+
+.join-btn {
+    background-color: transparent;
+    color: #F4550F;
+    text-transform: capitalize;
+    font-size: 15;
+    width: 110;
+    padding: 8 0;
+    border-width: 1;
+    border-color: #F4550F;
+    border-radius: 3%;
+    text-align: center;
+    vertical-align: center;
+}

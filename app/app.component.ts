@@ -35,7 +35,7 @@ export class AppComponent implements OnInit {
             this.loggedIn = isLoggedIn;
 
             if (this.loggedIn) {
-                this._routerExtensions.navigate(['events']);
+                this._routerExtensions.navigate(["/events"], { clearHistory: true });
             } else {
                 this._routerExtensions.navigate(['user/login']);
             }

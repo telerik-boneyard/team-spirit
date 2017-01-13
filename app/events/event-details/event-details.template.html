@@ -34,7 +34,7 @@
             <StackLayout orientation="horizontal" class="info-wrapper">
                 <StackLayout>
                     <Label class="info-label" text="Location"></Label>
-                    <Label [text]="event.LocationName"></Label>
+                    <Label [text]="event.LocationName" [textWrap]="true"></Label>
                 </StackLayout>
                 <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png"></Image> <!-- remove inline style -->
             </StackLayout>

@@ -10,11 +10,11 @@
     </ActionBarExtension>
     
     <TabView *ngIf="initialized" [selectedIndex]="0" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
-        <StackLayout *tabItem="{ title: 'Public' }" class="tab-item">
-            <group-list [groups]="publicGroups | async" (onGroupTap)="selectGroup($event)"></group-list>
-        </StackLayout>
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
-            <group-list [groups]="userGroups | async" (onGroupTap)="selectGroup($event)"></group-list>
+            <group-list [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
+        </StackLayout>
+        <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
+            <group-list [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
         </StackLayout>
     </TabView>
     

@@ -29,4 +29,8 @@ export class EverliveProvider {
     getNewQuery() {
         return new Everlive.Query();
     }
+
+    getNewAggregateQuery() {
+        return new Everlive.AggregateQuery();
+    }
 }

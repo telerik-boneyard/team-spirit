@@ -14,6 +14,7 @@ import { utilities } from '../../shared';
 export class GroupDetailsComponent implements OnInit {
     group: Group;
     hasJoined: boolean = false;
+    members: User[] = [];
     private _currentUser: User;
 
     constructor(
@@ -27,24 +28,52 @@ export class GroupDetailsComponent implements OnInit {
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(p => {
-            this._groupsService.getById(p['id'])
-                .then(group => {
-                    this.group = group;
-                    return this._usersService.currentUser()
-                })
+            this._usersService.currentUser()
                 .then(user => {
                     this._currentUser = user;
-                    return this._groupsService.isUserAMember(user.Id, this.group.Id);
+                    return this._groupsService.getById(p['id']);
                 })
-                .then(isMember => this.hasJoined = isMember)
+                .then(group => {
+                    this.group = group;
+                    let promise = Promise.resolve(false);
+
+                    if (p['joinRedirect']) { // join if its a join redirect
+                        promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
+                    }
+
+                    return promise;
+                })
+                .then(() => {
+                    if (this.group.RequiresApproval && p['joinRedirect']) {
+                        this._alertsService.showSuccess('Request to join sent');
+                    }
+                    
+                    return this._groupsService.getGroupMembers(this.group.Id);
+                })
+                .then(members => {
+                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
+                    this.members = members;
+                })
                 .catch(err => {
                     this._alertsService.showError(err && err.message);
                 });;
         });
     }
 
-    getResizedImageUrl(rawUrl: string) {
-        return utilities.getAsResizeUrl(rawUrl);
+    getResizedImageUrl(rawUrl: string, size?) {
+        return utilities.getAsResizeUrl(rawUrl, size);
+    }
+
+    getApprovalBtnText() {
+        return this.group.RequiresApproval ? 'Approval' : 'No Approval';
+    }
+
+    getRemainingText() {
+        let remainingCount = Math.max(0, this.members.length - 5);
+        if (remainingCount) {
+            return `and ${remainingCount} more`;
+        }
+        return '';
     }
 
     canEdit() {
@@ -59,10 +88,17 @@ export class GroupDetailsComponent implements OnInit {
         return this.group.RequiresApproval ? 'request to join' : 'join';
     }
 
+    onViewEvents() {
+        console.log('go to events clicked');
+    }
+
     onJoin() {
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {
-                this.hasJoined = true;
+                if (!this.group.RequiresApproval) {
+                    this.hasJoined = true;
+                    this.members.push(this._currentUser);
+                }
             })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);
@@ -71,6 +107,11 @@ export class GroupDetailsComponent implements OnInit {
 
     onLeave() {
         this._groupsService.leaveGroup(this.group.Id, this._currentUser.Id)
+            .then(() => { 
+                this.hasJoined = false;
+                this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
+                this._alertsService.showSuccess(`Left group ${this.group.Name}`);
+             })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);
             });

@@ -10,8 +10,8 @@ import { Group } from '../../shared/models';
     styleUrls: ['groups/groups/groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-    publicGroups: Promise<Group[]>;
-    userGroups: Promise<Group[]>;
+    publicGroups: Group[];
+    userGroups: Group[];
     initialized: boolean = false;
 
     constructor(
@@ -22,14 +22,17 @@ export class GroupsComponent implements OnInit {
     ) {}
     
     ngOnInit() {
-        this.publicGroups = this._groupsService.getPublicGroups();
+        // this._routerExtensions.navigateByUrl(`/groups/4e292710-9b69-11e6-901f-5dd3e4bc26b4`); // TODO: remove
         
         this._usersService.currentUser()
-            .then(u => this.userGroups = this._groupsService.getUserGroups(u.Id));
-            
-        
-        Promise.all([this.publicGroups, this.userGroups])
-            .then(() => this.initialized = true, () => this.initialized = false);
+            .then(u => {
+                let prm1 = this._groupsService.getUnjoinedGroups(u.Id)
+                    .then(res => this.publicGroups = res);
+                let prm2 = this._groupsService.getUserGroups(u.Id)
+                    .then(res => this.userGroups = res);
+                return Promise.all([prm1, prm2]);
+            })
+            .then(r => this.initialized = true);
     }
 
     selectGroup(group: Group) {

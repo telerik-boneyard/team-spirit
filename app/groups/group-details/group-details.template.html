@@ -10,21 +10,29 @@
     </ActionBarExtension>
     <StackLayout *ngIf="group">
         <Image *ngIf="group.ImageUrl" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
-        
-        <Label [text]="group && group.Name"></Label>
 
-        <StackLayout orientation="horizontal">
-            <Label text="Requires Approval:"></Label>
-            <Label [text]="!!group.RequiresApproval"></Label>
+        <GridLayout columns="*, *, *" rows="auto" class="action-bar">
+            <Label class="btn" row="0" col="0" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
+            <Label class="btn" row="0" col="0" *ngIf="hasJoined" text="Joined" (tap)="onLeave()"></Label>
+            <Label class="btn" row="0" col="1" [text]="getApprovalBtnText()"></Label>
+            <Label class="btn" row="0" col="2" text="View Events" (tap)="onViewEvents()"></Label>
+        </GridLayout>
+
+        <StackLayout class="info-container">
+            <StackLayout class="info-wrapper">
+                <Label class="info-label" text="Description"></Label>
+                <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>
+            </StackLayout>
+
+            <StackLayout class="info-wrapper no-separator">
+                <Label class="info-label" text="Members"></Label>
+                <WrapLayout *ngIf="members.length">
+                    <Image *ngFor="let user of members.slice(0, 5)" src="{{getResizedImageUrl(user.ImageUrl, { width: 60, height: 60 })}}" class="user-image"></Image>
+                    <Label *ngIf="getRemainingText()" [text]="getRemainingText()"></Label>
+                </WrapLayout>
+                <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
+            </StackLayout>
         </StackLayout>
-
-        <StackLayout orientation="horizontal">
-            <Label text="Group is Public:"></Label>
-            <Label [text]="!!group.IsPublic"></Label>
-        </StackLayout>
-
-        <Button *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
-        <Button *ngIf="hasJoined" [text]="'Leave'" (tap)="onLeave()"></Button>
     </StackLayout>
 
     <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
