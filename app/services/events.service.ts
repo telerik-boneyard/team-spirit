@@ -55,20 +55,18 @@ export class EventsService {
             .then(r => r.result);
     }
 
-    getUpcoming() {
-        let filter = this._getUpcomingFilter();
+    getUpcoming(groupIds: string[]) {
+        let filter = this._getUpcomingFilter(groupIds);
         return this._getWithFilter(filter);
     }
 
     getUpcomingCountsByGroups(groupIds: string[]): Promise<{ GroupId: string, Name: number }[]> {
-        let groupFilter = { GroupId: { $in: groupIds} };
-        let filter = this._getUpcomingFilter(groupFilter);
+        let filter = this._getUpcomingFilter(groupIds);
 
         let query = this._elProvider.getNewAggregateQuery();
         query.where(filter);
         query.groupBy('GroupId').count('Name');
-        return this._data.aggregate(query)
-            .then((r: any) => r.result);
+        return this._data.aggregate(query).then((r: any) => r.result);
     }
 
     getPast(userGroupIds: string[]) {
@@ -125,7 +123,7 @@ export class EventsService {
         return this._data.destroySingle(eventId);
     }
 
-    private _getUpcomingFilter(groupFilter?) {
+    private _getUpcomingFilter(userGroupIds: string[]) {
         let registrationFilter = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
         let dateFilter = [
                 { EventDate: { $gte: new Date().toISOString() } },
@@ -136,12 +134,10 @@ export class EventsService {
         let filter = {
             $and: [
                 { $or: registrationFilter },
-                { $or: dateFilter }
+                { $or: dateFilter },
+                { GroupId: { $in: userGroupIds } }
             ]
         };
-        if (groupFilter) {
-            filter.$and.push(groupFilter);
-        }
         
         return filter;
     }

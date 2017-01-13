@@ -10,10 +10,18 @@
     </ActionBarExtension>
     <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
-            <event-list [events]="upcomingEvents | async" (onEventTap)="showDetails($event)"></event-list>
+            <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
+            
+            <StackLayout *ngIf="!upcomingEvents.length">
+                <Label text="No upcoming events" [textWrap]="true"></Label>
+                <Button [nsRouterLink]="['/groups']" text="To Groups"></Button>
+            </StackLayout>
         </StackLayout>
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">
-            <event-list [events]="pastEvents | async" (onEventTap)="showDetails($event)"></event-list>
+            <event-list *ngIf="pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)"></event-list>
+            
+            <Label *ngIf="!pastEvents.length" text="No past events" [textWrap]="true"></Label>
+
         </StackLayout>
     </TabView>
 
