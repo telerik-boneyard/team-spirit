@@ -85,7 +85,12 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     getJoinBtnText() {
-        return this.group.RequiresApproval ? 'request to join' : 'join';
+        return this.group.RequiresApproval ? 'Ask to join' : 'Join';
+    }
+
+    getDetailsText() {
+        let text = `This group is ${this.group.IsPublic ? 'public' : 'private'} and ${this.group.RequiresApproval ? 'requires approval' : 'does not require approval'} to join.`;
+        return text;
     }
 
     onViewEvents() {
@@ -110,7 +115,6 @@ export class GroupDetailsComponent implements OnInit {
             .then(() => { 
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
-                this._alertsService.showSuccess(`Left group ${this.group.Name}`);
              })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);

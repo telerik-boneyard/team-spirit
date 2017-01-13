@@ -5,21 +5,14 @@
     /*transform: translateY(-25);*/
 }
 
-.action-bar {
-    
-}
-
 .info-container {
     padding: 15;
 }
 
 .action-bar .btn {
-    /*border-radius: 0%;
-    margin: 0;*/
-    width: 33.5%;
+    width: 50%;
     height: 50;
     background-color: #ddd;
-
 }
 
 .info-wrapper {

@@ -60,7 +60,7 @@ export class EventsService {
         return this._getWithFilter(filter);
     }
 
-    getUpcomingByGroups(groupIds: string[]): Promise<{ GroupId: string, Name: number }[]> {
+    getUpcomingCountsByGroups(groupIds: string[]): Promise<{ GroupId: string, Name: number }[]> {
         let groupFilter = { GroupId: { $in: groupIds} };
         let filter = this._getUpcomingFilter(groupFilter);
 
@@ -71,13 +71,17 @@ export class EventsService {
             .then((r: any) => r.result);
     }
 
-    getPast() {
+    getPast(userGroupIds: string[]) {
+        if (!userGroupIds.length) {
+            return Promise.reject({ message: 'No group ids specified' });
+        }
+        
         let filter = {
-            $or: [
-                { EventDate: { $lt: new Date().toISOString() } }
-            ]
+            EventDate: { $lt: new Date().toISOString() },
+            GroupId: { $in: userGroupIds }
         };
-        return this._getWithFilter(filter, true, { field: 'EventDate', desc: true });
+        return this._usersService.currentUser()
+            .then(u => this._getWithFilter(filter, true, { field: 'EventDate', desc: true }));
     }
 
     getParticipants(eventId: string) {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
-import { EventsService, UsersService } from '../../services';
+import { EventsService, UsersService, GroupsService } from '../../services';
 import { Event } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -21,6 +21,7 @@ export class EventsComponent implements OnInit {
     constructor(
         private _usersService: UsersService,
         private _eventsService: EventsService,
+        private _groupsService: GroupsService,
         private _routerExtensions: RouterExtensions,
         private _page: Page
     ) { }
@@ -32,10 +33,18 @@ export class EventsComponent implements OnInit {
     ngOnInit() {
         this._page.actionBarHidden = false;
         this.upcomingEvents = this._eventsService.getUpcoming();
-        this.pastEvents = this._eventsService.getPast();
+
+        this.pastEvents = this._usersService.currentUser()
+            .then(user => {
+                this.canAdd = !!user;
+                return this._groupsService.getUserGroups(user.Id);
+            })
+            .then(userGroups => {
+                return this._eventsService.getPast(userGroups.map(g => g.Id));
+            });
+
         Promise.all([this.upcomingEvents, this.pastEvents])
             .then(() => this.initialized = true, () => this.initialized = false);
-        this._usersService.currentUser().then(user => this.canAdd = !!user);
     }
 
     showDetails(event: Event) {

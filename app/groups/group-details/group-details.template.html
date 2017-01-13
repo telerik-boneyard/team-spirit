@@ -11,12 +11,12 @@
     <StackLayout *ngIf="group">
         <Image *ngIf="group.ImageUrl" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
 
-        <GridLayout columns="*, *, *" rows="auto" class="action-bar">
-            <Label class="btn" row="0" col="0" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
-            <Label class="btn" row="0" col="0" *ngIf="hasJoined" text="Joined" (tap)="onLeave()"></Label>
-            <Label class="btn" row="0" col="1" [text]="getApprovalBtnText()"></Label>
-            <Label class="btn" row="0" col="2" text="View Events" (tap)="onViewEvents()"></Label>
-        </GridLayout>
+        <Button class="button-action" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
+
+        <StackLayout *ngIf="hasJoined" orientation="horizontal" class="action-bar">
+            <Label class="btn" text="See Events" (tap)="onViewEvents()"></Label>
+            <Label class="btn" text="Leave Group" (tap)="onLeave()"></Label>
+        </StackLayout>
 
         <StackLayout class="info-container">
             <StackLayout class="info-wrapper">
@@ -24,13 +24,18 @@
                 <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>
             </StackLayout>
 
-            <StackLayout class="info-wrapper no-separator">
+            <StackLayout class="info-wrapper">
                 <Label class="info-label" text="Members"></Label>
                 <WrapLayout *ngIf="members.length">
                     <Image *ngFor="let user of members.slice(0, 5)" src="{{getResizedImageUrl(user.ImageUrl, { width: 60, height: 60 })}}" class="user-image"></Image>
                     <Label *ngIf="getRemainingText()" [text]="getRemainingText()"></Label>
                 </WrapLayout>
                 <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
+            </StackLayout>
+            
+            <StackLayout class="info-wrapper no-separator">
+                <Label class="info-label" text="Details"></Label>
+                <Label class="info-value" [text]="getDetailsText()" [textWrap]="true"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>

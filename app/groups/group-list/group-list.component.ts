@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, NgZone } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { GroupsService, UsersService, AlertService, EventsService } from '../../services';
@@ -23,8 +23,7 @@ export class GroupListComponent implements OnInit {
         private _eventsService: EventsService,
         private _groupsService: GroupsService,
         private _alertsService: AlertService,
-        private _usersService: UsersService,
-        private _zone: NgZone
+        private _usersService: UsersService
     ) {}
 
     ngOnInit() {
@@ -84,7 +83,7 @@ export class GroupListComponent implements OnInit {
 
     private _getUpcomingEvents() {
         let ids = this.groups.map(g => g.Id);
-        return this._eventsService.getUpcomingByGroups(ids)
+        return this._eventsService.getUpcomingCountsByGroups(ids)
             .then(evData => {
                 evData.forEach(d => {
                     this._addGroupInfo(d.GroupId, d.Name);
