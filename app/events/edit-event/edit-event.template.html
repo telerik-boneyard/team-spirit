@@ -1,13 +1,8 @@
-<StackLayout>
+<StackLayout class="cntnr">
     <ActionBarExtension>
         <NavigationButton ios.systemIcon="1" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem>
             <Label text="Edit Event"></Label>
-        </ActionItem>
-        <ActionItem
-            ios.systemIcon="16"
-            android.systemIcon="ic_menu_delete"
-            (tap)="delete()">
         </ActionItem>
         <ActionItem
             ios.systemIcon="0"
@@ -15,5 +10,10 @@
             (tap)="save()">
         </ActionItem>
     </ActionBarExtension>
-    <editable-event *ngIf="event" [event]="event"></editable-event>
+    <ScrollView>
+        <StackLayout>
+            <editable-event *ngIf="event" [event]="event"></editable-event>
+            <Label *ngIf="event" class="btn-delete" text="Delete event" (tap)="delete()"></Label>
+        </StackLayout>
+    </ScrollView>
 </StackLayout>

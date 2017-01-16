@@ -1,3 +1,8 @@
-StackLayout {
+.cntnr {
     background-color: #fff;
+}
+
+.btn-delete {
+    color: red;
+    text-align: right;
 }

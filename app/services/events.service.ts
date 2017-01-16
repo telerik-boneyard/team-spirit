@@ -70,7 +70,7 @@ export class EventsService {
     getUpcoming(groupIds: string[]) {
         return this._usersService.currentUser()
             .then(user => {
-                let filter: any = this._getUpcomingFilter(groupIds);
+                let filter = this._getUpcomingFilter(groupIds, user.Id);
                 return this._getWithFilter(filter);
             });
     }
@@ -138,8 +138,12 @@ export class EventsService {
         return this._data.destroySingle(eventId);
     }
 
-    private _getUpcomingFilter(userGroupIds: string[]) {
-        let registrationFilter = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
+    private _getUpcomingFilter(userGroupIds: string[], ownerId?: string) {
+        let registrationFilter: any[] = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
+        if (ownerId) {
+            registrationFilter.push({ Owner: ownerId });
+        }
+        
         let dateFilter = [
                 { EventDate: { $gte: new Date().toISOString() } },
                 { EventDate: { $exists: false } },
