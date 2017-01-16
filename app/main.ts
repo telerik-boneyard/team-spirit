@@ -21,7 +21,8 @@ import {
     EventListComponent,
     AddEventComponent,
     EditableEventComponent,
-    EditEventComponent
+    EditEventComponent,
+    EventDateVotesComponent
 } from './events';
 
 import {
@@ -44,6 +45,7 @@ const routes = [
     { path: 'events/add', component: AddEventComponent },
     { path: 'events/:id', component: EventDetailsComponent },
     { path: 'events/edit/:id', component: EditEventComponent },
+    { path: 'events/dateChoices/:id', component: EventDateVotesComponent },
 
     { path: 'groups', component: GroupsComponent },
     { path: 'groups/add', component: AddGroupComponent },
@@ -73,7 +75,8 @@ const routes = [
         EditUserComponent,
         AppModalComponent,
         ListPickerModalComponent,
-        DateTimePickerModalComponent
+        DateTimePickerModalComponent,
+        EventDateVotesComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,

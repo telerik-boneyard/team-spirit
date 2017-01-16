@@ -5,3 +5,4 @@ export * from './add-event/add-event.component';
 export * from './editable-event/editable-event.component';
 export * from './edit-event/edit-event.component';
 export * from './event-registration-modal/event-registration-modal.component';
+export * from './event-date-votes/event-date-votes.component';

@@ -1,0 +1,13 @@
+<StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="event && event.Name" textWrap="true"></Label>
+        </ActionItem>
+    </ActionBarExtension>
+    <StackLayout *ngIf="event">
+        <StackLayout *ngFor="let date of (event.EventDateChoices || []); let ind = index" orientation="horizontal">
+            <Label [text]="date | date:dateFormat"></Label>
+            <Label [text]="' : ' + (choiceCounts[ind] || 0)"></Label>
+        </StackLayout>
+    </StackLayout>
+</StackLayout>

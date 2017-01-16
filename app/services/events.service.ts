@@ -55,6 +55,18 @@ export class EventsService {
             .then(r => r.result);
     }
 
+    getDateChoicesVotes(eventId: string) {
+        let eventPromise = this.getById(eventId);
+        let choicesPromise = this._registrationsService.getEventDateChoices(eventId);
+        return Promise.all<any>([eventPromise, choicesPromise])
+            .then((res) => {
+                let event: Event = res[0];
+                let countByChoices: number[] = res[1];
+
+                return { event, countByChoices };
+            });
+    }
+
     getUpcoming(groupIds: string[]) {
         let filter = this._getUpcomingFilter(groupIds);
         return this._getWithFilter(filter);

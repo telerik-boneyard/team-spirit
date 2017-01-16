@@ -16,13 +16,14 @@
             <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Button>
 
             <StackLayout class="info-wrapper">
-                <GridLayout columns="auto, auto, *">
-                    <Label class="info-label" text="Date" col="0"></Label>
-                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1"></Label>
-                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png" col="2"></Image> <!-- remove inline style -->
+                <GridLayout columns="auto, auto, *" rows="auto, auto">
+                    <Label class="info-label" text="Date" col="0" row="0"></Label>
+                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
+                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png" col="2" row="0"></Image>
                 </GridLayout>
                 <Label *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
                 <Label *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
+                <Button *ngIf="!event.EventDate" [nsRouterLink]="['/events/dateChoices/' + event.Id]" text="Choices"></Button>
             </StackLayout>
 
             <StackLayout class="info-wrapper">
@@ -33,7 +34,7 @@
             <StackLayout class="info-wrapper">
                 <GridLayout columns="auto, *">
                     <Label class="info-label" text="Location" col="0"></Label>
-                    <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png" col="1"></Image> <!-- remove inline style -->
+                    <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png" col="1"></Image>
                 </GridLayout>
                 <Label [text]="event.LocationName" [textWrap]="true"></Label>
             </StackLayout>
