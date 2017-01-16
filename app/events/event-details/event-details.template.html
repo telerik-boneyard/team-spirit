@@ -23,7 +23,7 @@
                 </GridLayout>
                 <Label *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
                 <Label *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
-                <Button *ngIf="!event.EventDate" [nsRouterLink]="['/events/dateChoices/' + event.Id]" text="Choices"></Button>
+                <Button *ngIf="!event.EventDate" [nsRouterLink]="['/events/' + event.Id + '/date-choices']" text="Choices"></Button>
             </StackLayout>
 
             <StackLayout class="info-wrapper">

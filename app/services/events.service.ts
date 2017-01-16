@@ -49,6 +49,11 @@ export class EventsService {
         return this._getWithFilter({});
     }
 
+    getByGroupId(groupId: string) {
+        let filter = { GroupId: groupId };
+        return this._getWithFilter(filter);
+    }
+
     getById(eventId: string) {
         return this._data.expand(this._eventExpandExpression)
             .getById(eventId)

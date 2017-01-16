@@ -1,0 +1,12 @@
+<StackLayout>
+    <ActionBarExtension>
+        <ActionItem>
+            <Label [text]="group && group.Name && ('Events for ' + group.Name)" textWrap="true"></Label> <!-- ngIf makes it appear on other pages - dunno why :) -->
+        </ActionItem>
+    </ActionBarExtension>
+
+    <StackLayout class="cntnr">
+        <event-list *ngIf="events" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
+        <ActivityIndicator [busy]="!events" [visibility]="events ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </StackLayout>
+</StackLayout>

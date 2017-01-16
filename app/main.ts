@@ -33,7 +33,8 @@ import {
     EditGroupComponent,
     GroupDetailsComponent,
     AddGroupComponent,
-    GroupCreationModalComponent
+    GroupCreationModalComponent,
+    GroupEventsComponent
 } from './groups';
 
 const routes = [
@@ -47,12 +48,13 @@ const routes = [
     { path: 'events/add', component: AddEventComponent },
     { path: 'events/:id', component: EventDetailsComponent },
     { path: 'events/edit/:id', component: EditEventComponent },
-    { path: 'events/dateChoices/:id', component: EventDateVotesComponent },
+    { path: 'events/:id/date-choices', component: EventDateVotesComponent },
 
     { path: 'groups', component: GroupsComponent },
     { path: 'groups/add', component: AddGroupComponent },
     { path: 'groups/:id', component: GroupDetailsComponent },
-    { path: 'groups/edit/:id', component: EditGroupComponent }
+    { path: 'groups/edit/:id', component: EditGroupComponent },
+    { path: 'groups/:id/events', component: GroupEventsComponent }
 ];
 
 @NgModule({
@@ -80,7 +82,8 @@ const routes = [
         DateTimePickerModalComponent,
         EventCreationModalComponent,
         EventDateVotesComponent,
-        GroupCreationModalComponent
+        GroupCreationModalComponent,
+        GroupEventsComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,

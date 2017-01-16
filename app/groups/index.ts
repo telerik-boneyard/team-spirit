@@ -5,3 +5,4 @@ export * from './editable-group/editable-group.component';
 export * from './group-details/group-details.component';
 export * from './add-group/add-group.component';
 export * from './group-creation-modal/group-creation-modal.component';
+export * from './group-events/group-events.component';

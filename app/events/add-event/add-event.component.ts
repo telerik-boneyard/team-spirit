@@ -46,7 +46,7 @@ export class AddEventComponent {
             })
             .then(() => {
                 this._routerExtensions.navigateByUrl('/events');
-            }, err => {}) // silently ignore close
+            })
             .catch(err => err && this._alertService.showError(err.message));
     }
 

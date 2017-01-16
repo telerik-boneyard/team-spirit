@@ -94,7 +94,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onViewEvents() {
-        console.log('go to events clicked');
+        this._routerExtensions.navigate([`groups/${this.group.Id}/events`]);
     }
 
     onViewRequests() {
