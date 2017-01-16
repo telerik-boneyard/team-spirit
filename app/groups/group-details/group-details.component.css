@@ -10,9 +10,11 @@
 }
 
 .action-bar .btn {
-    width: 50%;
+    width: 30%;
     height: 50;
+    font-size: 11;
     background-color: #ddd;
+    color: #F4550F;
 }
 
 .info-wrapper {

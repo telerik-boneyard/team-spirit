@@ -24,6 +24,7 @@ export class ListPickerModalComponent {
     }
 
     onDone() {
-        this._params.closeCallback(this.selectedIndex);
+        let ind = this.availableOptions.length ? this.selectedIndex : -1;
+        this._params.closeCallback(ind)
     }
 }

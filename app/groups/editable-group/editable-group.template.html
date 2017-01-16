@@ -1,12 +1,32 @@
-<StackLayout>
-    <TextField hint="Name" [(ngModel)]="group.Name" returnKeyType="next"></TextField>
-    <StackLayout orientation="horizontal">
-        <Label text="Requires Approval:"></Label>
-        <Switch [(ngModel)]="group.RequiresApproval"></Switch>
+<StackLayout class="cntnr">
+    <Image src="{{getGroupResizedUrl(group.ImageUrl)}}"></Image>
+
+    <StackLayout class="input-field">
+        <Label class="label" text="Name"></Label>
+        <TextField class="field" [(ngModel)]="group.Name" [editable]="true" textWrap="true"></TextField>
     </StackLayout>
-    <StackLayout orientation="horizontal">
-        <Label text="Group is Public:"></Label>
-        <Switch [(ngModel)]="group.IsPublic"></Switch>
+
+    <StackLayout class="input-field">
+        <Label class="label" text="Description"></Label>
+        <TextView class="field" [(ngModel)]="group.Description" [editable]="true"></TextView>
     </StackLayout>
-    <TextView hint="Description" [(ngModel)]="group.Description" [editable]="true" returnKeyType="next"></TextView>
+
+    <StackLayout class="input-field with-popup">
+        <Label class="label" text="Group Type"></Label>
+        <Label class="field" (tap)="onSelectType()" [text]="getGroupType(group.IsPublic)"></Label>
+    </StackLayout>
+
+    <StackLayout class="input-field with-popup">
+        <Label class="label" text="Membership Approval"></Label>
+        <Label class="field" (tap)="onSelectApproval()" [text]="getApprovalType(group.RequiresApproval)"></Label>
+    </StackLayout>
+
+    <StackLayout *ngIf="currentUser" class="input-field user">
+        <Label class="label" text="Administrator"></Label>
+        <StackLayout orientation="horizontal">
+            <Image class="user-image" src="{{getUserResizedUrl(currentUser.ImageUrl)}}"></Image>
+            <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
+        </StackLayout>
+    </StackLayout>
+
 </StackLayout>

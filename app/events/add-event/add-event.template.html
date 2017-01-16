@@ -6,5 +6,7 @@
         </ActionItem>
         <ActionItem ios.systemIcon="0" android.systemIcon="btn_check_buttonless_on" (tap)="onCreate()"></ActionItem>
     </ActionBarExtension>
-    <editable-event [event]="newEvent"></editable-event>
+    <ScrollView>
+        <editable-event [event]="newEvent"></editable-event>
+    </ScrollView>
 </StackLayout>

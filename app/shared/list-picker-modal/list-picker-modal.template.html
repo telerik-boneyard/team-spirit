@@ -1,10 +1,17 @@
 <StackLayout class="cntnr">
     <!-- TODO: use app-modal -->
     
-    <ListPicker #picker [items]="availableOptions"
-                [selectedIndex]="selectedIndex"
-                (selectedIndexChange)="selectedIndexChanged(picker.selectedIndex)">
-    </ListPicker>
+    <StackLayout *ngIf="availableOptions.length">
+        <ListPicker #picker [items]="availableOptions"
+                    [selectedIndex]="selectedIndex"
+                    (selectedIndexChange)="selectedIndexChanged(picker.selectedIndex)">
+        </ListPicker>
 
-    <Button class="button-action" (tap)="onDone()" text="Select"></Button>
+        <Button class="button-action" (tap)="onDone()" text="Select"></Button>
+    </StackLayout>
+
+    <StackLayout *ngIf="!availableOptions.length">
+        <Label text="No items to choose from"></Label>
+        <Button (tap)="onDone()" text="Close"></Button>
+    </StackLayout>
 </StackLayout>

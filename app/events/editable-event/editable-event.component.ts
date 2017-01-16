@@ -68,7 +68,9 @@ export class EditableEventComponent implements OnInit{
     onSelectGroup() {
         this._openGroupModal()
             .then((selectedIndex: number) => {
-                this.selectGroup(this.userGroups[selectedIndex]);
+                if (selectedIndex > -1) {
+                    this.selectGroup(this.userGroups[selectedIndex]);
+                }
             }, err => err); // ignore rejection (when user clicks back and closes)
     }
 
@@ -112,7 +114,7 @@ export class EditableEventComponent implements OnInit{
         let selectedIndex = utilities.findIndex(this.userGroups, g => g.Id === this.event.GroupId);
         let ctx = {
             items: this.userGroups.map(g => g.Name),
-            selectedIndex 
+            selectedIndex
         };
         return this._openModal(ctx, ListPickerModalComponent);
     }

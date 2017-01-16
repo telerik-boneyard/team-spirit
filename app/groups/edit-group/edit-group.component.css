@@ -1,0 +1,9 @@
+.cntnr {
+    background-color: #fff;
+    height: 100%;
+}
+
+.btn-delete {
+    text-align: right;
+    color: red; /* wireframes are work in progress */
+}

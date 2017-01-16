@@ -1,0 +1,29 @@
+.info-cntnr {
+  padding: 15;
+}
+
+.label-field-pair {
+  margin: 10 0;
+}
+
+TextField,
+TextView {
+  margin-bottom: 20;
+  color: #333;
+  placeholder-color: #888;
+}
+
+.form .input-field .label {
+  color: #888;
+}
+
+.user-image {
+  width: 30;
+  height: 30;
+  margin-right: 10;
+  border-radius: 50%;
+}
+
+.user .label {
+  margin-bottom: 5;
+}

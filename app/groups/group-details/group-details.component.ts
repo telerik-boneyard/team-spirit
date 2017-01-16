@@ -97,6 +97,10 @@ export class GroupDetailsComponent implements OnInit {
         console.log('go to events clicked');
     }
 
+    onViewRequests() {
+        this._alertsService.showError('Note implemented yet. Please follow the development :)');
+    }
+
     onJoin() {
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {

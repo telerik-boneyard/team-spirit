@@ -1,12 +1,7 @@
-<StackLayout>
+<StackLayout class="cntnr">
     <ActionBarExtension>
         <ActionItem>
             <Label [text]="group && group.Name"></Label>
-        </ActionItem>
-        <ActionItem
-            ios.systemIcon="16"
-            android.systemIcon="ic_menu_delete"
-            (tap)="delete()">
         </ActionItem>
         <ActionItem
             ios.systemIcon="3"
@@ -14,5 +9,10 @@
             (tap)="save()">
         </ActionItem>
     </ActionBarExtension>
-    <editable-group *ngIf="group" [group]="group"></editable-group>
+    <ScrollView *ngIf="group">
+        <StackLayout>
+            <editable-group [group]="group"></editable-group>
+            <Label class="btn-delete" text="Delete group" (tap)="delete()"></Label>
+        </StackLayout>
+    </ScrollView>
 </StackLayout>
