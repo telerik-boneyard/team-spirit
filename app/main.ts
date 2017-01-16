@@ -11,7 +11,8 @@ import { UserDetailsComponent, LoginComponent, EditUserComponent } from './users
 import {
     AppModalComponent,
     DateTimePickerModalComponent,
-    ListPickerModalComponent
+    ListPickerModalComponent,
+    PhotoPickerComponent
 } from './shared';
 
 import { 
@@ -47,13 +48,13 @@ const routes = [
     { path: 'events', component: EventsComponent },
     { path: 'events/add', component: AddEventComponent },
     { path: 'events/:id', component: EventDetailsComponent },
-    { path: 'events/edit/:id', component: EditEventComponent },
+    { path: 'events/:id/edit', component: EditEventComponent },
     { path: 'events/:id/date-choices', component: EventDateVotesComponent },
 
     { path: 'groups', component: GroupsComponent },
     { path: 'groups/add', component: AddGroupComponent },
     { path: 'groups/:id', component: GroupDetailsComponent },
-    { path: 'groups/edit/:id', component: EditGroupComponent },
+    { path: 'groups/:id/edit', component: EditGroupComponent },
     { path: 'groups/:id/events', component: GroupEventsComponent }
 ];
 
@@ -83,7 +84,8 @@ const routes = [
         EventCreationModalComponent,
         EventDateVotesComponent,
         GroupCreationModalComponent,
-        GroupEventsComponent
+        GroupEventsComponent,
+        PhotoPickerComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,

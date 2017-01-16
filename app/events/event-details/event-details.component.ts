@@ -60,7 +60,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        this._routerExtensions.navigate([`/events/edit/${this.event.Id}`]);
+        this._routerExtensions.navigate([`/events/${this.event.Id}/edit`]);
     }
 
     canEdit() {

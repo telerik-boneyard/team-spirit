@@ -16,7 +16,7 @@ export function isNonemptyString (str: any) {
 };
 
 export function shouldDisableDrawer (activeRouteUrl: string) {
-    return constants.disabledDawerRoutes.some(r => !activeRouteUrl.indexOf(r));
+    return constants.disabledDawerRoutes.some(r => r.test(activeRouteUrl));
 };
 
 export function find<T> (arr: T[], predicate: (item: T) => any): T {

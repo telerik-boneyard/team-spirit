@@ -81,7 +81,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        this._routerExtensions.navigateByUrl(`groups/edit/${this.group.Id}`);
+        this._routerExtensions.navigateByUrl(`groups/${this.group.Id}/edit`);
     }
 
     getJoinBtnText() {
