@@ -8,17 +8,21 @@
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
-    
+
     <TabView *ngIf="initialized" [selectedIndex]="0" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
-            <Label *ngIf="!userGroups.length" text="You haven't joined any groups. Slide over to the next tab to find some!" [textWrap]="true"></Label>
+            <StackLayout *ngIf="!userGroups.length" class="no-items">
+                <Label text="You haven't joined any groups. Slide over to the next tab to find some!'" [textWrap]="true"></Label>
+            </StackLayout>
         </StackLayout>
         <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
             <group-list *ngIf="publicGroups.length" [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
-            <Label *ngIf="!publicGroups.length" text="No groups to show in this tab" [textWrap]="true"></Label>
+            <StackLayout *ngIf="!publicGroups.length" class="no-items">
+                <Label text="No groups to show in this tab" [textWrap]="true"></Label>
+            </StackLayout>
         </StackLayout>
     </TabView>
-    
+
     <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 </StackLayout>

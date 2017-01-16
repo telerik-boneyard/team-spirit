@@ -74,3 +74,11 @@ TextView {
 .btn-small {
   font-size: 16;
 }
+
+.no-items {
+  padding: 15 30;
+}
+
+.no-items Label {
+  margin-bottom: 10;
+}

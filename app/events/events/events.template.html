@@ -11,16 +11,18 @@
     <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton>
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
-            
-            <StackLayout *ngIf="!upcomingEvents.length">
+
+            <StackLayout *ngIf="!upcomingEvents.length" class="no-items">
                 <Label text="No upcoming events" [textWrap]="true"></Label>
-                <Button [nsRouterLink]="['/groups']" text="To Groups"></Button>
+                <Button [nsRouterLink]="['/groups']" text="To Groups" class="btn btn-primary"></Button>
             </StackLayout>
         </StackLayout>
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">
             <event-list *ngIf="pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)"></event-list>
-            
-            <Label *ngIf="!pastEvents.length" text="No past events" [textWrap]="true"></Label>
+
+            <StackLayout *ngIf="!pastEvents.length" class="no-items">
+                <Label text="No past events" [textWrap]="true"></Label>
+            </StackLayout>
 
         </StackLayout>
     </TabView>
