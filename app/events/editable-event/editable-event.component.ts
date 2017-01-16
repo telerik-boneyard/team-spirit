@@ -45,10 +45,6 @@ export class EditableEventComponent implements OnInit{
         return this.dateOptions.length ? 'Add date option' : 'Select date';
     }
 
-    getResizedImageUrl(rawUrl: string) {
-        return utilities.getAsResizeUrl(rawUrl, { width: 120, height: 120 });
-    }
-
     toggleOpenForRegistration() {
         this.event.OpenForRegistration = !this.event.OpenForRegistration;
     }

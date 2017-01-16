@@ -4,7 +4,7 @@
   padding: 15;
 }
 
-.user-image {
+.user >>> Image {
   width: 130;
   height: 130;
   border-radius: 100%;

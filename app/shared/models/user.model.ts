@@ -11,6 +11,5 @@ export class User extends ItemModel {
         public Phone: string
     ) {
         super();
-        this.ImageUrl = ImageUrl || constants.emptyImage;
     }
 }

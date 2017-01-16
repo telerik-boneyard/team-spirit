@@ -60,10 +60,6 @@ export class GroupDetailsComponent implements OnInit {
         });
     }
 
-    getResizedImageUrl(rawUrl: string, size?) {
-        return utilities.getAsResizeUrl(rawUrl, size);
-    }
-
     getApprovalBtnText() {
         return this.group.RequiresApproval ? 'Approval' : 'No Approval';
     }

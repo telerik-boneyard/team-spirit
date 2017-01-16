@@ -32,6 +32,9 @@ export class EventsComponent implements OnInit {
     }
 
     ngOnInit() {
+        // this._routerExtensions.navigateByUrl(`/events/a0c52f80-d905-11e6-a6d8-b1a296ec2f6d/edit`);
+        // this._routerExtensions.navigateByUrl('/groups');
+        
         this._page.actionBarHidden = false;
 
         this._usersService.currentUser()

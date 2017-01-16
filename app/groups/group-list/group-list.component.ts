@@ -36,10 +36,6 @@ export class GroupListComponent implements OnInit {
         this.onGroupTap.emit(clickedGroup);
     }
 
-    getResizedImageUrl(imageUrl: string) {
-        return utilities.getAsResizeUrl(imageUrl, { width: 50, height: 50 });
-    }
-
     getJoinBtnText(group: Group) {
         return group.RequiresApproval ? 'Ask to join' : 'Join now';
     }

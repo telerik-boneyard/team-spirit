@@ -52,6 +52,7 @@ export class UsersService {
     }
 
     updateUser(user: User) {
+        delete user.ImageUrl; // delete expanded field, if present
         let updatePromise = this._users.updateSingle(user);
         // dont chain so returned promise doesnt have the cache clearing
         updatePromise.then(() => this._currUserCache = null);

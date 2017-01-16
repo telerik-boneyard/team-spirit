@@ -10,7 +10,7 @@
     </ActionBarExtension>
 
     <StackLayout *ngIf="event">
-        <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
+        <photo-picker [url]="event.ImageUrl" [type]="'event'"></photo-picker>
 
         <StackLayout class="info-container">
             <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Button>
@@ -52,8 +52,9 @@
             <StackLayout class="info-wrapper no-separator">
                 <Label class="info-label" text="Registered Participants"></Label>
 
-                <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" orientation="horizontal">
-                    <Image *ngFor="let user of registeredUsers.slice(0, 3)" class="user-image" src="{{getResizedImageUrl(user.ImageUrl, true)}}"></Image>
+                <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" class="registered-users-wrapper" orientation="horizontal">
+                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+
                     <StackLayout orientation="horizontal" (tap)="toggleExpandedUsers()" class="expandable">
                         <Label *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
                         <Label [text]="(registeredUsers.length === 1 ? 'is' : 'are') + ' going'"></Label>

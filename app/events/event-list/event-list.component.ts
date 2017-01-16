@@ -28,10 +28,6 @@ export class EventListComponent {
         return date;
     }
 
-    getResizedImageUrl(rawUrl: string): string {
-        return utilities.getAsResizeUrl(rawUrl);
-    }
-
     getRemainingTime(event: Event) {
         let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);

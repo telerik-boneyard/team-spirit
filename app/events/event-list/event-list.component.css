@@ -34,13 +34,13 @@
   margin-bottom: 20;
 }
 
-.user-image,
+.event-organiser >>> Image,
 .user-name,
 .group {
   vertical-align: middle;
 }
 
-.user-image {
+.event-organiser >>> Image {
   width: 30;
   height: 30;
   margin-right: 10;

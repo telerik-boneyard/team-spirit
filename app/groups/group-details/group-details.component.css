@@ -43,7 +43,7 @@
     border-width: 0;
 }
 
-.user-image {
+ .members-wrapper >>> Image {
     width: 30;
     height: 30;
     border-radius: 100%;

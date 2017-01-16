@@ -26,12 +26,13 @@
   text-transform: uppercase;
 }
 
-.user-image,
+.registered-users-wrapper >>> Image,
 .expandable {
   vertical-align: middle;
 }
 
-.user-image {
+/* this is angular2 syntax :| */
+.registered-users-wrapper >>> Image {
   width: 30;
   height: 30;
   border-radius: 50%;

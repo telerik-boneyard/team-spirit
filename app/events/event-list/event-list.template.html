@@ -6,10 +6,10 @@
                 <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date" textWrap="true"></Label>
                 <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
             </GridLayout>
-            <Image *ngIf="event.Image" src="{{getResizedImageUrl(event.ImageUrl)}}"></Image>
+            <photo-picker [url]="event.ImageUrl" [type]="'event'" ></photo-picker>
             <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
             <GridLayout columns="auto, auto, *" class="event-organiser">
-                <Image *ngIf="event.Organizer.ImageUrl" src="{{event.Organizer.ImageUrl}}" class="user-image" col="0"></Image>
+                <photo-picker [url]="event.Organizer.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
                 <Label [text]="event.Organizer.DisplayName + ' | '" col="1" textWrap="true" class="user-name"></Label>
                 <Label [text]="event.Group" col="2" class="group"></Label>
             </GridLayout>

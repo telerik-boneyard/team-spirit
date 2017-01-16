@@ -1,4 +1,6 @@
 <StackLayout class="cntnr">
+    <photo-picker [url]="event.ImageUrl" [type]="'event'" [editable]="true"></photo-picker>
+    
     <StackLayout class="form info-cntnr">
         <StackLayout class="input-field">
             <Label class="label" text="Name"></Label>
@@ -12,7 +14,7 @@
 
         <StackLayout class="input-field group with-popup">
             <Label class="label" text="Group"></Label>
-            <Label class="field" (tap)="onSelectGroup()" [text]="getSelectedGroupName()" [ngClass]="{ 'not-selected': !event.GroupId }"></Label>
+            <Label class="field" (tap)="onSelectGroup()" [text]="getSelectedGroupName()"></Label>
         </StackLayout>
 
         <StackLayout class="input-field">
@@ -37,7 +39,7 @@
         <StackLayout *ngIf="currentUser" class="input-field user">
             <Label class="label" text="Organizer"></Label>
             <StackLayout orientation="horizontal">
-                <Image class="user-image" src="{{getResizedImageUrl(currentUser.ImageUrl)}}"></Image>
+                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
                 <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
             </StackLayout>
         </StackLayout>

@@ -67,15 +67,6 @@ export class EventDetailsComponent implements OnInit {
         return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
     }
 
-    getResizedImageUrl(rawUrl: string, userImage = false): string {
-        let dims: any = { width: 750, height: 400 };
-
-        if (userImage) {
-            dims = { width: 60, height: 60 };
-        }
-        return utilities.getAsResizeUrl(rawUrl, dims);
-    }
-
     getDate() {
         if (this.event.EventDate) {
             return new Date(this.event.EventDate);

@@ -4,15 +4,6 @@
     padding: 15%;
 }
 
-.user-image {
-    width: 125;
-    height: 125;
-    border-radius: 100%;
-    border-width: 1;
-    border-color: #fff;
-    transform: translateY(65);
-}
-
 .user-label {
     text-transform: uppercase;
     color: #F4550F;

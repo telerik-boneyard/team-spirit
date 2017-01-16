@@ -12,8 +12,8 @@
     <StackLayout *ngIf="user">
         <AbsoluteLayout width="100%" height="130">
             <StackLayout left="0" top="60" width="100%" height="90" backgroundColor="white"></StackLayout>
-            <StackLayout left="0" top="0" width="100%">
-                <Image class="user-image" src="{{getResizedImageUrl()}}"></Image>
+            <StackLayout left="0" top="0" width="100%" class="user">
+                <photo-picker [url]="user.ImageUrl" [type]="'user'"></photo-picker>
             </StackLayout>
         </AbsoluteLayout>
 
