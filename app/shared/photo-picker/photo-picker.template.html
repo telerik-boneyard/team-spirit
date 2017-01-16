@@ -1,2 +1,4 @@
-<Image *ngIf="url && editable" [src]="url" (tap)="onEdit()"></Image>
-<Image *ngIf="url && !editable" [src]="url"></Image>
+<StackLayout *ngIf="resizedUrl">
+    <Image *ngIf="editable" [src]="resizedUrl" (tap)="onEdit()"></Image>
+    <Image *ngIf="!editable" [src]="resizedUrl"></Image>
+</StackLayout>

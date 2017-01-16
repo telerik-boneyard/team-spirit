@@ -8,21 +8,19 @@ import { utilities, constants } from '../';
     styleUrls: [ 'shared/photo-picker/photo-picker.component.css' ]
 })
 export class PhotoPickerComponent implements OnInit {
-    url: string;
+    resizedUrl: string;
 
     @Input('url') rawUrl: string;
     @Input() type: string;
     @Input('small') isSmall: boolean;
     @Input() editable: boolean;
 
-    constructor() {}
-
     ngOnInit() {
         if (!this.rawUrl) {
             this.rawUrl = this._decidePlaceholder();
         }
 
-        this.url = this._resizeAccordingly(this.rawUrl, this.type);
+        this.resizedUrl = this._resizeAccordingly(this.rawUrl, this.type);
     }
 
     onEdit(event) {
@@ -48,8 +46,6 @@ export class PhotoPickerComponent implements OnInit {
     }
 
     private _resizeAccordingly(rawUrl: string, type: string) {
-        // console.log(`racc url: ${rawUrl}, type: ${JSON.stringify(type)}`);
-        
         switch (type) {
             case 'group':
                 return this._resizeForGroup(rawUrl, this.isSmall);
@@ -86,7 +82,6 @@ export class PhotoPickerComponent implements OnInit {
     }
     
     private _resize(url: string, dims?: { w: number, h: number }) {
-        // console.log(`url: ${url}, dims: ${JSON.stringify(dims)}`);
         let dimensions;
         if (dims) {
             dimensions = { width: dims.w, height: dims.h };

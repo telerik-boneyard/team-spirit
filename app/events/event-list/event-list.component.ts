@@ -13,9 +13,8 @@ export class EventListComponent {
     @Input() events: Event[];
     @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
 
-    eventTap(event: any) {
-        let clickedEvent = this.events[event.index];
-        this.onEventTap.emit(clickedEvent);
+    eventTap(event: Event) {
+        this.onEventTap.emit(event);
     }
 
     getEventDate(event: Event) {
