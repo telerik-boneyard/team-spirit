@@ -1,5 +1,4 @@
 import { Component, Input, OnInit, ViewContainerRef, Type } from '@angular/core';
-import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 
 import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
 import { ListPickerModalComponent, DateTimePickerModalComponent } from '../../shared';
@@ -23,7 +22,6 @@ export class EditableEventComponent implements OnInit{
     private _isEdit: boolean = false;
 
     constructor(
-        private _modalService: ModalDialogService,
         private _groupsService: GroupsService,
         private _eventService: EventsService,
         private _usersService: UsersService,
@@ -100,14 +98,7 @@ export class EditableEventComponent implements OnInit{
     }
 
     private _openModal(ctx: any, componentClass: Type<any>) {
-        let opts: ModalDialogOptions = {
-            context: ctx,
-            fullscreen: true,
-            viewContainerRef: this._vcRef
-        };
-
-        return this._modalService.showModal(componentClass, opts)
-            .then(result => (result !== undefined) ? result : Promise.reject(null));
+        return this._alertService.showModal(ctx, this._vcRef, componentClass);
     }
 
     private _openGroupModal() {

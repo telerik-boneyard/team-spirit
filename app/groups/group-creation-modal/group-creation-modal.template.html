@@ -1,0 +1,6 @@
+<StackLayout class="group-creation-modal">
+    <app-modal [title]="'Great job!'"
+               [text]="getText()"
+               [buttons]="{ ok: 'Invite members', cancel: 'Maybe later' }"
+               (ok)="onOk($event)" (cancel)="onCancel($event)"></app-modal>
+</StackLayout>

@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, ViewContainerRef } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 
+import { EventCreationModalComponent } from '../event-creation-modal/event-creation-modal.component';
+import { Event, Group } from '../../shared/models';
 import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
-import { Event } from '../../shared/models';
 
 @Component({
     selector: 'add-event',
@@ -13,10 +14,12 @@ export class AddEventComponent {
     newEvent: Event;
 
     constructor(
+        private _routerExtensions: RouterExtensions,
+        private _groupsService: GroupsService,
         private _eventService: EventsService,
         private _alertService: AlertService,
         private _usersService: UsersService,
-        private _routerExtensions: RouterExtensions
+        private _vcRef: ViewContainerRef
     ) {
         this.newEvent = new Event();
     }
@@ -32,12 +35,19 @@ export class AddEventComponent {
                 }
             })
             .then(() => {
-                return this._eventService.create(this.newEvent);
+                let creationPromise = this._eventService.create(this.newEvent);
+                let groupPromise = this._groupsService.getById(this.newEvent.GroupId);
+                return Promise.all<any>([groupPromise, creationPromise]);;
             })
-            .then((res) => {
-                this._routerExtensions.navigate(['/events']);
+            .then((data) => {
+                let group: Group = data[0];
+                let ctx: any = { groupName: group.Name };
+                return this._alertService.showModal(ctx, this._vcRef, EventCreationModalComponent);
             })
-            .catch(err => this._alertService.showError(err.message));
+            .then(() => {
+                this._routerExtensions.navigateByUrl('/events');
+            }, err => {}) // silently ignore close
+            .catch(err => err && this._alertService.showError(err.message));
     }
 
     onCancel() {

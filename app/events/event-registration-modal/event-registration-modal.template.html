@@ -1,5 +1,5 @@
-<StackLayout>
-    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)">
+<StackLayout class="reg-modal">
+    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [buttons]="{ ok: 'Submit', cancel: 'Cancel' }">
         <ListView [items]="availableDates">
             <template let-option="item" class="form">
                 <StackLayout orientation="horizontal" class="input-field switch-field">

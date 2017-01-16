@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, ViewContainerRef, Type } from '@angular/core';
-import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 
 import { ListPickerModalComponent } from '../../shared';
-import { GroupsService, UsersService } from '../../services';
+import { GroupsService, UsersService, AlertService } from '../../services';
 import { Group, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -19,7 +18,7 @@ export class EditableGroupComponent implements OnInit {
     private _groupApprovalOptions = [ 'Approval is required', 'Approval not required' ];
 
     constructor(
-        private _modalService: ModalDialogService,
+        private _alertsService: AlertService,
         private _usersService: UsersService,
         private _vcRef: ViewContainerRef
     ) {}
@@ -77,14 +76,7 @@ export class EditableGroupComponent implements OnInit {
     }
 
     private _openModal(ctx: any) {
-        let opts: ModalDialogOptions = {
-            context: ctx,
-            fullscreen: true,
-            viewContainerRef: this._vcRef
-        };
-
-        return this._modalService.showModal(ListPickerModalComponent, opts)
-            .then(result => (result !== undefined) ? result : Promise.reject(null));
+        return this._alertsService.showModal(ctx, this._vcRef, ListPickerModalComponent);
     }
 
     private _getResizedImageUrl(rawUrl: string, dims?) {

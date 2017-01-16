@@ -13,8 +13,8 @@
 
         <Button class="button-action" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
 
-        <StackLayout *ngIf="hasJoined" orientation="horizontal" class="action-bar">
-            <Label class="btn" text="See requests" (tap)="onViewRequests()"></Label>
+        <StackLayout *ngIf="hasJoined" orientation="horizontal" class="action-bar" [ngClass]="{ 'admin': !canEdit() }">
+            <Label *ngIf="canEdit()" class="btn" text="See requests" (tap)="onViewRequests()"></Label>
             <Label class="btn" text="See Events" (tap)="onViewEvents()"></Label>
             <Label class="btn" text="Leave Group" (tap)="onLeave()"></Label>
         </StackLayout>

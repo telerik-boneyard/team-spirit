@@ -1,11 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
-// import { DatePicker } from "ui/date-picker";
-// import { TimePicker } from "ui/time-picker";
-
-// import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
-// import { Event, Group, User } from '../../shared/models';
-// import { utilities } from '../../shared';
 
 @Component({
     selector: 'app-modal',
@@ -15,6 +9,9 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 export class AppModalComponent {
     @Output('ok') okCallback = new EventEmitter<any>();
     @Output('cancel') cancelCallback = new EventEmitter<any>();
+    @Input() buttons: { ok?: string, cancel?: string };
+    @Input() title: string;
+    @Input() text: string;
 
     onOk() {
         this.okCallback.emit();

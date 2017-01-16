@@ -17,6 +17,10 @@
     color: #F4550F;
 }
 
+.action-bar.admin .btn {
+    width: 49.5%;
+}
+
 .info-wrapper {
     margin: 15 0 0 0;
     padding-bottom: 15;

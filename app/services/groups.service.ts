@@ -79,7 +79,7 @@ export class GroupsService {
                 let filter = {
                     $and: [
                         { Id: { $nin: ids } },
-                        { IsPublic: true }
+                        { $or: [ { IsPublic: true }, { Owner: userId } ] }
                     ]
                 };
                 return this._getGroupsByFilter(filter);

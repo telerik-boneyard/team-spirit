@@ -18,6 +18,7 @@ import {
     EventsComponent,
     EventDetailsComponent,
     EventRegistrationModalComponent,
+    EventCreationModalComponent,
     EventListComponent,
     AddEventComponent,
     EditableEventComponent,
@@ -31,7 +32,8 @@ import {
     EditableGroupComponent,
     EditGroupComponent,
     GroupDetailsComponent,
-    AddGroupComponent    
+    AddGroupComponent,
+    GroupCreationModalComponent
 } from './groups';
 
 const routes = [
@@ -76,12 +78,16 @@ const routes = [
         AppModalComponent,
         ListPickerModalComponent,
         DateTimePickerModalComponent,
-        EventDateVotesComponent
+        EventCreationModalComponent,
+        EventDateVotesComponent,
+        GroupCreationModalComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,
         ListPickerModalComponent,
-        DateTimePickerModalComponent
+        DateTimePickerModalComponent,
+        EventCreationModalComponent,
+        GroupCreationModalComponent
     ],
     bootstrap: [AppComponent],
     imports: [

@@ -1,7 +1,11 @@
-<StackLayout class="modal-cntnr">
+<StackLayout class="app-modal-cntnr">
+    <Label *ngIf="title" class="app-modal-title" [text]="title"></Label>
+    <Label *ngIf="text" class="app-modal-text" [text]="text"></Label>
+
     <ng-content></ng-content>
-    <StackLayout class="controls-wrapper">
-        <Button class="btn btn-primary" [text]="'Submit'" (tap)="onOk()"></Button>
-        <Button class="btn btn-small" [text]="'Cancel'" (tap)="onCancel()"></Button>
+
+    <StackLayout class="controls-wrapper" *ngIf="buttons">
+        <Button class="btn btn-primary" [text]="buttons.ok" (tap)="onOk()"></Button>
+        <Button class="btn btn-small" [text]="buttons.cancel" (tap)="onCancel()"></Button>
     </StackLayout>
 </StackLayout>

@@ -22,15 +22,13 @@ export class GroupsComponent implements OnInit {
     ) {}
     
     ngOnInit() {
-        // this._routerExtensions.navigateByUrl(`/groups/4e292710-9b69-11e6-901f-5dd3e4bc26b4`); // TODO: remove
-        
         this._usersService.currentUser()
             .then(u => {
-                let prm1 = this._groupsService.getUnjoinedGroups(u.Id)
+                let unjoinedGroupsPromise = this._groupsService.getUnjoinedGroups(u.Id)
                     .then(res => this.publicGroups = res);
-                let prm2 = this._groupsService.getUserGroups(u.Id)
+                let userGroupsPromise = this._groupsService.getUserGroups(u.Id)
                     .then(res => this.userGroups = res);
-                return Promise.all([prm1, prm2]);
+                return Promise.all([unjoinedGroupsPromise, userGroupsPromise]);
             })
             .then(r => this.initialized = true);
     }
