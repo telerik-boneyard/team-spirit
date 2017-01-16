@@ -1,4 +1,4 @@
-<StackLayout class="ctnr">
+<ScrollView class="ctnr">
     <ActionBarExtension>
         <ActionItem>
             <Label [text]="group && group.Name"></Label>
@@ -41,4 +41,4 @@
     </StackLayout>
 
     <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</StackLayout>
+</ScrollView>

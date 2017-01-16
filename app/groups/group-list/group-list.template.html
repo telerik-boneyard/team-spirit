@@ -1,6 +1,6 @@
 <ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)">
     <template let-group="item">
-        <GridLayout columns="50, 200, auto" rows="auto, auto">
+        <GridLayout columns="50, *, *" rows="auto, auto">
             <Image rowSpan="2" row="0" col="0" *ngIf="group.ImageUrl" class="group-image" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
 
             <Label row="0" col="1" [text]="group.Name" class="group-name"></Label>

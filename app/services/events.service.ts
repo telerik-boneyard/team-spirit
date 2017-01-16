@@ -68,8 +68,11 @@ export class EventsService {
     }
 
     getUpcoming(groupIds: string[]) {
-        let filter = this._getUpcomingFilter(groupIds);
-        return this._getWithFilter(filter);
+        return this._usersService.currentUser()
+            .then(user => {
+                let filter: any = this._getUpcomingFilter(groupIds);
+                return this._getWithFilter(filter);
+            });
     }
 
     getUpcomingCountsByGroups(groupIds: string[]): Promise<{ GroupId: string, Name: number }[]> {
