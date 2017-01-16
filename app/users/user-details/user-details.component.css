@@ -1,36 +1,38 @@
 .cntnr {
-    background-color: #F4550F;
-    height: 100%;
-    padding: 15%;
+  background-color: #F4550F;
+  height: 100%;
+  padding: 15;
 }
 
 .user-image {
-    width: 125;
-    height: 125;
-    border-radius: 100%;
-    border-width: 1;
-    border-color: #fff;
-    transform: translateY(65);
+  width: 130;
+  height: 130;
+  border-radius: 100%;
+  border-width: 2;
+  border-color: #fff;
+  background-color: #fff;
 }
 
 .user-label {
-    text-transform: uppercase;
-    color: #F4550F;
+  margin-bottom: 5;
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
 }
 
 .user-info-cnt {
-    padding: 65% 15% 0% 15%;
-    background-color: #fff;
+  padding: 15;
+  background-color: #fff;
 }
 
 .user-info-block {
-    margin: 10 0;
+  margin: 10 0;
 }
 
 .user-info-value {
-    color: #000;
+  color: #000;
 }
 
 .expandable {
-    text-decoration: underline;
+  text-decoration: underline;
 }
