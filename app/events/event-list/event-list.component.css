@@ -1,17 +1,17 @@
 .main-container {
-  height: 640;
+  height: 100%;
   background-color: #fff;
 }
 
 .list-events {
-  height: 640;
+  height: 100%;
 }
 
 .event-name,
 .event-date-wrp,
 .event-description,
 .event-organiser {
-  margin: 10 30;
+  margin: 10 20;
 }
 
 .event-date-wrp,

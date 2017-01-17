@@ -1,10 +1,10 @@
 <ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)">
     <template let-group="item">
-        <GridLayout columns="50, *, *" rows="auto, auto">
+        <GridLayout columns="65, *, auto" rows="auto, auto" class="group">
             <Image rowSpan="2" row="0" col="0" *ngIf="group.ImageUrl" class="group-image" src="{{getResizedImageUrl(group.ImageUrl)}}"></Image>
 
-            <Label row="0" col="1" [text]="group.Name" class="group-name"></Label>
-            <Label row="1" col="1" [text]="getSubtext(group)"></Label>
+            <Label row="0" col="1" [text]="group.Name" class="group-name" textWrap="true"></Label>
+            <Label row="1" col="1" [text]="getSubtext(group)" class="group-subtext" textWrap="true"></Label>
 
             <Label *ngIf="!areUserGroups" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
         </GridLayout>
