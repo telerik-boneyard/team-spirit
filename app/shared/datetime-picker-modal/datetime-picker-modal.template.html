@@ -1,10 +1,10 @@
 <StackLayout class="cntnr">
     <!-- TODO: use app-modal -->
-    
+
     <StackLayout orientation="horizontal">
         <DatePicker #datePicker [(ngModel)]="date" (loaded)="configureDatePicker(datePicker)"></DatePicker>
         <TimePicker #timePicker></TimePicker>
     </StackLayout>
 
-    <Button (tap)="onSelect(datePicker, timePicker)" class="button-action" text="Add Option"></Button>
+    <Button (tap)="onSelect(datePicker, timePicker)" class="btn btn-primary" text="Add Option"></Button>
 </StackLayout>

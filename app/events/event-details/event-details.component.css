@@ -26,6 +26,10 @@
   text-transform: uppercase;
 }
 
+.info-wrapper .info-value {
+  color: #000;
+}
+
 .user-image,
 .expandable {
   vertical-align: middle;
