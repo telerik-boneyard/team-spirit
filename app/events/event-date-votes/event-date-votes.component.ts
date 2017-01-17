@@ -12,7 +12,7 @@ import { utilities } from '../../shared';
 })
 export class EventDateVotesComponent implements OnInit {
     event: Event;
-    choiceCounts: number[];
+    countsByDate: any; // obj with keys the dats and values the counts
     dateFormat: string = utilities.dateFormat;
 
     constructor(
@@ -26,7 +26,7 @@ export class EventDateVotesComponent implements OnInit {
             this._eventsService.getDateChoicesVotes(params['id'])
                 .then(result => {
                     this.event = result.event;
-                    this.choiceCounts = result.countByChoices;
+                    this.countsByDate = result.countByDate;
                 });
         });
     }

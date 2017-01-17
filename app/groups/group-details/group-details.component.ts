@@ -120,4 +120,8 @@ export class GroupDetailsComponent implements OnInit {
                 this._alertsService.showError(err && err.message);
             });
     }
+
+    onBack() {
+        this._routerExtensions.back();
+    }
 }

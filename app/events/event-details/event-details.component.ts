@@ -81,7 +81,7 @@ export class EventDetailsComponent implements OnInit {
         let registrationPromise: Promise<any>;
 
         if (this.event.EventDate) {
-            registrationPromise = this._eventsService.registerForEvent(this.event.Id, [0]);
+            registrationPromise = this._eventsService.registerForEvent(this.event.Id, [this.event.EventDate]);
         } else {
             registrationPromise = this._openPopupAndRegister();
         }
@@ -111,6 +111,10 @@ export class EventDetailsComponent implements OnInit {
         return this.registeredUsers.map(u => u.DisplayName || u.Username).join(', ');
     }
 
+    onBack() {
+        this._routerExtensions.back();
+    }
+
     private _openPopupAndRegister() {
         let opts: ModalDialogOptions = {
             context: {
@@ -123,7 +127,9 @@ export class EventDetailsComponent implements OnInit {
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
             .then((dateChoices: number[]) => {
                 if (dateChoices && dateChoices.length) {
-                    return this._eventsService.registerForEvent(this.event.Id, dateChoices);
+                    let choicesAsStrings: string[] = [];
+                    dateChoices.forEach(c => choicesAsStrings.push(this.event.EventDateChoices[c]));
+                    return this._eventsService.registerForEvent(this.event.Id, choicesAsStrings);
                 } else {
                     return Promise.resolve(false);
                 }

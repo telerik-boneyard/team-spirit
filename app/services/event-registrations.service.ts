@@ -32,21 +32,18 @@ export class EventRegistrationsService {
         return this._data.get(query).then(r => r.result.map(r => r.User));
     }
 
-    getEventDateChoices(eventId: string) {
+    getEventDateChoiceCounts(eventId: string) {
         return this._data.get({ EventId: eventId })
             .then((res) => {
-                let regs = res.result;
-                let result: number[] = [];
-
-                regs.forEach(reg => {
+                let result: any = {};
+                res.result.forEach(reg => {
                     reg.Choices.forEach(choice => result[choice] = (result[choice] || 0) + 1);
                 });
-
                 return result;
             });
     }
 
-    create(eventId: string, userId: string, dateChoices: number[]) {
+    create(eventId: string, userId: string, dateChoices: string[]) {
         let queryStringParams = {
             eventId,
             userId,

@@ -2,7 +2,7 @@ import { User, Event } from './index';
 import { ItemModel } from './item.model';
 
 export class EventRegistration extends ItemModel {
-    Choices: number[];
+    Choices: string[];
     EventId: string;
     UserId: string;
     

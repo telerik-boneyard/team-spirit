@@ -62,13 +62,13 @@ export class EventsService {
 
     getDateChoicesVotes(eventId: string) {
         let eventPromise = this.getById(eventId);
-        let choicesPromise = this._registrationsService.getEventDateChoices(eventId);
+        let choicesPromise = this._registrationsService.getEventDateChoiceCounts(eventId);
         return Promise.all<any>([eventPromise, choicesPromise])
             .then((res) => {
                 let event: Event = res[0];
-                let countByChoices: number[] = res[1];
+                let countByDate: any = res[1]; // obj with keys the dates and values the counts
 
-                return { event, countByChoices };
+                return { event, countByDate };
             });
     }
 
@@ -106,7 +106,7 @@ export class EventsService {
         return this._registrationsService.getParticipants(eventId);
     }
 
-    registerForEvent(eventId: string, dateChoices: number[]) {
+    registerForEvent(eventId: string, dateChoices: string[]) {
         return this._usersService.currentUser()
             .then(u => {
                 return this._registrationsService.create(eventId, u.Id, dateChoices);

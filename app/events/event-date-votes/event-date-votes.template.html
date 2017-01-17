@@ -5,9 +5,9 @@
         </ActionItem>
     </ActionBarExtension>
     <StackLayout *ngIf="event">
-        <StackLayout *ngFor="let date of (event.EventDateChoices || []); let ind = index" orientation="horizontal">
+        <StackLayout *ngFor="let date of (event.EventDateChoices || [])" orientation="horizontal">
             <Label [text]="date | date:dateFormat"></Label>
-            <Label [text]="' : ' + (choiceCounts[ind] || 0)"></Label>
+            <Label [text]="' : ' + (countsByDate[date] || 0)"></Label>
         </StackLayout>
     </StackLayout>
 </StackLayout>

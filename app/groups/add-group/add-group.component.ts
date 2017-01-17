@@ -62,4 +62,8 @@ export class AddGroupComponent {
             }
         });
     }
+
+    onCancel() {
+        this._routerExtensions.back();
+    }
 }

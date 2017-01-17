@@ -1,8 +1,7 @@
 export const appId = '35ylfmbdmpzbqn0c';
 export const disabledDawerRoutes = [
     new RegExp('^/user/login', 'i'),
-    new RegExp('^/events/.*?/add', 'i'),
-    new RegExp('^/events/.*?/edit', 'i')
+    new RegExp('^/((events)|(groups))/.+', 'i')
 ];
 
 export const imagePlaceholders = {

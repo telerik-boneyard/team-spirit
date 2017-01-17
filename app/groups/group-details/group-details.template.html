@@ -1,5 +1,6 @@
 <ScrollView class="ctnr">
     <ActionBarExtension>
+        <NavigationButton ios.systemIcon="1" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
         <ActionItem>
             <Label [text]="group && group.Name"></Label>
         </ActionItem>

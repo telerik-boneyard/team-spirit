@@ -85,4 +85,8 @@ export class EditGroupComponent implements OnInit {
                 }
             });
     }
+
+    onCancel() {
+        this._routerExtensions.back();
+    }
 }
