@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { EventsService, AlertService } from '../../services';
+import { EventsService, AlertService, FilesService } from '../../services';
 import { Event, User } from '../../shared/models';
+import { utilities } from '../../shared';
 
 @Component({
     selector: 'edit-event',
@@ -17,8 +18,9 @@ export class EditEventComponent implements OnInit {
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
         private _routerExtensions: RouterExtensions,
+        private _filesService: FilesService,
         private _eventsService: EventsService
-    ) { }
+    ) {}
 
     ngOnInit() {
         this._route.params.subscribe(p => {
@@ -39,6 +41,20 @@ export class EditEventComponent implements OnInit {
 
         this._alertsService.askConfirmation('Save all changes?')
             .then(() => {
+                // TODO: move to service
+                let prm = Promise.resolve<{ Id: string, Uri: string }>();
+
+                if (utilities.isLocalUrl(this.event.ImageUrl)) {
+                    // this has been turned into local uri by the picker component
+                    prm = this._filesService.uploadFromUri(this.event.ImageUrl);
+                }
+
+                return prm;
+            })
+            .then((uploadResult) => {
+                if (uploadResult) {
+                    this.event.Image = uploadResult.Id;
+                }
                 return this._eventsService.update(this.event);
             })
             .then(() => {
@@ -51,7 +67,7 @@ export class EditEventComponent implements OnInit {
                 if (err) {
                     this._alertsService.showError(err.message);
                 }
-            });;
+            });
     }
 
     delete() {

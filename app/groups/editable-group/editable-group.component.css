@@ -17,7 +17,7 @@ TextView {
   color: #888;
 }
 
-.user-image {
+.user >>> Image {
   width: 30;
   height: 30;
   margin-right: 10;

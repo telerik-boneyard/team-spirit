@@ -3,7 +3,8 @@ import { RouterExtensions } from 'nativescript-angular/router';
 
 import { EventCreationModalComponent } from '../event-creation-modal/event-creation-modal.component';
 import { Event, Group } from '../../shared/models';
-import { EventsService, AlertService, UsersService, GroupsService } from '../../services';
+import { EventsService, AlertService, UsersService, GroupsService, FilesService } from '../../services';
+import { utilities } from '../../shared';
 
 @Component({
     selector: 'add-event',
@@ -16,6 +17,7 @@ export class AddEventComponent {
     constructor(
         private _routerExtensions: RouterExtensions,
         private _groupsService: GroupsService,
+        private _filesService: FilesService,
         private _eventService: EventsService,
         private _alertService: AlertService,
         private _usersService: UsersService,
@@ -35,6 +37,20 @@ export class AddEventComponent {
                 }
             })
             .then(() => {
+                // TODO: move to service
+                let prm = Promise.resolve<{ Id: string, Uri: string }>();
+
+                if (utilities.isLocalUrl(this.newEvent.ImageUrl)) {
+                    // this has been turned into local uri by the picker component
+                    prm = this._filesService.uploadFromUri(this.newEvent.ImageUrl);
+                }
+
+                return prm;
+            })
+            .then((uploadResult) => {
+                if (uploadResult) {
+                    this.newEvent.Image = uploadResult.Id;
+                }
                 let creationPromise = this._eventService.create(this.newEvent);
                 let groupPromise = this._groupsService.getById(this.newEvent.GroupId);
                 return Promise.all<any>([groupPromise, creationPromise]);;

@@ -1,5 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
+import * as nsImgSource from 'image-source';
+import * as nsImage from 'ui/image';
 
+import { ImagePickerService } from '../../services';
 import { utilities, constants } from '../';
 
 @Component({
@@ -15,6 +18,12 @@ export class PhotoPickerComponent implements OnInit {
     @Input('small') isSmall: boolean;
     @Input() editable: boolean;
 
+    @Output('urlChange') onUpload = new EventEmitter<any>();
+
+    constructor(
+        private _imgPickerService: ImagePickerService
+    ) {}
+
     ngOnInit() {
         if (!this.rawUrl) {
             this.rawUrl = this._decidePlaceholder();
@@ -25,7 +34,18 @@ export class PhotoPickerComponent implements OnInit {
 
     onEdit(event) {
         if (this.editable) {
-            console.log('picking...');
+            this._imgPickerService.pickImage()
+                .then(obj => {
+                    console.log('picked:' + JSON.stringify(obj));
+                    // this.onUpload.emit(obj);
+                    
+                    // this.editableImg.imageSource = nsImgSource.fromFileOrResource(obj.uri);
+                    this.resizedUrl = obj.uri;
+                    this.onUpload.emit(obj.uri);
+                })
+                .catch(err => {
+                    console.log('pick err: ' + JSON.stringify(err));
+                });
         } else {
             console.log('editable is false...');
         }

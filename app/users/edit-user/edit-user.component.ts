@@ -36,4 +36,9 @@ export class EditUserComponent implements OnInit {
             .then(() => this._routerExtensions.navigateByUrl('user'))
             .catch(err => err && this._alertsService.showError(err));
     }
+
+    onImageUpload(createdImage: { Uri: string, Id: string }) {
+        this.user.Image = createdImage.Id;
+        this._usersService.updateUser(this.user);
+    }
 }

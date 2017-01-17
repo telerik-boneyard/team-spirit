@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { GroupCreationModalComponent } from '../group-creation-modal/group-creation-modal.component';
-import { GroupsService, AlertService } from '../../services';
+import { GroupsService, AlertService, FilesService } from '../../services';
 import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -17,6 +17,7 @@ export class AddGroupComponent {
 
     constructor(
         private _routerExtensions: RouterExtensions,
+        private _filesService: FilesService,
         private _groupsService: GroupsService,
         private _alertService: AlertService,
         private _vsRef: ViewContainerRef
@@ -30,25 +31,35 @@ export class AddGroupComponent {
             return this._alertService.showError(errMsg);
         }
         let createdId: string;
-        this._groupsService.create(this.group)
-            .then((result) => {
-                createdId = result.Id;
-                let ctx = { groupName: this.group.Name };
-                return this._alertService.showModal(ctx, this._vsRef, GroupCreationModalComponent);
-            })
-            .then((doInviteMembers: boolean) => {
-                if (doInviteMembers) {
-                    return this._alertService.showError('Not implemented, yet');
-                }
-                
-            })
-            .then(() => {
-                this._routerExtensions.navigateByUrl(`/groups/${createdId}`);
-            })
-            .catch(err => {
-                if (err) {
-                    this._alertService.showError(err.message);
-                }
-            });
+        let promise: Promise<{ Id: string, Uri: string }> = Promise.resolve();
+
+        if (utilities.isLocalUrl(this.group.ImageUrl)) {
+            promise = this._filesService.uploadFromUri(this.group.ImageUrl);
+        }
+        
+        promise.then((uploadResult) => {
+            if (uploadResult) {
+                this.group.Image = uploadResult.Id;
+            }
+            return this._groupsService.create(this.group);
+        })
+        .then((result) => {
+            createdId = result.Id;
+            let ctx = { groupName: this.group.Name };
+            return this._alertService.showModal(ctx, this._vsRef, GroupCreationModalComponent);
+        })
+        .then((doInviteMembers: boolean) => {
+            if (doInviteMembers) {
+                return this._alertService.showError('Not implemented, yet');
+            }
+        })
+        .then(() => {
+            this._routerExtensions.navigateByUrl(`/groups/${createdId}`);
+        })
+        .catch(err => {
+            if (err) {
+                this._alertService.showError(err.message);
+            }
+        });
     }
 }

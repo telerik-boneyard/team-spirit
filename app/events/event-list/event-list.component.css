@@ -12,13 +12,13 @@
   border-width: 0;
   border-bottom-width: 1;
   border-color: #ccc;
+  margin: 0 20;
 }
 
 .event-name,
 .event-date-wrp,
 .event-description,
-.event-organiser,
-.event-list-separator {
+.event-organiser {
   margin: 10 20;
 }
 

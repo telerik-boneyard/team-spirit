@@ -39,6 +39,7 @@ export class GroupsService {
     }
 
     create(group: Group) {
+        group = this._sanitizeGroup(group);
         return this._groupsData.create(group).then(res => res.result);
     }
 
@@ -138,7 +139,7 @@ export class GroupsService {
     }
 
     update(group: Group) {
-        delete (<any>group).ImageUrl; // sanitize expanded field
+        group = this._sanitizeGroup(group);
         return this._groupsData.updateSingle(group).then(r => r.result);
     }
 
@@ -195,5 +196,10 @@ export class GroupsService {
         query.where(filter);
         query.expand(this._imageExpandExp);
         return this._groupsData.get(query).then(res => res.result);
+    }
+
+    private _sanitizeGroup(group: Group) {
+        delete group.ImageUrl;
+        return group;
     }
 }

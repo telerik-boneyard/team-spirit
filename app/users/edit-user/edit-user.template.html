@@ -12,7 +12,7 @@
     
     <ScrollView>
         <StackLayout *ngIf="user" class="user-info-cnt">
-            <photo-picker [url]="user.ImageUrl" [type]="'user'" [editable]="true"></photo-picker>
+            <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)"></photo-picker>
 
             <StackLayout class="user-info-block">
                 <Label class="user-label" text="Name"></Label>

@@ -11,13 +11,15 @@ import {
     EventsService,
     EventRegistrationsService,
     AlertService,
-    GroupsService
+    GroupsService,
+    ImagePickerService,
+    FilesService
 } from './services';
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app.component.html',
-    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService, AlertService, GroupsService]
+    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService, AlertService, GroupsService, ImagePickerService, FilesService]
 })
 export class AppComponent implements OnInit {
     loggedIn: boolean = false;

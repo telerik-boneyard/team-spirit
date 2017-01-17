@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { GroupsService, AlertService } from '../../services';
+import { GroupsService, AlertService, FilesService } from '../../services';
 import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -17,6 +17,7 @@ export class EditGroupComponent implements OnInit {
     constructor(
         private _groupsService: GroupsService,
         private _alertsService: AlertService,
+        private _filesService: FilesService,
         private _routerExtensions: RouterExtensions,
         private _activatedRoute: ActivatedRoute
     ) { }
@@ -40,6 +41,18 @@ export class EditGroupComponent implements OnInit {
         
         this._alertsService.askConfirmation(`Update all fields of "${this.group.Name}"?`)
             .then(() => {
+                let prm = Promise.resolve<{ Id: string, Uri: string }>();
+
+                if (utilities.isLocalUrl(this.group.ImageUrl)) {
+                    prm = this._filesService.uploadFromUri(this.group.ImageUrl);
+                }
+
+                return prm;
+            })
+            .then((uploadResult) => {
+                if (uploadResult) {
+                    this.group.Image = uploadResult.Id;
+                }
                 return this._groupsService.update(this.group);
             })
             .then(() => {

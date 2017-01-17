@@ -8,7 +8,8 @@ export class User extends ItemModel {
         public DisplayName: string,
         public Email: string,
         public ImageUrl: string,
-        public Phone: string
+        public Phone: string,
+        public Image: string
     ) {
         super();
     }

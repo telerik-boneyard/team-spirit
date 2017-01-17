@@ -51,14 +51,6 @@ export class EditableGroupComponent implements OnInit {
         }, err => err); // ignore rejection (when user clicks back and closes));
     }
 
-    getUserResizedUrl(rawUrl: string) {
-        return this._getResizedImageUrl(rawUrl, { width: 60, height: 60 });
-    }
-
-    getGroupResizedUrl(rawUrl: string) {
-        return this._getResizedImageUrl(rawUrl);
-    }
-
     private _openGroupTypeModal() {
         let ctx = {
             items: this._groupTypeOptions,

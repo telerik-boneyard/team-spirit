@@ -33,3 +33,8 @@ export function findIndex<T> (arr: T[], predicate: (item: T) => any): number {
 
     return -1;
 };
+
+export function isLocalUrl (url: string) {
+    let regExp = new RegExp('^\/.*', 'i');
+    return url && regExp.test(url);
+};

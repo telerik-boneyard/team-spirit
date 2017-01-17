@@ -82,6 +82,6 @@ export class UsersService {
         if (!user) {
             return null;
         }
-        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone);
+        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone, user.Image);
     }
 }
