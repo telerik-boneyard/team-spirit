@@ -26,7 +26,11 @@
   text-transform: uppercase;
 }
 
-.registered-users-wrapper >>> Image,
+.info-wrapper .info-value {
+  color: #000;
+}
+
+.user-image,
 .expandable {
   vertical-align: middle;
 }

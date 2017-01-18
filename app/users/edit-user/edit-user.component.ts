@@ -6,7 +6,8 @@ import { utilities } from '../../shared';
 import {
     UsersService,
     GroupsService,
-    AlertService
+    AlertService,
+    FilesService
 } from '../../services';
 
 @Component({
@@ -21,6 +22,7 @@ export class EditUserComponent implements OnInit {
         private _routerExtensions: RouterExtensions,
         private _usersService: UsersService,
         private _alertsService: AlertService,
+        private _filesService: FilesService,
         private _groupsService: GroupsService
     ) {}
     
@@ -31,7 +33,19 @@ export class EditUserComponent implements OnInit {
 
     save() {
         this._alertsService.askConfirmation('Update your entire profile?')
-            .then(() => this._usersService.updateUser(this.user))
+            .then(() => {
+                let promise = Promise.resolve<any>(false);
+                if (utilities.isLocalUrl(this.user.ImageUrl)) {
+                    promise = this._filesService.uploadFromUri(this.user.ImageUrl);
+                }
+                return promise;
+            })
+            .then(uploadResult => {
+                if (uploadResult) {
+                    this.user.Image = uploadResult.Id
+                }
+                return this._usersService.updateUser(this.user);
+            })
             .then(res => this._alertsService.showSuccess('Details updated'))
             .then(() => this._routerExtensions.navigateByUrl('user'))
             .catch(err => err && this._alertsService.showError(err));

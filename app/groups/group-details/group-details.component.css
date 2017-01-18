@@ -1,50 +1,51 @@
 .ctnr {
-    background-color: white;
-    height: 100%;
-
-    /*transform: translateY(-25);*/
+  background-color: #fff;
+  height: 100%;
 }
 
 .info-container {
-    padding: 15;
+  padding: 15;
 }
 
 .action-bar .btn {
-    width: 30%;
-    height: 50;
-    font-size: 11;
-    background-color: #ddd;
-    color: #F4550F;
-}
-
-.action-bar.admin .btn {
-    width: 49.5%;
+  height: 50;
+  margin: 0;
+  font-size: 11;
+  background-color: #ddd;
+  color: #F4550F;
+  text-align: center;
 }
 
 .info-wrapper {
-    margin: 15 0 0 0;
-    padding-bottom: 15;
-    
-    border-width: 0;
-    border-bottom-width: 2;
-    border-color: #ccc;
+  margin: 15 0 0 0;
+  padding-bottom: 15;
+  border-width: 0;
+  border-bottom-width: 1;
+  border-color: #ADADAD;
 }
 
 .info-wrapper .info-label {
-    color: #F4550F;
-    text-transform: uppercase;
+  margin-bottom: 5;
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
 }
 
 .info-wrapper .info-value {
-    color: #000;
+  color: #000;
 }
 
 .info-wrapper.no-separator {
-    border-width: 0;
+  border-width: 0;
 }
 
- .members-wrapper >>> Image {
-    width: 30;
-    height: 30;
-    border-radius: 100%;
+.members-wrapper >>> Image {
+  width: 30;
+  height: 30;
+  margin-right: 5;
+  border-radius: 100%;
+}
+
+.join-group {
+  margin: 15;
 }

@@ -1,32 +1,33 @@
 <StackLayout class="cntnr">
     <photo-picker [(url)]="group.ImageUrl" [editable]="true" [type]="'group'"></photo-picker>
+    <StackLayout class="form info-cntnr">
 
-    <StackLayout class="input-field">
-        <Label class="label" text="Name"></Label>
-        <TextField class="field" [(ngModel)]="group.Name" [editable]="true" textWrap="true"></TextField>
-    </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="Name"></Label>
+            <TextField class="field" [(ngModel)]="group.Name" [editable]="true" textWrap="true"></TextField>
+        </StackLayout>
 
-    <StackLayout class="input-field">
-        <Label class="label" text="Description"></Label>
-        <TextView class="field" [(ngModel)]="group.Description" [editable]="true"></TextView>
-    </StackLayout>
+        <StackLayout class="input-field">
+            <Label class="label" text="Description"></Label>
+            <TextView class="field" [(ngModel)]="group.Description" [editable]="true"></TextView>
+        </StackLayout>
 
-    <StackLayout class="input-field with-popup">
-        <Label class="label" text="Group Type"></Label>
-        <Label class="field" (tap)="onSelectType()" [text]="getGroupType(group.IsPublic)"></Label>
-    </StackLayout>
+        <StackLayout class="input-field with-popup">
+            <Label class="label" text="Group Type"></Label>
+            <Label class="field" (tap)="onSelectType()" [text]="getGroupType(group.IsPublic)"></Label>
+        </StackLayout>
 
-    <StackLayout class="input-field with-popup">
-        <Label class="label" text="Membership Approval"></Label>
-        <Label class="field" (tap)="onSelectApproval()" [text]="getApprovalType(group.RequiresApproval)"></Label>
-    </StackLayout>
+        <StackLayout class="input-field with-popup">
+            <Label class="label" text="Membership Approval"></Label>
+            <Label class="field" (tap)="onSelectApproval()" [text]="getApprovalType(group.RequiresApproval)"></Label>
+        </StackLayout>
 
-    <StackLayout *ngIf="currentUser" class="input-field user">
-        <Label class="label" text="Administrator"></Label>
-        <StackLayout orientation="horizontal">
-            <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
-            <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
+        <StackLayout *ngIf="currentUser" class="input-field user">
+            <Label class="label" text="Administrator"></Label>
+            <StackLayout orientation="horizontal">
+                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
+            </StackLayout>
         </StackLayout>
     </StackLayout>
-
 </StackLayout>

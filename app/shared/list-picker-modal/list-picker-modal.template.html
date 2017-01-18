@@ -1,13 +1,13 @@
 <StackLayout class="cntnr">
     <!-- TODO: use app-modal -->
-    
+
     <StackLayout *ngIf="availableOptions.length">
         <ListPicker #picker [items]="availableOptions"
                     [selectedIndex]="selectedIndex"
                     (selectedIndexChange)="selectedIndexChanged(picker.selectedIndex)">
         </ListPicker>
 
-        <Button class="button-action" (tap)="onDone()" text="Select"></Button>
+        <Button class="btn btn-primary" (tap)="onDone()" text="Select"></Button>
     </StackLayout>
 
     <StackLayout *ngIf="!availableOptions.length">

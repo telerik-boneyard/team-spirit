@@ -1,18 +1,10 @@
 .main-container {
-  height: 640;
+  height: 100%;
   background-color: #fff;
 }
 
 .list-events {
-  height: 640;
   height: 100%;
-}
-
-.event-list-separator {
-  border-width: 0;
-  border-bottom-width: 1;
-  border-color: #ccc;
-  margin: 0 20;
 }
 
 .event-name,
