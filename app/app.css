@@ -95,6 +95,9 @@ TextView {
   font-size: 14;
   color: #fff;
   text-align: left;
+  background-color: rgba(255, 0, 0, 0.0);
+  border-color: rgba(255, 0, 0, 0.0);
+  border-width: 1;
 }
 
 .drawer .logo {
