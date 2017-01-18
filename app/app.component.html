@@ -3,15 +3,18 @@
     <ActionItem *ngIf="!disableDrawer && !isAndroid" ios.position="left" ios.systemIcon="18" (tap)="toggleDrawer()"></ActionItem>
 </ActionBar>
 <RadSideDrawer #drawer>
-    <StackLayout tkDrawerContent>
-        <StackLayout class="sideStackLayout">
-            <Button *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Button>
-            <Button text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
-            <Button *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
-            <Button *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user']" (tap)="closeDrawer()"></Button>
-            <Button *ngIf="loggedIn" text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
+    <DockLayout tkDrawerContent class="drawer">
+        <StackLayout class="sideStackLayout" width="100%" dock="top">
+            <Button class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Button>
+            <Button class="btn" text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
+            <Button class="btn" *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
+            <Button class="btn" *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user']" (tap)="closeDrawer()"></Button>
+            <Button class="btn" *ngIf="loggedIn" text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
         </StackLayout>
-    </StackLayout>
+        <StackLayout dock="bottom" verticalAlignment="bottom">
+            <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>
+        </StackLayout>
+    </DockLayout>
     <StackLayout tkMainContent>
         <router-outlet></router-outlet>
     </StackLayout>

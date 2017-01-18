@@ -82,3 +82,21 @@ TextView {
 .no-items Label {
   margin-bottom: 10;
 }
+
+.drawer {
+  padding: 20;
+  background-image: url("res://background");
+  background-size: cover;
+}
+
+.drawer .btn {
+  margin: 0;
+  padding: 0;
+  font-size: 14;
+  color: #fff;
+  text-align: left;
+}
+
+.drawer .logo {
+  width: 140;
+}
