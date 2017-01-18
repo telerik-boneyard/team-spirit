@@ -1,16 +1,16 @@
 .cntnr {
   background-color: #F4550F;
   height: 100%;
-  padding: 15%;
+  padding: 15;
 }
 
-.user-info-cnt >>> Image {
-  width: 125;
-  height: 125;
+.user >>> Image {
+  width: 130;
+  height: 130;
   border-radius: 25;
-  border-width: 1;
+  border-width: 2;
   border-color: #fff;
-  transform: translateY(65);
+  background-color: #fff;
 }
 
 .user-label {

@@ -9,26 +9,33 @@
             (tap)="save()">
         </ActionItem>
     </ActionBarExtension>
-    
-    <ScrollView>
-        <StackLayout *ngIf="user" class="user-info-cnt">
-            <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)"></photo-picker>
 
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Name"></Label>
-                <TextField class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Username"></Label>
-                <TextField class="user-info-editable-value" [(ngModel)]="user.Username"></TextField>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Phone"></Label>
-                <TextField class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Email"></Label>
-                <TextField class="user-info-editable-value" [(ngModel)]="user.Email" keyboardType="email"></TextField>
+    <ScrollView>
+        <StackLayout *ngIf="user">
+            <AbsoluteLayout width="100%" height="130">
+                <StackLayout left="0" top="60" width="100%" height="90" backgroundColor="white"></StackLayout>
+                <StackLayout left="0" top="0" width="100%" class="user">
+                    <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)"></photo-picker>
+                </StackLayout>
+            </AbsoluteLayout>
+            <!-- <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)"></photo-picker> -->
+            <StackLayout class="user-info-cnt">
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Name"></Label>
+                    <TextField class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Username"></Label>
+                    <TextField class="user-info-editable-value" [(ngModel)]="user.Username"></TextField>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Phone"></Label>
+                    <TextField class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Email"></Label>
+                    <TextField class="user-info-editable-value" [(ngModel)]="user.Email" keyboardType="email"></TextField>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
     </ScrollView>
