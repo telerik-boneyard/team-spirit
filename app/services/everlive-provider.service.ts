@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import Everlive from 'everlive-sdk';
 import { Item } from '../../node_modules/everlive-sdk/dist/declarations/everlive/interfaces/Item';
 
+import { RouterExtensions } from 'nativescript-angular/router';
 import * as nsPlatform from 'platform';
+import * as dialogs from 'ui/dialogs';
 
 import { utilities, constants } from '../shared';
 
@@ -10,7 +12,7 @@ import { utilities, constants } from '../shared';
 export class EverliveProvider {
     private _everlive: Everlive;
 
-    constructor() {
+    constructor(private _routerExtensions: RouterExtensions) { // todo: remove
         this._everlive = new Everlive({
             appId: constants.appId,
             authentication: {
@@ -36,9 +38,17 @@ export class EverliveProvider {
         return new Everlive.AggregateQuery();
     }
 
+    private iosCb(a1, a2, a3) {
+        let eventId = a1.eventId;
+        dialogs.alert('evid: ' + eventId + ' args: ' + JSON.stringify([a1, a2, a3]));
+        // if (eventId) {
+            // this._routerExtensions.navigateByUrl('/events/${eventId}');
+        // }
+    }
+
     subscribeForPushNotifications(userId: string) {
         let pushRegSettings = {
-            iOS: { badge: true, sound: true, alert: true },
+            iOS: { badge: true, sound: true, alert: true, notificationCallbackIOS: this.iosCb },
             android: { senderID: constants.androidProjNumber }
         };
 

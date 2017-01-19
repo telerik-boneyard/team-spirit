@@ -29,7 +29,8 @@
     "everlive-sdk": "1.9.1",
     "nativescript-theme-core": "^0.1.3",
     "nativescript-imagepicker": "^2.4.1",
-    "nativescript-permissions": "^1.2.0"
+    "nativescript-permissions": "^1.2.0",
+    "nativescript-push-notifications": "0.1.0"
   },
   "devDependencies": {
     "babel-traverse": "6.18.0",

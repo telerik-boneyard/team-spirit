@@ -10,7 +10,7 @@ TextField,
 TextView {
   margin-bottom: 20;
   color: #333;
-  placeholder-color: #888;
+  placeholder-color: transparent;
 }
 
 .form .input-field .label {
