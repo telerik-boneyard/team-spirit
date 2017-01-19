@@ -9,7 +9,7 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <TabView *ngIf="initialized" [selectedIndex]="0" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <TabView *ngIf="initialized" [selectedIndex]="0" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee" class="tab-view">
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
             <StackLayout *ngIf="!userGroups.length" class="no-items">

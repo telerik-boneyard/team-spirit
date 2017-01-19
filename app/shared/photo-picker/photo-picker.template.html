@@ -1,6 +1,4 @@
-<AbsoluteLayout *ngIf="resizedUrl">
-    <StackLayout class="container" [ngClass]="{ 'large': !isSmall }">
-        <Image class="image" *ngIf="editable" [src]="resizedUrl" (tap)="onEdit()"></Image>
-        <Image class="image" *ngIf="!editable" [src]="resizedUrl"></Image>
-    </StackLayout>
-</AbsoluteLayout>
+<StackLayout class="container" *ngIf="resizedUrl" [ngClass]="{ 'large': !isSmall }">
+    <Image class="image" *ngIf="editable" [src]="resizedUrl" (tap)="onEdit()"></Image>
+    <Image class="image" *ngIf="!editable" [src]="resizedUrl"></Image>
+</StackLayout>

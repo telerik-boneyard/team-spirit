@@ -10,7 +10,7 @@ TextField,
 TextView {
   margin-bottom: 20;
   color: #333;
-  placeholder-color: #888;
+  placeholder-color: transparent;
 }
 
 .form .input-field .label {
@@ -21,9 +21,15 @@ TextView {
   width: 30;
   height: 30;
   margin-right: 10;
-  border-radius: 50%;
+  border-radius: 25;
 }
 
 .user .label {
   margin-bottom: 5;
+}
+
+.group .field {
+  border-color: #888;
+  border-bottom-width: 1;
+  min-height: 30;
 }

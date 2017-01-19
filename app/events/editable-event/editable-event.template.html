@@ -31,7 +31,7 @@
             <Label class="label" text="Event Date"></Label>
             <StackLayout orientation="horizontal" *ngFor="let date of dateOptions; let ind = index">
                 <Label class="field" [text]="date | date:dateFormat"></Label>
-                <Image style="width: 20; height: 20;" src="res://remove_iocn" (tap)="removeDateOption(ind)"></Image>
+                <Image style="width: 50; height: 50;" src="res://remove_iocn" (tap)="removeDateOption(ind)"></Image>
             </StackLayout>
             <Label [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
         </StackLayout>

@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
         private _everlive: EverliveProvider,
         private _page: Page
     ) {
-        this.user = {};
+        this.user = { username: 'georgip', password: 'qweqwe' };
     }
 
     ngOnInit() {

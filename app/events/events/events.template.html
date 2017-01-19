@@ -8,7 +8,7 @@
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
-    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" sdkExampleTitle sdkToggleNavButton>
+    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
 
@@ -23,7 +23,6 @@
             <StackLayout *ngIf="!pastEvents.length" class="no-items">
                 <Label text="No past events" [textWrap]="true"></Label>
             </StackLayout>
-
         </StackLayout>
     </TabView>
 

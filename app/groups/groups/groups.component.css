@@ -6,3 +6,7 @@
 .tab-item {
     padding: 10 20;
 }
+
+.tab-view {
+    height: 100%;
+}

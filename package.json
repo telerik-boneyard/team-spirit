@@ -4,9 +4,12 @@
   "readme": "NativeScript Application",
   "repository": "<fill-your-repository-here>",
   "nativescript": {
-    "id": "org.nativescript.teamspirit",
+    "id": "com.telerik.PushNotificationApp",
     "tns-android": {
       "version": "2.4.1"
+    },
+    "tns-ios": {
+      "version": "2.4.0"
     }
   },
   "dependencies": {

@@ -52,12 +52,14 @@ export class AppComponent implements OnInit {
             }
         });
 
-        application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {
-            if (this._routerExtensions.canGoBack()) {
-                args.cancel = true;
-                this._routerExtensions.back();
-            }
-        });
+        if (application.android) {
+            application.android.on(application.AndroidApplication.activityBackPressedEvent, (args: application.AndroidActivityBackPressedEventData) => {
+                if (this._routerExtensions.canGoBack()) {
+                    args.cancel = true;
+                    this._routerExtensions.back();
+                }
+            });
+        }
     }
 
     closeDrawer() {

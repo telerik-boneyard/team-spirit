@@ -1,6 +1,8 @@
 <ScrollView class="cntnr">
     <ActionBarExtension>
-        <NavigationButton ios.systemIcon="1" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
+        <ActionItem ios.systemIcon="1" ios.position="left" android.systemIcon="ic_menu_back" (tap)="onBack()">
+            <label text="Back"></label>
+        </ActionItem>
         <ActionItem>
             <Label [text]="event && event.Name" textWrap="true"></Label>
         </ActionItem>

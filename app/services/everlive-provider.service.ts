@@ -15,7 +15,8 @@ export class EverliveProvider {
             appId: constants.appId,
             authentication: {
                 persist: true
-            }
+            },
+            scheme: 'https'
         });
     }
 

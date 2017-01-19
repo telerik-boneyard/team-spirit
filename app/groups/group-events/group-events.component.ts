@@ -45,6 +45,10 @@ export class GroupEventsComponent implements OnInit {
         this._routerExtensions.navigateByUrl(`/events/${event.Id}`);
     }
 
+    onBack() {
+        this._routerExtensions.back();
+    }
+
     private _onError(err) {
         if (err) {
             this._alertsService.showError(err.message);
