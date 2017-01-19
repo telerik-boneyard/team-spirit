@@ -13,13 +13,28 @@ import {
     AlertService,
     GroupsService,
     ImagePickerService,
-    FilesService
+    FilesService,
+    PushNotificationsService,
+    PlatformService
 } from './services';
+
+let services = [
+    EverliveProvider,
+    UsersService,
+    EventsService,
+    EventRegistrationsService,
+    AlertService,
+    GroupsService,
+    ImagePickerService,
+    FilesService,
+    PushNotificationsService,
+    PlatformService
+];
 
 @Component({
     selector: 'my-app',
     templateUrl: 'app.component.html',
-    providers: [EverliveProvider, UsersService, EventsService, EventRegistrationsService, AlertService, GroupsService, ImagePickerService, FilesService]
+    providers: services
 })
 export class AppComponent implements OnInit {
     loggedIn: boolean = false;
