@@ -9,3 +9,5 @@ export const imagePlaceholders = {
     event: 'https://bs2.cdn.telerik.com/v1/35ylfmbdmpzbqn0c/f5553200-dc04-11e6-a1b6-951194c76e81',
     group: 'https://bs1.cdn.telerik.com/v1/35ylfmbdmpzbqn0c/381fbc90-dc05-11e6-a1b6-951194c76e81'
 };
+
+export const androidProjNumber = '832404619163';

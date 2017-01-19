@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
-import { UsersService, AlertService } from '../../services';
+import { UsersService, AlertService, EverliveProvider } from '../../services';
 
 @Component({
     selector: 'login',
@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
         private _usersService: UsersService,
         private _alertsService: AlertService,
         private _routerExtensions: RouterExtensions,
+        private _everlive: EverliveProvider,
         private _page: Page
     ) {
         this.user = {};
@@ -34,7 +35,8 @@ export class LoginComponent implements OnInit {
 
     login() {
         this._usersService.login(this.user.username, this.user.password)
-            .then(() => {
+            .then((loginResult) => {
+                this._everlive.subscribeForPushNotifications(loginResult.result.principal_id).catch(err => err);
                 this._routerExtensions.navigate(['events', { clearHistory: true }]);
             })
             .catch((e) => {

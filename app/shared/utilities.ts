@@ -38,3 +38,13 @@ export function isLocalUrl (url: string) {
     let regExp = new RegExp('^\/.*', 'i');
     return url && regExp.test(url);
 };
+
+export function shallowCopy (obj) {
+    let res: any = {};
+    for (let prop in obj) {
+        if (obj.hasOwnProperty(prop)) {
+            res[prop] = obj[prop];
+        }
+    }
+    return res;
+};

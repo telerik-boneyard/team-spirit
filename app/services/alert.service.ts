@@ -19,7 +19,7 @@ export class AlertService {
     }
 
     showInfo(message: string) {
-        return this._showMessage(message, 'You could try...');
+        return this._showMessage(message, 'Just so you know...');
     }
 
     askConfirmation(message: string) {

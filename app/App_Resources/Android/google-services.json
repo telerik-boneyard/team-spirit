@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "832404619163",
+    "firebase_url": "https://signintest-1.firebaseio.com",
+    "project_id": "signintest-1",
+    "storage_bucket": "signintest-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:832404619163:android:26d8921203cc68d3",
+        "android_client_info": {
+          "package_name": "com.telerik.PushNotificationApp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "832404619163-qmk9eda93na4nt9djn7ef5aeuaauc25u.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "832404619163-aashklas0at8j9ec03qeljumii4q19bg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVDRle0pMO6KRFuT43m6ZI7vSD4RYVvGQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

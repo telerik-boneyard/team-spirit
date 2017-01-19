@@ -28,6 +28,8 @@ export class AppComponent implements OnInit {
     @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
     constructor(
+        private _alertsService: AlertService,
+        private _everlive: EverliveProvider,
         private _usersService: UsersService,
         private _routerExtensions: RouterExtensions
     ) { }
