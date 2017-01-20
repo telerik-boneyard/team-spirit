@@ -42,6 +42,7 @@ export class EventsService {
     }
 
     create(event: Event) {
+        this._clearExpandedFields(event);
         return this._data.create(event);
     }
 
