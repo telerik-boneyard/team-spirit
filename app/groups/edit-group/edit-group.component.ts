@@ -47,7 +47,7 @@ export class EditGroupComponent implements OnInit {
             .then(() => {
                 let prm = Promise.resolve<{ Id: string, Uri: string }>();
 
-                if (utilities.isLocalUrl(this.group.ImageUrl)) {
+                if (utilities.isLocalFileUrl(this.group.ImageUrl)) {
                     prm = this._filesService.uploadFromUri(this.group.ImageUrl);
                 }
 

@@ -48,7 +48,7 @@ export class EditEventComponent implements OnInit {
                 // TODO: move to service
                 let prm = Promise.resolve<{ Id: string, Uri: string }>();
 
-                if (utilities.isLocalUrl(this.event.ImageUrl)) {
+                if (utilities.isLocalFileUrl(this.event.ImageUrl)) {
                     // this has been turned into local uri by the picker component
                     prm = this._filesService.uploadFromUri(this.event.ImageUrl);
                 }

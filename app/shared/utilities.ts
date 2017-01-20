@@ -34,10 +34,15 @@ export function findIndex<T> (arr: T[], predicate: (item: T) => any): number {
     return -1;
 };
 
-export function isLocalUrl (url: string) {
-    let regExp = new RegExp('^\/.*', 'i');
-    return url && regExp.test(url);
+export function isLocalFileUrl (url: string) {
+    let dataPathRegExp = new RegExp('^\/.*', 'i');
+    return url && dataPathRegExp.test(url);
 };
+
+export function isResourceUrl (url: string) {
+    let resourceRegExp = new RegExp('^res:\/\/', 'i');
+    return url && resourceRegExp.test(url);
+}
 
 export function shallowCopy (obj) {
     let res: any = {};

@@ -36,7 +36,7 @@ export class AddGroupComponent {
         let createdId: string;
         let promise: Promise<{ Id: string, Uri: string }> = Promise.resolve();
 
-        if (utilities.isLocalUrl(this.group.ImageUrl)) {
+        if (utilities.isLocalFileUrl(this.group.ImageUrl)) {
             promise = this._filesService.uploadFromUri(this.group.ImageUrl);
         }
         

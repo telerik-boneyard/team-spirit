@@ -102,6 +102,10 @@ export class PhotoPickerComponent implements OnInit {
     }
     
     private _resize(url: string, dims?: { w: number, h: number }) {
+        if (utilities.isResourceUrl(url)) {
+            return url;
+        }
+        
         let dimensions;
         if (dims) {
             dimensions = { width: dims.w, height: dims.h };

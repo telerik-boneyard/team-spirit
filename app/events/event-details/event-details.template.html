@@ -23,7 +23,7 @@
                 <GridLayout columns="auto, auto, *" rows="auto, auto">
                     <Label class="info-label" text="Date" col="0" row="0"></Label>
                     <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
-                    <Image class="info-icon" src="http://icons.iconarchive.com/icons/martz90/circle/256/calendar-icon.png" col="2" row="0"></Image>
+                    <Image class="info-icon" src="res://calendar_icon" col="2" row="0"></Image>
                 </GridLayout>
                 <Label class="info-value" *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
                 <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>

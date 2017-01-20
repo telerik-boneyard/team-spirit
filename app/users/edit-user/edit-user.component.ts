@@ -35,7 +35,7 @@ export class EditUserComponent implements OnInit {
         this._alertsService.askConfirmation('Update your entire profile?')
             .then(() => {
                 let promise = Promise.resolve<any>(false);
-                if (utilities.isLocalUrl(this.user.ImageUrl)) {
+                if (utilities.isLocalFileUrl(this.user.ImageUrl)) {
                     promise = this._filesService.uploadFromUri(this.user.ImageUrl);
                 }
                 return promise;

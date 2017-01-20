@@ -43,7 +43,7 @@ export class AddEventComponent {
                 // TODO: move to service
                 let prm = Promise.resolve<{ Id: string, Uri: string }>();
 
-                if (utilities.isLocalUrl(this.newEvent.ImageUrl)) {
+                if (utilities.isLocalFileUrl(this.newEvent.ImageUrl)) {
                     // this has been turned into local uri by the picker component
                     prm = this._filesService.uploadFromUri(this.newEvent.ImageUrl);
                 }
