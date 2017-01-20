@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { GroupCreationModalComponent } from '../group-creation-modal/group-creation-modal.component';
-import { GroupsService, AlertService, FilesService } from '../../services';
+import { GroupsService, AlertService, FilesService, PlatformService } from '../../services';
 import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -14,15 +14,18 @@ import { utilities } from '../../shared';
 })
 export class AddGroupComponent {
     group: Group;
+    isAndroid: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions,
         private _filesService: FilesService,
         private _groupsService: GroupsService,
         private _alertService: AlertService,
+        private _platform: PlatformService,
         private _vsRef: ViewContainerRef
     ) {
         this.group = new Group();
+        this.isAndroid = this._platform.isAndroid;
     }
     
     onCreate() {

@@ -10,7 +10,7 @@ TextField,
 TextView {
   margin-bottom: 20;
   color: #333;
-  placeholder-color: transparent;
+  placeholder-color: white; /* hides the "null" placeholder for ios, when model is null */
 }
 
 .form .input-field .label {

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { GroupsService, AlertService, FilesService } from '../../services';
+import { GroupsService, AlertService, FilesService, PlatformService } from '../../services';
 import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -13,14 +13,18 @@ import { utilities } from '../../shared';
 })
 export class EditGroupComponent implements OnInit {
     group: Group;
+    isAndroid: boolean = false;
 
     constructor(
         private _groupsService: GroupsService,
         private _alertsService: AlertService,
         private _filesService: FilesService,
         private _routerExtensions: RouterExtensions,
+        private _platform: PlatformService,
         private _activatedRoute: ActivatedRoute
-    ) { }
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(p => {

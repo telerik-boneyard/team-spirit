@@ -31,4 +31,5 @@
 
 .user-info-editable-value {
   color: #000;
+  placeholder-color: white; /* hides the "null" placeholder for ios, when model is null */
 }

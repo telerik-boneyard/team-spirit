@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { GroupsService, AlertService, EverliveProvider, UsersService } from '../../services';
+import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -15,6 +15,7 @@ export class GroupDetailsComponent implements OnInit {
     group: Group;
     hasJoined: boolean = false;
     members: User[] = [];
+    isAndroid: boolean = false;
     private _currentUser: User;
 
     constructor(
@@ -23,8 +24,11 @@ export class GroupDetailsComponent implements OnInit {
         private _alertsService: AlertService,
         private _everliveProvider: EverliveProvider,
         private _routerExtensions: RouterExtensions,
+        private _platform: PlatformService,
         private _groupsService: GroupsService
-    ) {}
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(p => {

@@ -1,5 +1,6 @@
 <ActionBar title="">
-    <ActionItem *ngIf="!disableDrawer" ios.position="left" ios.systemIcon="18" android.systemIcon="ic_menu_sort_by_size" (tap)="toggleDrawer()"></ActionItem>
+    <NavigationButton *ngIf="!disableDrawer && isAndroid" android.systemIcon="ic_menu_sort_by_size" (tap)="toggleDrawer()"></NavigationButton>
+    <ActionItem *ngIf="!disableDrawer && !isAndroid" ios.position="left" ios.systemIcon="18" (tap)="toggleDrawer()"></ActionItem>
 </ActionBar>
 <RadSideDrawer #drawer>
     <StackLayout tkDrawerContent>

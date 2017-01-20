@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { EventsService, GroupsService, AlertService } from '../../services';
+import { EventsService, GroupsService, AlertService, PlatformService } from '../../services';
 import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -14,14 +14,18 @@ import { utilities } from '../../shared';
 export class GroupEventsComponent implements OnInit {
     events: Event[];
     group: Group;
+    isAndroid: boolean = false;
 
     constructor(
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
         private _groupsService: GroupsService,
         private _eventsService: EventsService,
+        private _platform: PlatformService,
         private _routerExtensions: RouterExtensions
-    ) {}
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._route.params.subscribe(params => {

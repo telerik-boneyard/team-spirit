@@ -3,7 +3,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 
 import { EventCreationModalComponent } from '../event-creation-modal/event-creation-modal.component';
 import { Event, Group } from '../../shared/models';
-import { EventsService, AlertService, UsersService, GroupsService, FilesService } from '../../services';
+import { EventsService, AlertService, UsersService, GroupsService, FilesService, PlatformService } from '../../services';
 import { utilities } from '../../shared';
 
 @Component({
@@ -13,6 +13,7 @@ import { utilities } from '../../shared';
 })
 export class AddEventComponent {
     newEvent: Event;
+    isAndroid: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -21,9 +22,11 @@ export class AddEventComponent {
         private _eventService: EventsService,
         private _alertService: AlertService,
         private _usersService: UsersService,
+        private _platform: PlatformService,
         private _vcRef: ViewContainerRef
     ) {
         this.newEvent = new Event();
+        this.isAndroid = this._platform.isAndroid;
     }
 
     onCreate() {

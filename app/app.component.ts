@@ -39,6 +39,7 @@ let services = [
 export class AppComponent implements OnInit {
     loggedIn: boolean = false;
     disableDrawer: boolean = false;
+    isAndroid: boolean = false;
     
     @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
@@ -46,8 +47,11 @@ export class AppComponent implements OnInit {
         private _alertsService: AlertService,
         private _everlive: EverliveProvider,
         private _usersService: UsersService,
-        private _routerExtensions: RouterExtensions
-    ) { }
+        private _routerExtensions: RouterExtensions,
+        private _platform: PlatformService
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._usersService.isLoggedIn().subscribe(isLoggedIn => {

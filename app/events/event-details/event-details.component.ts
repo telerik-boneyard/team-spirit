@@ -4,7 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
 
-import { EventsService, UsersService, AlertService } from '../../services';
+import { EventsService, UsersService, AlertService, PlatformService } from '../../services';
 import { Event, User } from '../../shared/models';
 import { utilities } from '../../shared';
 import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
@@ -22,6 +22,7 @@ export class EventDetailsComponent implements OnInit {
     alreadyRegistered = false;
     isPastEvent = false;
     registeredUsersExpanded = false;
+    isAndroid: boolean = false;
 
     private _currentUser: User;
 
@@ -32,8 +33,11 @@ export class EventDetailsComponent implements OnInit {
         private _usersService: UsersService,
         private _modalService: ModalDialogService,
         private _vcRef: ViewContainerRef,
+        private _platform: PlatformService,
         private _routerExtensions: RouterExtensions
-    ) { }
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._route.params.subscribe(p => {

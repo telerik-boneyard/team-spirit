@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
-import { EventsService, AlertService, FilesService } from '../../services';
+import { EventsService, AlertService, FilesService, PlatformService } from '../../services';
 import { Event, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -13,14 +13,18 @@ import { utilities } from '../../shared';
 })
 export class EditEventComponent implements OnInit {
     event: Event;
+    isAndroid: boolean = false;
 
     constructor(
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
         private _routerExtensions: RouterExtensions,
         private _filesService: FilesService,
+        private _platform: PlatformService,
         private _eventsService: EventsService
-    ) {}
+    ) {
+        this.isAndroid = this._platform.isAndroid;
+    }
 
     ngOnInit() {
         this._route.params.subscribe(p => {
