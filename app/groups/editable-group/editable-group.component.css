@@ -27,3 +27,8 @@ TextView {
 .user .label {
   margin-bottom: 5;
 }
+
+.group-image >>> Image {
+  width: 100%;
+  height: 200;
+}

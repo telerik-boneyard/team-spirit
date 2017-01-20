@@ -33,3 +33,8 @@ TextView {
   border-bottom-width: 1;
   min-height: 30;
 }
+
+.event-image >>> Image {
+  width: 100%;
+  height: 200;
+}
