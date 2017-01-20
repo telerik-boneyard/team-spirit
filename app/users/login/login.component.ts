@@ -49,6 +49,11 @@ export class LoginComponent implements OnInit {
             return this._alertsService.showError('Passwords do not match');
         }
 
+        let errMsg = this._usersService.validateUser(this.user);
+        if (errMsg) {
+            return this._alertsService.showError(errMsg);
+        }
+
         this._usersService.register(this.user.username, this.user.password)
             .then((res) => {
                 this.changeView(false)

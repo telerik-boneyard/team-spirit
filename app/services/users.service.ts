@@ -5,6 +5,8 @@ import { User as ServerUser } from '../../node_modules/everlive-sdk/dist/declara
 import { User } from '../shared'
 import { Observable, BehaviorSubject } from 'rxjs';
 
+import { utilities } from '../shared';
+
 @Injectable()
 export class UsersService {
     private _users: Users;
@@ -35,7 +37,7 @@ export class UsersService {
     }
 
     register(username: string, password: string) {
-        return this._users.register(username, password, null);
+        return this._users.register(username, password, { Email: username });
     }
 
     currentUser(reCache = false) {
@@ -76,6 +78,16 @@ export class UsersService {
         return this._users.getById(id).then(res => {
             return this._serverUserToUserModel(res.result);
         });
+    }
+
+    validateUser(user: any) {
+        let errMsg = '';
+
+        if (!utilities.isEmail(user.username)) {
+            errMsg = 'Email is not valid';
+        }
+        
+        return errMsg;
     }
 
     private _serverUserToUserModel(user: any) { // cause expand could have anything
