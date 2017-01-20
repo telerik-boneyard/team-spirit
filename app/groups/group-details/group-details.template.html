@@ -13,7 +13,7 @@
     <StackLayout *ngIf="group">
         <photo-picker [url]="group.ImageUrl" [type]="'group'"></photo-picker>
 
-        <Button class="btn btn-primary join-group" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
+        <Label class="btn btn-primary join-group" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
 
         <GridLayout *ngIf="hasJoined" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" [attr.columns]="canEdit() ? '*, *, *' : '*, *'">
             <Label *ngIf="canEdit()" class="btn" text="See requests" (tap)="onViewRequests()" col="0"></Label>

@@ -5,7 +5,7 @@
     <ng-content></ng-content>
 
     <StackLayout class="controls-wrapper" *ngIf="buttons">
-        <Button class="btn btn-primary" [text]="buttons.ok" (tap)="onOk()"></Button>
-        <Button class="btn btn-small" [text]="buttons.cancel" (tap)="onCancel()"></Button>
+        <Label class="btn btn-primary" [text]="buttons.ok" (tap)="onOk()"></Label>
+        <Label class="btn btn-small" [text]="buttons.cancel" (tap)="onCancel()"></Label>
     </StackLayout>
 </StackLayout>

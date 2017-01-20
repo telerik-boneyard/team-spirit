@@ -5,11 +5,11 @@
 <RadSideDrawer #drawer>
     <DockLayout tkDrawerContent class="drawer">
         <StackLayout class="sideStackLayout" width="100%" dock="top">
-            <Button class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
+            <Label class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Label>
+            <Label class="btn" text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Label>
+            <Label class="btn" *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Label>
+            <Label class="btn" *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user']" (tap)="closeDrawer()"></Label>
+            <Label class="btn" *ngIf="loggedIn" text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Label>
         </StackLayout>
         <StackLayout dock="bottom" verticalAlignment="bottom">
             <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>
