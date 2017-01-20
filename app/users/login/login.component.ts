@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
         private _push: PushNotificationsService,
         private _page: Page
     ) {
-        this.user = { username: 'georgip', password: 'qweqwe' };
+        this.user = {};
     }
 
     ngOnInit() {

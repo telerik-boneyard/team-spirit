@@ -10,7 +10,8 @@
 .event-name,
 .event-date-wrp,
 .event-description,
-.event-organiser {
+.event-organiser,
+.event-list-separator {
   margin: 10 20;
 }
 
@@ -45,4 +46,10 @@
   height: 30;
   margin-right: 10;
   border-radius: 30;
+}
+
+.event-list-separator {
+  border-width: 0;
+  border-bottom-width: 1;
+  border-color: #adadad;
 }
