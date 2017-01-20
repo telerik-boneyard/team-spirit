@@ -9,6 +9,7 @@ TextField {
   margin-left: 30;
   margin-right: 30;
   vertical-align: center;
+  height: 100%;
 }
 
 .logo {
