@@ -1,7 +1,9 @@
 <ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)">
     <template let-group="item">
         <GridLayout columns="65, *, auto" rows="auto, auto" class="group">
-            <photo-picker [url]="group.ImageUrl" [type]="'group'" [small]="true"></photo-picker>
+            <StackLayout rowSpan="2" row="0" col="0">
+                <photo-picker [url]="group.ImageUrl" [type]="'group'" [small]="true"></photo-picker>
+            </StackLayout>
 
             <Label row="0" col="1" [text]="group.Name" class="group-name" textWrap="true"></Label>
             <Label row="1" col="1" [text]="getSubtext(group)" class="group-subtext" textWrap="true"></Label>
