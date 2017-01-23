@@ -8,7 +8,7 @@
 }
 
 .action-bar .btn {
-  height: 50;
+  height: 70;
   margin: 0;
   font-size: 11;
   background-color: #ddd;
@@ -48,4 +48,8 @@
 
 .join-group {
   margin: 15;
+}
+
+.btn-icon {
+  font-size: 32;
 }
