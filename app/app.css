@@ -97,12 +97,23 @@ TextView {
 .drawer .btn {
   margin: 0;
   padding: 20 0;
-  font-size: 20;
+  font-size: 18;
   color: #fff;
   text-align: left;
   background-color: rgba(255, 0, 0, 0.0);
   border-color: rgba(255, 0, 0, 0.0);
   border-width: 1;
+}
+
+.drawer .btn-icon,
+.drawer .btn-text {
+  vertical-align: middle;
+}
+
+.drawer .btn-icon {
+  width: 50;
+  font-size: 26;
+  text-align: center;
 }
 
 .drawer .logo {
