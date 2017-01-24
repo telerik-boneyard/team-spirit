@@ -30,3 +30,10 @@
   text-align: center;
   vertical-align: center;
 }
+
+.group-list-separator {
+  border-width: 0;
+  border-bottom-width: 1;
+  border-color: #c8c7cc;
+  height: 1;
+}

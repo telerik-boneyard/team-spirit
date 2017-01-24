@@ -1,6 +1,6 @@
 <StackLayout class="reg-modal">
-    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [buttons]="{ ok: 'Submit', cancel: 'Cancel' }">
-        <ListView [items]="availableDates">
+    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="'Registration'" [buttons]="{ ok: 'Submit', cancel: 'Maybe later' }">
+        <ListView [items]="availableDates" separatorColor="transparent">
             <template let-option="item" class="form">
                 <StackLayout orientation="horizontal" class="input-field switch-field">
                     <Switch class="switch" [(ngModel)]="option.isSelected"></Switch>

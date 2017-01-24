@@ -1,6 +1,9 @@
 .app-modal-cntnr {
-  height: 100%;
   width: 100%;
+  height: 100%;
+  padding-left: 40;
+  padding-right: 40;
+  vertical-align: center;
   background-color: white;
 }
 
@@ -8,11 +11,20 @@
   margin-top: 25;
 }
 
+.btn-wrp {
+  width: 75%;
+}
+
+.btn-primary {
+  max-width: 100;
+}
+
 .btn-small {
   color: #888;
 }
 
 .app-modal-title {
+  margin-bottom: 20;
   color: #F4550F;
   text-align: center;
   font-size: 24;

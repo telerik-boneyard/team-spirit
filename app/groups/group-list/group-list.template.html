@@ -1,14 +1,17 @@
-<ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)">
+<ListView *ngIf="groups && initialized" [items]="groups" (itemTap)="groupTap($event)" separatorColor="transparent">
     <template let-group="item">
-        <GridLayout columns="65, *, auto" rows="auto, auto" class="group">
-            <StackLayout rowSpan="2" row="0" col="0">
-                <photo-picker [url]="group.ImageUrl" [type]="'group'" [small]="true"></photo-picker>
-            </StackLayout>
+        <StackLayout>
+            <GridLayout columns="65, *, auto" rows="auto, auto" class="group">
+                <StackLayout rowSpan="2" row="0" col="0">
+                    <photo-picker [url]="group.ImageUrl" [type]="'group'" [small]="true"></photo-picker>
+                </StackLayout>
 
-            <Label row="0" col="1" [text]="group.Name" class="group-name" textWrap="true"></Label>
-            <Label row="1" col="1" [text]="getSubtext(group)" class="group-subtext" textWrap="true"></Label>
+                <Label row="0" col="1" [text]="group.Name" class="group-name" textWrap="true"></Label>
+                <Label row="1" col="1" [text]="getSubtext(group)" class="group-subtext" textWrap="true"></Label>
 
-            <Label *ngIf="!areUserGroups" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
-        </GridLayout>
+                <Label *ngIf="!areUserGroups" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
+            </GridLayout>
+            <Label class="group-list-separator" text=""></Label>
+        </StackLayout>
     </template>
 </ListView>
