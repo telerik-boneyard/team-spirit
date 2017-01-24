@@ -1,13 +1,4 @@
-/* .reg-modal {
-  height: 100%;
-  margin-left: 20;
-  margin-right: 20;
-  vertical-align: center;
-} */
-
-/* .aaa {
-  height: 100%;
-  margin-left: 20;
-  margin-right: 20;
-  vertical-align: center;
-} */
+.reg-modal {
+  padding-left: 20;
+  padding-right: 20;
+}

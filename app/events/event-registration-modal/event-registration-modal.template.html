@@ -1,5 +1,5 @@
-<StackLayout class="reg-modal">
-    <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="'Registration'" [buttons]="{ ok: 'Submit', cancel: 'Maybe later' }">
+<app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="'Registration'" [buttons]="{ ok: 'Submit', cancel: 'Maybe later' }">
+    <StackLayout class="reg-modal">
         <ListView [items]="availableDates" separatorColor="transparent">
             <template let-option="item" class="form">
                 <StackLayout orientation="horizontal" class="input-field switch-field">
@@ -8,5 +8,5 @@
                 </StackLayout>
             </template>
         </ListView>
-    </app-modal>
-</StackLayout>
+    </StackLayout>
+</app-modal>
