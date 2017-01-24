@@ -119,3 +119,13 @@ TextView {
 .drawer .logo {
   width: 140;
 }
+
+.actionbar-title-wrp {
+  width: 60%;
+}
+
+.actionbar-title {
+  width: 250;
+  text-align: right;
+  padding-right: 20;
+}

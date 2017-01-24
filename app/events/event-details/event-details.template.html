@@ -5,7 +5,9 @@
             <label text="Back"></label>
         </ActionItem>
         <ActionItem>
-            <Label [text]="event && event.Name" textWrap="true"></Label>
+            <StackLayout class="actionbar-title-wrp">
+                <Label [text]="event && event.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+            </StackLayout>
         </ActionItem>
         <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
             ios.systemIcon="2" android.systemIcon="ic_menu_edit"
