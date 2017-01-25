@@ -14,7 +14,9 @@ TextView {
 }
 
 .form .input-field .label {
+  font-size: 12;
   color: #888;
+  text-transform: uppercase;
 }
 
 .user >>> Image {
@@ -24,8 +26,27 @@ TextView {
   border-radius: 25;
 }
 
+.date .label,
+.group .label,
 .user .label {
-  margin-bottom: 5;
+  margin-bottom: 10;
+}
+
+.date .field,
+.date .remove {
+  vertical-align: middle;
+}
+
+.date .remove {
+  margin-left: 10;
+  color: #ff0000;
+  font-size: 20;
+}
+
+.select-date {
+  margin-top: 10;
+  font-size: 14;
+  text-decoration: underline;
 }
 
 .group .field {

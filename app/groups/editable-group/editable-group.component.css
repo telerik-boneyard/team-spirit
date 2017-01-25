@@ -14,7 +14,9 @@ TextView {
 }
 
 .form .input-field .label {
+  font-size: 12;
   color: #888;
+  text-transform: uppercase;
 }
 
 .user >>> Image {

@@ -40,8 +40,8 @@
 
             <StackLayout class="info-wrapper members-wrapper">
                 <Label class="info-label" text="Members"></Label>
-                <WrapLayout *ngIf="members.length">
-                    <photo-picker *ngFor="let user of members.slice(0, 5)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                <WrapLayout *ngIf="members.length" class="expandable">
+                    <photo-picker class="user-image" *ngFor="let user of members.slice(0, 5)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
                     <Label *ngIf="getRemainingText()" [text]="getRemainingText()"></Label>
                 </WrapLayout>
                 <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>

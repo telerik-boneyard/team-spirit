@@ -53,3 +53,13 @@
 .btn-icon {
   font-size: 32;
 }
+
+.expandable .user-image,
+.expandable Label {
+  vertical-align: middle;
+}
+
+.expandable Label {
+  font-size: 12;
+  font-weight: bold;
+}

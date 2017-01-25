@@ -39,6 +39,7 @@
 .registered-users-wrapper >>> Image {
   width: 30;
   height: 30;
+  margin-right: 5;
   border-radius: 50%;
 }
 
@@ -55,7 +56,6 @@
 }
 
 .expandable Label {
-  margin-left: 5;
   font-size: 12;
   font-weight: bold;
 }

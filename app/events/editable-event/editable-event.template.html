@@ -1,6 +1,6 @@
 <StackLayout class="cntnr">
     <photo-picker class="event-image" [(url)]="event.ImageUrl" [type]="'event'" [editable]="true"></photo-picker>
-    
+
     <StackLayout class="form info-cntnr">
         <StackLayout class="input-field">
             <Label class="label" text="Name"></Label>
@@ -31,9 +31,9 @@
             <Label class="label" text="Event Date"></Label>
             <StackLayout orientation="horizontal" *ngFor="let date of dateOptions; let ind = index">
                 <Label class="field" [text]="date | date:dateFormat"></Label>
-                <Image style="width: 50; height: 50;" src="res://remove_iocn" (tap)="removeDateOption(ind)"></Image>
+                <Label class="remove material-icon" text="&#xf136;" (tap)="removeDateOption(ind)"></Label>
             </StackLayout>
-            <Label [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
+            <Label class="select-date" [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
         </StackLayout>
 
         <StackLayout *ngIf="currentUser" class="input-field user">
