@@ -26,6 +26,10 @@ TextView {
   border-color: #c8c7cc;
 }
 
+ActivityIndicator {
+  color: #F4550F;
+}
+
 .material-icon {
   font-family: 'Material-Design-Iconic-Font';
 }
