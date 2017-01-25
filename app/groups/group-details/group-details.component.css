@@ -39,11 +39,13 @@
   border-width: 0;
 }
 
+.members-wrapper >>> .no-image,
 .members-wrapper >>> Image {
   width: 30;
   height: 30;
   margin-right: 5;
-  border-radius: 25;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .join-group {

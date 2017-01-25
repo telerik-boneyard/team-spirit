@@ -19,11 +19,13 @@ TextView {
   text-transform: uppercase;
 }
 
+.user >>> .no-image,
 .user >>> Image {
   width: 30;
   height: 30;
-  margin-right: 10;
-  border-radius: 25;
+  margin-right: 5;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .date .label,

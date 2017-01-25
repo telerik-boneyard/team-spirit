@@ -16,7 +16,7 @@
     </ActionBarExtension>
 
     <StackLayout *ngIf="event">
-        <photo-picker [url]="event.ImageUrl" [type]="'event'"></photo-picker>
+        <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
 
         <StackLayout class="info-container">
             <Label *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Label>
@@ -59,7 +59,7 @@
                 <Label class="info-label" text="Registered Participants"></Label>
 
                 <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" class="registered-users-wrapper" orientation="horizontal">
-                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
 
                     <StackLayout orientation="horizontal" (tap)="toggleExpandedUsers()" class="expandable">
                         <Label class="info-value" *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>

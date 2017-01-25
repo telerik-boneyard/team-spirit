@@ -1,5 +1,5 @@
 <StackLayout class="cntnr">
-    <photo-picker class="group-image" [(url)]="group.ImageUrl" [editable]="true" [type]="'group'"></photo-picker>
+    <photo-picker class="group-image" [(url)]="group.ImageUrl" [editable]="true" [type]="'group'" [noImageText]="'Add Photo'" [noImageIcon]="'&#xf28c;'"></photo-picker>
     <StackLayout class="form info-cntnr">
 
         <StackLayout class="input-field">
@@ -25,7 +25,7 @@
         <StackLayout *ngIf="currentUser" class="input-field user">
             <Label class="label" text="Administrator"></Label>
             <StackLayout orientation="horizontal">
-                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
                 <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
             </StackLayout>
         </StackLayout>

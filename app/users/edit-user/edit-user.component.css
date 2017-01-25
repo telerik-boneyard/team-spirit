@@ -4,12 +4,24 @@
   padding: 15;
 }
 
+.user >>> .no-image.large,
 .user >>> Image {
   width: 130;
   height: 130;
   border-radius: 75;
   border-width: 2;
   border-color: #fff;
+}
+
+.user >>> .no-image.large {
+  background-color: #ededed;
+}
+
+.user >>> .no-image.large .icon {
+  font-size: 80;
+}
+
+.user >>> Image {
   background-color: #fff;
 }
 

@@ -7,11 +7,11 @@
                 <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
             </GridLayout>
 
-            <photo-picker [evName]="event.Name" [url]="event.ImageUrl" [type]="'event'"></photo-picker>
+            <photo-picker [evName]="event.Name" [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
 
             <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
             <GridLayout columns="auto, auto, *" class="event-organiser">
-                <photo-picker [url]="event.Organizer.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                <photo-picker [url]="event.Organizer.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
                 <Label [text]="event.Organizer.DisplayName + ' | '" col="1" textWrap="true" class="user-name"></Label>
                 <Label [text]="event.Group" col="2" class="group"></Label>
             </GridLayout>

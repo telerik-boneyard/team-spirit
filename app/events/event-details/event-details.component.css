@@ -36,11 +36,13 @@
 }
 
 /* this is angular2 syntax :| */
-.registered-users-wrapper >>> Image {
+.registered-users-wrapper >>> Image,
+.registered-users-wrapper >>> .no-image {
   width: 30;
   height: 30;
   margin-right: 5;
-  border-radius: 50%;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .info-icon {
