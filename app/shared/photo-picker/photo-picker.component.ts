@@ -35,22 +35,20 @@ export class PhotoPickerComponent implements OnInit {
     }
 
     onEdit(event) {
-        if (this.editable) {
-            this._imgPickerService.pickImage()
-                .then(obj => {
-                    console.log('picked:' + JSON.stringify(obj));
-                    // this.onUpload.emit(obj);
-
-                    // this.editableImg.imageSource = nsImgSource.fromFileOrResource(obj.uri);
-                    this.resizedUrl = obj.uri;
-                    this.onUpload.emit(obj.uri);
-                })
-                .catch(err => {
-                    console.log('pick err: ' + JSON.stringify(err));
-                });
-        } else {
-            console.log('editable is false...');
+        if (!this.editable) {
+            return;
         }
+        
+        this._imgPickerService.pickImage()
+            .then(obj => {
+                this.resizedUrl = obj.uri;
+                this.onUpload.emit(obj.uri);
+            })
+            .catch(err => {
+                if (err) {
+                    console.log('pick err: ' + JSON.stringify(err));
+                }
+            });
     }
 
     private _resizeAccordingly(rawUrl: string, type: string) {
