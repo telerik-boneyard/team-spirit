@@ -5,10 +5,15 @@
 }
 
 .user >>> .no-image.large,
+.user >>> .image-wrp,
 .user >>> Image {
   width: 130;
   height: 130;
   border-radius: 75;
+}
+
+.user >>> .no-image.large,
+.user >>> .image-wrp {
   border-width: 2;
   border-color: #fff;
 }
@@ -21,7 +26,7 @@
   font-size: 80;
 }
 
-.user >>> Image {
+.user >>> .image-wrp Image {
   background-color: #fff;
 }
 

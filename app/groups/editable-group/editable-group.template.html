@@ -1,5 +1,5 @@
 <StackLayout class="cntnr">
-    <photo-picker class="group-image" [(url)]="group.ImageUrl" [editable]="true" [type]="'group'" [noImageText]="'Add Photo'" [noImageIcon]="'&#xf28c;'"></photo-picker>
+    <photo-picker class="group-image" [(url)]="group.ImageUrl" [editable]="true" [type]="'group'"  [noImageText]="group.ImageUrl ? 'Change Photo' : 'Add Photo'" [noImageIcon]="'&#xf28c;'"></photo-picker>
     <StackLayout class="form info-cntnr">
 
         <StackLayout class="input-field">
