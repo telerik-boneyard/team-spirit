@@ -37,6 +37,7 @@
                     <Label *ngIf="userGroups.length > 1" class="user-info-value expandable" [text]="getRemainingGroupsText()" (tap)="toggleExpandedMembership()"></Label>
                 </StackLayout>
                 <Label class="user-info-value" *ngIf="membershipExpanded" [text]="getAllMembershipNames()" (tap)="toggleExpandedMembership()" [textWrap]="true"></Label>
+                <Label *ngIf="!userGroups || !userGroups.length" text="Not a member of any group, yet"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>
