@@ -151,8 +151,8 @@ export class EventDetailsComponent implements OnInit {
         return ` - ${this._countByDate[date] || 0} votes`
     }
 
-    userVotedForDate(date: string) {
-        return !!this._userRegForThisEvent && this._userRegForThisEvent.Choices.some(r => r === date);
+    userVotedForDate(date: Date) {
+        return !!this._userRegForThisEvent && this._userRegForThisEvent.Choices.some((r: any) => r.toISOString() === date.toISOString());
     }
 
     private _openPopupAndRegister() {
