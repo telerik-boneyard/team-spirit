@@ -126,6 +126,6 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl(`/groups`);
     }
 }

@@ -116,7 +116,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl('/events');
     }
 
     private _openPopupAndRegister() {
