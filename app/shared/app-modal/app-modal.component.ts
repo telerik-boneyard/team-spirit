@@ -13,6 +13,25 @@ export class AppModalComponent {
     @Input() title: string;
     @Input() text: string;
 
+    constructor(private _params?: ModalDialogParams) {
+        if (!this._params) {
+            return;
+        }
+
+        if (this._params.context.buttons) {
+            this.buttons = this._params.context.buttons;
+        }
+
+        if (this._params.context.closeTimeout) {
+            setTimeout(() => {
+                this._params.closeCallback(true);
+            }, this._params.context.closeTimeout);
+        }
+
+        this.title = this._params.context.title;
+        this.text = this._params.context.text;
+    }
+
     onOk() {
         this.okCallback.emit();
     }

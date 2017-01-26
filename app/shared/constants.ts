@@ -11,3 +11,5 @@ export const imagePlaceholders = {
 };
 
 export const androidProjNumber = '832404619163';
+
+export const modalsTimeout = 3000;

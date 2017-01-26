@@ -6,7 +6,7 @@ import * as utils from 'utils/utils';
 
 import { EventsService, UsersService, AlertService, PlatformService } from '../../services';
 import { Event, User } from '../../shared/models';
-import { utilities } from '../../shared';
+import { utilities, constants, AppModalComponent } from '../../shared';
 import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 
 @Component({
@@ -94,6 +94,17 @@ export class EventDetailsComponent implements OnInit {
             if (didRegister) { // would be false if user closed modal
                 this.alreadyRegistered = true;
                 this.registeredUsers.unshift(this._currentUser);
+            }
+            return didRegister;
+        })
+        .then(didRegister => {
+            if (didRegister) {
+                let ctx = {
+                    title: 'Hooooray!',
+                    text: 'You have successfully registered for this event.',
+                    closeTimeout: constants.modalsTimeout
+                };
+                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
             }
         })
         .catch(this._onError.bind(this));

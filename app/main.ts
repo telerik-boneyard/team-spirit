@@ -92,7 +92,8 @@ const routes = [
         ListPickerModalComponent,
         DateTimePickerModalComponent,
         EventCreationModalComponent,
-        GroupCreationModalComponent
+        GroupCreationModalComponent,
+        AppModalComponent
     ],
     bootstrap: [AppComponent],
     imports: [
