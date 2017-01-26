@@ -1,11 +1,22 @@
 .app-modal-cntnr {
-  height: 100%;
   width: 100%;
-  background-color: white;
+  height: 100%;
+  padding-left: 20;
+  padding-right: 20;
+  vertical-align: center;
+  background-color: #fff;
 }
 
 .controls-wrapper {
   margin-top: 25;
+}
+
+.btn-wrp {
+  width: 75%;
+}
+
+.btn-primary {
+  margin-bottom: 20;
 }
 
 .btn-small {
@@ -13,6 +24,7 @@
 }
 
 .app-modal-title {
+  margin-bottom: 20;
   color: #F4550F;
   text-align: center;
   font-size: 24;
@@ -21,5 +33,5 @@
 .app-modal-text {
   color: #000;
   text-align: center;
-  font-size: 13;
+  font-size: 14;
 }

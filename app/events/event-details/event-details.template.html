@@ -5,7 +5,9 @@
             <label text="Back"></label>
         </ActionItem>
         <ActionItem>
-            <Label [text]="event && event.Name" textWrap="true"></Label>
+            <StackLayout class="actionbar-title-wrp">
+                <Label [text]="event && event.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+            </StackLayout>
         </ActionItem>
         <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
             ios.systemIcon="2" android.systemIcon="ic_menu_edit"
@@ -14,20 +16,20 @@
     </ActionBarExtension>
 
     <StackLayout *ngIf="event">
-        <photo-picker [url]="event.ImageUrl" [type]="'event'"></photo-picker>
+        <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
 
         <StackLayout class="info-container">
-            <Button *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Button>
+            <Label *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Label>
 
             <StackLayout class="info-wrapper">
                 <GridLayout columns="auto, auto, *" rows="auto, auto">
                     <Label class="info-label" text="Date" col="0" row="0"></Label>
                     <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
-                    <Image class="info-icon" src="res://calendar_icon" col="2" row="0"></Image>
+                    <Label class="info-icon material-icon" text="&#xf32e;" col="2" row="0"></Label>
                 </GridLayout>
                 <Label class="info-value" *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
                 <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
-                <Button *ngIf="!event.EventDate" [nsRouterLink]="['/events/' + event.Id + '/date-choices']" text="Choices"></Button>
+                <Label *ngIf="!event.EventDate" [nsRouterLink]="['/events/' + event.Id + '/date-choices']" text="Choices"></Label>
             </StackLayout>
 
             <StackLayout class="info-wrapper">
@@ -38,7 +40,7 @@
             <StackLayout class="info-wrapper">
                 <GridLayout columns="auto, *">
                     <Label class="info-label" text="Location" col="0"></Label>
-                    <Image *ngIf="event.LocationURL" class="info-icon" (tap)="showLocation()" src="https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/gps-128.png" col="1"></Image>
+                    <Label *ngIf="event.LocationURL" class="info-icon material-icon" text="&#xf1a1;" (tap)="showLocation()" col="1"></Label>
                 </GridLayout>
                 <Label class="info-value" [text]="event.LocationName" [textWrap]="true"></Label>
             </StackLayout>
@@ -57,7 +59,7 @@
                 <Label class="info-label" text="Registered Participants"></Label>
 
                 <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" class="registered-users-wrapper" orientation="horizontal">
-                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
 
                     <StackLayout orientation="horizontal" (tap)="toggleExpandedUsers()" class="expandable">
                         <Label class="info-value" *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>

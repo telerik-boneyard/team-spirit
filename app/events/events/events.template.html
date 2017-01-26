@@ -14,7 +14,7 @@
 
             <StackLayout *ngIf="!upcomingEvents.length" class="no-items">
                 <Label text="No upcoming events" [textWrap]="true"></Label>
-                <Button [nsRouterLink]="['/groups']" text="To Groups" class="btn btn-primary"></Button>
+                <Label [nsRouterLink]="['/groups']" text="To Groups" class="btn btn-primary"></Label>
             </StackLayout>
         </StackLayout>
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">

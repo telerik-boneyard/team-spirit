@@ -3,7 +3,9 @@
         <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()"></ActionItem>
         <ActionItem>
-            <Label [text]="group && group.Name"></Label>
+            <StackLayout class="actionbar-title-wrp">
+                <Label [text]="group && group.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+            </StackLayout>
         </ActionItem>
         <ActionItem
             ios.systemIcon="3"

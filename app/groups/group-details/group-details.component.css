@@ -8,7 +8,7 @@
 }
 
 .action-bar .btn {
-  height: 50;
+  height: 70;
   margin: 0;
   font-size: 11;
   background-color: #ddd;
@@ -21,7 +21,7 @@
   padding-bottom: 15;
   border-width: 0;
   border-bottom-width: 1;
-  border-color: #ADADAD;
+  border-color: #c8c7cc;
 }
 
 .info-wrapper .info-label {
@@ -39,13 +39,29 @@
   border-width: 0;
 }
 
+.members-wrapper >>> .no-image,
 .members-wrapper >>> Image {
   width: 30;
   height: 30;
   margin-right: 5;
-  border-radius: 25;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .join-group {
   margin: 15;
+}
+
+.btn-icon {
+  font-size: 32;
+}
+
+.expandable .user-image,
+.expandable Label {
+  vertical-align: middle;
+}
+
+.expandable Label {
+  font-size: 12;
+  font-weight: bold;
 }
