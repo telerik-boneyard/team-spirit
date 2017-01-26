@@ -35,7 +35,7 @@ export class AddGroupComponent {
         }
         let createdId: string;
 
-        this._alertService.askConfirmation(`Create group ${this.group.Name}?`)
+        this._alertService.askConfirmation(`Create group "${this.group.Name}"?`)
             .then(() => {
                 let promise: Promise<{ Id: string, Uri: string }> = Promise.resolve();
 
@@ -63,7 +63,14 @@ export class AddGroupComponent {
             .then(() => {
                 this._routerExtensions.navigateByUrl(`/groups/${createdId}`);
             })
-            .catch(err => err && this._alertService.showError(err.message));
+            .catch(err => {
+                if (err) {
+                    if (err.code === 107) {
+                        err.message = 'A group with this name already exists. Please use a different name';
+                    }
+                    this._alertService.showError(err.message);
+                }
+            });
     }
 
     onCancel() {
