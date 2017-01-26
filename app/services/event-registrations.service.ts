@@ -52,4 +52,9 @@ export class EventRegistrationsService {
         
         return this._elProvider.get.businessLogic.invokeCloudFunction('registerForEvent', { queryStringParams });
     }
+
+    getUserRegistrationForEvent(eventId: string, userId: string) {
+        return this._data.get({ EventId: eventId, UserId: userId })
+            .then(res => res.result[0]);
+    }
 }

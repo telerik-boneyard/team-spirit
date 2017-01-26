@@ -62,8 +62,19 @@ export class EventsService {
             .then(r => r.result);
     }
 
-    getDateChoicesVotes(eventId: string) {
-        let eventPromise = this.getById(eventId);
+    getDateChoicesVotes(event: Event): Promise<{ event: Event, countByDate: any }>
+    getDateChoicesVotes(eventId: string): Promise<{ event: Event, countByDate: any }>
+    getDateChoicesVotes(eventOrId: Event|string): Promise<{ event: Event, countByDate: any }> {
+        let eventPromise = Promise.resolve(eventOrId as Event); // assume it's event
+        let eventId: string;
+
+        if (typeof eventOrId === 'string') {
+            eventId = eventOrId;
+            eventPromise = this.getById(eventId);
+        } else {
+            eventId = eventOrId.Id;
+        }
+
         let choicesPromise = this._registrationsService.getEventDateChoiceCounts(eventId);
         return Promise.all<any>([eventPromise, choicesPromise])
             .then((res) => {
