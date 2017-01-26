@@ -12,7 +12,7 @@
   padding-bottom: 15;
   border-width: 0;
   border-bottom-width: 1;
-  border-color: #ADADAD;
+  border-color: #c8c7cc;
 }
 
 .info-wrapper.no-separator {
@@ -36,16 +36,21 @@
 }
 
 /* this is angular2 syntax :| */
-.registered-users-wrapper >>> Image {
+.registered-users-wrapper >>> Image,
+.registered-users-wrapper >>> .no-image {
   width: 30;
   height: 30;
-  border-radius: 50%;
+  margin-right: 5;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .info-icon {
   width: 25;
   height: 25;
   horizontal-align: right;
+  font-size: 26;
+  color: #F4550F;
 }
 
 .tbd {
@@ -53,7 +58,6 @@
 }
 
 .expandable Label {
-  margin-left: 5;
   font-size: 12;
   font-weight: bold;
 }

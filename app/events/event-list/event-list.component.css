@@ -41,16 +41,18 @@
   vertical-align: middle;
 }
 
-.event-organiser >>> Image {
+.event-organiser >>> Image,
+.event-organiser >>> .no-image {
   width: 30;
   height: 30;
-  margin-right: 10;
-  border-radius: 30;
+  margin-right: 5;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
 }
 
 .event-list-separator {
   border-width: 0;
   border-bottom-width: 1;
-  border-color: #adadad;
+  border-color: #c8c7cc;
   height: 1;
 }

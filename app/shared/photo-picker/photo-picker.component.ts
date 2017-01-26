@@ -17,6 +17,8 @@ export class PhotoPickerComponent implements OnInit {
     @Input() type: string;
     @Input('small') isSmall: boolean;
     @Input() editable: boolean;
+    @Input() noImageIcon: string;
+    @Input() noImageText: string;
 
     @Output('urlChange') onUpload = new EventEmitter<any>();
 
@@ -26,7 +28,7 @@ export class PhotoPickerComponent implements OnInit {
 
     ngOnInit() {
         if (!this.rawUrl) {
-            this.rawUrl = this._decidePlaceholder();
+            return;
         }
 
         this.resizedUrl = this._resizeAccordingly(this.rawUrl, this.type);
@@ -38,7 +40,7 @@ export class PhotoPickerComponent implements OnInit {
                 .then(obj => {
                     console.log('picked:' + JSON.stringify(obj));
                     // this.onUpload.emit(obj);
-                    
+
                     // this.editableImg.imageSource = nsImgSource.fromFileOrResource(obj.uri);
                     this.resizedUrl = obj.uri;
                     this.onUpload.emit(obj.uri);
@@ -51,20 +53,6 @@ export class PhotoPickerComponent implements OnInit {
         }
     }
 
-    private _decidePlaceholder() {
-        let placeholder = '';
-
-        if (this.type === 'event') {
-            placeholder = constants.imagePlaceholders.event;
-        } else if (this.type === 'group') {
-            placeholder = constants.imagePlaceholders.group;
-        } else {
-            placeholder = constants.imagePlaceholders.user;
-        }
-
-        return placeholder;
-    }
-
     private _resizeAccordingly(rawUrl: string, type: string) {
         switch (type) {
             case 'group':
@@ -75,7 +63,7 @@ export class PhotoPickerComponent implements OnInit {
 
             case 'event':
                 return this._resizeForEvent(rawUrl);
-        
+
             default: {
                 return this._resizeForEvent(rawUrl);
             }
@@ -100,12 +88,12 @@ export class PhotoPickerComponent implements OnInit {
     private _resizeForEvent(url: string) {
         return this._resize(url);
     }
-    
+
     private _resize(url: string, dims?: { w: number, h: number }) {
         if (utilities.isResourceUrl(url)) {
             return url;
         }
-        
+
         let dimensions;
         if (dims) {
             dimensions = { width: dims.w, height: dims.h };

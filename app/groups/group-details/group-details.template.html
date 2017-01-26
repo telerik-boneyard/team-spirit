@@ -3,7 +3,9 @@
         <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
         <ActionItem>
-            <Label [text]="group && group.Name"></Label>
+            <StackLayout class="actionbar-title-wrp">
+                <Label [text]="group && group.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+            </StackLayout>
         </ActionItem>
         <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
             ios.systemIcon="2" android.systemIcon="ic_menu_edit"
@@ -11,14 +13,23 @@
         </ActionItem>
     </ActionBarExtension>
     <StackLayout *ngIf="group">
-        <photo-picker [url]="group.ImageUrl" [type]="'group'"></photo-picker>
+        <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
 
-        <Button class="btn btn-primary join-group" *ngIf="hasJoined === false" [text]="getJoinBtnText()" (tap)="onJoin()"></Button>
+        <Label class="btn btn-primary join-group" *ngIf="hasJoined === false" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
 
         <GridLayout *ngIf="hasJoined === true" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" [attr.columns]="canEdit() ? '*, *, *' : '*, *'">
-            <Label *ngIf="canEdit()" class="btn" text="See requests" (tap)="onViewRequests()" col="0"></Label>
-            <Label class="btn" text="See Events" (tap)="onViewEvents()" [attr.col]="canEdit() ? 1 : 0"></Label>
-            <Label class="btn" text="Leave Group" (tap)="onLeave()" [attr.col]="canEdit() ? 2 : 1"></Label>
+            <StackLayout *ngIf="canEdit()" class="btn" (tap)="onViewRequests()" col="0">
+                <Label class="btn-icon material-icon" text="&#xf207;"></Label>
+                <Label class="btn-text" text="See requests"></Label>
+            </StackLayout>
+            <StackLayout class="btn" (tap)="onViewEvents()" [attr.col]="canEdit() ? 1 : 0">
+                <Label class="btn-icon material-icon" text="&#xf27a;"></Label>
+                <Label class="btn-text" text="See Events"></Label>
+            </StackLayout>
+            <StackLayout class="btn" (tap)="onLeave()" [attr.col]="canEdit() ? 2 : 1">
+                <Label class="btn-icon material-icon" text="&#xf134;"></Label>
+                <Label class="btn-text" text="Leave Group"></Label>
+            </StackLayout>
         </GridLayout>
 
         <StackLayout class="info-container">
@@ -29,8 +40,8 @@
 
             <StackLayout class="info-wrapper members-wrapper">
                 <Label class="info-label" text="Members"></Label>
-                <WrapLayout *ngIf="members.length">
-                    <photo-picker *ngFor="let user of members.slice(0, 5)" [url]="user.ImageUrl" [type]="'user'" [small]="true"></photo-picker>
+                <WrapLayout *ngIf="members.length" class="expandable">
+                    <photo-picker class="user-image" *ngFor="let user of members.slice(0, 5)" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
                     <Label *ngIf="getRemainingText()" [text]="getRemainingText()"></Label>
                 </WrapLayout>
                 <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>

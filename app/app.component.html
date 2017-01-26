@@ -5,11 +5,27 @@
 <RadSideDrawer #drawer>
     <DockLayout tkDrawerContent class="drawer">
         <StackLayout class="sideStackLayout" width="100%" dock="top">
-            <Button class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="Events" [nsRouterLink]="['events']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="Groups" [nsRouterLink]="['groups']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="My Profile" [nsRouterLink]="['user']" (tap)="closeDrawer()"></Button>
-            <Button class="btn" *ngIf="loggedIn" text="Log out" (tap)="logout()" (tap)="closeDrawer()"></Button>
+            <Label class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Label>
+
+            <StackLayout orientation="horizontal" class="btn" [nsRouterLink]="['events']" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf27a;"></Label>
+                <Label class="btn-text" text="Events"></Label>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['groups']" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf209;"></Label>
+                <Label class="btn-text" text="Groups"></Label>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['user']" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf207;"></Label>
+                <Label class="btn-text" text="My Profile"></Label>
+            </StackLayout>
+
+            <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" (tap)="logout()" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf191;"></Label>
+                <Label class="btn-text" text="Log out"></Label>
+            </StackLayout>
         </StackLayout>
         <StackLayout dock="bottom" verticalAlignment="bottom">
             <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>

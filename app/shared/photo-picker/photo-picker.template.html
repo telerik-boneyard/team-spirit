@@ -1,4 +1,27 @@
+<StackLayout *ngIf="!resizedUrl">
+    <StackLayout class="no-image editable" *ngIf="editable" (tap)="onEdit()" [ngClass]="{ 'large': !isSmall }">
+        <Label class="icon material-icon" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
+        <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
+    </StackLayout>
+    <StackLayout class="no-image" *ngIf="!editable" [ngClass]="{ 'large': !isSmall }">
+        <Label class="icon material-icon" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
+        <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
+    </StackLayout>
+</StackLayout>
 <StackLayout class="container" *ngIf="resizedUrl" [ngClass]="{ 'large': !isSmall }">
-    <Image class="image" *ngIf="editable" [src]="resizedUrl" (tap)="onEdit()"></Image>
-    <Image class="image" *ngIf="!editable" [src]="resizedUrl"></Image>
+    <StackLayout class="image-wrp editable" *ngIf="editable" (tap)="onEdit()">
+        <AbsoluteLayout *ngIf="noImageText || noImageIcon">
+            <Image top="0" left="0" class="image" [src]="resizedUrl"></Image>
+            <StackLayout top="0" left="0" class="icon-wrp">
+                <Label class="icon material-icon" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
+                <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
+            </StackLayout>
+        </AbsoluteLayout>
+        <StackLayout *ngIf="!noImageText && !noImageIcon">
+            <Image class="image" [src]="resizedUrl"></Image>
+        </StackLayout>
+    </StackLayout>
+    <StackLayout class="image-wrp" *ngIf="!editable">
+        <Image class="image" [src]="resizedUrl"></Image>
+    </StackLayout>
 </StackLayout>

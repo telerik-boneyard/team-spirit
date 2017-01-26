@@ -1,13 +1,11 @@
 .cntnr {
-    background-color: #fff;
-    height: 100%;
+  width: 100%;
+  height: 100%;
+  padding: 20;
+  vertical-align: center;
+  background-color: #fff;
 }
 
-DatePicker {
-    width: 200;
-}
-
-DatePicker, TimePicker {
-    margin-top: 150;
-    height: 150;
+.btn-wrp {
+  width: 65%;
 }

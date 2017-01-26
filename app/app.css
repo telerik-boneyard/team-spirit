@@ -23,7 +23,15 @@ TextView {
   margin-bottom: 10;
   font-size: 16;
   border-width: 0 0 1 0;
-  border-color: #ADADAD;
+  border-color: #c8c7cc;
+}
+
+ActivityIndicator {
+  color: #F4550F;
+}
+
+.material-icon {
+  font-family: 'Material-Design-Iconic-Font';
 }
 
 .switch {
@@ -64,6 +72,7 @@ TextView {
   margin: 0 6;
   font-size: 20;
   color: #ffffff;
+  text-align: center;
 }
 
 .btn-primary {
@@ -91,8 +100,8 @@ TextView {
 
 .drawer .btn {
   margin: 0;
-  padding: 0;
-  font-size: 14;
+  padding: 20 0;
+  font-size: 18;
   color: #fff;
   text-align: left;
   background-color: rgba(255, 0, 0, 0.0);
@@ -100,6 +109,27 @@ TextView {
   border-width: 1;
 }
 
+.drawer .btn-icon,
+.drawer .btn-text {
+  vertical-align: middle;
+}
+
+.drawer .btn-icon {
+  width: 50;
+  font-size: 26;
+  text-align: center;
+}
+
 .drawer .logo {
   width: 140;
+}
+
+.actionbar-title-wrp {
+  width: 60%;
+}
+
+.actionbar-title {
+  width: 250;
+  text-align: right;
+  padding-right: 20;
 }
