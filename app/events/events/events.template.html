@@ -1,4 +1,4 @@
-<ScrollView class="cntnr">
+<StackLayout class="cntnr">
     <ActionBarExtension>
         <ActionItem>
             <Label text="Events"></Label>
@@ -27,5 +27,7 @@
         </StackLayout>
     </TabView>
 
-    <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</ScrollView>
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</StackLayout>
