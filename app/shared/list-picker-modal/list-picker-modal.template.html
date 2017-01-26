@@ -6,8 +6,9 @@
                     [selectedIndex]="selectedIndex"
                     (selectedIndexChange)="selectedIndexChanged(picker.selectedIndex)">
         </ListPicker>
-
-        <Label class="btn btn-primary" (tap)="onDone()" text="Select"></Label>
+        <StackLayout class="btn-wrp">
+            <Label class="btn btn-primary" (tap)="onDone()" text="Select"></Label>
+        </StackLayout>
     </StackLayout>
 
     <StackLayout *ngIf="!availableOptions.length">
