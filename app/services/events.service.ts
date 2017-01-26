@@ -52,7 +52,8 @@ export class EventsService {
 
     getByGroupId(groupId: string) {
         let filter = { GroupId: groupId };
-        return this._getWithFilter(filter);
+        let sort = [{ field: 'EventDateChoices', desc: true }, { field: 'EventDate', desc: true }];
+        return this._getWithFilter(filter, true, sort);
     }
 
     getById(eventId: string) {
