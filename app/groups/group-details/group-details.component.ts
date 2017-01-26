@@ -13,7 +13,7 @@ import { utilities } from '../../shared';
 })
 export class GroupDetailsComponent implements OnInit {
     group: Group;
-    hasJoined: boolean = false;
+    hasJoined: boolean = null;
     members: User[] = [];
     isAndroid: boolean = false;
     private _currentUser: User;
