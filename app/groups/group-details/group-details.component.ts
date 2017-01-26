@@ -49,7 +49,7 @@ export class GroupDetailsComponent implements OnInit {
                 })
                 .then(() => {
                     if (this.group.RequiresApproval && p['joinRedirect']) {
-                        this._alertsService.showSuccess('Request to join sent');
+                        this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
                     }
                     
                     return this._groupsService.getGroupMembers(this.group.Id);
@@ -62,10 +62,6 @@ export class GroupDetailsComponent implements OnInit {
                     this._alertsService.showError(err && err.message);
                 });;
         });
-    }
-
-    getApprovalBtnText() {
-        return this.group.RequiresApproval ? 'Approval' : 'No Approval';
     }
 
     getRemainingText() {
@@ -107,6 +103,8 @@ export class GroupDetailsComponent implements OnInit {
                 if (!this.group.RequiresApproval) {
                     this.hasJoined = true;
                     this.members.push(this._currentUser);
+                } else {
+                    this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
                 }
             })
             .catch((err) => {
