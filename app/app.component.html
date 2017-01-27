@@ -22,6 +22,11 @@
                 <Label class="btn-text" text="My Profile"></Label>
             </StackLayout>
 
+            <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['settings']" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf191;"></Label>
+                <Label class="btn-text" text="Settings"></Label>
+            </StackLayout>
+
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" (tap)="logout()" (tap)="closeDrawer()">
                 <Label class="btn-icon material-icon" text="&#xf191;"></Label>
                 <Label class="btn-text" text="Log out"></Label>
