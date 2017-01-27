@@ -62,7 +62,7 @@ export class EditEventComponent implements OnInit {
                 return this._eventsService.update(this.event);
             })
             .then(() => {
-                return this._alertsService.showSuccess(`Group "${this.event.Name}" updated!`);
+                return this._alertsService.showSuccess(`Event "${this.event.Name}" updated!`);
             })
             .then((res) => {
                 this._routerExtensions.navigate([`/events/${this.event.Id}`]);
