@@ -155,6 +155,10 @@ export class EventDetailsComponent implements OnInit {
         return !!this._userRegForThisEvent && this._userRegForThisEvent.Choices.some((r: any) => r.toISOString() === date.toISOString());
     }
 
+    onParticipantsTap() {
+        this._routerExtensions.navigateByUrl(`/events/${this.event.Id}/participants`);
+    }
+
     private _openPopupAndRegister() {
         let opts: ModalDialogOptions = {
             context: {
