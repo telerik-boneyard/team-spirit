@@ -26,7 +26,8 @@ import {
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
-    EventDateVotesComponent
+    EventDateVotesComponent,
+    EventParticipantsComponent
 } from './events';
 
 import {
@@ -52,6 +53,7 @@ const routes = [
     { path: 'events/add', component: AddEventComponent },
     { path: 'events/:id', component: EventDetailsComponent },
     { path: 'events/:id/edit', component: EditEventComponent },
+    { path: 'events/:id/participants', component: EventParticipantsComponent },
     { path: 'events/:id/date-choices', component: EventDateVotesComponent },
 
     { path: 'groups', component: GroupsComponent },
@@ -92,7 +94,8 @@ const routes = [
         PhotoPickerComponent,
         UserDisplayComponent,
         UsersListComponent,
-        GroupMembersComponent
+        GroupMembersComponent,
+        EventParticipantsComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,

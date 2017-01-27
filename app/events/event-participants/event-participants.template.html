@@ -1,0 +1,32 @@
+<StackLayout class="cntnr">
+    <ActionBarExtension>
+    	<NavigationButton *ngIf="isAndroid"android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
+    	<ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
+        <ActionItem>
+            <StackLayout class="actionbar-title-wrp">
+                <Label [text]="event && event.Name && ('Participants for ' + event.Name)" class="actionbar-title"></Label>
+            </StackLayout>
+        </ActionItem>
+        <!--<ActionItem (tap)="onAdd()" *ngIf="canAdd"
+            ios.systemIcon="4" android.systemIcon="ic_menu_add"
+            ios.position="right">
+        </ActionItem>-->
+    </ActionBarExtension>
+
+    <StackLayout *ngIf="eventDates.length">
+        <StackLayout *ngFor="let date of eventDates">
+            <Label [text]="date | date:dateFormat" textWrap="true" textWrap="true"></Label>
+            <user-list *ngIf="hasVoters(date)" [users]="getParticipants(date)"></user-list>
+            <Label *ngIf="!hasVoters(date)" text="Nobody voted for this date" textWrap="true"></Label>
+        </StackLayout>
+
+        <StackLayout *ngIf="hasOldDates()">
+            <Label text="Dates that were deprecated" textWrap="true"></Label>
+            <Label *ngFor="let date of getOldDates()" [text]="date | date:dateFormat" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!participants" [visibility]="participants ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</StackLayout>

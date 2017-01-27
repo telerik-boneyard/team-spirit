@@ -18,6 +18,8 @@ export class GroupMembersComponent implements OnInit {
     noAdmin: boolean = false;
     canAdd: boolean = false;
 
+    private _groupId: string;
+
     constructor(
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
@@ -31,10 +33,10 @@ export class GroupMembersComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.subscribe(p => {
-            let groupId: string = p['id'];
-            let groupPrm = this._groupsService.getById(groupId)
+            this._groupId = p['id'];
+            let groupPrm = this._groupsService.getById(this._groupId)
                 .then(g => this.group = g);
-            let membersPrm = this._groupsService.getGroupMembers(groupId)
+            let membersPrm = this._groupsService.getGroupMembers(this._groupId)
                 .then(members => this.members = members);
             
             Promise.all<any>([this._usersService.currentUser(), groupPrm, membersPrm])
@@ -60,6 +62,6 @@ export class GroupMembersComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl(`/groups/${this._groupId}`);
     }
 }

@@ -32,31 +32,40 @@ export class GroupDetailsComponent implements OnInit {
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(p => {
-            this._usersService.currentUser()
-                .then(user => {
-                    this._currentUser = user;
-                    return this._groupsService.getById(p['id']);
+            let groupId = p['id'];
+
+            let userPrm = this._usersService.currentUser()
+                .then(user => this._currentUser = user);
+            
+            let groupPrm = this._groupsService.getById(groupId)
+                .then(group => this.group = group);
+
+            Promise.all<any>([userPrm, groupPrm])
+                .then(() => this._groupsService.getGroupMembers(this.group.Id))
+                .then(members => {
+                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
+                    this.members = members;
                 })
-                .then(group => {
-                    this.group = group;
+                .then(() => {
                     let promise = Promise.resolve(false);
 
-                    if (p['joinRedirect']) { // join if its a join redirect
+                    if (!this.hasJoined && p['joinRedirect']) { // join if its a join redirect
                         promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
                     }
 
                     return promise;
                 })
-                .then(() => {
+                .then((result) => {
+                    if (result === false) { // was not a join redirect or was already a member
+                        return;
+                    }
+
                     if (this.group.RequiresApproval && p['joinRedirect']) {
                         this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
                     }
-                    
-                    return this._groupsService.getGroupMembers(this.group.Id);
-                })
-                .then(members => {
-                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
-                    this.members = members;
+
+                    this.hasJoined = true;
+                    this.members.push(this._currentUser);
                 })
                 .catch(err => {
                     this._alertsService.showError(err && err.message);
