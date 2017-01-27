@@ -12,7 +12,8 @@ import {
     AppModalComponent,
     DateTimePickerModalComponent,
     ListPickerModalComponent,
-    PhotoPickerComponent
+    PhotoPickerComponent,
+    UserDisplayComponent
 } from './shared';
 
 import { 
@@ -85,7 +86,8 @@ const routes = [
         EventDateVotesComponent,
         GroupCreationModalComponent,
         GroupEventsComponent,
-        PhotoPickerComponent
+        PhotoPickerComponent,
+        UserDisplayComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,
