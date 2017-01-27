@@ -13,7 +13,8 @@ import {
     DateTimePickerModalComponent,
     ListPickerModalComponent,
     PhotoPickerComponent,
-    UserDisplayComponent
+    UserDisplayComponent,
+    UsersListComponent
 } from './shared';
 
 import { 
@@ -36,7 +37,8 @@ import {
     GroupDetailsComponent,
     AddGroupComponent,
     GroupCreationModalComponent,
-    GroupEventsComponent
+    GroupEventsComponent,
+    GroupMembersComponent
 } from './groups';
 
 const routes = [
@@ -56,7 +58,8 @@ const routes = [
     { path: 'groups/add', component: AddGroupComponent },
     { path: 'groups/:id', component: GroupDetailsComponent },
     { path: 'groups/:id/edit', component: EditGroupComponent },
-    { path: 'groups/:id/events', component: GroupEventsComponent }
+    { path: 'groups/:id/events', component: GroupEventsComponent },
+    { path: 'groups/:id/members', component: GroupMembersComponent }
 ];
 
 @NgModule({
@@ -87,7 +90,9 @@ const routes = [
         GroupCreationModalComponent,
         GroupEventsComponent,
         PhotoPickerComponent,
-        UserDisplayComponent
+        UserDisplayComponent,
+        UsersListComponent,
+        GroupMembersComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,

@@ -1,8 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 
 import { User } from '../models';
-import { ImagePickerService } from '../../services';
-import { utilities, constants } from '../';
 
 @Component({
     selector: 'user-display',

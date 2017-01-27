@@ -123,6 +123,10 @@ export class GroupDetailsComponent implements OnInit {
             });
     }
 
+    onMembersTap() {
+        this._routerExtensions.navigateByUrl(`/groups/${this.group.Id}/members`);
+    }
+
     onBack() {
         this._routerExtensions.navigateByUrl(`/groups`);
     }

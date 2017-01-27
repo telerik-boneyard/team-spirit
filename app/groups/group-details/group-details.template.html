@@ -40,7 +40,7 @@
                     <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>
                 </StackLayout>
 
-                <StackLayout class="info-wrapper members-wrapper">
+                <StackLayout class="info-wrapper members-wrapper" (tap)="onMembersTap()">
                     <Label class="info-label" text="Members"></Label>
                     <user-display *ngIf="members.length" [users]="members" [withImages]="5"></user-display>
                     <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>

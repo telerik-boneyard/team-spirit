@@ -1,0 +1,10 @@
+<StackLayout>
+    <ListView [items]="users" separatorColor="gray">
+        <template let-user="item">
+            <StackLayout orientation="horizontal">
+                <user-display [users]="[user]" [showNames]="true"></user-display>
+                <Label *ngIf="user._label" [text]="getUserLabel(user)" textWrap="true"></Label>
+            </StackLayout>
+        </template>
+    </ListView>
+</StackLayout>
