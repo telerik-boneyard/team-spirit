@@ -26,6 +26,9 @@
             </StackLayout>
         </StackLayout>
     </TabView>
+    
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</StackLayout>
 
-    <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</ScrollView>

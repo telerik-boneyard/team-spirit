@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 
+import { constants } from '../../shared';
+
 @Component({
     selector: 'event-creation-modal',
     templateUrl: 'events/event-creation-modal/event-creation-modal.template.html',
@@ -14,7 +16,7 @@ export class EventCreationModalComponent {
 
         setTimeout(() => {
             this._params.closeCallback(true);
-        }, 3000);
+        }, constants.modalsTimeout);
     }
 
     getText() {

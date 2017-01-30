@@ -36,7 +36,7 @@
 }
 
 .event-organiser >>> Image,
-.user-name,
+.event-organiser >>> .user-name,
 .group {
   vertical-align: middle;
 }

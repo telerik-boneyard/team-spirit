@@ -40,6 +40,18 @@ export class UsersService {
         return this._users.register(username, password, { Email: username });
     }
 
+    resetUserPassword(identifier: string) {
+        let obj: any = {};
+        
+        if (utilities.isEmail(identifier)) {
+            obj.Email = identifier;
+        } else {
+            obj.Username = identifier;
+        }
+        
+        return this._users.resetPassword(obj).then(res => true, err => true);
+    }
+
     currentUser(reCache = false) {
         if (!this._currUserCache || reCache) {
             this._currUserCache = this._users.expand(this._imageExpandExp)
@@ -94,6 +106,6 @@ export class UsersService {
         if (!user) {
             return null;
         }
-        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone, user.Image);
+        return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone, user.Image, user.PushNotificationsEnabled, user.EmailNotificationsEnabled);
     }
 }

@@ -45,7 +45,6 @@ export class ImagePickerService {
             .then((res) => {
                 return this._processImages(res);
             }, (err) => {
-                console.log('user cancelled or refused to grant permissions');
                 return Promise.reject(false);
             });
     }

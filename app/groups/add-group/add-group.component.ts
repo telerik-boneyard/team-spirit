@@ -34,36 +34,43 @@ export class AddGroupComponent {
             return this._alertService.showError(errMsg);
         }
         let createdId: string;
-        let promise: Promise<{ Id: string, Uri: string }> = Promise.resolve();
 
-        if (utilities.isLocalFileUrl(this.group.ImageUrl)) {
-            promise = this._filesService.uploadFromUri(this.group.ImageUrl);
-        }
-        
-        promise.then((uploadResult) => {
-            if (uploadResult) {
-                this.group.Image = uploadResult.Id;
-            }
-            return this._groupsService.create(this.group);
-        })
-        .then((result) => {
-            createdId = result.Id;
-            let ctx = { groupName: this.group.Name };
-            return this._alertService.showModal(ctx, this._vsRef, GroupCreationModalComponent);
-        })
-        .then((doInviteMembers: boolean) => {
-            if (doInviteMembers) {
-                return this._alertService.showError('Not implemented, yet');
-            }
-        })
-        .then(() => {
-            this._routerExtensions.navigateByUrl(`/groups/${createdId}`);
-        })
-        .catch(err => {
-            if (err) {
-                this._alertService.showError(err.message);
-            }
-        });
+        this._alertService.askConfirmation(`Create group "${this.group.Name}"?`)
+            .then(() => {
+                let promise: Promise<{ Id: string, Uri: string }> = Promise.resolve();
+
+                if (utilities.isLocalFileUrl(this.group.ImageUrl)) {
+                    promise = this._filesService.uploadFromUri(this.group.ImageUrl);
+                }
+                return promise;
+            })
+            .then((uploadResult) => {
+                if (uploadResult) {
+                    this.group.Image = uploadResult.Id;
+                }
+                return this._groupsService.create(this.group);
+            })
+            .then((result) => {
+                createdId = result.Id;
+                let ctx = { groupName: this.group.Name };
+                return this._alertService.showModal(ctx, this._vsRef, GroupCreationModalComponent);
+            })
+            .then((doInviteMembers: boolean) => {
+                if (doInviteMembers) {
+                    return this._alertService.showError('Not implemented, yet');
+                }
+            })
+            .then(() => {
+                this._routerExtensions.navigateByUrl(`/groups/${createdId}`);
+            })
+            .catch(err => {
+                if (err) {
+                    if (err.code === 107) {
+                        err.message = 'A group with this name already exists. Please use a different name';
+                    }
+                    this._alertService.showError(err.message);
+                }
+            });
     }
 
     onCancel() {

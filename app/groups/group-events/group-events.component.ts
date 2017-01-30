@@ -16,6 +16,8 @@ export class GroupEventsComponent implements OnInit {
     group: Group;
     isAndroid: boolean = false;
 
+    private _groupId: string;
+
     constructor(
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
@@ -29,15 +31,15 @@ export class GroupEventsComponent implements OnInit {
 
     ngOnInit() {
         this._route.params.subscribe(params => {
-            let groupId = params['id'];
+            this._groupId = params['id'];
 
-            this._eventsService.getByGroupId(groupId)
+            this._eventsService.getByGroupId(this._groupId)
                 .then(events => {
                     this.events = events;
                 })
                 .catch(this._onError.bind(this));
             
-            this._groupsService.getById(groupId)
+            this._groupsService.getById(this._groupId)
                 .then(group => {
                     this.group = group;
                 })
@@ -50,7 +52,7 @@ export class GroupEventsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl(`/groups/${this._groupId}`);
     }
 
     private _onError(err) {

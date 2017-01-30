@@ -13,7 +13,7 @@ import { utilities } from '../../shared';
 })
 export class GroupDetailsComponent implements OnInit {
     group: Group;
-    hasJoined: boolean = false;
+    hasJoined: boolean = null;
     members: User[] = [];
     isAndroid: boolean = false;
     private _currentUser: User;
@@ -32,40 +32,44 @@ export class GroupDetailsComponent implements OnInit {
 
     ngOnInit() {
         this._activatedRoute.params.subscribe(p => {
-            this._usersService.currentUser()
-                .then(user => {
-                    this._currentUser = user;
-                    return this._groupsService.getById(p['id']);
+            let groupId = p['id'];
+
+            let userPrm = this._usersService.currentUser()
+                .then(user => this._currentUser = user);
+            
+            let groupPrm = this._groupsService.getById(groupId)
+                .then(group => this.group = group);
+
+            Promise.all<any>([userPrm, groupPrm])
+                .then(() => this._groupsService.getGroupMembers(this.group.Id))
+                .then(members => {
+                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
+                    this.members = members;
                 })
-                .then(group => {
-                    this.group = group;
+                .then(() => {
                     let promise = Promise.resolve(false);
 
-                    if (p['joinRedirect']) { // join if its a join redirect
+                    if (!this.hasJoined && p['joinRedirect']) { // join if its a join redirect
                         promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
                     }
 
                     return promise;
                 })
-                .then(() => {
-                    if (this.group.RequiresApproval && p['joinRedirect']) {
-                        this._alertsService.showSuccess('Request to join sent');
+                .then((result) => {
+                    if (result === false) { // was not a join redirect or was already a member
+                        return;
                     }
-                    
-                    return this._groupsService.getGroupMembers(this.group.Id);
-                })
-                .then(members => {
-                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
-                    this.members = members;
+
+                    if (this.group.RequiresApproval && p['joinRedirect']) {
+                        this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
+                    }
+
+                    this._addCurrentUserAsRegistered();
                 })
                 .catch(err => {
                     this._alertsService.showError(err && err.message);
                 });;
         });
-    }
-
-    getApprovalBtnText() {
-        return this.group.RequiresApproval ? 'Approval' : 'No Approval';
     }
 
     getRemainingText() {
@@ -104,9 +108,10 @@ export class GroupDetailsComponent implements OnInit {
     onJoin() {
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {
-                if (!this.group.RequiresApproval) {
-                    this.hasJoined = true;
-                    this.members.push(this._currentUser);
+                if (this.group.RequiresApproval) {
+                    this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
+                } else {
+                    this._addCurrentUserAsRegistered();
                 }
             })
             .catch((err) => {
@@ -125,7 +130,18 @@ export class GroupDetailsComponent implements OnInit {
             });
     }
 
+    onMembersTap() {
+        this._routerExtensions.navigateByUrl(`/groups/${this.group.Id}/members`);
+    }
+
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl(`/groups`);
+    }
+
+    private _addCurrentUserAsRegistered() {
+        this.hasJoined = true;
+        let clone = this.members.slice(0);
+        clone.push(this._currentUser);
+        this.members = clone;
     }
 }

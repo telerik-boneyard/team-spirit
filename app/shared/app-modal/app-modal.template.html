@@ -1,13 +1,13 @@
 <StackLayout class="app-modal-cntnr">
-    <Label *ngIf="title" class="app-modal-title" [text]="title"></Label>
-    <Label *ngIf="text" class="app-modal-text" [text]="text"></Label>
+    <Label *ngIf="title" class="app-modal-title" [text]="title" textWrap="true"></Label>
+    <Label *ngIf="text" class="app-modal-text" [text]="text" textWrap="true"></Label>
 
     <ng-content></ng-content>
 
     <StackLayout class="controls-wrapper" *ngIf="buttons">
         <StackLayout class="btn-wrp">
-            <Label class="btn btn-primary" [text]="buttons.ok" (tap)="onOk()"></Label>
+            <Label class="btn btn-primary" [text]="buttons.ok" (tap)="onOk()" textWrap="true"></Label>
         </StackLayout>
-        <Label class="btn btn-small" [text]="buttons.cancel" (tap)="onCancel()"></Label>
+        <Label class="btn btn-small" [text]="buttons.cancel" (tap)="onCancel()" textWrap="true"></Label>
     </StackLayout>
 </StackLayout>

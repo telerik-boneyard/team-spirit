@@ -2,12 +2,18 @@ import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
-import * as utils from 'utils/utils';
+import * as nsUtils from 'utils/utils';
 
-import { EventsService, UsersService, AlertService, PlatformService } from '../../services';
-import { Event, User } from '../../shared/models';
-import { utilities } from '../../shared';
+import { Event, User, EventRegistration } from '../../shared/models';
+import { utilities, constants, AppModalComponent } from '../../shared';
 import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
+import {
+    EventsService,
+    UsersService,
+    AlertService,
+    PlatformService,
+    EventRegistrationsService
+} from '../../services';
 
 @Component({
     selector: 'event-details',
@@ -24,7 +30,11 @@ export class EventDetailsComponent implements OnInit {
     registeredUsersExpanded = false;
     isAndroid: boolean = false;
 
+    private _eventId: string = null;
+    private _countByDate: any;
     private _currentUser: User;
+    private _userRegForThisEvent: EventRegistration;
+    private _dateChoicesMade: string[] = [];
 
     constructor(
         private _route: ActivatedRoute,
@@ -34,25 +44,30 @@ export class EventDetailsComponent implements OnInit {
         private _modalService: ModalDialogService,
         private _vcRef: ViewContainerRef,
         private _platform: PlatformService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _regsService: EventRegistrationsService
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
         this._route.params.subscribe(p => {
-            let eventId = p['id'];
-            this._eventsService.getById(eventId)
+            this._eventId = p['id'];
+            this._eventsService.getById(this._eventId)
                 .then((event) => {
                     this.event = event;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
+                    return this._eventsService.getDateChoicesVotes(event.Id);
+                })
+                .then((result) => {
+                    this._countByDate = result.countByDate;
                 })
                 .catch(this._onError.bind(this));
 
             this._usersService.currentUser()
                 .then(currentUser => {
                     this._currentUser = currentUser;
-                    return this._eventsService.getParticipants(eventId);
+                    return this._eventsService.getParticipants(this._eventId);
                 })
                 .then((participants) => {
                     this.registeredUsers = participants;
@@ -60,6 +75,10 @@ export class EventDetailsComponent implements OnInit {
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
                 .catch(this._onError.bind(this));
+            
+            this._usersService.currentUser()
+                .then(user => this._regsService.getUserRegistrationForEvent(this._eventId, user.Id))
+                .then(userReg => this._userRegForThisEvent = userReg);
         });
     }
 
@@ -69,12 +88,6 @@ export class EventDetailsComponent implements OnInit {
 
     canEdit() {
         return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
-    }
-
-    getDate() {
-        if (this.event.EventDate) {
-            return new Date(this.event.EventDate);
-        }
     }
 
     register() {
@@ -91,16 +104,27 @@ export class EventDetailsComponent implements OnInit {
         }
             
         registrationPromise.then((didRegister) => {
+            if (didRegister) {
+            }
+            return didRegister;
+        })
+        .then(didRegister => {
             if (didRegister) { // would be false if user closed modal
-                this.alreadyRegistered = true;
-                this.registeredUsers.unshift(this._currentUser);
+                let ctx = {
+                    title: 'Hooooray!',
+                    text: 'You have successfully registered for this event.',
+                    closeTimeout: constants.modalsTimeout
+                };
+
+                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
+                this._updateInfoOnRegister();
             }
         })
         .catch(this._onError.bind(this));
     }
 
     showLocation() {
-        utils.openUrl(this.event.LocationURL);
+        nsUtils.openUrl(this.event.LocationURL);
     }
 
     toggleExpandedUsers() {
@@ -116,7 +140,23 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        this._routerExtensions.navigateByUrl('/events');
+    }
+
+    countsInitialized() {
+        return !!this._countByDate;
+    }
+
+    getVoteText(date: string) {
+        return ` - ${this._countByDate[date] || 0} votes`
+    }
+
+    userVotedForDate(date: Date) {
+        return !!this._userRegForThisEvent && this._userRegForThisEvent.Choices.some((r: any) => r.toISOString() === date.toISOString());
+    }
+
+    onParticipantsTap() {
+        this._routerExtensions.navigateByUrl(`/events/${this.event.Id}/participants`);
     }
 
     private _openPopupAndRegister() {
@@ -131,9 +171,8 @@ export class EventDetailsComponent implements OnInit {
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
             .then((dateChoices: number[]) => {
                 if (dateChoices && dateChoices.length) {
-                    let choicesAsStrings: string[] = [];
-                    dateChoices.forEach(c => choicesAsStrings.push(this.event.EventDateChoices[c]));
-                    return this._eventsService.registerForEvent(this.event.Id, choicesAsStrings);
+                    dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
+                    return this._eventsService.registerForEvent(this.event.Id, this._dateChoicesMade);
                 } else {
                     return Promise.resolve(false);
                 }
@@ -144,5 +183,16 @@ export class EventDetailsComponent implements OnInit {
         if (err) {
             this._alertsService.showError(err && err.message);
         }
+    }
+
+    private _updateInfoOnRegister() {
+        this.alreadyRegistered = true;
+        this.registeredUsers.unshift(this._currentUser);
+        this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
+        this._dateChoicesMade.forEach(dc => {
+            this._countByDate[dc] = this._countByDate[dc] || 0;
+            this._countByDate[dc]++;
+            this._userRegForThisEvent.Choices.push(dc);
+        });
     }
 }

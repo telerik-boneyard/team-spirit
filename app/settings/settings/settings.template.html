@@ -1,0 +1,24 @@
+<StackLayout class="cntnr">
+    <ActionBarExtension>
+        <ActionItem>
+            <Label text="Settings"></Label>
+        </ActionItem>
+    </ActionBarExtension>
+
+    <StackLayout *ngIf="user">
+        <StackLayout orientation="horizontal">
+            <Switch [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
+            <Label text="Receive email notifications" textWrap="true"></Label>
+        </StackLayout>
+        <StackLayout orientation="horizontal">
+            <Switch [(ngModel)]="user.PushNotificationsEnabled"></Switch>
+            <Label text="Receive push notifications" textWrap="true"></Label>
+        </StackLayout>
+
+        <Button (tap)="onSave()" text="Save Settings"></Button>
+    </StackLayout>
+
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</StackLayout>

@@ -1,0 +1,17 @@
+/* this is angular2 syntax :| */
+.list-wrapper >>> Image {
+  width: 30;
+  height: 30;
+  margin-right: 5;
+  border-radius: 15;
+  background-color: rgba(0, 0, 0, .35);
+}
+
+/* no image styles should go here, i guess */
+.list-wrapper >>> .icon {
+  /*font-size: 22;
+  vertical-align: middle;
+  text-align: center;
+  color: rgba(255, 255, 255, .5);
+  background-color: rgba(0, 0, 0, .05);*/
+}

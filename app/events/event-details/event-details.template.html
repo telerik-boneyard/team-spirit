@@ -1,79 +1,80 @@
-<ScrollView class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
-        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
-            <label text="Back"></label>
-        </ActionItem>
-        <ActionItem>
-            <StackLayout class="actionbar-title-wrp">
-                <Label [text]="event && event.Name" horizontalAlignment="right" class="actionbar-title"></Label>
-            </StackLayout>
-        </ActionItem>
-        <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
-            ios.systemIcon="2" android.systemIcon="ic_menu_edit"
-            ios.position="right">
-        </ActionItem>
-    </ActionBarExtension>
+<StackLayout>
+    <ScrollView class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
+                <label text="Back"></label>
+            </ActionItem>
+            <ActionItem>
+                <StackLayout class="actionbar-title-wrp">
+                    <Label [text]="event && event.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+                </StackLayout>
+            </ActionItem>
+            <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
+                ios.systemIcon="2" android.systemIcon="ic_menu_edit"
+                ios.position="right">
+            </ActionItem>
+        </ActionBarExtension>
 
-    <StackLayout *ngIf="event">
-        <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
+        <StackLayout *ngIf="event">
+            <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
 
-        <StackLayout class="info-container">
-            <Label *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Label>
+            <StackLayout class="info-container">
+                <Label *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Label>
 
-            <StackLayout class="info-wrapper">
-                <GridLayout columns="auto, auto, *" rows="auto, auto">
-                    <Label class="info-label" text="Date" col="0" row="0"></Label>
-                    <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
-                    <Label class="info-icon material-icon" text="&#xf32e;" col="2" row="0"></Label>
-                </GridLayout>
-                <Label class="info-value" *ngFor="let date of (event.EventDateChoices || [])" [text]="date | date:dateFormat"></Label>
-                <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
-                <Label *ngIf="!event.EventDate" [nsRouterLink]="['/events/' + event.Id + '/date-choices']" text="Choices"></Label>
-            </StackLayout>
+                <StackLayout class="info-wrapper">
+                    <GridLayout columns="auto, auto, *" rows="auto, auto">
+                        <Label class="info-label" text="Date" col="0" row="0"></Label>
+                        <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
+                        <Label class="info-icon material-icon" text="&#xf32e;" col="2" row="0"></Label>
+                    </GridLayout>
+                    <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])">
+                        <Label *ngIf="alreadyRegistered && userVotedForDate(date)" text="Y"></Label> <!-- will be an icon -->
+                        <Label *ngIf="alreadyRegistered && !userVotedForDate(date)" text="N"></Label> <!-- will be an icon -->
+                        <Label class="info-value" [text]="date | date:dateFormat"></Label>
+                        <Label *ngIf="countsInitialized()" [text]="getVoteText(date)"></Label>
+                    </StackLayout>
+                    <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper">
-                <Label class="info-label" text="Description"></Label>
-                <Label class="info-value" [text]="event.Description" [textWrap]="true"></Label>
-            </StackLayout>
+                <StackLayout class="info-wrapper">
+                    <Label class="info-label" text="Description"></Label>
+                    <Label class="info-value" [text]="event.Description" [textWrap]="true"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper">
-                <GridLayout columns="auto, *">
-                    <Label class="info-label" text="Location" col="0"></Label>
-                    <Label *ngIf="event.LocationURL" class="info-icon material-icon" text="&#xf1a1;" (tap)="showLocation()" col="1"></Label>
-                </GridLayout>
-                <Label class="info-value" [text]="event.LocationName" [textWrap]="true"></Label>
-            </StackLayout>
+                <StackLayout class="info-wrapper">
+                    <GridLayout columns="auto, *">
+                        <Label class="info-label" text="Location" col="0"></Label>
+                        <Label *ngIf="event.LocationURL" class="info-icon material-icon" text="&#xf1a1;" (tap)="showLocation()" col="1"></Label>
+                    </GridLayout>
+                    <Label class="info-value" [text]="event.LocationName" [textWrap]="true"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper">
-                <Label class="info-label" text="Group"></Label>
-                <Label class="info-value" [text]="event.Group"></Label>
-            </StackLayout>
+                <StackLayout class="info-wrapper">
+                    <Label class="info-label" text="Group"></Label>
+                    <Label class="info-value" [text]="event.Group"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper">
-                <Label class="info-label" text="Organizer"></Label>
-                <Label class="info-value" [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
-            </StackLayout>
+                <StackLayout class="info-wrapper">
+                    <Label class="info-label" text="Organizer"></Label>
+                    <Label class="info-value" [text]="event.Organizer.DisplayName || event.Organizer.Username"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper no-separator">
-                <Label class="info-label" text="Registered Participants"></Label>
-
-                <WrapLayout *ngIf="registeredUsers.length > 0 && !registeredUsersExpanded" class="registered-users-wrapper" orientation="horizontal">
-                    <photo-picker *ngFor="let user of registeredUsers.slice(0, 3)" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
-
-                    <StackLayout orientation="horizontal" (tap)="toggleExpandedUsers()" class="expandable">
-                        <Label class="info-value" *ngIf="remainingUsersCount" [text]="' and ' + remainingUsersCount + ' more'"></Label>
+                <StackLayout class="info-wrapper no-separator">
+                    <Label class="info-label" text="Registered Participants"></Label>
+                    <StackLayout *ngIf="registeredUsers.length > 0" (tap)="onParticipantsTap()" class="registered-users-wrapper" orientation="horizontal">
+                        <user-display [users]="registeredUsers" [withImages]="3"></user-display>
                         <Label class="info-value" [text]="(registeredUsers.length === 1 ? 'is' : 'are') + ' going'"></Label>
                     </StackLayout>
-                </WrapLayout>
 
-                <Label class="info-value" *ngIf="registeredUsersExpanded" (tap)="collapseExpandedUsers()" [text]="getAllRegisteredUserNames()" [textWrap]="true"></Label>
-                <Label class="info-value" *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
+                    <Label class="info-value" *ngIf="registeredUsersExpanded" (tap)="collapseExpandedUsers()" [text]="getAllRegisteredUserNames()" [textWrap]="true"></Label>
+                    <Label class="info-value" *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
+                </StackLayout>
             </StackLayout>
-
         </StackLayout>
-    </StackLayout>
 
-    <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-
-</ScrollView>
+        <ScrollView>
+            <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </ScrollView>
+</StackLayout>

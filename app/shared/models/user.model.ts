@@ -9,7 +9,9 @@ export class User extends ItemModel {
         public Email: string,
         public ImageUrl: string,
         public Phone: string,
-        public Image: string
+        public Image: string,
+        public PushNotificationsEnabled: boolean,
+        public EmailNotificationsEnabled: boolean
     ) {
         super();
     }
