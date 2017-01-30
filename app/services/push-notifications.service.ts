@@ -18,11 +18,8 @@ export class PushNotificationsService {
     }
 
     private pushCb(...args) {
-        let eventId = args[0].eventId;
+        // let eventId = args[0].eventId;
         console.log('args: ' + JSON.stringify(args));
-        if (eventId) {
-            this._router.navigateByUrl('/events/${eventId}');
-        }
     }
 
     subscribe(userId: string) {

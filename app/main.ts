@@ -2,7 +2,7 @@
 import { platformNativeScriptDynamic, NativeScriptModule } from "nativescript-angular/platform";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { NgModule } from "@angular/core";
+import { NgModule, enableProdMode } from "@angular/core";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
@@ -119,4 +119,5 @@ const routes = [
 class AppComponentModule {
 }
 
+enableProdMode();
 platformNativeScriptDynamic().bootstrapModule(AppComponentModule);

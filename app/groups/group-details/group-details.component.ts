@@ -64,8 +64,7 @@ export class GroupDetailsComponent implements OnInit {
                         this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
                     }
 
-                    this.hasJoined = true;
-                    this.members.push(this._currentUser);
+                    this._addCurrentUserAsRegistered();
                 })
                 .catch(err => {
                     this._alertsService.showError(err && err.message);
@@ -109,11 +108,10 @@ export class GroupDetailsComponent implements OnInit {
     onJoin() {
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {
-                if (!this.group.RequiresApproval) {
-                    this.hasJoined = true;
-                    this.members.push(this._currentUser);
-                } else {
+                if (this.group.RequiresApproval) {
                     this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
+                } else {
+                    this._addCurrentUserAsRegistered();
                 }
             })
             .catch((err) => {
@@ -138,5 +136,12 @@ export class GroupDetailsComponent implements OnInit {
 
     onBack() {
         this._routerExtensions.navigateByUrl(`/groups`);
+    }
+
+    private _addCurrentUserAsRegistered() {
+        this.hasJoined = true;
+        let clone = this.members.slice(0);
+        clone.push(this._currentUser);
+        this.members = clone;
     }
 }
