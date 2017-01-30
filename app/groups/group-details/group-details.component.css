@@ -8,10 +8,10 @@
 }
 
 .action-bar .btn {
-  height: 70;
+  height: 65;
   margin: 0;
   font-size: 11;
-  background-color: #ddd;
+  background-color: #ededed;
   color: #F4550F;
   text-align: center;
 }

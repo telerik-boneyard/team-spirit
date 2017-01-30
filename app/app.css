@@ -1,5 +1,9 @@
 ﻿@import '~/css/core.light.css';
 
+.if {
+  font-family: 'teamup-font';
+}
+
 Page {
   background-color: #ffffff;
   font-size: 16;
@@ -8,6 +12,25 @@ Page {
 ActionBar {
   background-color: #F4550F;
   color: #ffffff;
+}
+
+ActionBar .title,
+ActionBar .button,
+ActionBar .if {
+  height: 26;
+  margin: 0 5 0 10;
+  text-align: center;
+  vertical-align: middle;
+}
+
+ActionBar .button {
+  margin-right: 10;
+}
+
+ActionBar .if {
+  height: 26;
+  width: 26;
+  font-size: 24;
 }
 
 TabView {
@@ -28,10 +51,6 @@ TextView {
 
 ActivityIndicator {
   color: #F4550F;
-}
-
-.material-icon {
-  font-family: 'Material-Design-Iconic-Font';
 }
 
 .switch {
@@ -116,20 +135,14 @@ ActivityIndicator {
 
 .drawer .btn-icon {
   width: 50;
-  font-size: 26;
+  font-size: 30;
   text-align: center;
+}
+
+.drawer .btn-text {
+  font-size: 20;
 }
 
 .drawer .logo {
   width: 140;
-}
-
-.actionbar-title-wrp {
-  width: 60%;
-}
-
-.actionbar-title {
-  width: 250;
-  text-align: right;
-  padding-right: 20;
 }

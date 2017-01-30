@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { EventsService, GroupsService, AlertService, PlatformService } from '../../services';
 import { Event, Group } from '../../shared/models';
@@ -22,12 +23,14 @@ export class GroupEventsComponent implements OnInit {
         private _groupsService: GroupsService,
         private _eventsService: EventsService,
         private _platform: PlatformService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._route.params.subscribe(params => {
             let groupId = params['id'];
 
@@ -36,15 +39,16 @@ export class GroupEventsComponent implements OnInit {
                     this.events = events;
                 })
                 .catch(this._onError.bind(this));
-            
+
             this._groupsService.getById(groupId)
                 .then(group => {
+                    this._page.actionBar.title = 'Events for ' + group.Name;
                     this.group = group;
                 })
                 .catch(this._onError.bind(this));
         });
     }
-    
+
     onEventTap(event: Event) {
         this._routerExtensions.navigateByUrl(`/events/${event.Id}`);
     }

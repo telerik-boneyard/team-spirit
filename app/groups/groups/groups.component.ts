@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, UsersService } from '../../services';
 import { Group } from '../../shared/models';
@@ -18,10 +19,12 @@ export class GroupsComponent implements OnInit {
         private _usersService: UsersService,
         private _groupsService: GroupsService,
         private _routerExtensions: RouterExtensions,
-        private _alertService: AlertService
+        private _alertService: AlertService,
+        private _page: Page
     ) {}
-    
+
     ngOnInit() {
+        this._page.actionBar.title = 'Groups';
         this._usersService.currentUser()
             .then(u => {
                 let unjoinedGroupsPromise = this._groupsService.getUnjoinedGroups(u.Id)

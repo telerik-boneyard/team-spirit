@@ -1,5 +1,5 @@
 <StackLayout class="cntnr">
-    <photo-picker class="event-image" [(url)]="event.ImageUrl" [type]="'event'" [editable]="true" [noImageText]="event.ImageUrl ? 'Change Photo' : 'Add Photo'" [noImageIcon]="'&#xf28c;'"></photo-picker>
+    <photo-picker class="event-image" [(url)]="event.ImageUrl" [type]="'event'" [editable]="true" [noImageText]="event.ImageUrl ? 'Change Photo' : 'Add Photo'" [noImageIcon]="'&#x77;'"></photo-picker>
 
     <StackLayout class="form info-cntnr">
         <StackLayout class="input-field">
@@ -31,7 +31,7 @@
             <Label class="label" text="Event Date"></Label>
             <StackLayout orientation="horizontal" *ngFor="let date of dateOptions; let ind = index">
                 <Label class="field" [text]="date | date:dateFormat"></Label>
-                <Label class="remove material-icon" text="&#xf136;" (tap)="removeDateOption(ind)"></Label>
+                <Label class="remove if" text="&#x67;" (tap)="removeDateOption(ind)"></Label>
             </StackLayout>
             <Label class="select-date" [text]="getSelectDateText()" (tap)="onSelectDate(date)"></Label>
         </StackLayout>
@@ -39,7 +39,7 @@
         <StackLayout *ngIf="currentUser" class="input-field user">
             <Label class="label" text="Organizer"></Label>
             <StackLayout orientation="horizontal">
-                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
+                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x6c;'"></photo-picker>
                 <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
             </StackLayout>
         </StackLayout>

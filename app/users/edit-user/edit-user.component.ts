@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { User, Group } from '../../shared';
 import { utilities } from '../../shared';
@@ -23,10 +24,12 @@ export class EditUserComponent implements OnInit {
         private _usersService: UsersService,
         private _alertsService: AlertService,
         private _filesService: FilesService,
-        private _groupsService: GroupsService
+        private _groupsService: GroupsService,
+        private _page: Page
     ) {}
-    
+
     ngOnInit() {
+        this._page.actionBar.title = 'Edit Profile';
         this._usersService.currentUser()
             .then(u => this.user = u)
     }
@@ -54,5 +57,9 @@ export class EditUserComponent implements OnInit {
     onImageUpload(createdImage: { Uri: string, Id: string }) {
         this.user.Image = createdImage.Id;
         this._usersService.updateUser(this.user);
+    }
+
+    onCancel() {
+        this._routerExtensions.back();
     }
 }

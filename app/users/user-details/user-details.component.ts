@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { User, Group } from '../../shared';
 import { utilities } from '../../shared';
@@ -23,10 +24,12 @@ export class UserDetailsComponent implements OnInit {
         private _routerExtensions: RouterExtensions,
         private _usersService: UsersService,
         private _alertsService: AlertService,
-        private _groupsService: GroupsService
-    ) {} 
+        private _groupsService: GroupsService,
+        private _page: Page
+    ) {}
 
     ngOnInit() {
+        this._page.actionBar.title = 'My Profile';
         this._usersService.currentUser()
             .then(u => this.user = u)
             .then(() => this._groupsService.getUserGroups(this.user.Id))

@@ -1,12 +1,7 @@
 <StackLayout>
     <ActionBarExtension>
-    	<NavigationButton *ngIf="isAndroid"android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
-    	<ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
-        <ActionItem>
-            <StackLayout class="actionbar-title-wrp">
-                <Label [text]="group && group.Name && ('Events for ' + group.Name)" class="actionbar-title"></Label> <!-- ngIf makes it appear on other pages - dunno why :) -->
-            </StackLayout>
-        </ActionItem>
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
     </ActionBarExtension>
 
     <StackLayout class="cntnr">

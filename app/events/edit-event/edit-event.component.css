@@ -1,9 +1,9 @@
 .cntnr {
-    height: 100%;
-    background-color: #fff;
+  height: 100%;
+  background-color: #fff;
 }
 
 .btn-delete {
-    color: red;
-    text-align: right;
+  color: red;
+  text-align: right;
 }

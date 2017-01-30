@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User } from '../../shared/models';
@@ -25,12 +26,14 @@ export class GroupDetailsComponent implements OnInit {
         private _everliveProvider: EverliveProvider,
         private _routerExtensions: RouterExtensions,
         private _platform: PlatformService,
-        private _groupsService: GroupsService
+        private _groupsService: GroupsService,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._activatedRoute.params.subscribe(p => {
             this._usersService.currentUser()
                 .then(user => {
@@ -38,6 +41,7 @@ export class GroupDetailsComponent implements OnInit {
                     return this._groupsService.getById(p['id']);
                 })
                 .then(group => {
+                    this._page.actionBar.title = group.Name;
                     this.group = group;
                     let promise = Promise.resolve(false);
 
@@ -51,7 +55,7 @@ export class GroupDetailsComponent implements OnInit {
                     if (this.group.RequiresApproval && p['joinRedirect']) {
                         this._alertsService.showSuccess('Request to join sent');
                     }
-                    
+
                     return this._groupsService.getGroupMembers(this.group.Id);
                 })
                 .then(members => {
@@ -116,7 +120,7 @@ export class GroupDetailsComponent implements OnInit {
 
     onLeave() {
         this._groupsService.leaveGroup(this.group.Id, this._currentUser.Id)
-            .then(() => { 
+            .then(() => {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
              })

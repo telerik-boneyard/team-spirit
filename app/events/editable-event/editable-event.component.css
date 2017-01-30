@@ -51,6 +51,10 @@ TextView {
   vertical-align: middle;
 }
 
+.date StackLayout {
+  margin-bottom: 10;
+}
+
 .date .remove {
   margin-left: 10;
   color: #ff0000;

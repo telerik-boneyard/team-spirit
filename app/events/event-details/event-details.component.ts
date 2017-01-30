@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as utils from 'utils/utils';
+import { Page } from 'ui/page';
 
 import { EventsService, UsersService, AlertService, PlatformService } from '../../services';
 import { Event, User } from '../../shared/models';
@@ -34,18 +35,21 @@ export class EventDetailsComponent implements OnInit {
         private _modalService: ModalDialogService,
         private _vcRef: ViewContainerRef,
         private _platform: PlatformService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             let eventId = p['id'];
             this._eventsService.getById(eventId)
                 .then((event) => {
                     this.event = event;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
+                    this._page.actionBar.title = event.Name;
                 })
                 .catch(this._onError.bind(this));
 
@@ -89,7 +93,7 @@ export class EventDetailsComponent implements OnInit {
         } else {
             registrationPromise = this._openPopupAndRegister();
         }
-            
+
         registrationPromise.then((didRegister) => {
             if (didRegister) { // would be false if user closed modal
                 this.alreadyRegistered = true;
