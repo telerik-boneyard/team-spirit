@@ -87,6 +87,11 @@ ActivityIndicator {
   vertical-align: middle;
 }
 
+.input-field.switch-field .label {
+  font-size: 16;
+  color: #000;
+}
+
 .btn {
   margin: 0 6;
   font-size: 20;
@@ -145,4 +150,11 @@ ActivityIndicator {
 
 .drawer .logo {
   width: 140;
+}
+
+.list-separator {
+  border-width: 0;
+  border-bottom-width: 1;
+  border-color: #c8c7cc;
+  height: 1;
 }

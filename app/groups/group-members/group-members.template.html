@@ -1,21 +1,16 @@
 <StackLayout class="cntnr">
     <ActionBarExtension>
-    	<NavigationButton *ngIf="isAndroid"android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
-    	<ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
-        <ActionItem>
-            <StackLayout class="actionbar-title-wrp">
-                <Label [text]="group && group.Name && ('Members of ' + group.Name)" class="actionbar-title"></Label>
-            </StackLayout>
-        </ActionItem>
+        <NavigationButton *ngIf="isAndroid"android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
+        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
         <ActionItem (tap)="onAdd()" *ngIf="canAdd"
             ios.systemIcon="4" android.systemIcon="ic_menu_add"
             ios.position="right">
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="members">
+    <StackLayout *ngIf="members" class="content">
         <user-list *ngIf="members" [users]="members"></user-list>
-        <Label *ngIf="noAdmin" text="Group administrator is not a member."></Label>
+        <Label *ngIf="noAdmin" text="Group administrator is not a member." class="no-admin"></Label>
     </StackLayout>
 
     <ScrollView class="cntnr">

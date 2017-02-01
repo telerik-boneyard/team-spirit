@@ -7,11 +7,12 @@
   background-color: rgba(0, 0, 0, .35);
 }
 
-/* no image styles should go here, i guess */
-.list-wrapper >>> .icon {
-  /*font-size: 22;
+.user-image,
+.user-name {
   vertical-align: middle;
-  text-align: center;
-  color: rgba(255, 255, 255, .5);
-  background-color: rgba(0, 0, 0, .05);*/
+}
+
+.user-name {
+  margin-left: 5;
+  color: #000;
 }
