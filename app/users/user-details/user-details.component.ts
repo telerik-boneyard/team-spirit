@@ -50,7 +50,7 @@ export class UserDetailsComponent implements OnInit {
     }
 
     getRemainingGroupsText() {
-        return ` and ${this.userGroups.length - 1} more`;
+        return `and ${this.userGroups.length - 1} more`;
     }
 
     toggleExpandedMembership() {

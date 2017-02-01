@@ -1,5 +1,9 @@
 <StackLayout class="cntnr">
     <ActionBarExtension>
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()">
+            <label text="Back"></label>
+        </ActionItem>
         <ActionItem (tap)="save()" ios.position="right">
             <StackLayout>
                 <Label text="Done" class="button"></Label>

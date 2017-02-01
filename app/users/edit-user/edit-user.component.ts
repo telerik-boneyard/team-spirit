@@ -8,7 +8,8 @@ import {
     UsersService,
     GroupsService,
     AlertService,
-    FilesService
+    FilesService,
+    PlatformService
 } from '../../services';
 
 @Component({
@@ -18,6 +19,7 @@ import {
 })
 export class EditUserComponent implements OnInit {
     user: User;
+    isAndroid: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -25,10 +27,12 @@ export class EditUserComponent implements OnInit {
         private _alertsService: AlertService,
         private _filesService: FilesService,
         private _groupsService: GroupsService,
+        private _platformService: PlatformService,
         private _page: Page
     ) {}
 
     ngOnInit() {
+        this.isAndroid = this._platformService.isAndroid;
         this._page.actionBar.title = 'Edit Profile';
         this._usersService.currentUser()
             .then(u => this.user = this._usersService.serverUserToUserModel(u));
@@ -65,6 +69,7 @@ export class EditUserComponent implements OnInit {
     }
 
     onCancel() {
-        this._routerExtensions.back();
+        this._alertsService.askConfirmation('All changes will be lost')
+            .then(() => this._routerExtensions.back(), err => true);
     }
 }

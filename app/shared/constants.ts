@@ -1,7 +1,7 @@
 export const appId = '35ylfmbdmpzbqn0c';
 export const disabledDawerRoutes = [
     new RegExp('^/user/login', 'i'),
-    new RegExp('^/((events)|(groups))/.+', 'i')
+    new RegExp('^/((events)|(groups)|(user))/.+', 'i')
 ];
 
 export const androidProjNumber = '832404619163';
