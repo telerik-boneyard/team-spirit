@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { AlertService, PlatformService, UsersService, EventsService, EventRegistrationsService } from '../../services';
 import { User, Event, EventRegistration } from '../../shared/models';
@@ -28,7 +29,8 @@ export class EventParticipantsComponent implements OnInit {
         private _eventsService: EventsService,
         private _platform: PlatformService,
         private _routerExtensions: RouterExtensions,
-        private _regsService: EventRegistrationsService
+        private _regsService: EventRegistrationsService,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
@@ -41,10 +43,14 @@ export class EventParticipantsComponent implements OnInit {
                 .then(p => this.participants = p);
 
             let eventPrm = this._eventsService.getById(eventId)
-                .then(e => this.event = e);
-            
+                .then(e => {
+                    this.event = e;
+                    this._page.actionBar.title = 'Participants for ' + this.event.Name;
+                });
+
             let regsPrm = this._regsService.getForEvent(eventId)
                 .then(r => this.registrations = r);
+
 
             Promise.all<any>([eventPrm, participantsPrm, regsPrm])
                 .then(() => {
@@ -101,7 +107,7 @@ export class EventParticipantsComponent implements OnInit {
     private _groupParticipantsByDate() {
         let usersById: any = {};
         this.participants.forEach(u => usersById[u.Id] = u);
-        
+
         this.registrations.forEach(reg => {
             let user: User = usersById[reg.UserId];
             reg.Choices.forEach((c: any) => {

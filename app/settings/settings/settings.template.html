@@ -1,21 +1,16 @@
 <StackLayout class="cntnr">
-    <ActionBarExtension>
-        <ActionItem>
-            <Label text="Settings"></Label>
-        </ActionItem>
-    </ActionBarExtension>
 
-    <StackLayout *ngIf="user">
-        <StackLayout orientation="horizontal">
-            <Switch [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
-            <Label text="Receive email notifications" textWrap="true"></Label>
+    <StackLayout *ngIf="user" class="form">
+        <StackLayout orientation="horizontal" class="input-field switch-field">
+            <Switch class="switch" [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
+            <Label class="label" text="Receive email notifications" textWrap="true"></Label>
         </StackLayout>
-        <StackLayout orientation="horizontal">
-            <Switch [(ngModel)]="user.PushNotificationsEnabled"></Switch>
-            <Label text="Receive push notifications" textWrap="true"></Label>
+        <StackLayout orientation="horizontal" class="input-field switch-field">
+            <Switch class="switch" [(ngModel)]="user.PushNotificationsEnabled"></Switch>
+            <Label class="label" text="Receive push notifications" textWrap="true"></Label>
         </StackLayout>
 
-        <Button (tap)="onSave()" text="Save Settings"></Button>
+        <Label class="btn btn-primary" (tap)="onSave()" text="Save Settings"></Label>
     </StackLayout>
 
     <ScrollView class="cntnr">

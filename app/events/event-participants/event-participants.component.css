@@ -1,4 +1,23 @@
 .cntnr {
-    height: 100%;
-    background-color: green;
+  height: 100%;
+  background-color: #fff;
+}
+
+.content {
+  padding: 20;
+}
+
+.info-label {
+  margin-bottom: 10;
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
+}
+
+.group-wrp {
+  margin-bottom: 30;
+}
+
+.no-voters {
+  padding: 10 0;
 }
