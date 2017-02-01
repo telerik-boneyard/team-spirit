@@ -41,7 +41,10 @@ export class GroupDetailsComponent implements OnInit {
                 .then(user => this._currentUser = user);
 
             let groupPrm = this._groupsService.getById(groupId)
-                .then(group => this.group = group);
+                .then(group => {
+                    this.group = group;
+                    this._page.actionBar.title = this.group.Name;
+                });
 
             Promise.all<any>([userPrm, groupPrm])
                 .then(() => this._groupsService.getGroupMembers(this.group.Id))
