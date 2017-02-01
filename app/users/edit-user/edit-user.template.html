@@ -1,9 +1,9 @@
 <StackLayout class="cntnr">
     <ActionBarExtension>
-        <ActionItem
-            ios.systemIcon="3"
-            android.systemIcon="ic_menu_save"
-            (tap)="save()">
+        <ActionItem (tap)="save()" ios.position="right">
+            <StackLayout>
+                <Label text="Done" class="button"></Label>
+            </StackLayout>
         </ActionItem>
     </ActionBarExtension>
 
