@@ -8,18 +8,22 @@
     </ActionBarExtension>
 
     <TabView *ngIf="initialized" [selectedIndex]="0" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee" class="tab-view">
-        <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
-            <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
-            <StackLayout *ngIf="!userGroups.length" class="no-items">
-                <Label text="You haven't joined any groups. Slide over to the next tab to find some!" [textWrap]="true"></Label>
+        <ScrollView *tabItem="{ title: 'My Groups' }" class="tab-item">
+            <StackLayout class="tab-items-wrapper">
+                <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
+                <StackLayout *ngIf="!userGroups.length" class="no-items">
+                    <Label text="You haven't joined any groups. Slide over to the next tab to find some!" [textWrap]="true"></Label>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
-        <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
-            <group-list *ngIf="publicGroups.length" [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
-            <StackLayout *ngIf="!publicGroups.length" class="no-items">
-                <Label text="No groups to show in this tab" [textWrap]="true"></Label>
+        </ScrollView>
+        <ScrollView *tabItem="{ title: 'All Groups' }" class="tab-item">
+            <StackLayout class="tab-items-wrapper">
+                <group-list *ngIf="publicGroups.length" [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
+                <StackLayout *ngIf="!publicGroups.length" class="no-items">
+                    <Label text="No groups to show in this tab" [textWrap]="true"></Label>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </TabView>
 
     <ScrollView class="cntnr">

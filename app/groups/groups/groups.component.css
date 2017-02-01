@@ -10,3 +10,7 @@
 .tab-view {
     height: 100%;
 }
+
+.tab-items-wrapper {
+    padding: 0 20;
+}

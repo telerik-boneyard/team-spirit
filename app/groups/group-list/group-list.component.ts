@@ -31,8 +31,7 @@ export class GroupListComponent implements OnInit {
         promise.then(() => this.initialized = true);
     }
 
-    groupTap(event: any) {
-        let clickedGroup = this.groups[event.index];
+    groupTap(clickedGroup: Group) {
         this.onGroupTap.emit(clickedGroup);
     }
 

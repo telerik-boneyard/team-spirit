@@ -105,7 +105,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onViewRequests() {
-        this._alertsService.showError('Note implemented yet. Please follow the development :)');
+        this._alertsService.showError('Not implemented yet. Please follow the development :)');
     }
 
     onJoin() {
