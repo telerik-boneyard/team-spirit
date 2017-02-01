@@ -21,16 +21,12 @@
                     <TextField class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
                 </StackLayout>
                 <StackLayout class="user-info-block">
-                    <Label class="user-label" text="Username"></Label>
-                    <TextField class="user-info-editable-value" [(ngModel)]="user.Username"></TextField>
+                    <Label class="user-label" text="Email"></Label>
+                    <TextField class="user-info-editable-value" [(ngModel)]="user.Username" keyboardType="email"></TextField>
                 </StackLayout>
                 <StackLayout class="user-info-block">
                     <Label class="user-label" text="Phone"></Label>
                     <TextField class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
-                </StackLayout>
-                <StackLayout class="user-info-block">
-                    <Label class="user-label" text="Email"></Label>
-                    <TextField class="user-info-editable-value" [(ngModel)]="user.Email" keyboardType="email"></TextField>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

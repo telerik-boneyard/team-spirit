@@ -3,14 +3,17 @@
         <StackLayout width="300">
             <Image src="res://logo" class="logo"></Image>
         </StackLayout>
-        <StackLayout class="input-field">
-            <TextField hint="Email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
+        <StackLayout class="input-field" *ngIf="isSignupView">
+            <TextField hint="Display Name" [(ngModel)]="user.DisplayName" ></TextField>
         </StackLayout>
         <StackLayout class="input-field">
-            <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
+            <TextField hint="Email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.Username" ></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <TextField hint="Password" secure="true" [(ngModel)]="user.Password" ></TextField>
         </StackLayout>
         <StackLayout class="input-field" *ngIf="isSignupView">
-            <TextField hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
+            <TextField hint="Confirm Password" secure="true" [(ngModel)]="user.ConfirmPassword" ></TextField>
         </StackLayout>
         <StackLayout *ngIf="!isSignupView">
             <Label text="Log in" (tap)="login()" class="btn btn-primary"></Label>

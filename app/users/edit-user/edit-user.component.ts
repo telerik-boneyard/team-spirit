@@ -31,10 +31,15 @@ export class EditUserComponent implements OnInit {
     ngOnInit() {
         this._page.actionBar.title = 'Edit Profile';
         this._usersService.currentUser()
-            .then(u => this.user = u)
+            .then(u => this.user = this._usersService.serverUserToUserModel(u));
     }
 
     save() {
+        let errMsg = this._usersService.validateUser(this.user);
+        if (errMsg) {
+            return this._alertsService.showError(errMsg);
+        }
+
         this._alertsService.askConfirmation('Update your entire profile?')
             .then(() => {
                 let promise = Promise.resolve<any>(false);
@@ -51,7 +56,7 @@ export class EditUserComponent implements OnInit {
             })
             .then(res => this._alertsService.showSuccess('Details updated'))
             .then(() => this._routerExtensions.navigateByUrl('user'))
-            .catch(err => err && this._alertsService.showError(err));
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     onImageUpload(createdImage: { Uri: string, Id: string }) {

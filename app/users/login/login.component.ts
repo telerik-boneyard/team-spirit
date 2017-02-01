@@ -11,7 +11,7 @@ import { utilities } from '../../shared';
     styleUrls: ['users/login/login.component.css']
 })
 export class LoginComponent implements OnInit {
-    user: {username?: string, password?: string, confirmPassword?: string};
+    user: { Username: string, Password: string, ConfirmPassword: string, DisplayName: string };
     isSignupView: boolean = false;
 
     constructor(
@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
         private _push: PushNotificationsService,
         private _page: Page
     ) {
-        this.user = {};
+        this.user = {} as any;
     }
 
     ngOnInit() {
@@ -30,13 +30,13 @@ export class LoginComponent implements OnInit {
     }
 
     changeView(signupView: boolean) {
-        this.user.username = '';
-        this.user.password = '';
+        this.user.Username = '';
+        this.user.Password = '';
         this.isSignupView = signupView;
     }
 
     login() {
-        this._usersService.login(this.user.username, this.user.password)
+        this._usersService.login(this.user.Username, this.user.Password)
             .then((loginResult) => {
                 this._push.subscribe(loginResult.result.principal_id).catch(err => err);
                 this._routerExtensions.navigate(['events', { clearHistory: true }]);
@@ -47,7 +47,7 @@ export class LoginComponent implements OnInit {
     }
 
     signup() {
-        if (this.user.password !== this.user.confirmPassword) {
+        if (this.user.Password !== this.user.ConfirmPassword) {
             return this._alertsService.showError('Passwords do not match');
         }
 
@@ -56,10 +56,10 @@ export class LoginComponent implements OnInit {
             return this._alertsService.showError(errMsg);
         }
 
-        this._usersService.register(this.user.username, this.user.password)
+        this._usersService.register(this.user.Username, this.user.Password, this.user.DisplayName)
             .then((res) => {
                 this.changeView(false);
-                this.user.confirmPassword = '';
+                this.user.ConfirmPassword = '';
             })
             .catch((e) => {
                 this._alertsService.showError(e && e.message);
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
     }
 
     resetPassword() {
-        let email = this.user.username;
+        let email = this.user.Username;
         if (!email || !utilities.isEmail(email)) {
             return this._alertsService.showError('Invalid email');
         }

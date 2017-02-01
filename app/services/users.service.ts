@@ -36,8 +36,8 @@ export class UsersService {
             });
     }
 
-    register(username: string, password: string) {
-        return this._users.register(username, password, { Email: username });
+    register(username: string, password: string, displayName: string) {
+        return this._users.register(username, password, { Email: username, DisplayName: displayName });
     }
 
     resetUserPassword(identifier: string) {
@@ -56,7 +56,7 @@ export class UsersService {
         if (!this._currUserCache || reCache) {
             this._currUserCache = this._users.expand(this._imageExpandExp)
                 .currentUser()
-                .then(u => this._serverUserToUserModel(u.result));
+                .then(u => this.serverUserToUserModel(u.result));
         }
         return this._currUserCache;
     }
@@ -66,7 +66,8 @@ export class UsersService {
     }
 
     updateUser(user: User) {
-        delete user.ImageUrl; // delete expanded field, if present
+        user = this._sanitizeUser(user);
+        user.Email = user.Username;
         let updatePromise = this._users.updateSingle(user);
         // dont chain so returned promise doesnt have the cache clearing
         updatePromise.then(() => this._currUserCache = null);
@@ -88,24 +89,33 @@ export class UsersService {
         }
         
         return this._users.getById(id).then(res => {
-            return this._serverUserToUserModel(res.result);
+            return this.serverUserToUserModel(res.result);
         });
     }
 
     validateUser(user: any) {
         let errMsg = '';
 
-        if (!utilities.isEmail(user.username)) {
+        if (!utilities.isEmail(user.Username)) {
             errMsg = 'Email is not valid';
+        }
+
+        if (!user.DisplayName) {
+            errMsg = 'Display Name is mandatory';
         }
         
         return errMsg;
     }
 
-    private _serverUserToUserModel(user: any) { // cause expand could have anything
+    serverUserToUserModel(user: any) { // cause expand could have anything
         if (!user) {
             return null;
         }
         return new User(user.Id, user.Username, user.DisplayName, user.Email, user.ImageUrl, user.Phone, user.Image, user.PushNotificationsEnabled, user.EmailNotificationsEnabled);
+    }
+
+    private _sanitizeUser(user: any) {
+        delete user.ImageUrl; // delete expanded field, if present
+        return user;
     }
 }
