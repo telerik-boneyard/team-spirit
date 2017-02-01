@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, PlatformService, UsersService } from '../../services';
 import { User, Group } from '../../shared/models';
@@ -26,7 +27,8 @@ export class GroupMembersComponent implements OnInit {
         private _groupsService: GroupsService,
         private _usersService: UsersService,
         private _platform: PlatformService,
-        private _routerExtensions: RouterExtensions
+        private _routerExtensions: RouterExtensions,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
@@ -35,10 +37,13 @@ export class GroupMembersComponent implements OnInit {
         this._route.params.subscribe(p => {
             this._groupId = p['id'];
             let groupPrm = this._groupsService.getById(this._groupId)
-                .then(g => this.group = g);
+                .then(g => {
+                    this.group = g;
+                    this._page.actionBar.title = 'Members of ' + this.group.Name;
+                });
             let membersPrm = this._groupsService.getGroupMembers(this._groupId)
                 .then(members => this.members = members);
-            
+
             Promise.all<any>([this._usersService.currentUser(), groupPrm, membersPrm])
                 .then((result) => {
                     let currentUser: User = result[0];
