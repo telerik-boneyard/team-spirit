@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as nsUtils from 'utils/utils';
+import { Page } from 'ui/page';
 
 import { Event, User, EventRegistration } from '../../shared/models';
 import { utilities, constants, AppModalComponent } from '../../shared';
@@ -45,17 +46,20 @@ export class EventDetailsComponent implements OnInit {
         private _vcRef: ViewContainerRef,
         private _platform: PlatformService,
         private _routerExtensions: RouterExtensions,
-        private _regsService: EventRegistrationsService
+        private _regsService: EventRegistrationsService,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             this._eventId = p['id'];
             this._eventsService.getById(this._eventId)
                 .then((event) => {
                     this.event = event;
+                    this._page.actionBar.title = event.Name;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
                     return this._eventsService.getDateChoicesVotes(event.Id);
                 })
@@ -102,7 +106,7 @@ export class EventDetailsComponent implements OnInit {
         } else {
             registrationPromise = this._openPopupAndRegister();
         }
-            
+
         registrationPromise.then((didRegister) => {
             if (didRegister) {
             }

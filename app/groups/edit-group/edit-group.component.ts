@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, FilesService, PlatformService } from '../../services';
 import { Group } from '../../shared/models';
@@ -21,15 +22,18 @@ export class EditGroupComponent implements OnInit {
         private _filesService: FilesService,
         private _routerExtensions: RouterExtensions,
         private _platform: PlatformService,
-        private _activatedRoute: ActivatedRoute
+        private _activatedRoute: ActivatedRoute,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._activatedRoute.params.subscribe(p => {
             this._groupsService.getById(p['id'])
                 .then(group => {
+                    this._page.actionBar.title = group.Name;
                     this.group = group;
                 }, (err) => {
                     this._alertsService.showError(err.message);
@@ -42,7 +46,7 @@ export class EditGroupComponent implements OnInit {
         if (validationErr) {
             return this._alertsService.showError(validationErr);
         }
-        
+
         this._alertsService.askConfirmation(`Update all fields of "${this.group.Name}"?`)
             .then(() => {
                 let prm = Promise.resolve<{ Id: string, Uri: string }>();

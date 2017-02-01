@@ -1,11 +1,12 @@
 <ScrollView class="main">
     <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()"></ActionItem>
-        <ActionItem>
-            <Label text="New Event"></Label>
+        <ActionItem (tap)="onCreate()" ios.position="right">
+            <StackLayout>
+                <Label text="Done" class="button"></Label>
+            </StackLayout>
         </ActionItem>
-        <ActionItem ios.systemIcon="0" android.systemIcon="btn_check_buttonless_on" (tap)="onCreate()"></ActionItem>
     </ActionBarExtension>
     <StackLayout>
         <editable-event [event]="newEvent"></editable-event>

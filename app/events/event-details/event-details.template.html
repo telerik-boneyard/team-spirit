@@ -1,23 +1,19 @@
 <StackLayout>
     <ScrollView class="cntnr">
         <ActionBarExtension>
-            <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onBack()"></NavigationButton>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
             <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
                 <label text="Back"></label>
             </ActionItem>
-            <ActionItem>
-                <StackLayout class="actionbar-title-wrp">
-                    <Label [text]="event && event.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+            <ActionItem *ngIf="canEdit()" (tap)="onEdit()" ios.position="right">
+                <StackLayout>
+                    <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
-            </ActionItem>
-            <ActionItem (tap)="onEdit()" *ngIf="canEdit()"
-                ios.systemIcon="2" android.systemIcon="ic_menu_edit"
-                ios.position="right">
             </ActionItem>
         </ActionBarExtension>
 
         <StackLayout *ngIf="event">
-            <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#xf28c;'" [noImageText]="'No image available'"></photo-picker>
+            <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
             <StackLayout class="info-container">
                 <Label *ngIf="!alreadyRegistered && !isPastEvent && event.OpenForRegistration && !event.RegistrationCompleted" text="Register" (tap)="register()" class="btn btn-primary"></Label>
@@ -26,7 +22,7 @@
                     <GridLayout columns="auto, auto, *" rows="auto, auto">
                         <Label class="info-label" text="Date" col="0" row="0"></Label>
                         <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
-                        <Label class="info-icon material-icon" text="&#xf32e;" col="2" row="0"></Label>
+                        <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label>
                     </GridLayout>
                     <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])">
                         <Label *ngIf="alreadyRegistered && userVotedForDate(date)" text="Y"></Label> <!-- will be an icon -->
@@ -45,7 +41,7 @@
                 <StackLayout class="info-wrapper">
                     <GridLayout columns="auto, *">
                         <Label class="info-label" text="Location" col="0"></Label>
-                        <Label *ngIf="event.LocationURL" class="info-icon material-icon" text="&#xf1a1;" (tap)="showLocation()" col="1"></Label>
+                        <Label *ngIf="event.LocationURL" class="info-icon if" text="&#x74;" (tap)="showLocation()" col="1"></Label>
                     </GridLayout>
                     <Label class="info-value" [text]="event.LocationName" [textWrap]="true"></Label>
                 </StackLayout>

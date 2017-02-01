@@ -1,5 +1,6 @@
 import { Component, ViewContainerRef } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { EventCreationModalComponent } from '../event-creation-modal/event-creation-modal.component';
 import { Event, Group } from '../../shared/models';
@@ -23,10 +24,15 @@ export class AddEventComponent {
         private _alertService: AlertService,
         private _usersService: UsersService,
         private _platform: PlatformService,
-        private _vcRef: ViewContainerRef
+        private _vcRef: ViewContainerRef,
+        private _page: Page
     ) {
         this.newEvent = new Event();
         this.isAndroid = this._platform.isAndroid;
+    }
+
+    ngOnInit() {
+        this._page.actionBar.title = 'New Event';
     }
 
     onCreate() {

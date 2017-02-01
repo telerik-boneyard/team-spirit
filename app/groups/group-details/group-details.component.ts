@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User } from '../../shared/models';
@@ -25,18 +26,20 @@ export class GroupDetailsComponent implements OnInit {
         private _everliveProvider: EverliveProvider,
         private _routerExtensions: RouterExtensions,
         private _platform: PlatformService,
-        private _groupsService: GroupsService
+        private _groupsService: GroupsService,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._activatedRoute.params.subscribe(p => {
             let groupId = p['id'];
 
             let userPrm = this._usersService.currentUser()
                 .then(user => this._currentUser = user);
-            
+
             let groupPrm = this._groupsService.getById(groupId)
                 .then(group => this.group = group);
 
@@ -121,7 +124,7 @@ export class GroupDetailsComponent implements OnInit {
 
     onLeave() {
         this._groupsService.leaveGroup(this.group.Id, this._currentUser.Id)
-            .then(() => { 
+            .then(() => {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
              })

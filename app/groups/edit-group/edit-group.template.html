@@ -1,16 +1,11 @@
 <StackLayout class="cntnr">
     <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" android.systemIcon="ic_menu_back" (tap)="onCancel()"></NavigationButton>
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()"></ActionItem>
-        <ActionItem>
-            <StackLayout class="actionbar-title-wrp">
-                <Label [text]="group && group.Name" horizontalAlignment="right" class="actionbar-title"></Label>
+        <ActionItem (tap)="save()" ios.position="right">
+            <StackLayout>
+                <Label text="Done" class="button"></Label>
             </StackLayout>
-        </ActionItem>
-        <ActionItem
-            ios.systemIcon="3"
-            android.systemIcon="ic_menu_save"
-            (tap)="save()">
         </ActionItem>
     </ActionBarExtension>
     <ScrollView class="cntnr">

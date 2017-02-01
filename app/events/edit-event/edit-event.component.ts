@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { EventsService, AlertService, FilesService, PlatformService } from '../../services';
 import { Event, User } from '../../shared/models';
@@ -21,12 +22,14 @@ export class EditEventComponent implements OnInit {
         private _routerExtensions: RouterExtensions,
         private _filesService: FilesService,
         private _platform: PlatformService,
-        private _eventsService: EventsService
+        private _eventsService: EventsService,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
     }
 
     ngOnInit() {
+        this._page.actionBar.title = 'Edit Event';
         this._route.params.subscribe(p => {
             this._eventsService.getById(p['id'])
                 .then((event: Event) => {

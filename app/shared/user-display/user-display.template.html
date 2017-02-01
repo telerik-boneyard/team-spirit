@@ -1,6 +1,6 @@
 <WrapLayout class="list-wrapper">
     <StackLayout orientation="horizontal" *ngFor="let user of users; let ind = index">
-        <photo-picker *ngIf="showImage(ind)" class="user-image" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#xf207;'"></photo-picker>
+        <photo-picker *ngIf="showImage(ind)" class="user-image" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x6c;'"></photo-picker>
         <Label *ngIf="showNames" class="user-name" [text]="user.DisplayName || user.Username"></Label>
     </StackLayout>
     <Label class="remaining-users" *ngIf="hasRemainingLabel()" [text]="getRemainingText()"></Label>

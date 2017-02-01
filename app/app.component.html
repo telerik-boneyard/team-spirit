@@ -1,5 +1,5 @@
 <ActionBar title="">
-    <NavigationButton *ngIf="!disableDrawer && isAndroid" android.systemIcon="ic_menu_sort_by_size" (tap)="toggleDrawer()"></NavigationButton>
+    <NavigationButton *ngIf="!disableDrawer && isAndroid" icon="res://icon_menu" (tap)="toggleDrawer()"></NavigationButton>
     <ActionItem *ngIf="!disableDrawer && !isAndroid" ios.position="left" ios.systemIcon="18" (tap)="toggleDrawer()"></ActionItem>
 </ActionBar>
 <RadSideDrawer #drawer>
@@ -8,27 +8,27 @@
             <Label class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Label>
 
             <StackLayout orientation="horizontal" class="btn" [nsRouterLink]="['events']" (tap)="closeDrawer()">
-                <Label class="btn-icon material-icon" text="&#xf27a;"></Label>
+                <Label class="btn-icon if" text="&#x6b;"></Label>
                 <Label class="btn-text" text="Events"></Label>
             </StackLayout>
 
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['groups']" (tap)="closeDrawer()">
-                <Label class="btn-icon material-icon" text="&#xf209;"></Label>
+                <Label class="btn-icon if" text="&#x6e;"></Label>
                 <Label class="btn-text" text="Groups"></Label>
             </StackLayout>
 
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['user']" (tap)="closeDrawer()">
-                <Label class="btn-icon material-icon" text="&#xf207;"></Label>
+                <Label class="btn-icon if" text="&#x6c;"></Label>
                 <Label class="btn-text" text="My Profile"></Label>
             </StackLayout>
 
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['settings']" (tap)="closeDrawer()">
-                <Label class="btn-icon material-icon" text="&#xf191;"></Label>
+                <Label class="btn-icon if" text="&#x6f;"></Label>
                 <Label class="btn-text" text="Settings"></Label>
             </StackLayout>
 
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" (tap)="logout()" (tap)="closeDrawer()">
-                <Label class="btn-icon material-icon" text="&#xf191;"></Label>
+                <Label class="btn-icon if" text="&#x75;"></Label>
                 <Label class="btn-text" text="Log out"></Label>
             </StackLayout>
         </StackLayout>

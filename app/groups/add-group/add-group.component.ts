@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { GroupCreationModalComponent } from '../group-creation-modal/group-creation-modal.component';
 import { GroupsService, AlertService, FilesService, PlatformService } from '../../services';
@@ -22,12 +23,17 @@ export class AddGroupComponent {
         private _groupsService: GroupsService,
         private _alertService: AlertService,
         private _platform: PlatformService,
-        private _vsRef: ViewContainerRef
+        private _vsRef: ViewContainerRef,
+        private _page: Page
     ) {
         this.group = new Group();
         this.isAndroid = this._platform.isAndroid;
     }
-    
+
+    ngOnInit() {
+        this._page.actionBar.title = 'New Group';
+    }
+
     onCreate() {
         let errMsg = this._groupsService.validateGroupEntry(this.group);
         if (errMsg) {
