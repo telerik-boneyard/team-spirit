@@ -59,6 +59,7 @@ export class LoginComponent implements OnInit {
         this._usersService.register(this.user.username, this.user.password)
             .then((res) => {
                 this.changeView(false);
+                this.user.confirmPassword = '';
             })
             .catch((e) => {
                 this._alertsService.showError(e && e.message);
