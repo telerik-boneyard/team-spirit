@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { Page } from 'ui/page';
 
 import { User } from '../../shared';
 import { utilities } from '../../shared';
@@ -12,13 +13,15 @@ import { UsersService, AlertService } from '../../services';
 })
 export class SettingsComponent implements OnInit {
     user: User;
-    
+
     constructor(
         private _usersService: UsersService,
-        private _alertsService: AlertService
+        private _alertsService: AlertService,
+        private _page: Page
     ) {}
-    
+
     ngOnInit() {
+        this._page.actionBar.title = 'Settings';
         this._usersService.currentUser().then(user => this.user = user);
     }
 

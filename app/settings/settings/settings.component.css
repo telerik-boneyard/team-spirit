@@ -1,4 +1,16 @@
 .cntnr {
-    height: 100%;
-    background-color: #fff;
+  height: 100%;
+  background-color: #fff;
+}
+
+.form {
+  padding: 20;
+}
+
+.input-field.switch-field {
+  padding: 0;
+}
+
+.btn {
+  margin: 20 0 0;
 }
