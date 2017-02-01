@@ -1,54 +1,56 @@
-<ScrollView class="ctnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
-        <ActionItem (tap)="onEdit()" *ngIf="canEdit()" ios.position="right">
-            <StackLayout>
-                <Label class="button if" text="&#x65;"></Label>
-            </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-    <StackLayout *ngIf="group">
-        <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
+<StackLayout>
+    <ScrollView class="ctnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
+            <ActionItem (tap)="onEdit()" *ngIf="canEdit()" ios.position="right">
+                <StackLayout>
+                    <Label class="button if" text="&#x65;"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
 
-        <Label class="btn btn-primary join-group" *ngIf="!hasJoined" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
+        <StackLayout *ngIf="group">
+            <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
-        <GridLayout *ngIf="hasJoined" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" [attr.columns]="canEdit() ? '*, *, *' : '*, *'">
-            <StackLayout *ngIf="canEdit()" class="btn" (tap)="onViewRequests()" col="0">
-                <Label class="btn-icon if" text="&#x6d;"></Label>
-                <Label class="btn-text" text="See requests"></Label>
-            </StackLayout>
-            <StackLayout class="btn" (tap)="onViewEvents()" [attr.col]="canEdit() ? 1 : 0">
-                <Label class="btn-icon if" text="&#x6b;"></Label>
-                <Label class="btn-text" text="See Events"></Label>
-            </StackLayout>
-            <StackLayout class="btn" (tap)="onLeave()" [attr.col]="canEdit() ? 2 : 1">
-                <Label class="btn-icon if" text="&#x76;"></Label>
-                <Label class="btn-text" text="Leave Group"></Label>
-            </StackLayout>
-        </GridLayout>
+            <Label class="btn btn-primary join-group" *ngIf="hasJoined === false" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
 
-        <StackLayout class="info-container">
-            <StackLayout class="info-wrapper">
-                <Label class="info-label" text="Description"></Label>
-                <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>
-            </StackLayout>
+            <GridLayout *ngIf="hasJoined === true" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" [attr.columns]="canEdit() ? '*, *, *' : '*, *'">
+                <StackLayout *ngIf="canEdit()" class="btn" (tap)="onViewRequests()" col="0">
+                    <Label class="btn-icon if" text="&#x6d;"></Label>
+                    <Label class="btn-text" text="See requests"></Label>
+                </StackLayout>
+                <StackLayout class="btn" (tap)="onViewEvents()" [attr.col]="canEdit() ? 1 : 0">
+                    <Label class="btn-icon if" text="&#x6b;"></Label>
+                    <Label class="btn-text" text="See Events"></Label>
+                </StackLayout>
+                <StackLayout class="btn" (tap)="onLeave()" [attr.col]="canEdit() ? 2 : 1">
+                    <Label class="btn-icon if" text="&#x76;"></Label>
+                    <Label class="btn-text" text="Leave Group"></Label>
+                </StackLayout>
+            </GridLayout>
 
-            <StackLayout class="info-wrapper members-wrapper">
-                <Label class="info-label" text="Members"></Label>
-                <WrapLayout *ngIf="members.length" class="expandable">
-                    <photo-picker class="user-image" *ngFor="let user of members.slice(0, 5)" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x6c;'"></photo-picker>
-                    <Label *ngIf="getRemainingText()" [text]="getRemainingText()"></Label>
-                </WrapLayout>
-                <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
-            </StackLayout>
+            <StackLayout class="info-container">
+                <StackLayout class="info-wrapper">
+                    <Label class="info-label" text="Description"></Label>
+                    <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>
+                </StackLayout>
 
-            <StackLayout class="info-wrapper no-separator">
-                <Label class="info-label" text="Details"></Label>
-                <Label class="info-value" [text]="getDetailsText()" [textWrap]="true"></Label>
+                <StackLayout class="info-wrapper members-wrapper" (tap)="onMembersTap()">
+                    <Label class="info-label" text="Members"></Label>
+                    <user-display *ngIf="members.length" [users]="members" [withImages]="5"></user-display>
+                    <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
+                </StackLayout>
+
+                <StackLayout class="info-wrapper no-separator">
+                    <Label class="info-label" text="Details"></Label>
+                    <Label class="info-value" [text]="getDetailsText()" [textWrap]="true"></Label>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
-    </StackLayout>
 
-    <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</ScrollView>
+        <ScrollView>
+            <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </ScrollView>
+</StackLayout>

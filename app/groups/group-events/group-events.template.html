@@ -1,11 +1,14 @@
-<StackLayout>
+<StackLayout class="cntnr">
     <ActionBarExtension>
         <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
     </ActionBarExtension>
 
-    <StackLayout class="cntnr">
-        <event-list *ngIf="events" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
-        <ActivityIndicator [busy]="!events" [visibility]="events ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    <StackLayout *ngIf="events">
+        <event-list [events]="events" (onEventTap)="onEventTap($event)"></event-list>
     </StackLayout>
+
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!events" [visibility]="events ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
 </StackLayout>

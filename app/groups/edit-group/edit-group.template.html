@@ -8,10 +8,13 @@
             </StackLayout>
         </ActionItem>
     </ActionBarExtension>
-    <ScrollView *ngIf="group">
-        <StackLayout>
+    <ScrollView class="cntnr">
+        <StackLayout *ngIf="group">
             <editable-group [group]="group"></editable-group>
             <Label class="btn-delete" text="Delete group" (tap)="delete()"></Label>
         </StackLayout>
+        <ScrollView>
+            <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
     </ScrollView>
 </StackLayout>

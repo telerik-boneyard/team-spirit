@@ -11,8 +11,8 @@
 
             <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
             <GridLayout columns="auto, auto, *" class="event-organiser">
-                <photo-picker [url]="event.Organizer.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x6c;'"></photo-picker>
-                <Label [text]="event.Organizer.DisplayName + ' | '" col="1" textWrap="true" class="user-name"></Label>
+                <user-display [users]="event.Organizer" [showNames]="true"></user-display>
+                <Label text=" | " col="1" textWrap="true" class="user-name"></Label>
                 <Label [text]="event.Group" col="2" class="group"></Label>
             </GridLayout>
 

@@ -1,22 +1,25 @@
-<StackLayout class="form main-container">
-    <StackLayout width="300">
-        <Image src="res://logo" class="logo"></Image>
+<ScrollView class="form main-container">
+    <StackLayout>
+        <StackLayout width="300">
+            <Image src="res://logo" class="logo"></Image>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <TextField hint="Email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
+        </StackLayout>
+        <StackLayout class="input-field">
+            <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
+        </StackLayout>
+        <StackLayout class="input-field" *ngIf="isSignupView">
+            <TextField hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
+        </StackLayout>
+        <StackLayout *ngIf="!isSignupView">
+            <Label text="Log in" (tap)="login()" class="btn btn-primary"></Label>
+            <Label text="Forgot your password?" (tap)="resetPassword()" class="btn btn-small"></Label>
+            <Label text="Don't have an account yet? Sign up" textWrap="true" (tap)="changeView(true)" class="btn btn-small"></Label>
+        </StackLayout>
+        <StackLayout *ngIf="isSignupView">
+            <Label text="Sign Up" (tap)="signup()" class="btn btn-primary"></Label>
+            <Label text="Back to login" textWrap="true" (tap)="changeView(false)" class="btn btn-small"></Label>
+        </StackLayout>
     </StackLayout>
-    <StackLayout class="input-field">
-        <TextField hint="Username" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.username" ></TextField>
-    </StackLayout>
-    <StackLayout class="input-field">
-        <TextField hint="Password" secure="true" [(ngModel)]="user.password" ></TextField>
-    </StackLayout>
-    <StackLayout class="input-field" *ngIf="isSignupView">
-        <TextField hint="Confirm Password" secure="true" [(ngModel)]="user.confirmPassword" ></TextField>
-    </StackLayout>
-    <StackLayout *ngIf="!isSignupView">
-        <Label text="Log in" (tap)="login()" class="btn btn-primary"></Label>
-        <Label text="Don't have an account yet? Sign up" textWrap="true" (tap)="changeView(true)" class="btn btn-small"></Label>
-    </StackLayout>
-    <StackLayout *ngIf="isSignupView">
-        <Label text="Sign Up" (tap)="signup()" class="btn btn-primary"></Label>
-        <Label text="Back to login" textWrap="true" (tap)="changeView(false)" class="btn btn-small"></Label>
-    </StackLayout>
-</StackLayout>
+</ScrollView>

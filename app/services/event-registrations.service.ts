@@ -33,10 +33,10 @@ export class EventRegistrationsService {
     }
 
     getEventDateChoiceCounts(eventId: string) {
-        return this._data.get({ EventId: eventId })
+        return this.getForEvent(eventId)
             .then((res) => {
                 let result: any = {};
-                res.result.forEach(reg => {
+                res.forEach(reg => {
                     reg.Choices.forEach(choice => result[choice] = (result[choice] || 0) + 1);
                 });
                 return result;
@@ -51,5 +51,14 @@ export class EventRegistrationsService {
         };
         
         return this._elProvider.get.businessLogic.invokeCloudFunction('registerForEvent', { queryStringParams });
+    }
+
+    getUserRegistrationForEvent(eventId: string, userId: string) {
+        return this._data.get({ EventId: eventId, UserId: userId })
+            .then(resp => resp.result[0]);
+    }
+
+    getForEvent(eventId: string) {
+        return this._data.get({ EventId: eventId }).then(resp => resp.result);
     }
 }

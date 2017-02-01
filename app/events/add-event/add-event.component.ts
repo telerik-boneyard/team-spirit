@@ -44,6 +44,7 @@ export class AddEventComponent {
                 if (errMsg) {
                     return Promise.reject({ message: errMsg });
                 }
+                return this._alertService.askConfirmation(`Create event ${this.newEvent.Name}?`);
             })
             .then(() => {
                 // TODO: move to service

@@ -1,4 +1,4 @@
-<StackLayout class="cntnr">
+<ScrollView class="cntnr">
     <ActionBarExtension>
         <ActionItem (tap)="onAdd()" ios.position="right">
             <StackLayout>
@@ -11,7 +11,7 @@
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
             <StackLayout *ngIf="!userGroups.length" class="no-items">
-                <Label text="You haven't joined any groups. Slide over to the next tab to find some!'" [textWrap]="true"></Label>
+                <Label text="You haven't joined any groups. Slide over to the next tab to find some!" [textWrap]="true"></Label>
             </StackLayout>
         </StackLayout>
         <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
@@ -22,5 +22,8 @@
         </StackLayout>
     </TabView>
 
-    <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</StackLayout>
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</ScrollView>
+

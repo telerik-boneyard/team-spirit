@@ -5,7 +5,6 @@
 <RadSideDrawer #drawer>
     <DockLayout tkDrawerContent class="drawer">
         <StackLayout class="sideStackLayout" width="100%" dock="top">
-
             <Label class="btn" *ngIf="!loggedIn" text="Log in" [nsRouterLink]="['user/login']" (tap)="closeDrawer()"></Label>
 
             <StackLayout orientation="horizontal" class="btn" [nsRouterLink]="['events']" (tap)="closeDrawer()">
@@ -23,11 +22,15 @@
                 <Label class="btn-text" text="My Profile"></Label>
             </StackLayout>
 
+            <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" [nsRouterLink]="['settings']" (tap)="closeDrawer()">
+                <Label class="btn-icon material-icon" text="&#xf191;"></Label>
+                <Label class="btn-text" text="Settings"></Label>
+            </StackLayout>
+
             <StackLayout orientation="horizontal" class="btn" *ngIf="loggedIn" (tap)="logout()" (tap)="closeDrawer()">
                 <Label class="btn-icon if" text="&#x75;"></Label>
                 <Label class="btn-text" text="Log out"></Label>
             </StackLayout>
-
         </StackLayout>
         <StackLayout dock="bottom" verticalAlignment="bottom">
             <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>

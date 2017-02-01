@@ -8,10 +8,13 @@
             </StackLayout>
         </ActionItem>
     </ActionBarExtension>
-    <ScrollView>
-        <StackLayout>
-            <editable-event *ngIf="event" [event]="event"></editable-event>
-            <Label *ngIf="event" class="btn-delete" text="Delete event" (tap)="delete()"></Label>
+    <ScrollView class="cntnr">
+        <StackLayout *ngIf="event">
+            <editable-event [event]="event"></editable-event>
+            <Label class="btn-delete" text="Delete event" (tap)="delete()"></Label>
         </StackLayout>
+        <ScrollView>
+            <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
     </ScrollView>
 </StackLayout>

@@ -24,10 +24,7 @@
 
         <StackLayout *ngIf="currentUser" class="input-field user">
             <Label class="label" text="Administrator"></Label>
-            <StackLayout orientation="horizontal">
-                <photo-picker [url]="currentUser.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x6c;'"></photo-picker>
-                <Label class="user-label" [text]="currentUser.DisplayName || currentUser.Username"></Label>
-            </StackLayout>
+            <user-display [users]="currentUser" [showNames]="true"></user-display>
         </StackLayout>
     </StackLayout>
 </StackLayout>

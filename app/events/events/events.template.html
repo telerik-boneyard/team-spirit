@@ -1,4 +1,4 @@
-<StackLayout class="cntnr">
+<ScrollView class="cntnr">
     <ActionBarExtension>
         <ActionItem (tap)="onAdd()" *ngIf="canAdd" ios.position="right">
             <StackLayout>
@@ -6,6 +6,7 @@
             </StackLayout>
         </ActionItem>
     </ActionBarExtension>
+
     <TabView *ngIf="initialized" #tabview [selectedIndex]="0" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
@@ -24,5 +25,8 @@
         </StackLayout>
     </TabView>
 
-    <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</StackLayout>
+    <ScrollView class="cntnr">
+        <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </ScrollView>
+</ScrollView>
+
