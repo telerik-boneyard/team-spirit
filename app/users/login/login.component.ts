@@ -32,6 +32,8 @@ export class LoginComponent implements OnInit {
     changeView(signupView: boolean) {
         this.user.Username = '';
         this.user.Password = '';
+        this.user.DisplayName = '';
+        this.user.ConfirmPassword = '';
         this.isSignupView = signupView;
     }
 
@@ -59,7 +61,6 @@ export class LoginComponent implements OnInit {
         this._usersService.register(this.user.Username, this.user.Password, this.user.DisplayName)
             .then((res) => {
                 this.changeView(false);
-                this.user.ConfirmPassword = '';
             })
             .catch((e) => {
                 this._alertsService.showError(e && e.message);
