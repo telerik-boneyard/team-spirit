@@ -45,6 +45,12 @@
   background-color: rgba(0, 0, 0, .35);
 }
 
+.vote,
+.info-label,
+.votes-count {
+  vertical-align: middle;
+}
+
 .info-icon {
   width: 30;
   height: 30;
@@ -61,4 +67,21 @@
 .expandable Label {
   font-size: 12;
   font-weight: bold;
+}
+
+.vote {
+  margin-right: 10;
+  padding-top: 5;
+}
+
+.vote.yes {
+  color: green;
+}
+
+.vote.no {
+  color: #ff0000;
+}
+
+.votes-count {
+  font-size: 13;
 }
