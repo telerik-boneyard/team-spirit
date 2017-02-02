@@ -7,7 +7,7 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" class="tab-view">
+    <TabView *ngIf="initialized" #tabview [selectedIndex]="0" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
 

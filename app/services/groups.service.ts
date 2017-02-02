@@ -191,10 +191,18 @@ export class GroupsService {
         return joinedGroups;
     }
 
-    private _getGroupsByFilter(filter: any) {
+    private _getGroupsByFilter(filter: any, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
         query.expand(this._imageExpandExp);
+
+        sorting = sorting || [{ field: 'Name' }];
+        sorting = [].concat(sorting);
+        sorting.forEach(sortType => {
+            let sortFunc = sortType.desc ? query.orderDesc : query.order;
+            sortFunc.call(query, sortType.field);
+        });
+
         return this._groupsData.get(query).then(res => res.result);
     }
 
