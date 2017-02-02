@@ -126,6 +126,10 @@ export class EventsService {
             });
     }
 
+    unregisterFromEvent(eventId: string, userId: string) {
+        return this._registrationsService.delete(eventId, userId);
+    }
+
     isPastEvent(event: Event): boolean {
         return event.EventDate && new Date(event.EventDate) < new Date();
     }

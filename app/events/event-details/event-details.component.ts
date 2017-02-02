@@ -61,10 +61,7 @@ export class EventDetailsComponent implements OnInit {
                     this.event = event;
                     this._page.actionBar.title = event.Name;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
-                    return this._eventsService.getDateChoicesVotes(event.Id);
-                })
-                .then((result) => {
-                    this._countByDate = result.countByDate;
+                    return this._updateCountsByDate();
                 })
                 .catch(this._onError.bind(this));
 
@@ -86,6 +83,11 @@ export class EventDetailsComponent implements OnInit {
         });
     }
 
+    private _updateCountsByDate() {
+        return this._eventsService.getDateChoicesVotes(this.event.Id)
+            .then(result => this._countByDate = result.countByDate);
+    }
+
     onEdit() {
         this._routerExtensions.navigate([`/events/${this.event.Id}/edit`]);
     }
@@ -95,22 +97,20 @@ export class EventDetailsComponent implements OnInit {
     }
 
     register() {
-        if (this.alreadyRegistered) {
-            return;
-        }
-
-        let registrationPromise: Promise<any>;
+        let dateSelectionPromise: Promise<string[]> = null;
 
         if (this.event.EventDate) {
-            registrationPromise = this._eventsService.registerForEvent(this.event.Id, [this.event.EventDate]);
+            dateSelectionPromise = Promise.resolve([this.event.EventDate]);
         } else {
-            registrationPromise = this._openPopupAndRegister();
+            dateSelectionPromise = this._openDateSelectionModal();
         }
 
-        registrationPromise.then((didRegister) => {
-            if (didRegister) {
+        dateSelectionPromise.then(dateChoices => {
+            if (dateChoices) {
+                return this._eventsService.registerForEvent(this.event.Id, dateChoices);
+            } else {
+                return Promise.resolve(false);
             }
-            return didRegister;
         })
         .then(didRegister => {
             if (didRegister) { // would be false if user closed modal
@@ -120,11 +120,41 @@ export class EventDetailsComponent implements OnInit {
                     closeTimeout: constants.modalsTimeout
                 };
 
-                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
                 this._updateInfoOnRegister();
+                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
             }
         })
         .catch(this._onError.bind(this));
+    }
+
+    changeVote() {
+        let updatedChoices: string[];
+        
+        this._openDateSelectionModal(true)
+            .then(dateChoices => {
+                if (!dateChoices) {
+                    return Promise.reject(false); // dont show an error, user closed the modal
+                }
+                if (dateChoices.length) {
+                    updatedChoices = dateChoices;
+                    return this._regsService.updateChoices(this.event.Id, this._currentUser.Id, dateChoices);
+                }
+            })
+            .then(() => {
+                // let oldChoices: string[] = this._userRegForThisEvent.Choices;
+                // oldChoices.forEach(oc => {
+                //     this._countByDate[oc]--;
+                // });
+                // updatedChoices.forEach(uc => {
+                //     if (this._countByDate[uc]) {
+                //         this._countByDate[uc] = (this._countByDate[uc] || 0) + 1;
+                //     }
+                // });
+                this._updateCountsByDate();
+                this._userRegForThisEvent.Choices = updatedChoices;
+                this._alertsService.showSuccess('Date vote updated');
+            })
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     showLocation() {
@@ -133,14 +163,6 @@ export class EventDetailsComponent implements OnInit {
 
     toggleExpandedUsers() {
         this.registeredUsersExpanded = !this.registeredUsersExpanded;
-    }
-
-    collapseExpandedUsers() {
-        this.registeredUsersExpanded = false;
-    }
-
-    getAllRegisteredUserNames() {
-        return this.registeredUsers.map(u => u.DisplayName || u.Username).join(', ');
     }
 
     onBack() {
@@ -163,7 +185,27 @@ export class EventDetailsComponent implements OnInit {
         this._routerExtensions.navigateByUrl(`/events/${this.event.Id}/participants`);
     }
 
-    private _openPopupAndRegister() {
+    canRegister() {
+        return !this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+    }
+
+    unregister() {
+        this._alertsService.askConfirmation(`Unregister from ${this.event.Name}?`)
+            .then(() => this._regsService.getUserRegistrationForEvent(this.event.Id, this._currentUser.Id))
+            .then(userReg => {
+                if (!userReg) {
+                    return Promise.reject({ message: 'You are not registered for this event' })
+                }
+                
+                this._userRegForThisEvent = userReg;
+                return this._eventsService.unregisterFromEvent(this.event.Id, this._currentUser.Id);
+            })
+            .then(() => this._updateInfoOnUnregister())
+            .then(() => this._alertsService.showSuccess(`Successfully unregistered from ${this.event.Name}`))
+            .catch(err => err && this._alertsService.showError(err.message));
+    }
+
+    private _openDateSelectionModal(isChangeVote = false) {
         let opts: ModalDialogOptions = {
             context: {
                 availableDates: this.event.EventDateChoices
@@ -172,14 +214,21 @@ export class EventDetailsComponent implements OnInit {
             viewContainerRef: this._vcRef
         };
 
+        if (isChangeVote) {
+            opts.context.title = 'Change date vote';
+        }
+
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
             .then((dateChoices: number[]) => {
+                let result: string[] = null;
+
                 if (dateChoices && dateChoices.length) {
+                    this._dateChoicesMade = [];
                     dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
-                    return this._eventsService.registerForEvent(this.event.Id, this._dateChoicesMade);
-                } else {
-                    return Promise.resolve(false);
+                    result = this._dateChoicesMade;
                 }
+
+                return Promise.resolve(result);
             });
     }
 
@@ -194,9 +243,20 @@ export class EventDetailsComponent implements OnInit {
         this.registeredUsers.unshift(this._currentUser);
         this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
         this._dateChoicesMade.forEach(dc => {
-            this._countByDate[dc] = this._countByDate[dc] || 0;
-            this._countByDate[dc]++;
+            // this._countByDate[dc] = this._countByDate[dc] || 0;
+            // this._countByDate[dc]++;
             this._userRegForThisEvent.Choices.push(dc);
         });
+        this._updateCountsByDate();
+    }
+
+    private _updateInfoOnUnregister() {
+        this.alreadyRegistered = false;
+        this.registeredUsers = this.registeredUsers.filter(u => u.Id !== this._currentUser.Id);
+        // this._userRegForThisEvent.Choices.forEach(userChoice => {
+        //     this._countByDate[userChoice] = Math.max(0, this._countByDate[userChoice] - 1);
+        // });
+        this._updateCountsByDate();
+        this._userRegForThisEvent = null;
     }
 }

@@ -10,6 +10,7 @@ export class Event extends ItemModel {
     Image?: string;
     ImageUrl?: string;
     OpenForRegistration: boolean;
+    RegistrationCompleted: boolean;
     OrganizerId: string;
     GroupId: string;
 }

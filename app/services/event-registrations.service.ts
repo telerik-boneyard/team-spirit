@@ -43,6 +43,11 @@ export class EventRegistrationsService {
             });
     }
 
+    updateChoices(eventId: string, userId: string, newChoices: string[]) {
+        let filter = { EventId: eventId, UserId: userId };
+        return this._data.update({ Choices: newChoices }, filter);
+    }
+
     create(eventId: string, userId: string, dateChoices: string[]) {
         let queryStringParams = {
             eventId,
@@ -60,5 +65,9 @@ export class EventRegistrationsService {
 
     getForEvent(eventId: string) {
         return this._data.get({ EventId: eventId }).then(resp => resp.result);
+    }
+
+    delete(eventId: string, userId: string) {
+        return this._data.destroy({ EventId: eventId, UserId: userId });
     }
 }
