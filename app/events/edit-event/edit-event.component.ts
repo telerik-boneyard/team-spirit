@@ -77,24 +77,6 @@ export class EditEventComponent implements OnInit {
             });
     }
 
-    delete() {
-        this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
-            .then(() => {
-                return this._eventsService.deleteById(this.event.Id);
-            })
-            .then(() => {
-                return this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`)
-            })
-            .then(() => {
-                this._routerExtensions.navigate(['/events']);
-            })
-            .catch(err => {
-                if (err) {
-                    this._alertsService.showError(err.message);
-                }
-            });
-    }
-
     onCancel() {
         this._routerExtensions.back();
     }

@@ -10,20 +10,25 @@
                     <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
             </ActionItem>
-            <ActionItem *ngIf="alreadyRegistered" (tap)="unregister()" ios.position="right">
-                <StackLayout>
-                    <Label text="X"></Label>
-                </StackLayout>
-            </ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(event && alreadyRegistered && !event.EventDate)" (tap)="changeVote()" ios.systemIcon="19" ios.position="right" text="Change Date Vote" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(alreadyRegistered)" ios.systemIcon="14" (tap)="unregister()" ios.position="right" text="Unregister" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" ios.systemIcon="16" (tap)="deleteEvent()" ios.position="right" text="Delete Event" android.position="popup"></ActionItem>
+
+            <ActionItem *ngIf="!isAndroid" (tap)="toggleIosPopup()" ios.systemIcon="9" ios.position="right"></ActionItem>
         </ActionBarExtension>
 
         <StackLayout *ngIf="event">
+            <StackLayout *ngIf="!isAndroid && iosPopupOpen">
+                <Label *ngIf="event && alreadyRegistered && !event.EventDate" (tap)="changeVote()" text="Change Date Vote"></Label>
+                <Label *ngIf="alreadyRegistered" (tap)="unregister()" text="Unregister"></Label>
+                <Label *ngIf="canEdit()" (tap)="deleteEvent()" text="Delete Event"></Label>
+            </StackLayout>
+            
             <Label *ngIf="alreadyRegistered" text="Registered"></Label>
             <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
             <StackLayout class="info-container">
                 <Label *ngIf="canRegister()" text="Register" (tap)="register()" class="btn btn-primary"></Label>
-                <Label *ngIf="alreadyRegistered && !event.EventDate" text="Change Date Vote" (tap)="changeVote()" class="btn btn-primary"></Label>
 
                 <StackLayout class="info-wrapper">
                     <GridLayout columns="auto, auto, *" rows="auto, auto">

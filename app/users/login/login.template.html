@@ -7,7 +7,7 @@
             <TextField hint="Display Name" [(ngModel)]="user.DisplayName" ></TextField>
         </StackLayout>
         <StackLayout class="input-field">
-            <TextField hint="Email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.Username" ></TextField>
+            <TextField hint="Email" autocorrect="false" autocapitalizationType="none" [(ngModel)]="user.Username" keyboardType="email"></TextField>
         </StackLayout>
         <StackLayout class="input-field">
             <TextField hint="Password" secure="true" [(ngModel)]="user.Password" ></TextField>
