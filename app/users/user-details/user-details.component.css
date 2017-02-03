@@ -2,6 +2,7 @@
   background-color: #F4550F;
   height: 100%;
   padding: 15;
+  background-image: url("res://background_profile");
 }
 
 .user >>> .no-image.large,
@@ -10,6 +11,7 @@
   width: 130;
   height: 130;
   border-radius: 75;
+  background-image: none;
 }
 
 .user >>> .no-image.large,
