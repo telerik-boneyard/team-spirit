@@ -201,6 +201,10 @@ export class EventDetailsComponent implements OnInit {
         return !this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
     }
 
+    canUnregister() {
+        return this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+    }
+
     unregister() {
         this._alertsService.askConfirmation(`Unregister from ${this.event.Name}?`)
             .then(() => this._regsService.getUserRegistrationForEvent(this.event.Id, this._currentUser.Id))

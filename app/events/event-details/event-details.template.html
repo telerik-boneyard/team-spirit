@@ -11,7 +11,7 @@
                 </StackLayout>
             </ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(event && alreadyRegistered && !event.EventDate)" (tap)="changeVote()" ios.systemIcon="19" ios.position="right" text="Change Date Vote" android.position="popup"></ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(alreadyRegistered)" ios.systemIcon="14" (tap)="unregister()" ios.position="right" text="Unregister" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister())" ios.systemIcon="14" (tap)="unregister()" ios.position="right" text="Unregister" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" ios.systemIcon="16" (tap)="deleteEvent()" ios.position="right" text="Delete Event" android.position="popup"></ActionItem>
 
             <ActionItem *ngIf="!isAndroid" (tap)="toggleIosPopup()" ios.systemIcon="9" ios.position="right"></ActionItem>
