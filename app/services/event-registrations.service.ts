@@ -7,7 +7,7 @@ import { EventRegistration } from '../shared/models';
 @Injectable()
 export class EventRegistrationsService {
     private _data: Data<EventRegistration>;
-    private readonly expandExp = {
+    private readonly _expandUserExpression = {
         UserId: {
             TargetTypeName: 'Users',
             ReturnAs: 'User',
@@ -24,10 +24,19 @@ export class EventRegistrationsService {
         this._data = this._elProvider.get.data<EventRegistration>('EventRegistrations');
     }
 
+    getAllForUser(userId: string, expandExpression?: any) {
+        let query = this._elProvider.getNewQuery();
+        query.where({ UserId: userId });
+        if (expandExpression) {
+            query.expand(expandExpression);
+        }
+        return this._data.get(query);
+    }
+
     getParticipants(eventId: string) {
         let query: any = this._elProvider.getNewQuery();
         query.where().eq('EventId', eventId);
-        query.expand(this.expandExp);
+        query.expand(this._expandUserExpression);
         query.select('User');
         return this._data.get(query).then(r => r.result.map(r => r.User));
     }

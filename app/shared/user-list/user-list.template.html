@@ -1,13 +1,9 @@
 <StackLayout>
-    <ListView [items]="users" separatorColor="transparent">
-        <template let-user="item">
-            <StackLayout>
-                <StackLayout orientation="horizontal" class="item">
-                    <user-display class="user-display" [users]="[user]" [showNames]="true"></user-display>
-                    <Label class="organizer" *ngIf="user._label" [text]="getUserLabel(user)" textWrap="true"></Label>
-                </StackLayout>
-                <Label class="list-separator" text=""></Label>
-            </StackLayout>
-        </template>
-    </ListView>
+    <StackLayout *ngFor="let user of users">
+        <StackLayout orientation="horizontal" class="item">
+            <user-display class="user-display" [users]="[user]" [showNames]="true"></user-display>
+            <Label class="organizer" *ngIf="user._label" [text]="getUserLabel(user)" textWrap="true"></Label>
+        </StackLayout>
+        <Label class="list-separator" text=""></Label>
+    </StackLayout>
 </StackLayout>

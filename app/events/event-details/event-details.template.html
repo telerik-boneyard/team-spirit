@@ -18,6 +18,7 @@
         </ActionBarExtension>
 
         <StackLayout *ngIf="event">
+            <Label *ngIf="alreadyRegistered" text="Registered"></Label>
             <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
             <StackLayout class="info-container">

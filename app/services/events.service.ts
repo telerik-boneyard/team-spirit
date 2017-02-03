@@ -50,6 +50,32 @@ export class EventsService {
         return this._getWithFilter({});
     }
 
+    getUserEvents(userId: string) {
+        let expandEventExpression = {
+            EventId: {
+                TargetTypeName: 'Events',
+                ReturnAs: 'Event',
+                Expand: {
+                    Image: {
+                        ReturnAs: 'ImageUrl',
+                        SingleField: 'Uri'
+                    },
+                    OrganizerId: {
+                        TargetTypeName: 'Users',
+                        ReturnAs: 'Organizer',
+                        Expand: {
+                            Image: {
+                                ReturnAs: 'ImageUrl',
+                                SingleField: 'Uri'
+                            }
+                        }
+                    }
+                }}
+        };
+        return this._registrationsService.getAllForUser(userId, expandEventExpression)
+            .then(resp => resp.result.map(expandedReg => expandedReg.Event));
+    }
+
     getByGroupId(groupId: string) {
         let filter = { GroupId: groupId };
         let sort = [{ field: 'EventDateChoices', desc: true }, { field: 'EventDate', desc: true }];

@@ -1,7 +1,10 @@
 <ScrollView class="list-events">
     <StackLayout>
         <StackLayout *ngFor="let event of events; let isLast = last" (tap)="eventTap(event)">
-            <Label [text]="event.Name" textWrap="true" class="event-name"></Label>
+            <WrapLayout>
+                <Label [text]="event.Name" textWrap="true" class="event-name"></Label>
+                <Label *ngIf="userIsRegistered(event.Id) && !isPastEvent(event)" class="registered-label" text="Registered"></Label>
+            </WrapLayout>
             <GridLayout columns="auto, *" class="event-date-wrp">
                 <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date" textWrap="true"></Label>
                 <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>

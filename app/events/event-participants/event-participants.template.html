@@ -1,4 +1,4 @@
-<StackLayout class="cntnr">
+<ScrollView class="cntnr">
     <ActionBarExtension>
         <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
@@ -24,4 +24,4 @@
     <ScrollView class="cntnr">
         <ActivityIndicator [busy]="!participants" [visibility]="participants ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
     </ScrollView>
-</StackLayout>
+</ScrollView>

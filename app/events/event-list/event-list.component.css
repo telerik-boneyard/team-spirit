@@ -56,3 +56,9 @@
   border-color: #c8c7cc;
   height: 1;
 }
+
+.registered-label {
+  border-width: 1;
+  border-color: #F4550F;
+  height: 25;
+}
