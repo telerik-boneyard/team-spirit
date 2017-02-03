@@ -53,14 +53,6 @@ export class EventDetailsComponent implements OnInit {
         this.isAndroid = this._platform.isAndroid;
     }
 
-    showIf(shouldShow: boolean) {
-        return shouldShow ? 'visible' : 'collapse';
-    }
-
-    toggleIosPopup() {
-        this.iosPopupOpen = !this.iosPopupOpen;
-    }
-
     ngOnInit() {
         this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
@@ -90,6 +82,14 @@ export class EventDetailsComponent implements OnInit {
                 .then(user => this._regsService.getUserRegistrationForEvent(this._eventId, user.Id))
                 .then(userReg => this._userRegForThisEvent = userReg);
         });
+    }
+
+    showIf(shouldShow: boolean) {
+        return utilities.showIf(shouldShow);
+    }
+
+    toggleIosPopup() {
+        this.iosPopupOpen = !this.iosPopupOpen;
     }
 
     onEdit() {

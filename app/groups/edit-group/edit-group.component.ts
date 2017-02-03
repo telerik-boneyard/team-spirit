@@ -78,20 +78,10 @@ export class EditGroupComponent implements OnInit {
 
     delete() {
         this._alertsService.askConfirmation(`Delete "${this.group.Name}"?`)
-            .then(() => {
-                return this._groupsService.delete(this.group.Id);
-            })
-            .then(() => {
-                return this._alertsService.showSuccess(`Group "${this.group.Name}" deleted!`);
-            })
-            .then(() => {
-                this._routerExtensions.navigate(['/groups']);
-            })
-            .catch(err => {
-                if (err) {
-                    this._alertsService.showError(err.message);
-                }
-            });
+            .then(() => this._groupsService.delete(this.group.Id))
+            .then(() => this._alertsService.showSuccess(`Group "${this.group.Name}" deleted!`))
+            .then(() => this._routerExtensions.navigate(['/groups']))
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     onCancel() {

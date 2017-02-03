@@ -5,7 +5,8 @@
     </ActionBarExtension>
 
     <StackLayout *ngIf="events">
-        <event-list [events]="events" (onEventTap)="onEventTap($event)"></event-list>
+        <event-list *ngIf="events.length" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
+        <Label *ngIf="!events.length" text="Group hasn't organised any events yet" textWrap="true"></Label>
     </StackLayout>
 
     <ScrollView class="cntnr">
