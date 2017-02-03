@@ -85,3 +85,17 @@
 .votes-count {
   font-size: 13;
 }
+
+.registered-label {
+  width: 99;
+  height: 34;
+  margin-top: 5;
+  padding: 8 20 0 10;
+  color: #F4550F;
+  font-size: 12;
+  font-weight: bold;
+  background-image: url("res://background_registered_label_event");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: -5 0;
+}
