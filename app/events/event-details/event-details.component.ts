@@ -202,7 +202,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     canUnregister() {
-        return this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+        return this.event && this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
     }
 
     unregister() {

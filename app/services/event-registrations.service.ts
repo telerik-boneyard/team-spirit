@@ -54,7 +54,13 @@ export class EventRegistrationsService {
 
     updateChoices(eventId: string, userId: string, newChoices: string[]) {
         let filter = { EventId: eventId, UserId: userId };
-        return this._data.update({ Choices: newChoices }, filter);
+        return this._data.update({ Choices: newChoices }, filter)
+            .then(resp => {
+                if (resp.result !== 1) {
+                    return Promise.reject({ message: 'Unexpected number of updated records - check back end' });
+                }
+                return resp;
+            });
     }
 
     create(eventId: string, userId: string, dateChoices: string[]) {
