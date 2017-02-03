@@ -21,6 +21,10 @@ export function shouldDisableDrawer (activeRouteUrl: string) {
     return constants.disabledDawerRoutes.some(r => r.test(activeRouteUrl));
 };
 
+export function showIf (shouldShow: boolean) {
+    return shouldShow ? 'visible' : 'collapse';
+};
+
 export function find<T> (arr: T[], predicate: (item: T) => any): T {
     for (let item of arr) {
         if (predicate(item)) {

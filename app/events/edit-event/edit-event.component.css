@@ -4,6 +4,6 @@
 }
 
 .btn-delete {
-  color: red;
   text-align: right;
+  color: red; /* wireframes are work in progress */
 }

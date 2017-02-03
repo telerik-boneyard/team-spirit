@@ -30,6 +30,7 @@ export class EventDetailsComponent implements OnInit {
     isPastEvent = false;
     registeredUsersExpanded = false;
     isAndroid: boolean = false;
+    iosPopupOpen: boolean = false;
 
     private _eventId: string = null;
     private _countByDate: any;
@@ -83,9 +84,12 @@ export class EventDetailsComponent implements OnInit {
         });
     }
 
-    private _updateCountsByDate() {
-        return this._eventsService.getDateChoicesVotes(this.event.Id)
-            .then(result => this._countByDate = result.countByDate);
+    showIf(shouldShow: boolean) {
+        return utilities.showIf(shouldShow);
+    }
+
+    toggleIosPopup() {
+        this.iosPopupOpen = !this.iosPopupOpen;
     }
 
     onEdit() {
@@ -94,6 +98,14 @@ export class EventDetailsComponent implements OnInit {
 
     canEdit() {
         return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
+    }
+
+    deleteEvent() {
+        this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
+            .then(() => this._eventsService.deleteById(this.event.Id))
+            .then(() => this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`))
+            .then(() => this._routerExtensions.navigate(['/events']))
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     register() {
@@ -203,6 +215,11 @@ export class EventDetailsComponent implements OnInit {
             .then(() => this._updateInfoOnUnregister())
             .then(() => this._alertsService.showSuccess(`Successfully unregistered from ${this.event.Name}`))
             .catch(err => err && this._alertsService.showError(err.message));
+    }
+
+    private _updateCountsByDate() {
+        return this._eventsService.getDateChoicesVotes(this.event.Id)
+            .then(result => this._countByDate = result.countByDate);
     }
 
     private _openDateSelectionModal(isChangeVote = false) {

@@ -44,6 +44,9 @@ export class LoginComponent implements OnInit {
                 this._routerExtensions.navigate(['events', { clearHistory: true }]);
             })
             .catch((e) => {
+                if (e.message && e.message.toLowerCase() === 'invalid username or password.') {
+                    e.message = 'Invalid e-mail or password.'; // :|
+                }
                 this._alertsService.showError(e && e.message);
             });
     }

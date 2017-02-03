@@ -17,6 +17,7 @@ export class GroupDetailsComponent implements OnInit {
     hasJoined: boolean = null;
     members: User[] = [];
     isAndroid: boolean = false;
+    iosPopupOpen: boolean = false;
     private _currentUser: User;
 
     constructor(
@@ -78,6 +79,22 @@ export class GroupDetailsComponent implements OnInit {
         });
     }
 
+    toggleIosPopup() {
+        this.iosPopupOpen = !this.iosPopupOpen;
+    }
+
+    showIf(shouldShow: boolean) {
+        return utilities.showIf(shouldShow);
+    }
+
+    deleteGroup() {
+        this._alertsService.askConfirmation(`Delete "${this.group.Name}"?`)
+            .then(() => this._groupsService.delete(this.group.Id))
+            .then(() => this._alertsService.showSuccess(`Group "${this.group.Name}" deleted!`))
+            .then(() => this._routerExtensions.navigate(['/groups']))
+            .catch(err => err && this._alertsService.showError(err.message));
+    }
+
     getRemainingText() {
         let remainingCount = Math.max(0, this.members.length - 5);
         if (remainingCount) {
@@ -137,7 +154,9 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onMembersTap() {
-        this._routerExtensions.navigateByUrl(`/groups/${this.group.Id}/members`);
+        if (this.members.length) {
+            this._routerExtensions.navigateByUrl(`/groups/${this.group.Id}/members`);
+        }
     }
 
     onBack() {
