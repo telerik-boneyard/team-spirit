@@ -1,7 +1,7 @@
 <ScrollView class="list-events">
     <StackLayout>
         <StackLayout *ngFor="let event of events; let isLast = last" (tap)="eventTap(event)">
-            <WrapLayout>
+            <WrapLayout class="event-name-wrp">
                 <Label [text]="event.Name" textWrap="true" class="event-name"></Label>
                 <Label *ngIf="userIsRegistered(event.Id) && !isPastEvent(event)" class="registered-label" text="Registered"></Label>
             </WrapLayout>

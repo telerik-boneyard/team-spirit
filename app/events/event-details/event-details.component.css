@@ -35,6 +35,11 @@
   vertical-align: middle;
 }
 
+.btn {
+  margin-right: 0;
+  margin-left: 0;
+}
+
 /* this is angular2 syntax :| */
 .registered-users-wrapper >>> Image,
 .registered-users-wrapper >>> .no-image {
@@ -84,4 +89,18 @@
 
 .votes-count {
   font-size: 13;
+}
+
+.registered-label {
+  width: 99;
+  height: 34;
+  margin-top: 5;
+  padding: 8 20 0 15;
+  color: #F4550F;
+  font-size: 12;
+  font-weight: bold;
+  background-image: url("res://background_registered_label_event");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: -5 0;
 }

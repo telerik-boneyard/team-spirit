@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.event-name,
+.event-name-wrp,
 .event-date-wrp,
 .event-description,
 .event-organiser,
@@ -21,10 +21,28 @@
   color: #ADADAD;
 }
 
+.event-name,
+.registered-label {
+  vertical-align: middle;
+}
+
 .event-name {
+  margin-right: 5;
   margin-bottom: 0;
-  font-size: 28;
+  font-size: 26;
   color: #F4550F;
+}
+
+.registered-label {
+  width: 75;
+  height: 20;
+  margin-top: 5;
+  padding: 1 0 0 7;
+  color: #F4550F;
+  font-size: 12;
+  background-image: url("res://background_registered_label_list");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .event-remaining-time {
@@ -55,10 +73,4 @@
   border-bottom-width: 1;
   border-color: #c8c7cc;
   height: 1;
-}
-
-.registered-label {
-  border-width: 1;
-  border-color: #F4550F;
-  height: 25;
 }
