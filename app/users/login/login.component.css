@@ -7,10 +7,9 @@ TextField {
 
 .main-container {
   height: 100%;
-  margin-left: 20;
-  margin-right: 20;
+  margin-right: 55;
+  margin-left: 55;
   vertical-align: center;
-  height: 100%;
 }
 
 .logo {
@@ -18,12 +17,20 @@ TextField {
   margin-bottom: 30;
 }
 
+.input-field {
+  padding-right: 0;
+  padding-left: 0;
+}
+
 .btn {
-  margin-bottom: 10;
+  margin-right: 0;
+  margin-left: 0;
 }
 
 .btn-small {
   background-color: rgba(255, 0, 0, 0.0);
   border-color: rgba(255, 0, 0, 0.0);
   border-width: 1;
+  font-size: 14;
 }
+

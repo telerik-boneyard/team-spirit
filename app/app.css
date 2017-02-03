@@ -61,6 +61,7 @@ ActivityIndicator {
 
 .switch[checked=true] {
   background-color: #F4550F;
+  color: #F4550F;
 }
 
 .switch[checked=true][isEnabled=false] {
@@ -71,10 +72,6 @@ ActivityIndicator {
 .switch[isEnabled=false] {
   background-color: #e0e0e0;
   color: #e0e0e0;
-}
-
-.switch[checked=true] {
-  color: #F4550F;
 }
 
 .switch .btn-primary.btn-active:highlighted {
