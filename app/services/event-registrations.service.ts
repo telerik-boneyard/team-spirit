@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Data';
 
 import { EverliveProvider } from './everlive-provider.service';
-import { EventRegistration } from '../shared/models';
+import { EventRegistration, User } from '../shared/models';
 
 @Injectable()
 export class EventRegistrationsService {
@@ -38,7 +38,11 @@ export class EventRegistrationsService {
         query.where().eq('EventId', eventId);
         query.expand(this._expandUserExpression);
         query.select('User');
-        return this._data.get(query).then(r => r.result.map(r => r.User));
+        return this._data.get(query).then(resp => {
+            let result: User[] = [];
+            resp.result.forEach(r => r.User && result.push(r.User));
+            return result;
+        });
     }
 
     getEventDateChoiceCounts(eventId: string) {

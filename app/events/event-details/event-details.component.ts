@@ -62,7 +62,9 @@ export class EventDetailsComponent implements OnInit {
                     this.event = event;
                     this._page.actionBar.title = event.Name;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
-                    return this._updateCountsByDate();
+                    if (!this.isPastEvent) {
+                        this._updateCountsByDate();
+                    }
                 })
                 .catch(this._onError.bind(this));
 
