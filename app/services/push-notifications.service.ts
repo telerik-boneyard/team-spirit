@@ -21,7 +21,7 @@ export class PushNotificationsService {
 
     private pushCb(...args) {
         console.log('args: ' + JSON.stringify(args));
-        this._alertsService.showSuccess('got push' + JSON.stringify(args));
+        // this._alertsService.showSuccess('got push' + JSON.stringify(args));
     }
 
     subscribe(userId: string) {
@@ -33,18 +33,5 @@ export class PushNotificationsService {
         };
 
         return this._everlive.get.push.register(pushRegSettings);
-    }
-
-    private _createDeviceReg(token: string, userId: string) {
-        let data = {
-            HardwareId: this._platform.deviceId,
-            HardwareModel: this._platform.deviceModel,
-            PushToken: token,
-            Locale: 'en_US',
-            TimeZone: 'Europe/Sofia',
-            PlatformType: this._platform.isAndroid ? 3 : 4,
-            PlatformVersion: this._platform.osVersion
-        };
-        return this.data.devices.create(data);
     }
 }
