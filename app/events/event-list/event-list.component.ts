@@ -17,6 +17,9 @@ export class EventListComponent implements OnInit {
         private _regsService: EventRegistrationsService,
         private _usersService: UsersService
     ) {}
+    
+    @Input() events: Event[];
+    @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
 
     ngOnInit() {
         this._usersService.currentUser()
@@ -27,9 +30,6 @@ export class EventListComponent implements OnInit {
                 });
             });
     }
-    
-    @Input() events: Event[];
-    @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
 
     eventTap(event: Event) {
         this.onEventTap.emit(event);
