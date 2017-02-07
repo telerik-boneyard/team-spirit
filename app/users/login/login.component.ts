@@ -63,11 +63,10 @@ export class LoginComponent implements OnInit {
 
         this._usersService.register(this.user.Username, this.user.Password, this.user.DisplayName)
             .then((res) => {
-                this.changeView(false);
+                this._alertsService.showSuccess('Welcome to TeamUP!');
+                return this._usersService.login(this.user.Username, this.user.Password);
             })
-            .catch((e) => {
-                this._alertsService.showError(e && e.message);
-            });
+            .catch((e) => e && this._alertsService.showError(e.message));
     }
 
     resetPassword() {

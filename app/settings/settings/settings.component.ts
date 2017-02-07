@@ -12,7 +12,8 @@ import { UsersService, AlertService } from '../../services';
     styleUrls: [ 'settings/settings/settings.component.css' ]
 })
 export class SettingsComponent implements OnInit {
-    user: User;
+    user: { PushNotificationsEnabled: boolean, EmailNotificationsEnabled: boolean } = {} as any;
+    private _currentUser: User;
 
     constructor(
         private _usersService: UsersService,
@@ -22,12 +23,29 @@ export class SettingsComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBar.title = 'Settings';
-        this._usersService.currentUser().then(user => this.user = user);
+        this._usersService.currentUser().then(user => {
+            this._currentUser = user;
+            this.user = {
+                PushNotificationsEnabled: this._currentUser.PushNotificationsEnabled,
+                EmailNotificationsEnabled: this._currentUser.EmailNotificationsEnabled
+            };
+        });
     }
 
     onSave() {
-        this._usersService.updateUser(this.user)
+        let updateObj = {
+            Id: this._currentUser.Id,
+            PushNotificationsEnabled: this.user.PushNotificationsEnabled,
+            EmailNotificationsEnabled: this.user.EmailNotificationsEnabled
+        };
+        this._usersService.updateUser(updateObj)
             .then(() => this._alertsService.showSuccess('Settings saved'))
-            .catch(err => err && this._alertsService.showError(err.message));
+            .catch(err => {
+                if (err) {
+                    this._alertsService.showError(err.message);
+                }
+                this.user.EmailNotificationsEnabled = this._currentUser.EmailNotificationsEnabled;
+                this.user.PushNotificationsEnabled = this._currentUser.PushNotificationsEnabled;
+            });
     }
 }

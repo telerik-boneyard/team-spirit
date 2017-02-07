@@ -65,10 +65,12 @@ export class UsersService {
         return this._isLoggedInSubj;
     }
 
-    updateUser(user: User) {
-        user = this._sanitizeUser(user);
-        user.Email = user.Username;
-        let updatePromise = this._users.updateSingle(user);
+    updateUser(user: User)
+    updateUser(updateObject: any)
+    updateUser(userOrUpdateObj: any) {
+        userOrUpdateObj = this._sanitizeUser(userOrUpdateObj);
+        userOrUpdateObj.Email = userOrUpdateObj.Username;
+        let updatePromise = this._users.updateSingle(userOrUpdateObj);
         // dont chain so returned promise doesnt have the cache clearing
         updatePromise.then(() => this._currUserCache = null);
         return updatePromise;
