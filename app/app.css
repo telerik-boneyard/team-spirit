@@ -119,11 +119,9 @@ ActivityIndicator {
   height: 80;
   margin-bottom: 30;
   padding-top: 10;
-  border-color: rgba(0, 0, 0, .25);
   border-color: #bfbfbf;
   border-width: 2;
   border-radius: 40;
-  color: rgba(0, 0, 0, .25);
   color: #bfbfbf;
   font-size: 60;
 }
