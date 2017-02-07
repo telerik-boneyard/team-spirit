@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
+import { action } from 'ui/dialogs';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User } from '../../shared/models';
@@ -17,7 +18,6 @@ export class GroupDetailsComponent implements OnInit {
     hasJoined: boolean = null;
     members: User[] = [];
     isAndroid: boolean = false;
-    iosPopupOpen: boolean = false;
     private _currentUser: User;
     private _disableJoinBtn: boolean = false;
 
@@ -83,14 +83,6 @@ export class GroupDetailsComponent implements OnInit {
         });
     }
 
-    toggleIosPopup() {
-        this.iosPopupOpen = !this.iosPopupOpen;
-    }
-
-    showIf(shouldShow: boolean) {
-        return utilities.showIf(shouldShow);
-    }
-
     deleteGroup() {
         this._alertsService.askConfirmation(`Delete "${this.group.Name}"?`)
             .then(() => this._groupsService.delete(this.group.Id))
@@ -136,7 +128,7 @@ export class GroupDetailsComponent implements OnInit {
         if (this._disableJoinBtn) {
             return;
         }
-        
+
         this._disableJoinBtn = true;
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {
@@ -172,6 +164,18 @@ export class GroupDetailsComponent implements OnInit {
 
     onBack() {
         this._routerExtensions.navigateByUrl(`/groups`);
+    }
+
+    toggleActions() {
+        action({
+            message: 'What would you like to do?',
+            actions: ['Delete Group'],
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result === 'Delete Group') {
+                this.deleteGroup();
+            }
+        });
     }
 
     private _addCurrentUserAsRegistered() {

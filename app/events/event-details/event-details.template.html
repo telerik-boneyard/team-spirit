@@ -10,19 +10,14 @@
                     <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
             </ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(event && alreadyRegistered && !event.EventDate)" (tap)="changeVote()" ios.systemIcon="19" ios.position="right" text="Change Date Vote" android.position="popup"></ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister())" ios.systemIcon="14" (tap)="unregister()" ios.position="right" text="Unregister" android.position="popup"></ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" ios.systemIcon="16" (tap)="deleteEvent()" ios.position="right" text="Delete Event" android.position="popup"></ActionItem>
-
-            <ActionItem *ngIf="!isAndroid" (tap)="toggleIosPopup()" ios.systemIcon="9" ios.position="right"></ActionItem>
+            <ActionItem (tap)="toggleActions()" *ngIf="canChangeVote() || canUnregister() || canEdit()">
+                <StackLayout>
+                    <Label class="button if" text="&#x66;"></Label>
+                </StackLayout>
+            </ActionItem>
         </ActionBarExtension>
 
         <StackLayout *ngIf="event">
-            <StackLayout *ngIf="!isAndroid && iosPopupOpen">
-                <Label *ngIf="event && alreadyRegistered && !event.EventDate" (tap)="changeVote()" text="Change Date Vote"></Label>
-                <Label *ngIf="alreadyRegistered" (tap)="unregister()" text="Unregister"></Label>
-                <Label *ngIf="canEdit()" (tap)="deleteEvent()" text="Delete Event"></Label>
-            </StackLayout>
             <AbsoluteLayout width="100%" height="200">
                 <StackLayout left="0" top="0" width="100%" height="200" class="user">
                     <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
