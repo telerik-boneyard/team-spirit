@@ -106,11 +106,45 @@ ActivityIndicator {
 }
 
 .no-items {
+  height: 100%;
   padding: 15 30;
+  vertical-align: middle;
+  text-align: center;
+  background-image: url("res://background_no_image");
+  background-color: rgba(0, 0, 0, .05);
+}
+
+.no-items .if {
+  width: 80;
+  height: 80;
+  margin-bottom: 30;
+  padding-top: 10;
+  border-color: rgba(0, 0, 0, .25);
+  border-color: #bfbfbf;
+  border-width: 2;
+  border-radius: 40;
+  color: rgba(0, 0, 0, .25);
+  color: #bfbfbf;
+  font-size: 60;
+}
+
+.no-items .title {
+  margin-bottom: 20;
+  font-size: 22;
+  font-weight: bold;
 }
 
 .no-items Label {
   margin-bottom: 10;
+}
+
+.no-items .actions {
+  width: 240;
+  margin: 50 0 0;
+}
+
+.no-items .btn {
+  margin: 0;
 }
 
 .drawer {
@@ -155,3 +189,12 @@ ActivityIndicator {
   border-color: #c8c7cc;
   height: 1;
 }
+
+/* .popup-menu {
+  width: 50%;
+  background-color: #fff;
+}
+
+.popup-menu-item {
+  padding: 10 15;
+} */
