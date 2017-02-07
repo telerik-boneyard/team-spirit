@@ -98,11 +98,11 @@ export class GroupsService {
     }
     
     getUserGroups(userId: string) {
-        let query = this._elProvider.getNewQuery();
-        query.where({ UserId: userId });
-        query.expand(this._expandGroupInMembership);
-        
-        return this._membershipsData.get(query).then(r => r.result.map(gm => gm.Group));
+        return this._membershipsData.get({ UserId: userId })
+            .then(resp => {
+                let userGroupsIds = resp.result.map(reg => reg.GroupId);
+                return this._getGroupsByFilter({ Id: { $in: userGroupsIds }});
+            });
     }
 
     getGroupMembers(groupId: string) {
