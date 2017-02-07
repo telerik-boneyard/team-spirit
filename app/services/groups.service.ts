@@ -109,7 +109,11 @@ export class GroupsService {
         let query = this._elProvider.getNewQuery();
         query.where({ GroupId: groupId });
         query.expand(this._expandUserInMembership);
-        return this._membershipsData.get(query).then(r => r.result.map(gm => gm.User));
+        return this._membershipsData.get(query).then(resp => {
+            let result: User[] = [];
+            resp.result.forEach(gm => gm.User && result.push(gm.User));
+            return result;
+        });
     }
     
     isUserAMember(userId: string, groupId: string): Promise<boolean>
@@ -174,6 +178,7 @@ export class GroupsService {
             } else {
                 if (r.result > 1) {
                     console.log('Deleted more than one registration - cant be good');
+                    console.log('resp: ' + JSON.stringify(r));
                 }
                 return Promise.reject({ message: 'You are not part of this group' });
             }

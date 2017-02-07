@@ -19,6 +19,7 @@ export class GroupDetailsComponent implements OnInit {
     isAndroid: boolean = false;
     iosPopupOpen: boolean = false;
     private _currentUser: User;
+    private _disableJoinBtn: boolean = false;
 
     constructor(
         private _usersService: UsersService,
@@ -46,7 +47,7 @@ export class GroupDetailsComponent implements OnInit {
                     this.group = group;
                     this._page.actionBar.title = this.group.Name;
                 });
-
+            // TODO: refactor :(
             Promise.all<any>([userPrm, groupPrm])
                 .then(() => this._groupsService.getGroupMembers(this.group.Id))
                 .then(members => {
@@ -57,12 +58,14 @@ export class GroupDetailsComponent implements OnInit {
                     let promise = Promise.resolve(false);
 
                     if (!this.hasJoined && p['joinRedirect']) { // join if its a join redirect
+                        this._disableJoinBtn = true;
                         promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
                     }
 
                     return promise;
                 })
                 .then((result) => {
+                    this._disableJoinBtn = false;
                     if (result === false) { // was not a join redirect or was already a member
                         return;
                     }
@@ -74,6 +77,7 @@ export class GroupDetailsComponent implements OnInit {
                     this._addCurrentUserAsRegistered();
                 })
                 .catch(err => {
+                    this._disableJoinBtn = false;
                     this._alertsService.showError(err && err.message);
                 });;
         });
@@ -129,6 +133,11 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onJoin() {
+        if (this._disableJoinBtn) {
+            return;
+        }
+        
+        this._disableJoinBtn = true;
         this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
             .then((resp) => {
                 if (this.group.RequiresApproval) {
@@ -136,8 +145,10 @@ export class GroupDetailsComponent implements OnInit {
                 } else {
                     this._addCurrentUserAsRegistered();
                 }
+                this._disableJoinBtn = false;
             })
             .catch((err) => {
+                this._disableJoinBtn = false;
                 this._alertsService.showError(err && err.message);
             });
     }
