@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
@@ -14,6 +14,8 @@ export class GroupsComponent implements OnInit {
     publicGroups: Group[];
     userGroups: Group[];
     initialized: boolean = false;
+
+    @ViewChild("groupsTabView") groupsTabView: ElementRef;
 
     constructor(
         private _usersService: UsersService,
@@ -42,5 +44,9 @@ export class GroupsComponent implements OnInit {
 
     onAdd() {
         this._routerExtensions.navigateByUrl('/groups/add');
+    }
+
+    goToAllGroups() {
+        this.groupsTabView.nativeElement.selectedIndex = 1;
     }
 }
