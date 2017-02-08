@@ -97,7 +97,8 @@
 }
 
 .votes-count {
-  font-size: 13;
+  font-size: 12;
+  color: #9d9d9d;
 }
 
 .registered-label {
