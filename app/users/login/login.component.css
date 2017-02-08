@@ -7,9 +7,26 @@ TextField {
 
 .main-container {
   height: 100%;
+  vertical-align: center;
+  background-image: url("res://background");
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+}
+
+.form {
+  padding: 20 0;
+}
+
+.form StackLayout {
   margin-right: 55;
   margin-left: 55;
-  vertical-align: center;
+}
+
+.logo-wrp {
+  width: 260;
+  margin-right: 55;
+  margin-left: 55;
 }
 
 .logo {
@@ -33,4 +50,3 @@ TextField {
   border-width: 1;
   font-size: 14;
 }
-

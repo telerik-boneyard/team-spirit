@@ -26,7 +26,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
-        this._page.backgroundImage = 'res://background';
     }
 
     changeView(signupView: boolean) {
@@ -75,7 +74,7 @@ export class LoginComponent implements OnInit {
         if (!email || !utilities.isEmail(email)) {
             return this._alertsService.showError('Invalid email');
         }
-        
+
         this._alertsService.askConfirmation('This will reset your password')
             .then(() => this._usersService.resetUserPassword(email), err => err)
             .then(wasReset => {
