@@ -4,6 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as nsUtils from 'utils/utils';
 import { Page } from 'ui/page';
+import { action } from 'ui/dialogs';
 
 import { Event, User, EventRegistration } from '../../shared/models';
 import { utilities, constants, AppModalComponent } from '../../shared';
@@ -30,13 +31,13 @@ export class EventDetailsComponent implements OnInit {
     isPastEvent = false;
     registeredUsersExpanded = false;
     isAndroid: boolean = false;
-    iosPopupOpen: boolean = false;
 
     private _eventId: string = null;
     private _countByDate: any;
     private _currentUser: User;
     private _userRegForThisEvent: EventRegistration;
     private _dateChoicesMade: string[] = [];
+    private _actions: string[] = [];
 
     constructor(
         private _route: ActivatedRoute,
@@ -57,7 +58,7 @@ export class EventDetailsComponent implements OnInit {
         this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             this._eventId = p['id'];
-            this._eventsService.getById(this._eventId)
+            let event = this._eventsService.getById(this._eventId)
                 .then((event) => {
                     this.event = event;
                     this._page.actionBar.title = event.Name;
@@ -68,7 +69,7 @@ export class EventDetailsComponent implements OnInit {
                 })
                 .catch(this._onError.bind(this));
 
-            this._usersService.currentUser()
+            let currentUser = this._usersService.currentUser()
                 .then(currentUser => {
                     this._currentUser = currentUser;
                     return this._eventsService.getParticipants(this._eventId);
@@ -79,19 +80,14 @@ export class EventDetailsComponent implements OnInit {
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
                 .catch(this._onError.bind(this));
-            
-            this._usersService.currentUser()
+
+            let user = this._usersService.currentUser()
                 .then(user => this._regsService.getUserRegistrationForEvent(this._eventId, user.Id))
                 .then(userReg => this._userRegForThisEvent = userReg);
+
+            Promise.all([event, currentUser, user])
+                .then(() => this._setupActions());
         });
-    }
-
-    showIf(shouldShow: boolean) {
-        return utilities.showIf(shouldShow);
-    }
-
-    toggleIosPopup() {
-        this.iosPopupOpen = !this.iosPopupOpen;
     }
 
     onEdit() {
@@ -143,7 +139,7 @@ export class EventDetailsComponent implements OnInit {
 
     changeVote() {
         let updatedChoices: string[];
-        
+
         this._openDateSelectionModal(true)
             .then(dateChoices => {
                 if (!dateChoices) {
@@ -207,6 +203,10 @@ export class EventDetailsComponent implements OnInit {
         return this.event && this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
     }
 
+    canChangeVote() {
+        return this.event && this.alreadyRegistered && !this.event.EventDate;
+    }
+
     unregister() {
         this._alertsService.askConfirmation(`Unregister from ${this.event.Name}?`)
             .then(() => this._regsService.getUserRegistrationForEvent(this.event.Id, this._currentUser.Id))
@@ -214,13 +214,44 @@ export class EventDetailsComponent implements OnInit {
                 if (!userReg) {
                     return Promise.reject({ message: 'You are not registered for this event' })
                 }
-                
+
                 this._userRegForThisEvent = userReg;
                 return this._eventsService.unregisterFromEvent(this.event.Id, this._currentUser.Id);
             })
             .then(() => this._updateInfoOnUnregister())
             .then(() => this._alertsService.showSuccess(`Successfully unregistered from ${this.event.Name}`))
             .catch(err => err && this._alertsService.showError(err.message));
+    }
+
+    toggleActions() {
+        action({
+            message: 'What would you like to do?',
+            actions: this._actions,
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result === 'Change Date Vote') {
+                this.changeVote();
+            } else if (result === 'Unregister') {
+                this.unregister();
+            } else if (result === 'Delete Event') {
+                this.deleteEvent();
+            }
+        });
+    }
+
+    private _setupActions() {
+        this._actions = [];
+        if (this.canChangeVote()) {
+            this._actions.push('Change Date Vote');
+        }
+
+        if (this.canUnregister()) {
+            this._actions.push('Unregister');
+        }
+
+        if (this.canEdit()) {
+            this._actions.push('Delete Event');
+        }
     }
 
     private _updateCountsByDate() {
@@ -271,6 +302,7 @@ export class EventDetailsComponent implements OnInit {
             this._userRegForThisEvent.Choices.push(dc);
         });
         this._updateCountsByDate();
+        this._setupActions();
     }
 
     private _updateInfoOnUnregister() {
@@ -280,6 +312,7 @@ export class EventDetailsComponent implements OnInit {
         //     this._countByDate[userChoice] = Math.max(0, this._countByDate[userChoice] - 1);
         // });
         this._updateCountsByDate();
+        this._setupActions();
         this._userRegForThisEvent = null;
     }
 }

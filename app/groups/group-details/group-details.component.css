@@ -57,8 +57,19 @@
 }
 
 .expandable .user-image,
-.expandable Label {
+.expandable Label,
+.members-wrapper .info-label,
+.members-wrapper .user-display,
+.members-wrapper .info-value,
+.members-wrapper .info-icon {
   vertical-align: middle;
+}
+
+.members-wrapper .info-icon {
+  width: 20;
+  height: 20;
+  font-size: 16;
+  color: #bfbfbf;
 }
 
 .expandable Label {

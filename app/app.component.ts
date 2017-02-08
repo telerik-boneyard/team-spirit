@@ -90,6 +90,6 @@ export class AppComponent implements OnInit {
     }
 
     logout() {
-        this._usersService.logout();
+        this._usersService.logout().catch(e => true);
     }
 }

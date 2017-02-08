@@ -8,16 +8,14 @@
                     <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
             </ActionItem>
-
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" ios.systemIcon="16" (tap)="deleteGroup()" ios.position="right" text="Delete Group" android.position="popup"></ActionItem>
-
-            <ActionItem *ngIf="!isAndroid" (tap)="toggleIosPopup()" ios.systemIcon="9" ios.position="right"></ActionItem>
+            <ActionItem (tap)="toggleActions()" *ngIf="canEdit()">
+                <StackLayout>
+                    <Label class="button if" text="&#x66;"></Label>
+                </StackLayout>
+            </ActionItem>
         </ActionBarExtension>
 
         <StackLayout *ngIf="group">
-            <StackLayout *ngIf="!isAndroid && iosPopupOpen">
-                <Label *ngIf="canEdit()" (tap)="deleteGroup()" text="Delete Group"></Label>
-            </StackLayout>
 
             <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
@@ -47,8 +45,11 @@
 
                 <StackLayout class="info-wrapper members-wrapper" (tap)="onMembersTap()">
                     <Label class="info-label" text="Members"></Label>
-                    <user-display *ngIf="members.length" [users]="members" [withImages]="5"></user-display>
-                    <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
+                    <StackLayout orientation="horizontal">
+                        <user-display *ngIf="members.length" [users]="members" [withImages]="5" class="user-display"></user-display>
+                        <Label *ngIf="members.length" class="info-icon if" text="&#x64;"></Label>
+                        <Label *ngIf="!members.length" text="Group has no members, yet." class="info-value"></Label>
+                    </StackLayout>
                 </StackLayout>
 
                 <StackLayout class="info-wrapper no-separator">

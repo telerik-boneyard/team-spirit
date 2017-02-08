@@ -52,7 +52,9 @@
 
 .vote,
 .info-label,
-.votes-count {
+.votes-count,
+.user-display,
+.registered-users-wrapper .info-icon {
   vertical-align: middle;
 }
 
@@ -63,6 +65,13 @@
   font-size: 26;
   color: #F4550F;
   text-align: center;
+}
+
+.registered-users-wrapper .info-icon {
+  width: 20;
+  height: 20;
+  font-size: 16;
+  color: #bfbfbf;
 }
 
 .tbd {
@@ -106,5 +115,6 @@
 }
 
 .going-label {
+  color: #000;
   margin-left: 5;
 }
