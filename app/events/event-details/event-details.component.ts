@@ -239,6 +239,10 @@ export class EventDetailsComponent implements OnInit {
         });
     }
 
+    showIf(shouldShow: boolean) {
+        return utilities.showIf(shouldShow);
+    }
+
     private _setupActions() {
         this._actions = [];
         if (this.canChangeVote()) {

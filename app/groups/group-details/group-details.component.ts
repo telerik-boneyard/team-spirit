@@ -197,6 +197,10 @@ export class GroupDetailsComponent implements OnInit {
         });
     }
 
+    showIf(shouldShow: boolean) {
+        return utilities.showIf(shouldShow);
+    }
+
     private _addCurrentUserAsRegistered() {
         this.hasJoined = true;
         let clone = this.members.slice(0);
