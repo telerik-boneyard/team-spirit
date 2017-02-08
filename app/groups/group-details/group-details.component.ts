@@ -4,7 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
-import { Group, User } from '../../shared/models';
+import { Group, User, GroupJoinRequest } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
@@ -18,6 +18,7 @@ export class GroupDetailsComponent implements OnInit {
     members: User[] = [];
     isAndroid: boolean = false;
     iosPopupOpen: boolean = false;
+    userApplication: GroupJoinRequest = null;
     private _currentUser: User;
     private _disableJoinBtn: boolean = false;
 
@@ -51,13 +52,15 @@ export class GroupDetailsComponent implements OnInit {
             Promise.all<any>([userPrm, groupPrm])
                 .then(() => this._groupsService.getGroupMembers(this.group.Id))
                 .then(members => {
-                    this.hasJoined = members.some(m => m.Id === this._currentUser.Id);
                     this.members = members;
                 })
-                .then(() => {
+                .then(() => this._groupsService.getApplication(this.group.Id, this._currentUser.Id))
+                .then((application) => {
+                    this.userApplication = application;
+                    this.hasJoined = this.members.some(m => m.Id === this._currentUser.Id);
                     let promise = Promise.resolve(false);
 
-                    if (!this.hasJoined && p['joinRedirect']) { // join if its a join redirect
+                    if (!this.userApplication && !this.hasJoined && p['joinRedirect']) { // join if its a join redirect
                         this._disableJoinBtn = true;
                         promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
                     }
@@ -142,6 +145,7 @@ export class GroupDetailsComponent implements OnInit {
             .then((resp) => {
                 if (this.group.RequiresApproval) {
                     this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
+                    this.userApplication = { Approved: false } as any;
                 } else {
                     this._addCurrentUserAsRegistered();
                 }
@@ -172,6 +176,20 @@ export class GroupDetailsComponent implements OnInit {
 
     onBack() {
         this._routerExtensions.navigateByUrl(`/groups`);
+    }
+
+    getApplicationStatusText() {
+        let text = '';
+        if (this.userApplication.Resolved) {
+            text = `Your request to join ${this.group.Name} has been denied`;
+        } else {
+            text = `Your request to join ${this.group.Name} has not been resolved yet`;
+        }
+        return text;
+    }
+
+    showJoinBtn() {
+        return this.hasJoined === false && this.userApplication == null;
     }
 
     private _addCurrentUserAsRegistered() {

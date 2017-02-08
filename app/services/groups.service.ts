@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Data';
 
 import { EverliveProvider } from './';
-import { Group, GroupMembership, User } from '../shared/models';
+import { Group, GroupMembership, User, GroupJoinRequest } from '../shared/models';
 import { utilities } from '../shared';
 
 @Injectable()
 export class GroupsService {
     private _membershipsData: Data<GroupMembership>;
     private _groupsData: Data<Group>;
+    private _groupJoinRequests: Data<GroupJoinRequest>;
     private readonly _imageExpandExp = {
         Image: {
             TargetTypeName: 'Files',
@@ -36,6 +37,7 @@ export class GroupsService {
     ) {
         this._membershipsData = this._elProvider.getData<GroupMembership>('GroupMembers');
         this._groupsData = this._elProvider.getData<Group>('Groups');
+        this._groupJoinRequests = this._elProvider.getData<GroupJoinRequest>('GroupJoinRequests');
     }
 
     create(group: Group) {
@@ -137,9 +139,7 @@ export class GroupsService {
         }
 
         return this._membershipsData.get({ UserId: userId, GroupId: groupId })
-            .then(resp => {
-                return resp.count > 0;
-            });
+            .then(resp => resp.count > 0);
     }
 
     update(group: Group) {
@@ -149,6 +149,14 @@ export class GroupsService {
 
     delete(id: string) {
         return this._groupsData.destroySingle(id).then(r => r.result);
+    }
+
+    getApplication(groupId: string, userId: string) {
+        let query = this._elProvider.getNewQuery();
+        query.where({ GroupId: groupId, ApplicantId: userId });
+        query.expand({ ApplicantId: { ReturnAs: 'Applicant' } });
+        return this._groupJoinRequests.get(query)
+            .then(resp => resp.result[0]);
     }
 
     validateGroupEntry(group: Group) {

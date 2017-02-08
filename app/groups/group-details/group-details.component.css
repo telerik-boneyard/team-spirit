@@ -65,3 +65,7 @@
   font-size: 12;
   font-weight: bold;
 }
+
+.application-sent-msg {
+  color: grey;
+}
