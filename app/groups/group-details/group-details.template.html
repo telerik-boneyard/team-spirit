@@ -20,7 +20,7 @@
             <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
             <Label class="btn btn-primary join-group" *ngIf="showJoinBtn()" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
-            <Label class="application-sent-msg" *ngIf="!!userApplication" [text]="getApplicationStatusText()" textWrap="true"></Label>
+            <Label class="application-sent-msg" *ngIf="!hasJoined && !!userApplication" [text]="getApplicationStatusText()" textWrap="true"></Label>
 
             <GridLayout *ngIf="hasJoined === true" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" [attr.columns]="(canEdit() && group.RequiresApproval) ? '*, *, *' : '*, *'">
                 <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="0">

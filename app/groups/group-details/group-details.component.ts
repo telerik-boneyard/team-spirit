@@ -182,7 +182,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     showJoinBtn() {
-        return this.hasJoined === false && this.userApplication == null;
+        return this.hasJoined === false && !this.userApplication;
     }
 
     toggleActions() {
