@@ -165,7 +165,7 @@ export class EventsService {
 
         for (let fieldName of utilities.eventMandatoryFields) {
             if (!utilities.isNonemptyString(event[fieldName])) {
-                errorMsg = `The field ${fieldName} is invalid`;
+                errorMsg = `The field ${fieldName} is required`;
                 break;
             }
         }
