@@ -8,7 +8,10 @@
                     <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
             </ActionItem>
-            <ActionItem (tap)="toggleActions()" *ngIf="canEdit()">
+
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" (tap)="deleteGroup()" text="Delete Group" android.position="popup"></ActionItem>
+
+            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && canEdit()">
                 <StackLayout>
                     <Label class="button if" text="&#x66;"></Label>
                 </StackLayout>
