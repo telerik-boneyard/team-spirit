@@ -95,7 +95,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     canEdit() {
-        return this._currentUser && this.event && this.event.Owner === this._currentUser.Id;
+        return this._currentUser && this.event && !this.isPastEvent && this.event.Owner === this._currentUser.Id;
     }
 
     deleteEvent() {

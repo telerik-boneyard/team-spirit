@@ -8,6 +8,11 @@ export const dateFormat = 'MMM dd, yyyy, hh:mm a';
 
 export const eventMandatoryFields = [ 'OrganizerId', 'LocationName', 'Name', 'GroupId' ];
 
+export function urlHasProtocol (str: string) {
+    let regExp = new RegExp('^[a-z]+://.+', 'i');
+    return regExp.test(str);
+}
+
 export function isEmail (str: string) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(str);
