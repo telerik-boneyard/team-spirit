@@ -68,9 +68,16 @@
   background-color: rgba(0, 0, 0, .35);
 }
 
+.event-organiser >>> .user-name,
+.user-name,
+.group {
+  color: #9d9d9d;
+}
+
 .event-list-separator {
   border-width: 0;
   border-bottom-width: 1;
   border-color: #c8c7cc;
   height: 1;
 }
+
