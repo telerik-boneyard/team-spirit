@@ -3,7 +3,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
 import { EventsService, UsersService, GroupsService, AlertService } from '../../services';
-import { Event } from '../../shared/models';
+import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
@@ -14,6 +14,7 @@ import { utilities } from '../../shared';
 export class EventsComponent implements OnInit {
     upcomingEvents: Event[];
     pastEvents: Event[];
+    userGroups: Group[] = [];
     initialized: boolean = false;
     dateFormat: string = utilities.dateFormat;
     canAdd: boolean = false;
@@ -49,6 +50,7 @@ export class EventsComponent implements OnInit {
                 if (!userGroups.length) {
                     return Promise.resolve([]);
                 }
+                this.userGroups = userGroups;
                 let userGroupIds = userGroups.map(g => g.Id);
                 let prm1 = this._eventsService.getPast(userGroupIds);
                 let prm2 = this._eventsService.getUpcoming(userGroupIds);
@@ -61,6 +63,10 @@ export class EventsComponent implements OnInit {
                 this.initialized = true;
             })
             .catch(err => this._alertsService.showError(err.message));
+    }
+
+    canAddEvent() {
+        return this.initialized && this.canAdd && this.userGroups.length;
     }
 
     showDetails(event: Event) {

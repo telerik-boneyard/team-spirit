@@ -1,6 +1,6 @@
 <ScrollView class="cntnr">
     <ActionBarExtension>
-        <ActionItem (tap)="onAdd()" *ngIf="canAdd" ios.position="right">
+        <ActionItem (tap)="onAdd()" *ngIf="canAddEvent()" ios.position="right">
             <StackLayout>
                 <Label class="button if" text="&#x61;"></Label>
             </StackLayout>
