@@ -8,6 +8,18 @@ export const dateFormat = 'MMM dd, yyyy, hh:mm a';
 
 export const eventMandatoryFields = [ 'OrganizerId', 'LocationName', 'Name', 'GroupId' ];
 
+export function compareStringsForSort (str1: string, str2: string) {
+    let result: number;
+    if (str1 < str2) {
+        result = -1;
+    } else if (str1 > str2) {
+        result = 1;
+    } else {
+        result = 0;
+    }
+    return result;
+};
+
 export function urlHasProtocol (str: string) {
     let regExp = new RegExp('^[a-z]+://.+', 'i');
     return regExp.test(str);

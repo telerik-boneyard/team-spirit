@@ -42,7 +42,9 @@ export class GroupMembersComponent implements OnInit {
                     this._page.actionBar.title = 'Members of ' + this.group.Name;
                 });
             let membersPrm = this._groupsService.getGroupMembers(this._groupId)
-                .then(members => this.members = members);
+                .then(members => this.members = members.sort((m1, m2) => {
+                    return utilities.compareStringsForSort(m1.DisplayName, m2.DisplayName);
+                }));
 
             Promise.all<any>([this._usersService.currentUser(), groupPrm, membersPrm])
                 .then((result) => {
