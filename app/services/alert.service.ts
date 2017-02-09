@@ -3,6 +3,8 @@ import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/mod
 
 import * as dialogs from 'ui/dialogs';
 
+import { AppModalComponent } from '../shared';
+
 @Injectable()
 export class AlertService {
 
@@ -27,14 +29,14 @@ export class AlertService {
             .then(conf => conf ? Promise.resolve() : Promise.reject(null));
     }
 
-    showModal(ctx: any, ref: ViewContainerRef, componentClass: Type<any>) {
+    showModal(ctx: any, ref: ViewContainerRef, componentClass?: Type<any>) {
         let opts: ModalDialogOptions = {
             context: ctx,
             fullscreen: true,
             viewContainerRef: ref
         };
 
-        return this._modalService.showModal(componentClass, opts)
+        return this._modalService.showModal(componentClass || AppModalComponent, opts)
             .then(result => (result !== undefined) ? result : Promise.reject(null));
     }
 

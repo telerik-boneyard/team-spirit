@@ -12,31 +12,45 @@ export class AppModalComponent {
     @Input() buttons: { ok?: string, cancel?: string };
     @Input() title: string;
     @Input() text: string;
+    @Input() fullscreen: boolean = true;
+
+    private _
 
     constructor(private _params?: ModalDialogParams) {
         if (!this._params) {
             return;
         }
-
-        if (this._params.context.buttons) {
-            this.buttons = this._params.context.buttons;
-        }
-
-        if (this._params.context.closeTimeout) {
-            setTimeout(() => {
-                this._params.closeCallback(true);
-            }, this._params.context.closeTimeout);
-        }
-
-        this.title = this._params.context.title;
-        this.text = this._params.context.text;
+        this._applyContextOptions(this._params.context);
     }
 
     onOk() {
-        this.okCallback.emit();
+        if (this.okCallback.observers.length > 0) {
+            this.okCallback.emit();
+        } else {
+            this._params.closeCallback();
+        }
     }
 
     onCancel() {
-        this.cancelCallback.emit();
+        if (this.cancelCallback.observers.length > 0) {
+            this.cancelCallback.emit();
+        } else {
+            this._params.closeCallback();
+        }
+    }
+
+    private _applyContextOptions(ctx: any) {
+        let validProps = ['title', 'text', 'buttons', 'fullscreen'];
+        for (let prop of validProps) {
+            if (prop in ctx && prop) {
+                this[prop] = ctx[prop];
+            }
+        }
+
+        if (ctx.closeTimeout) {
+            setTimeout(() => {
+                this._params.closeCallback(true);
+            }, ctx.closeTimeout);
+        }
     }
 }

@@ -6,7 +6,7 @@ import { NgModule, enableProdMode } from "@angular/core";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
-import { UserDetailsComponent, LoginComponent, EditUserComponent } from './users';
+import { UserDetailsComponent, LoginComponent, EditUserComponent, PasswordResetModalComponent } from './users';
 import { SettingsComponent } from './settings';
 
 import {
@@ -95,14 +95,16 @@ const routes = [
         UsersListComponent,
         GroupMembersComponent,
         EventParticipantsComponent,
-        SettingsComponent
+        SettingsComponent,
+        PasswordResetModalComponent
     ],
     entryComponents: [
         EventRegistrationModalComponent,
-        ListPickerModalComponent,
+        PasswordResetModalComponent,
         DateTimePickerModalComponent,
         EventCreationModalComponent,
         GroupCreationModalComponent,
+        ListPickerModalComponent,
         AppModalComponent
     ],
     bootstrap: [AppComponent],

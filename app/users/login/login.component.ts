@@ -1,9 +1,15 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, ViewContainerRef } from '@angular/core'
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
-import { UsersService, AlertService, EverliveProvider, PushNotificationsService } from '../../services';
 import { utilities } from '../../shared';
+import { PasswordResetModalComponent } from '../';
+import {
+    UsersService,
+    AlertService,
+    EverliveProvider,
+    PushNotificationsService
+} from '../../services';
 
 @Component({
     selector: 'login',
@@ -19,6 +25,7 @@ export class LoginComponent implements OnInit {
         private _alertsService: AlertService,
         private _routerExtensions: RouterExtensions,
         private _push: PushNotificationsService,
+        private _vcRef: ViewContainerRef,
         private _page: Page
     ) {
         this.user = {} as any;
@@ -69,19 +76,18 @@ export class LoginComponent implements OnInit {
     }
 
     resetPassword() {
-        let email = this.user.Username;
-        if (!email || !utilities.isEmail(email)) {
-            return this._alertsService.showError('Invalid email');
-        }
-
-        this._alertsService.askConfirmation('This will reset your password')
-            .then(() => this._usersService.resetUserPassword(email), err => err)
-            .then(wasReset => {
-                if (wasReset) {
-                    this._alertsService.showSuccess('Password reset email was sent');
-                }
+        this._alertsService.showModal({}, this._vcRef, PasswordResetModalComponent)
+            .then((email: string) => this._usersService.resetUserPassword(email))
+            .then(() => {
+                let ctx = {
+                    title: 'Password request sent',
+                    text: 'Check your email for the link to reset your password.',
+                    buttons: { ok: 'OK, thanks!' },
+                    fullscreen: false
+                };
+                return this._alertsService.showModal(ctx, this._vcRef);
             })
-            .catch(this._getErrHandler());
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     private _getErrHandler() {
