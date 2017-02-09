@@ -7,7 +7,7 @@
             </WrapLayout>
             <GridLayout columns="auto, *" class="event-date-wrp">
                 <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date" textWrap="true"></Label>
-                <Label [text]="getRemainingTime(event)" col="1" class="event-remaining-time"></Label>
+                <Label [text]="getRemainingTime(event)" class="event-remaining-time" [attr.col]="getEventDate(event) ? 1 : 0"></Label>
             </GridLayout>
 
             <photo-picker [evName]="event.Name" [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
