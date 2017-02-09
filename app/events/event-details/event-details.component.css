@@ -42,7 +42,9 @@
 
 /* this is angular2 syntax :| */
 .registered-users-wrapper >>> Image,
-.registered-users-wrapper >>> .no-image {
+.organizer >>> Image,
+.registered-users-wrapper >>> .no-image,
+.organizer >>> .no-image {
   width: 30;
   height: 30;
   margin-right: 5;
