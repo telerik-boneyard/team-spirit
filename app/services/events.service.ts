@@ -172,8 +172,6 @@ export class EventsService {
 
         if (!event.EventDate && (!event.EventDateChoices || event.EventDateChoices.length === 0)) {
             errorMsg = 'Must specify at least one event date option.';
-        } else if (utilities.isNonemptyString(event.LocationURL) && !utilities.urlHasProtocol(event.LocationURL)) {
-            errorMsg = 'The Location URL requires a protocol.';
         }
 
         return errorMsg;

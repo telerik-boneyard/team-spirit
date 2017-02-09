@@ -168,7 +168,12 @@ export class EventDetailsComponent implements OnInit {
     }
 
     showLocation() {
-        nsUtils.openUrl(this.event.LocationURL);
+        let url = this.event.LocationURL;
+        if (!utilities.urlHasProtocol(url)) {
+            url = 'http://' + url;
+        }
+        console.log('opening url: ' + url);
+        nsUtils.openUrl(url);
     }
 
     toggleExpandedUsers() {
@@ -184,7 +189,12 @@ export class EventDetailsComponent implements OnInit {
     }
 
     getVoteText(date: string) {
-        return ` - ${this._countByDate[date] || 0} votes`
+        let voteCount = this._countByDate[date] || 0;
+        let text = ` - ${voteCount} vote`;
+        if (voteCount !== 1) {
+            text += 's';
+        }
+        return text;
     }
 
     userVotedForDate(date: Date) {
