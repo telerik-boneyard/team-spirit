@@ -56,12 +56,11 @@
   font-size: 32;
 }
 
-.expandable .user-image,
-.expandable Label,
 .members-wrapper .info-label,
 .members-wrapper .user-display,
 .members-wrapper .info-value,
-.members-wrapper .info-icon {
+.members-wrapper .info-icon,
+.members-wrapper .user-display-wrp {
   vertical-align: middle;
 }
 
@@ -70,11 +69,6 @@
   height: 20;
   font-size: 16;
   color: #bfbfbf;
-}
-
-.expandable Label {
-  font-size: 12;
-  font-weight: bold;
 }
 
 .application-sent-msg {
