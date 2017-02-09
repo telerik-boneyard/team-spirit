@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
@@ -14,19 +15,31 @@ export class GroupsComponent implements OnInit {
     publicGroups: Group[];
     userGroups: Group[];
     initialized: boolean = false;
+    selectedIndex: number = 0;
 
     @ViewChild("groupsTabView") groupsTabView: ElementRef;
 
     constructor(
+        private _page: Page,
+        private _route: ActivatedRoute,
         private _usersService: UsersService,
         private _groupsService: GroupsService,
         private _routerExtensions: RouterExtensions,
-        private _alertService: AlertService,
-        private _page: Page
+        private _alertService: AlertService
     ) {}
 
     ngOnInit() {
         this._page.actionBar.title = 'Groups';
+        this._route.params.subscribe(p => {
+            if ('selectedTabIndex' in p) {
+                let index = Number(p['selectedTabIndex']);
+                // ngIf on the tab view makes it impossible to toggle it with goToTab()
+                // but setting this.selectedIndex doesnt switch tabs after this initial time
+                // so we use a mix of both...
+                this.selectedIndex = index;
+            }
+        });
+
         this._usersService.currentUser()
             .then(u => {
                 let unjoinedGroupsPromise = this._groupsService.getUnjoinedGroups(u.Id)
@@ -46,7 +59,7 @@ export class GroupsComponent implements OnInit {
         this._routerExtensions.navigateByUrl('/groups/add');
     }
 
-    goToAllGroups() {
-        this.groupsTabView.nativeElement.selectedIndex = 1;
+    goToTab(tabIndex: number) {
+        this.groupsTabView.nativeElement.selectedIndex = tabIndex;
     }
 }

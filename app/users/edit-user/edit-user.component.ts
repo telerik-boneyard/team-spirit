@@ -54,7 +54,7 @@ export class EditUserComponent implements OnInit {
             })
             .then(uploadResult => {
                 if (uploadResult) {
-                    this.user.Image = uploadResult.Id
+                    this.user.Image = uploadResult.Id;
                 }
                 return this._usersService.updateUser(this.user);
             })
@@ -69,7 +69,6 @@ export class EditUserComponent implements OnInit {
     }
 
     onCancel() {
-        this._alertsService.askConfirmation('All changes will be lost')
-            .then(() => this._routerExtensions.back(), err => true);
+        this._routerExtensions.back();
     }
 }
