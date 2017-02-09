@@ -72,7 +72,14 @@ export class LoginComponent implements OnInit {
                 this._alertsService.showSuccess('Welcome to TeamUP!');
                 return this._usersService.login(this.user.Username, this.user.Password);
             })
-            .catch((e) => e && this._alertsService.showError(e.message));
+            .catch((err) => {
+                if (err) {
+                    if (err.code === 201) {
+                        err.message = 'A user with the same email address already exists.';
+                    }
+                    this._alertsService.showError(err.message);
+                }
+            });
     }
 
     resetPassword() {
@@ -88,11 +95,5 @@ export class LoginComponent implements OnInit {
                 return this._alertsService.showModal(ctx, this._vcRef);
             })
             .catch(err => err && this._alertsService.showError(err.message));
-    }
-
-    private _getErrHandler() {
-        return (err) => {
-            this._alertsService.showError(err && err.message);
-        }
     }
 }
