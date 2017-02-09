@@ -57,9 +57,12 @@ export class GroupListComponent implements OnInit {
     }
 
     getSubtext(group: Group) {
-        let info = this.groupInfoById[group.Id];
-        let postfix = this.areUserGroups ? ' upcoming events' : ' users';
-        return (info || 'No') + postfix;
+        let count: number = this.groupInfoById[group.Id];
+        let postfix = this.areUserGroups ? ' upcoming event' : ' user';
+        if (count !== 1) {
+            postfix += 's';
+        }
+        return (count || 'No') + postfix;
     }
 
     private _getUserCountByGroup() {
