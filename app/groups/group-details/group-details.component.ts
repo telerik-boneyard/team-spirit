@@ -49,36 +49,18 @@ export class GroupDetailsComponent implements OnInit {
                     this.group = group;
                     this._page.actionBar.title = this.group.Name;
                 });
-            // TODO: refactor :(
+
             Promise.all<any>([userPrm, groupPrm])
                 .then(() => this._groupsService.getGroupMembers(this.group.Id))
-                .then(members => {
-                    this.members = members;
-                })
+                .then(members => this.members = members)
                 .then(() => this._groupsService.getApplication(this.group.Id, this._currentUser.Id))
                 .then((application) => {
                     this.userApplication = application;
                     this.hasJoined = this.members.some(m => m.Id === this._currentUser.Id);
-                    let promise = Promise.resolve(false);
 
-                    if (!this.userApplication && !this.hasJoined && p['joinRedirect']) { // join if its a join redirect
-                        this._disableJoinBtn = true;
-                        promise = this._groupsService.joinGroup(this.group.Id, this._currentUser.Id);
+                    if (!this.userApplication && !this.hasJoined && p['joinRedirect']) {
+                        this.onJoin(); // this handles its errors
                     }
-
-                    return promise;
-                })
-                .then((result) => {
-                    this._disableJoinBtn = false;
-                    if (result === false) { // was not a join redirect or was already a member
-                        return;
-                    }
-
-                    if (this.group.RequiresApproval && p['joinRedirect']) {
-                        this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
-                    }
-
-                    this._addCurrentUserAsRegistered();
                 })
                 .catch(err => {
                     this._disableJoinBtn = false;
@@ -128,26 +110,16 @@ export class GroupDetailsComponent implements OnInit {
         this._alertsService.showError('Not implemented yet. Please follow the development :)');
     }
 
-    onJoin() {
+    onJoin(): Promise<any> {
         if (this._disableJoinBtn) {
-            return;
+            return Promise.resolve(false);
         }
 
         this._disableJoinBtn = true;
-        this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
-            .then((resp) => {
-                if (this.group.RequiresApproval) {
-                    this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
-                    this.userApplication = { Approved: false } as any;
-                } else {
-                    this._addCurrentUserAsRegistered();
-                }
-                this._disableJoinBtn = false;
-            })
-            .catch((err) => {
-                this._disableJoinBtn = false;
-                this._alertsService.showError(err && err.message);
-            });
+        this._joinGroup().catch((err) => {
+            this._disableJoinBtn = false;
+            this._alertsService.showError(err && err.message);
+        });
     }
 
     onLeave() {
@@ -172,11 +144,11 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     getApplicationStatusText() {
-        let text = '';
-        if (this.userApplication.Resolved) {
-            text = `Your request to join ${this.group.Name} has been denied`;
+        let text = `Your request to join ${this.group.Name} has `;
+        if (this.userApplication && this.userApplication.Resolved) {
+            text += 'been denied';
         } else {
-            text = `Your request to join ${this.group.Name} has not been resolved yet`;
+            text += 'not been resolved yet';
         }
         return text;
     }
@@ -206,5 +178,19 @@ export class GroupDetailsComponent implements OnInit {
         let clone = this.members.slice(0);
         clone.push(this._currentUser);
         this.members = clone;
+    }
+
+    private _joinGroup() {
+        return this._groupsService.joinGroup(this.group.Id, this._currentUser.Id)
+            .then((resp) => {
+                if (this.group.RequiresApproval) {
+                    this._alertsService.showSuccess(`Request to join "${this.group.Name}" sent`);
+                    this.userApplication = { Approved: false } as any;
+                } else {
+                    this._addCurrentUserAsRegistered();
+                }
+                this._disableJoinBtn = false;
+                return resp;
+            });
     }
 }

@@ -42,6 +42,7 @@ export class GroupsService {
 
     create(group: Group) {
         group = this._sanitizeGroup(group);
+        group.IsPublic = true; // TODO: remove once the concept is implemented
         return this._groupsData.create(group).then(res => res.result);
     }
 
@@ -144,6 +145,7 @@ export class GroupsService {
 
     update(group: Group) {
         group = this._sanitizeGroup(group);
+        group.IsPublic = true; // TODO: remove once this is an active concept
         return this._groupsData.updateSingle(group).then(r => r.result);
     }
 
