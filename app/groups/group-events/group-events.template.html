@@ -6,7 +6,14 @@
 
     <StackLayout *ngIf="events">
         <event-list *ngIf="events.length" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
-        <Label *ngIf="!events.length" text="Group hasn't organised any events yet" textWrap="true"></Label>
+        <StackLayout *ngIf="!events.length" class="no-items">
+            <Label class="if" text="&#x6a;"></Label>
+            <Label text="No events for group {{ group.Name }}" [textWrap]="true" class="title"></Label>
+            <Label text="Be first and organize a memorable event for you and your friends." [textWrap]="true"></Label>
+            <StackLayout class="actions">
+                <Label text="Organize Event" class="btn btn-primary" [nsRouterLink]="['/events/add']"></Label>
+            </StackLayout>
+        </StackLayout>
     </StackLayout>
 
     <ScrollView class="cntnr">
