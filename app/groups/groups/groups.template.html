@@ -7,7 +7,18 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <TabView #groupsTabView *ngIf="initialized && (userGroups.length || publicGroups.length)" [selectedIndex]="selectedIndex" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee" class="tab-view">
+    <StackLayout *ngIf="initialized && !userGroups.length && !publicGroups.length" class="no-items">
+        <Label class="if" text="&#x6e;"></Label>
+        <Label text="No groups yet" [textWrap]="true" class="title"></Label>
+        <StackLayout>
+            <Label text="Oops... It's empty in here. Let's get started!" [textWrap]="true"></Label>
+            <StackLayout class="actions">
+                <Label text="Create Group" class="btn btn-primary" (tap)="onAdd()"></Label>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+
+    <TabView #groupsTabView *ngIf="initialized && (userGroups.length || publicGroups.length)" [selectedIndex]="selectedIndex" class="tab-view">
         <ScrollView *tabItem="{ title: 'My Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': !userGroups.length }">
                 <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
@@ -17,17 +28,24 @@
                     <StackLayout>
                         <Label text="Join your friends and let the fun begin." [textWrap]="true"></Label>
                         <StackLayout class="actions">
-                            <Label text="Browse all groups" class="btn btn-primary" (tap)="goToTab(1)"></Label>
+                            <Label text="Browse all Groups" class="btn btn-primary" (tap)="goToTab(1)"></Label>
                         </StackLayout>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
         <ScrollView *tabItem="{ title: 'All Groups' }" class="tab-item">
-            <StackLayout class="tab-items-wrapper">
+            <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': !publicGroups.length }">
                 <group-list *ngIf="publicGroups.length" [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
                 <StackLayout *ngIf="!publicGroups.length" class="no-items">
-                    <Label text="No groups to show in this tab" [textWrap]="true"></Label>
+                    <Label class="if" text="&#x6e;"></Label>
+                    <Label text="No groups yet" [textWrap]="true" class="title"></Label>
+                    <StackLayout>
+                        <Label text="Oops... It's empty in here. Let's get started!" [textWrap]="true"></Label>
+                        <StackLayout class="actions">
+                            <Label text="Create Group" class="btn btn-primary" (tap)="onAdd()"></Label>
+                        </StackLayout>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
         </ScrollView>

@@ -7,18 +7,29 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="initialized && !upcomingEvents.length && !pastEvents.length" class="no-items">
+    <StackLayout *ngIf="initialized && !upcomingEvents.length && !pastEvents.length && !userGroups.length" class="no-items">
         <Label class="if" text="&#x6a;"></Label>
         <Label text="Ready for fun?" [textWrap]="true" class="title"></Label>
         <StackLayout *ngIf="canAdd">
             <Label text="Join a group of your interest and be ready for a great fun events." [textWrap]="true"></Label>
             <StackLayout class="actions">
-                <Label text="Go to groups" class="btn btn-primary" [nsRouterLink]="['/groups', { selectedTabIndex: 1 }]"></Label>
+                <Label text="Go to Groups" class="btn btn-primary" [nsRouterLink]="['/groups', { selectedTabIndex: 1 }]"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>
 
-    <TabView *ngIf="initialized && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <StackLayout *ngIf="initialized && !upcomingEvents.length && !pastEvents.length && userGroups.length" class="no-items">
+        <Label class="if" text="&#x6a;"></Label>
+        <Label text="No events yet" [textWrap]="true" class="title"></Label>
+        <StackLayout *ngIf="canAdd">
+            <Label text="Be first and organize a memorable event for you and your friends." [textWrap]="true"></Label>
+            <StackLayout class="actions">
+                <Label text="Organize Event" class="btn btn-primary" (tap)="onAdd()"></Label>
+            </StackLayout>
+        </StackLayout>
+    </StackLayout>
+
+    <TabView *ngIf="initialized && userGroups.length && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
 
@@ -29,7 +40,7 @@
                     <Label text="Theatre, sports, or dancing..." [textWrap]="true"></Label>
                     <Label text="Why don't you organize it yourself?" [textWrap]="true"></Label>
                     <StackLayout class="actions">
-                        <Label text="Organize event" class="btn btn-primary" (tap)="onAdd()"></Label>
+                        <Label text="Organize Event" class="btn btn-primary" (tap)="onAdd()"></Label>
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
