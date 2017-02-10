@@ -66,7 +66,7 @@ export class EventListComponent implements OnInit {
         if (days > 0) {
             return days + ' days left';
         } else if (days < 0) {
-            return Math.abs(days) + ' Days ago';
+            return Math.abs(days) + ' days ago';
         } else {
             return 'TODAY';
         }

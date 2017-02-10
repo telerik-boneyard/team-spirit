@@ -10,9 +10,11 @@ import { constants } from '../../shared';
 })
 export class EventCreationModalComponent {
     groupName: string;
+    openForRegistration: boolean = true;
 
     constructor(private _params: ModalDialogParams) {
         this.groupName = this._params.context.groupName;
+        this.openForRegistration = !!this._params.context.openForRegistration;
 
         setTimeout(() => {
             this._params.closeCallback(true);
@@ -20,6 +22,10 @@ export class EventCreationModalComponent {
     }
 
     getText() {
-        return `Your friends from ${this.groupName} will be notified for this event.`;
+        let msg = `Your friends from ${this.groupName} will be notified for this event`;
+        if (!this.openForRegistration) {
+            msg += ` when you open it for registration`;
+        }
+        return msg + '.';
     }
 }

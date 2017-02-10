@@ -67,7 +67,7 @@ export class AddEventComponent {
             })
             .then((data) => {
                 let group: Group = data[0];
-                let ctx: any = { groupName: group.Name };
+                let ctx: any = { groupName: group.Name, openForRegistration: this.newEvent.OpenForRegistration };
                 return this._alertService.showModal(ctx, this._vcRef, EventCreationModalComponent);
             })
             .then(() => {
