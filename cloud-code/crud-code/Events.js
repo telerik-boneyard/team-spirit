@@ -24,17 +24,19 @@ Everlive.Events.beforeDelete(function(request, context, done) {
 });
 
 Everlive.Events.afterDelete(function(request, response, context, done) {
-    if (!request.itemId) {
-        return done();
-    }
-    
     var deletedEventId = request.itemId;
-    if (!deletedEventId) {
+    var idsFilter = request.filterExpression && request.filterExpression._id && request.filterExpression._id.$in; // like from portal
+    var idsToDelete = [];
+    if (!deletedEventId && !idsFilter) {
         return done();
+    } else if (deletedEventId) {
+        idsToDelete = [deletedEventId];
+    } else {
+        idsToDelete = idsFilter;
     }
     
     var el = Everlive.Sdk.withMasterKey();
-    el.data('EventRegistrations').destroy({ EventId: deletedEventId })
+    el.data('EventRegistrations').destroy({ EventId: { $in: idsToDelete } })
     .then(function(resp) {
         done();
     })
@@ -67,7 +69,6 @@ Everlive.Events.beforeUpdate(function(request, context, done) {
 		done();
     }
 });
-
 
 Everlive.Events.afterUpdate(function(request, response, context, done) {
     if (response.result && request.itemId) {

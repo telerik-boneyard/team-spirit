@@ -1,4 +1,5 @@
 var rsvp = require('rsvp');
+var Promise = rsvp.Promise;
 
 Everlive.CloudFunction.onRequest(function(request, response, done) {
     getData(request.data)
@@ -119,9 +120,8 @@ function getDataForEventRelated (templateName, context) {
             var members = groupMembersRes.result;
             var userData = filterForNotification(members);
             var emailContext = {
-                Event: event.Name,
-                Group: group.Name,
-                EventDate: event.EventDate ? event.EventDate.toString() : '(TBD)'
+                Event: event,
+                GroupName: group.Name
             };
 
             return {
@@ -183,15 +183,60 @@ function getDataForUserAskedToJoinGroup (context) {
             user = userRes.result;
             var emailContext = {
                 UserName: user.DisplayName,
+                UserEmail: user.Email, // or Username - it is actually email
                 GroupName: group.Name
             };
             return {
                 groupName: group.Name,
                 userName: user.DisplayName,
+                userEmail: user.Email,
                 push: { userIds: [owner.Id] },
                 email: {
                     templateName: 'UserAskedToJoinGroup',
-                    recipients: [owner.Email], // or Username - it is actually email,
+                    recipients: [owner.Email], // or Username - it is actually email
+                    context: emailContext
+                }
+            };
+        });
+}
+
+function getDataForUserUnregisteredFromEvent (context) {
+    var event, unregisteredUser, organizer;
+    var promises = [
+        getEvent(context.eventId),
+        getUser(context.userId)
+    ];
+
+    return Promise.all(promises)
+        .then(function(result) {
+            event = result[0].result;
+            unregisteredUser = result[1].result;
+            if (!event || !unregisteredUser) {
+                return Promise.reject({ message: 'Could not find event or user' });
+            }
+            return getUser(event.OrganizerId);
+        })
+        .then(function(resp) {
+            organizer = resp.result;
+            if (!organizer) {
+                return Promise.reject({ message: 'Could not find organizer' });
+            }
+        })
+        .then(function() {
+            var userData = filterForNotification([organizer]);
+            var emailContext = {
+                User: unregisteredUser.DisplayName,
+                Event: event.Name
+            };
+
+            // TODO: extract this part, lots of refactoring in this file :/
+            return {
+                eventName: event.Name,
+                userName: unregisteredUser.DisplayName,
+                push: { userIds: userData.userIds },
+                email: {
+                    templateName: 'UserUnregisteredFromEvent',
+                    recipients: userData.recipients,
                     context: emailContext
                 }
             };
@@ -208,18 +253,37 @@ var getterByAlertType = {
     getDataForEventRegistrationClosed: getDataForEventRelated.bind(null, 'EventRegistrationClosed'),
     getDataForEventDatesUpdated: getDataForEventRelated.bind(null, 'EventDatesUpdated'),
     getDataForUserJoinedGroup: getDataForUserJoinedGroup,
-    getDataForUserAskedToJoinGroup: getDataForUserAskedToJoinGroup
+    getDataForUserAskedToJoinGroup: getDataForUserAskedToJoinGroup,
+    getDataForUserUnregisteredFromEvent: getDataForUserUnregisteredFromEvent
 };
 
 // === EMAIL ======================================================
 
 function sendEmail (data) {
-    Everlive.Email.sendEmailFromTemplate(data.templateName, data.recipients, data.context, done);
+    if (!data.recipients || !data.recipients.length) {
+        console.log('not sending email - no recipients');
+        return rsvp.Promise.resolve();
+    }
+    
+    return new rsvp.Promise(function(resolve, reject) {
+        Everlive.Email.sendEmailFromTemplate(data.templateName, data.recipients, data.context, function(err) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve();
+            }
+        });
+    });
 }
 
 // === PUSH ======================================================
 
 function sendPush (alertType, context) {
+    if (!context.push || !context.push.userIds.length) {
+        console.log('not sending push - no recipients');
+        return rsvp.Promise.resolve();
+    }
+    
     var el = Everlive.Sdk.withMasterKey();
     var notifObject = getNotificationObject(alertType, context);
     return el.push.send(notifObject);
@@ -253,6 +317,10 @@ function getNotificationObject (alertType, context) {
         case 'UserAskedToJoinGroup':
             title = 'New request to join ' + context.groupName;
             message = context.userName + ' asked to join ' + context.groupName;
+            break;
+        case 'UserUnregisteredFromEvent':
+            title = context.userName + ' decided not to come';
+            message = context.userName + ' is not coming to ' + context.eventName;
             break;
 
 
