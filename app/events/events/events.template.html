@@ -29,7 +29,7 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView *ngIf="initialized && userGroups.length && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <TabView *ngIf="initialized && userGroups.length && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
 
