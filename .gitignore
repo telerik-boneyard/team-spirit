@@ -1,5 +1,6 @@
-**/*.js
-**/*.js.map
+app/**/*.js
+app/**/*.js.map
 
 node_modules
 platforms
+hooks
