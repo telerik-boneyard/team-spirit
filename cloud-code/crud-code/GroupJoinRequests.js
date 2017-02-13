@@ -1,73 +1,28 @@
-// For best performance, only uncomment functions that you use
-
-/*
-Everlive.Events.beforeRead(function(request, context, done) {
-	//Enter your custom code here
-
-	//Call done() once you are finished
-	done();
-});
-*/
-
-/*
-Everlive.Events.afterRead(function(request, response, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.beforeCreate(function(request, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.afterCreate(function(request, response, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.beforeUpdate(function(request, context, done) {
-
-	done();
-});
-*/
-
-/*
 Everlive.Events.afterUpdate(function(request, response, context, done) {
+	var el = Everlive.Sdk.withMasterKey();
+	var reqsDb = el.data('GroupJoinRequests');
+	var membershipsDb = el.data('GroupMembers');
 
-	done();
+	reqsDb.getById(request.itemId).then(function(resp) {
+		var updatedRequests = [].concat(resp.result);
+		var updatePromises = updatedRequests.map(function(req) {
+            if (!req.Approved) {
+                return Promise.resolve();
+            }
+			return membershipsDb.create({ UserId: req.ApplicantId, GroupId: req.GroupId })
+				.then(function(resp) {
+					return membershipsDb.setOwner(req.ApplicantId, resp.result.Id);
+				});
+		});
+		return Promise.all(updatePromises);
+	})
+	.then(function() {
+		console.log('success');
+		done();
+	})
+	.catch(function() {
+		response.result = { message: 'Could create all group registrations' };
+		response.statusCode = 500;
+		done();
+	});
 });
-*/
-
-/*
-Everlive.Events.beforeDelete(function(request, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.afterDelete(function(request, response, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.beforeAggregate(function(request, context, done) {
-
-	done();
-});
-*/
-
-/*
-Everlive.Events.afterAggregate(function(request, response, context, done) {
-
-	done();
-});
-*/

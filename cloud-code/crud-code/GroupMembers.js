@@ -1,5 +1,7 @@
+var rsvp = require('rsvp');
+var Promise = rsvp.Promise;
+
 function makePostReq (data) {
-    var rsvp = require('rsvp');
     return new rsvp.Promise(function(resolve, reject) {
         var headers = {
             'Content-Type': 'application/json',
@@ -33,12 +35,14 @@ Everlive.Events.afterCreate(function(request, response, context, done) {
 
 Everlive.Events.afterDelete(function(request, response, context, done) {
     var userId = request.filterExpression && request.filterExpression.UserId; // user is leaving group. if group is deleted, filter would include groupid
+    var groupId = request.filterExpression && request.filterExpression.GroupId;
     
     if (userId) { // how leaveGroup works in the app
-        deleteRegistrationsForUser(userId)
+        deleteRegistrationsForUser(userId, groupId)
         	.then(done, onError(response, done));
     } else if (context.deletedUserId) { // deleting by id - probably through the portal
-        deleteRegistrationsForUser(context.deletedUserId).then(done, onError(response, done));
+        deleteRegistrationsForUser(context.deletedUserId, groupId)
+            .then(done, onError(response, done));
     } else {
     	done();
     }
@@ -50,7 +54,7 @@ Everlive.Events.beforeDelete(function(request, context, done) {
     var userId; // Id of user who is leaving group - only handling voluntary leaving now
     var groupId;
     var deleteFilter = request.filterExpression;
-    if ('UserId' in deleteFilter && 'GroupId' in deleteFilter) {
+    if (deleteFilter && 'UserId' in deleteFilter && 'GroupId' in deleteFilter) {
         userId = deleteFilter.UserId;
         groupId = deleteFilter.GroupId;
     }
@@ -65,7 +69,6 @@ Everlive.Events.beforeDelete(function(request, context, done) {
                 done();
             });
     } else if (userId && groupId) {
-        console.log('in');
     	groupsDb.getById(groupId).then(function(resp) {
         	if (resp.result && resp.result.Owner === userId) {
                 Everlive.Response.setErrorResult('An administrator cannot leave their group.');
@@ -83,10 +86,11 @@ Everlive.Events.beforeDelete(function(request, context, done) {
 
 
 
-function deleteRegistrationsForUser(userId) {
+function deleteRegistrationsForUser(userId, groupId) {
     var el = Everlive.Sdk.withMasterKey();
     var eventsDb = el.data('Events');
     var regsDb = el.data('EventRegistrations');
+    var requestsDb = el.data('GroupJoinRequests');
     var registrationFilter = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
 	var oneDay = 86400000;
     var dateFilter = [
@@ -106,7 +110,12 @@ function deleteRegistrationsForUser(userId) {
         .then(function(resp) {
             if (resp.result && resp.result.length > 0) {
                 var eventIds = resp.result.map(function(e) { return e.Id; });
-                return regsDb.destroy({ UserId: userId, EventId: { $in: eventIds } });
+                var regPrm = regsDb.destroy({ UserId: userId, EventId: { $in: eventIds } });
+                var reqsPrm = Promise.resolve();
+                if (groupId) {
+                    reqsPrm = requestsDb.destroy({ ApplicantId: userId, GroupId: groupId });
+                }
+                return Promise.all([regPrm, reqsPrm]);
             }
         });
 }

@@ -44,6 +44,12 @@ function getGroupMembers (groupId) {
     return groupMembersDB.withHeaders(headers).get({ GroupId: groupId });
 }
 
+function getJoinReq(applicantId, groupId) {
+    var el = Everlive.Sdk.withMasterKey();
+    var groupDB = el.data('GroupJoinRequests');
+    return groupDB.get({ ApplicantId: applicantId, GroupId: groupId });
+}
+
 function filterForNotification (users, skipUserId) {
     var recipients = [];
     var userIds = [];
@@ -181,10 +187,20 @@ function getDataForUserAskedToJoinGroup (context) {
         })
         .then(function(userRes) {
             user = userRes.result;
+            return getJoinReq(user.Id, group.Id);
+        })
+        .then(function(reqRes) {
+            var cloudFuncUrl = Everlive.Parameters.apiBaseUrlSecure + '/v1/' + Everlive.Parameters.apiKey
+                + '/Functions/resolveUserJoinRequest?reqId=' + reqRes.result[0].Id // there should be exactly one
+                // + 'applicantId=' + user.Id
+                // + '&groupId=' + group.Id
+                + '&approved=';
             var emailContext = {
                 UserName: user.DisplayName,
                 UserEmail: user.Email, // or Username - it is actually email
-                GroupName: group.Name
+                GroupName: group.Name,
+                ApproveLink: encodeURI(cloudFuncUrl + 'true'),
+                DenyLink: encodeURI(cloudFuncUrl + 'false')
             };
             return {
                 groupName: group.Name,

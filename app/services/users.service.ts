@@ -118,6 +118,7 @@ export class UsersService {
 
     private _sanitizeUser(user: any) {
         delete user.ImageUrl; // delete expanded field, if present
+        delete user._label;
         return user;
     }
 }

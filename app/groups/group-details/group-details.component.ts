@@ -127,6 +127,7 @@ export class GroupDetailsComponent implements OnInit {
             .then(() => {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
+                this.userApplication = null;
              })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);
@@ -146,7 +147,7 @@ export class GroupDetailsComponent implements OnInit {
     getApplicationStatusText() {
         let text = `Your request to join ${this.group.Name} has `;
         if (this.userApplication && this.userApplication.Resolved) {
-            text += 'been denied';
+            text += 'been denied'; // cause if it was approved, they wouldn't see this message
         } else {
             text += 'not been resolved yet';
         }

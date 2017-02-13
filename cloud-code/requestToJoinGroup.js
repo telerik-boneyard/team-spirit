@@ -1,4 +1,4 @@
-function makePostReq (data) {
+function sendNotification (data) {
     var rsvp = require('rsvp');
     return new rsvp.Promise(function(resolve, reject) {
         var headers = {
@@ -52,33 +52,29 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
                         if (getGroupResult.result) {
                             var group = getGroupResult.result;
                             if (group.RequiresApproval) {
-                                var joinRequest = {
-                                    ApplicantId: userId,
-                                    GroupId: groupId
-                                };
                                 var requestsDb = el.data('GroupJoinRequests');
                                 requestsDb.get({ GroupId: groupId, ApplicantId: userId })
                                     .then(function(requestsResult) {
                                         if (requestsResult.count !== 0) {
                                             var rsvp = require('rsvp');
-                                            return rsvp.Promise.reject({ message: 'User has already applied' });
+                                            return rsvp.Promise.reject({ message: 'You have already applied for ' + group.Name });
                                         }
-                                    })
-                                    .then(function() {
+                                        var joinRequest = {
+                                            ApplicantId: userId,
+                                            GroupId: groupId
+                                        };
                                         return requestsDb.create(joinRequest);
                                     })
                                     .then(function(createResp){
-                                        return requestsDb.setOwner(userId, createResp.result.Id);
-                                    })
-                                    .then(function(requestRes) {
-                                        var reqData = {
+                                        var notifData = {
                                             alertType: 'UserAskedToJoinGroup',
                                             groupId: groupId,
                                             userId: userId
                                         };
-                                        makePostReq(reqData);
-                                        done(); // dont wait for notification response
+                                        sendNotification(notifData); // dont wait for notification response
+                                        return requestsDb.setOwner(userId, createResp.result.Id);
                                     })
+                                    .then(done)
                                     .catch(onError(response, done));
                             } else {
                                 var newGroupMember = {
