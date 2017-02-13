@@ -112,27 +112,27 @@ function getDataForUserRegisteredForEvent (context) {
 }
 
 function getDataForEventRelated (templateName, context) {
-    var event, group;
-    return getEvent(context.eventId)
-        .then(function(eventRes) {
-            event = eventRes.result;
-            return getGroup(event.GroupId);
+    var event, group, members;
+    return Promise.all([getEvent(context.eventId), getGroup(context.groupId), getGroupMembers(context.groupId)])
+        .then(function(results) {
+            event = results[0].result;
+            group = results[1].result;
+            members = results[2].result;
+            return getUser(event.OrganizerId);
         })
-        .then(function(groupRes) {
-            group = groupRes.result;
-            return getGroupMembers(event.GroupId);
-        })
-        .then(function(groupMembersRes) {
-            var members = groupMembersRes.result;
+        .then(function(organizerRes) {
+            var organizer = organizerRes.result;
             var userData = filterForNotification(members);
             var emailContext = {
                 Event: event,
-                GroupName: group.Name
+                GroupName: group.Name,
+                Organizer: organizer.DisplayName
             };
 
             return {
                 eventName: event.Name,
                 groupName: group.Name,
+                organizerName: organizer.DisplayName,
                 push: { userIds: userData.userIds },
                 email: {
                     templateName: templateName,
@@ -295,7 +295,7 @@ function sendEmail (data) {
 // === PUSH ======================================================
 
 function sendPush (alertType, context) {
-    if (!context.push || !context.push.userIds.length) {
+    if (!context.push || !context.push.userIds || !context.push.userIds.length) {
         console.log('not sending push - no recipients');
         return rsvp.Promise.resolve();
     }
