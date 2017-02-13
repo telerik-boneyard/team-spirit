@@ -162,10 +162,15 @@ export class EventsService {
 
     validateEvent(event: Event): string {
         let errorMsg: string;
+        let msgsMap = {
+            'GroupId': 'Group',
+            'OrganizerId': 'Organizer',
+            'LocationName': 'Location Name'
+        };
 
         for (let fieldName of utilities.eventMandatoryFields) {
             if (!utilities.isNonemptyString(event[fieldName])) {
-                errorMsg = `The field ${fieldName} is required`;
+                errorMsg = `The field "${msgsMap[fieldName] || fieldName}" is required`;
                 break;
             }
         }
