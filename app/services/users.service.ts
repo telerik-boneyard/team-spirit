@@ -37,7 +37,9 @@ export class UsersService {
     }
 
     register(username: string, password: string, displayName: string) {
-        return this._users.register(username, password, { Email: username, DisplayName: displayName });
+        let attrs: any = { Email: username, DisplayName: displayName };
+        attrs.TimezoneOffset = (new Date()).getTimezoneOffset();
+        return this._users.register(username, password, attrs);
     }
 
     resetUserPassword(identifier: string) {

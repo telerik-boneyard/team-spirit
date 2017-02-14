@@ -111,8 +111,22 @@ function getDataForUserRegisteredForEvent (context) {
         });
 }
 
+function _offsetDate (dateIsoString, offset) {
+    var oneHour = 3600000;
+    var msInMinute = 60000;
+    var d = new Date(dateIsoString);
+    var offsetDateInMs = d.getTime() + (d.getTimezoneOffset() * msInMinute);
+    return new Date(offsetDateInMs + (oneHour * offset));
+}
+
+function _formatDate (dateIsoString, offset) {
+    var dateStr = _offsetDate(dateIsoString, offset).toString();
+    var ind = dateStr.indexOf(' GMT');
+    return dateStr.substring(0, ind);
+}
+
 function getDataForEventRelated (templateName, context) {
-    var event, group, members;
+    var event, group, members, organizer;
     return Promise.all([getEvent(context.eventId), getGroup(context.groupId), getGroupMembers(context.groupId)])
         .then(function(results) {
             event = results[0].result;
@@ -122,6 +136,15 @@ function getDataForEventRelated (templateName, context) {
         })
         .then(function(organizerRes) {
             var organizer = organizerRes.result;
+            var offset = organizer.TimezoneOffset;
+            if (event.EventDate) {
+                event.EventDate = _formatDate(event.EventDate, offset);
+            } else {
+                event.EventDateChoices = event.EventDateChoices.map(function(dateOption) {
+                    return _formatDate(dateOption, offset);
+                });
+            }
+
             var userData = filterForNotification(members);
             var emailContext = {
                 Event: event,
