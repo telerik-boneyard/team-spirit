@@ -116,7 +116,7 @@ function _offsetDate (dateIsoString, offset) {
     var msInMinute = 60000;
     var d = new Date(dateIsoString);
     var offsetDateInMs = d.getTime() + (d.getTimezoneOffset() * msInMinute);
-    return new Date(offsetDateInMs + (oneHour * offset));
+    return new Date(offsetDateInMs + (oneHour * (offset || 0)));
 }
 
 function _formatDate (dateIsoString, offset) {
@@ -136,6 +136,7 @@ function getDataForEventRelated (templateName, context) {
         })
         .then(function(organizerRes) {
             var organizer = organizerRes.result;
+            event.Organizer = organizer.DisplayName;
             var offset = organizer.TimezoneOffset;
             if (event.EventDate) {
                 event.EventDate = _formatDate(event.EventDate, offset);
@@ -148,8 +149,7 @@ function getDataForEventRelated (templateName, context) {
             var userData = filterForNotification(members);
             var emailContext = {
                 Event: event,
-                GroupName: group.Name,
-                Organizer: organizer.DisplayName
+                GroupName: group.Name
             };
 
             return {
