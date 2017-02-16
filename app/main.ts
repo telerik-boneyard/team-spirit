@@ -3,11 +3,13 @@ import { platformNativeScriptDynamic, NativeScriptModule } from "nativescript-an
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { NgModule, enableProdMode } from "@angular/core";
+import { Routes } from "@angular/router";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 
 import { AppComponent } from "./app.component";
 import { UserDetailsComponent, LoginComponent, EditUserComponent, PasswordResetModalComponent } from './users';
 import { SettingsComponent } from './settings';
+import { EverliveProvider, UsersService, AuthGuardService } from './services';
 
 import {
     AppModalComponent,
@@ -42,26 +44,32 @@ import {
     GroupMembersComponent
 } from './groups';
 
-const routes = [
-    { path: '', redirectTo: 'user/login', terminal: true, pathMatch: 'full' },
-    { path: 'settings', component: SettingsComponent },
+const routes: Routes = [
+    { path: '', redirectTo: 'events', pathMatch: 'full' },
+    { path: 'settings', canActivate: [ AuthGuardService ], component: SettingsComponent },
     
-    { path: 'user', component: UserDetailsComponent },
-    { path: 'user/edit', component: EditUserComponent },
     { path: 'user/login', component: LoginComponent },
+    { path: 'user/edit', canActivate: [ AuthGuardService ], component: EditUserComponent },
+    { path: 'user', canActivate: [ AuthGuardService ], component: UserDetailsComponent },
 
-    { path: 'events', component: EventsComponent },
-    { path: 'events/add', component: AddEventComponent },
-    { path: 'events/:id', component: EventDetailsComponent },
-    { path: 'events/:id/edit', component: EditEventComponent },
-    { path: 'events/:id/participants', component: EventParticipantsComponent },
+    { path: 'events', canActivate: [ AuthGuardService ], children: [
+            { path: '', component: EventsComponent },
+            { path: 'add', component: AddEventComponent },
+            { path: ':id', component: EventDetailsComponent },
+            { path: ':id/edit', component: EditEventComponent },
+            { path: ':id/participants', component: EventParticipantsComponent },
+        ]
+    },
 
-    { path: 'groups', component: GroupsComponent },
-    { path: 'groups/add', component: AddGroupComponent },
-    { path: 'groups/:id', component: GroupDetailsComponent },
-    { path: 'groups/:id/edit', component: EditGroupComponent },
-    { path: 'groups/:id/events', component: GroupEventsComponent },
-    { path: 'groups/:id/members', component: GroupMembersComponent }
+    { path: 'groups', canActivate: [ AuthGuardService ], children: [
+            { path: '', component: GroupsComponent },
+            { path: 'add', component: AddGroupComponent },
+            { path: ':id', component: GroupDetailsComponent },
+            { path: ':id/edit', component: EditGroupComponent },
+            { path: ':id/events', component: GroupEventsComponent },
+            { path: ':id/members', component: GroupMembersComponent }
+        ]
+    }
 ];
 
 @NgModule({
@@ -107,7 +115,8 @@ const routes = [
         ListPickerModalComponent,
         AppModalComponent
     ],
-    bootstrap: [AppComponent],
+    providers: [ EverliveProvider, UsersService, AuthGuardService ],
+    bootstrap: [ AppComponent ],
     imports: [
         NativeScriptFormsModule,
         NativeScriptModule,

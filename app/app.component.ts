@@ -19,8 +19,6 @@ import {
 } from './services';
 
 let services = [
-    EverliveProvider,
-    UsersService,
     EventsService,
     EventRegistrationsService,
     AlertService,
@@ -37,7 +35,6 @@ let services = [
     providers: services
 })
 export class AppComponent implements OnInit {
-    loggedIn: boolean = false;
     disableDrawer: boolean = false;
     isAndroid: boolean = false;
     
@@ -54,16 +51,6 @@ export class AppComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._usersService.isLoggedIn().subscribe(isLoggedIn => {
-            this.loggedIn = isLoggedIn;
-
-            if (this.loggedIn) {
-                this._routerExtensions.navigate(["/events"], { clearHistory: true });
-            } else {
-                this._routerExtensions.navigate(['user/login']);
-            }
-        });
-
         this._routerExtensions.router.events.subscribe((ev) => {
             if (ev instanceof NavigationEnd) {
                 this.disableDrawer = utilities.shouldDisableDrawer(ev.url);
@@ -90,6 +77,8 @@ export class AppComponent implements OnInit {
     }
 
     logout() {
-        this._usersService.logout().catch(e => true);
+        this._usersService.logout()
+            .then(e => true, e => true)
+            .then(() => this._routerExtensions.navigateByUrl('user/login'));
     }
 }

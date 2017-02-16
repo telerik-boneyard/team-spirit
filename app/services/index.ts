@@ -9,3 +9,4 @@ export * from './groups.service';
 export * from './image-picker.service';
 export * from './push-notifications.service';
 export * from './platform.service';
+export * from './auth-guard.service';
