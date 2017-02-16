@@ -15,7 +15,7 @@
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister())" (tap)="unregister()" text="Unregister" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" (tap)="deleteEvent()" text="Delete Event" android.position="popup"></ActionItem>
 
-            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && (canChangeVote() || canUnregister() || canEdit())">
+            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && (canChangeVote() || canUnregister() || canEdit())" ios.position="right">
                 <StackLayout>
                     <Label class="button if" text="&#x66;"></Label>
                 </StackLayout>

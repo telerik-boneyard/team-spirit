@@ -11,7 +11,7 @@
 
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" (tap)="deleteGroup()" text="Delete Group" android.position="popup"></ActionItem>
 
-            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && canEdit()">
+            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && canEdit()" ios.position="right">
                 <StackLayout>
                     <Label class="button if" text="&#x66;"></Label>
                 </StackLayout>
