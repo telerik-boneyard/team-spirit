@@ -5,66 +5,57 @@ import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angula
 import { NgModule } from "@angular/core";
 
 import { AppComponent } from "./app.component";
-
+import { SettingsComponent } from './settings';
 import { appRoutes } from './app.routing';
 
 import {
-    AppModalComponent,
-    DateTimePickerModalComponent,
-    ListPickerModalComponent,
-    PhotoPickerComponent,
-    UserDisplayComponent,
-    UsersListComponent
-} from './shared';
+    EverliveProvider,
+    UsersService,
+    AuthGuardService,
+    PlatformService,
+    AlertService,
+    EventRegistrationsService,
+    EventsService,
+    FilesService,
+    GroupsService,
+    ImagePickerService,
+    PushNotificationsService
+} from './services';
 
-
-
-
-// new stuff
 import { EventsModule } from './events';
 import { GroupsModule } from './groups';
-// import { UsersModule } from './users';
-
-
+import { UsersModule } from './users';
+import { SharedModule } from './shared';
 
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
         AppComponent,
-        LoginComponent,
-        UserDetailsComponent,
-        EditUserComponent,
-        AppModalComponent,
-        ListPickerModalComponent,
-        DateTimePickerModalComponent,
-        EventCreationModalComponent,
-        GroupCreationModalComponent,
-        GroupEventsComponent,
-        PhotoPickerComponent,
-        UserDisplayComponent,
-        UsersListComponent,
-        GroupMembersComponent,
-        EventParticipantsComponent,
-        SettingsComponent,
-        PasswordResetModalComponent
+        SettingsComponent
     ],
-    entryComponents: [
-        EventRegistrationModalComponent,
-        PasswordResetModalComponent,
-        DateTimePickerModalComponent,
-        EventCreationModalComponent,
-        GroupCreationModalComponent,
-        ListPickerModalComponent,
-        AppModalComponent
+    providers: [
+        EverliveProvider,
+        UsersService,
+        AuthGuardService,
+        PlatformService,
+        AlertService,
+        EventRegistrationsService,
+        EventsService,
+        FilesService,
+        GroupsService,
+        ImagePickerService,
+        PushNotificationsService
     ],
-    providers: [ EverliveProvider, UsersService, AuthGuardService ],
     bootstrap: [ AppComponent ],
     imports: [
         NativeScriptFormsModule,
         NativeScriptModule,
         NativeScriptRouterModule,
         NativeScriptRouterModule.forRoot(appRoutes),
-        EventsModule
+        EventsModule,
+        GroupsModule,
+        UsersModule,
+        SharedModule
     ]
 })
 export class AppModule {}

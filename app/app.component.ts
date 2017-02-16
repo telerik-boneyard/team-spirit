@@ -18,21 +18,9 @@ import {
     PlatformService
 } from './services';
 
-let services = [
-    EventsService,
-    EventRegistrationsService,
-    AlertService,
-    GroupsService,
-    ImagePickerService,
-    FilesService,
-    PushNotificationsService,
-    PlatformService
-];
-
 @Component({
     selector: 'my-app',
-    templateUrl: 'app.component.html',
-    providers: services
+    templateUrl: 'app.component.html'
 })
 export class AppComponent implements OnInit {
     disableDrawer: boolean = false;
@@ -41,8 +29,6 @@ export class AppComponent implements OnInit {
     @ViewChild('drawer') drawer: RadSideDrawerComponent;
 
     constructor(
-        private _alertsService: AlertService,
-        private _everlive: EverliveProvider,
         private _usersService: UsersService,
         private _routerExtensions: RouterExtensions,
         private _platform: PlatformService

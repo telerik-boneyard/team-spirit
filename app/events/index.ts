@@ -7,3 +7,5 @@ export * from './edit-event/edit-event.component';
 export * from './event-registration-modal/event-registration-modal.component';
 export * from './event-creation-modal/event-creation-modal.component';
 export * from './event-participants/event-participants.component';
+export * from './events.module';
+export * from './events.routing';

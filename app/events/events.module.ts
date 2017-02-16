@@ -4,6 +4,7 @@ import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 
 import { RouterModule } from "@angular/router";
 import { eventsRoutes } from './events.routing';
+import { SharedModule } from '../shared';
 
 import { 
     EventsComponent,
@@ -21,6 +22,7 @@ import {
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
+    SharedModule,
     RouterModule.forChild(eventsRoutes)
   ],
   declarations: [
@@ -33,6 +35,10 @@ import {
     EditableEventComponent,
     EditEventComponent,
     EventParticipantsComponent
+  ],
+  entryComponents: [
+    EventRegistrationModalComponent,
+    EventCreationModalComponent
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
