@@ -35,13 +35,11 @@ export class GroupEventsComponent implements OnInit {
         this._page.actionBar.title = '';
         this._route.params.subscribe(params => {
             this._groupId = params['id'];
-
-            this._eventsService.getUpcoming([this._groupId])
-                .then(upcomingEvents => {
-                    this.events = upcomingEvents;
-                    return this._eventsService.getPast([this._groupId]);
-                })
-                .then(pastEvents => this.events = this.events.concat(pastEvents))
+            let upcomingPrm = this._eventsService.getUpcoming([this._groupId]);
+            let pastPrm = this._eventsService.getPast([this._groupId]);
+            
+            Promise.all([upcomingPrm, pastPrm])
+                .then(results => this.events = results[0].concat(results[1]))
                 .catch(this._onError.bind(this));
 
             this._groupsService.getById(this._groupId)

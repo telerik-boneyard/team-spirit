@@ -2,10 +2,10 @@
     <ActionBarExtension>
         <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
         <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
-        <ActionItem (tap)="onAdd()" *ngIf="canAdd"
+        <!--<ActionItem (tap)="onAdd()" *ngIf="canAdd"
             ios.systemIcon="4" android.systemIcon="ic_menu_add"
             ios.position="right">
-        </ActionItem>
+        </ActionItem>-->
     </ActionBarExtension>
 
     <StackLayout *ngIf="members" class="content">
