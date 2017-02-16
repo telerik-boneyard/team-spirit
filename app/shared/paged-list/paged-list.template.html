@@ -1,0 +1,5 @@
+<StackLayout>
+    <!-- in a StackLayout? -->
+    <ng-content *ngFor="let item of items"></ng-content>
+    <Label (tap)="onLoadMore()" [text]="loadMoreText"></Label>
+</StackLayout>
