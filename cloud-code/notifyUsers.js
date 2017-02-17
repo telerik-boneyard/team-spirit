@@ -363,7 +363,7 @@ function getNotificationObject (alertType, context) {
             break;
 
 
-        default:
+        default: // TODO: remove this, it's for testing purposes only
             title = 'New Message!';
             message = 'Well, we dont know what it is... :|';
             break;

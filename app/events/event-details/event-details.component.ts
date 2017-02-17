@@ -205,16 +205,28 @@ export class EventDetailsComponent implements OnInit {
         this._routerExtensions.navigateByUrl(`/events/${this.event.Id}/participants`);
     }
 
+    rethinkMode() {
+        return this.event && !this.isPastEvent && this.event.RegistrationCompleted;
+    }
+
     canRegister() {
-        return !this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+        return this.event && !this.alreadyRegistered && !this.isPastEvent && this._openAndNotComplete();
     }
 
     canUnregister() {
-        return this.event && this.alreadyRegistered && !this.isPastEvent && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+        return this._reggedAndNotPast() && this._openAndNotComplete();
     }
 
     canChangeVote() {
-        return this.event && this.alreadyRegistered && !this.event.EventDate;
+        return this._reggedAndNotPast() && !this.event.EventDate && !this.event.RegistrationCompleted;
+    }
+
+    rethinkAndGo() {
+        return this.rethinkMode() && !this.alreadyRegistered;
+    }
+
+    rethinkAndDontGo() {
+        return this.rethinkMode() && this.alreadyRegistered;
     }
 
     unregister() {
@@ -253,14 +265,36 @@ export class EventDetailsComponent implements OnInit {
         return utilities.showIf(shouldShow);
     }
 
+    getRegisterBtnText() {
+        let text: string;
+        if (this.event.EventDate) {
+            text = 'I\'m going';
+        } else {
+            text = 'Vote for date';
+        }
+        return text;
+    }
+
+    private _reggedAndNotPast() {
+        return this.event && this.alreadyRegistered && !this.isPastEvent;
+    }
+
+    private _openAndNotComplete() {
+        return this.event && this.event.OpenForRegistration && !this.event.RegistrationCompleted;
+    }
+
     private _setupActions() {
         this._actions = [];
+        if (this.rethinkAndGo()) {
+            this._actions.push('I\'m going');
+        }
+
         if (this.canChangeVote()) {
             this._actions.push('Change Date Vote');
         }
 
-        if (this.canUnregister()) {
-            this._actions.push('Unregister');
+        if (this.canUnregister() || this.rethinkAndDontGo()) {
+            this._actions.push('I\'m not going');
         }
 
         if (this.canEdit()) {

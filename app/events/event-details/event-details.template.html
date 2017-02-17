@@ -12,10 +12,11 @@
             </ActionItem>
 
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canChangeVote())" (tap)="changeVote()" text="Change Date Vote" android.position="popup"></ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister())" (tap)="unregister()" text="Unregister" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister() || rethinkAndDontGo())" (tap)="unregister()" text="I'm not going" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(rethinkAndGo())" (tap)="register()" text="I'm going" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" (tap)="deleteEvent()" text="Delete Event" android.position="popup"></ActionItem>
 
-            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && (canChangeVote() || canUnregister() || canEdit())" ios.position="right">
+            <ActionItem (tap)="toggleActions()" *ngIf="!isAndroid && (canChangeVote() || canUnregister() || canEdit() || rethinkMode())" ios.position="right">
                 <StackLayout>
                     <Label class="button if" text="&#x66;"></Label>
                 </StackLayout>
@@ -33,7 +34,7 @@
             </AbsoluteLayout>
 
             <StackLayout class="info-container">
-                <Label *ngIf="canRegister()" text="Register" (tap)="register()" class="btn btn-primary"></Label>
+                <Label *ngIf="canRegister()" [text]="getRegisterBtnText()" (tap)="register()" class="btn btn-primary"></Label>
 
                 <StackLayout class="info-wrapper">
                     <GridLayout columns="auto, auto, *" rows="auto, auto">
@@ -45,7 +46,7 @@
                         <Label *ngIf="alreadyRegistered && userVotedForDate(date)" text="&#x68;" class="vote yes if"></Label>
                         <Label *ngIf="alreadyRegistered && !userVotedForDate(date)" text="&#x67;" class="vote no if"></Label>
                         <Label class="info-value" [text]="date | date:dateFormat"></Label>
-                        <Label class="votes-count" *ngIf="countsInitialized()" [text]="getVoteText(date)"></Label>
+                        <Label class="votes-count" *ngIf="countsInitialized()" [text]="getVoteText(date)" textWrap="true"></Label>
                     </StackLayout>
                     <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
                 </StackLayout>
