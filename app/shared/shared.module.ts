@@ -30,6 +30,7 @@ import {
     ListPickerModalComponent
   ],
   exports: [
+    AppModalComponent,
     PhotoPickerComponent,
     UserDisplayComponent,
     UsersListComponent

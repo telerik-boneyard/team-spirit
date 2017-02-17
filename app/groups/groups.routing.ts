@@ -12,10 +12,10 @@ import {
 } from './';
 
 export const routes: Routes = [
-    { path: 'groups', component: GroupsComponent },
-    { path: 'groups/add', component: AddGroupComponent },
-    { path: 'groups/:id', component: GroupDetailsComponent },
-    { path: 'groups/:id/edit', component: EditGroupComponent },
-    { path: 'groups/:id/events', component: GroupEventsComponent },
-    { path: 'groups/:id/members', component: GroupMembersComponent }
+    { path: '', component: GroupsComponent },
+    { path: 'add', component: AddGroupComponent },
+    { path: ':id', component: GroupDetailsComponent },
+    { path: ':id/edit', component: EditGroupComponent },
+    { path: ':id/events', component: GroupEventsComponent },
+    { path: ':id/members', component: GroupMembersComponent }
 ];

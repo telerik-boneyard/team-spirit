@@ -58,10 +58,8 @@ export class EventDetailsComponent implements OnInit {
         this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             this._eventId = p['id'];
-            console.log('ev id: ' + this._eventId);
             let event = this._eventsService.getById(this._eventId)
                 .then((event) => {
-            console.log('got ev: ' + JSON.stringify(this.event));
                     this.event = event;
                     this._page.actionBar.title = event.Name;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
@@ -69,10 +67,7 @@ export class EventDetailsComponent implements OnInit {
                         this._updateCountsByDate();
                     }
                 })
-                .catch(err => {
-                    console.log(`the err: ${JSON.stringify(err)}`);
-                    this._onError(err);
-                });
+                .catch(err => this._onError.bind(this));
 
             let currentUser = this._usersService.currentUser()
                 .then(currentUser => {
@@ -84,11 +79,7 @@ export class EventDetailsComponent implements OnInit {
                     this.alreadyRegistered = this.registeredUsers.some(u => u.Id === this._currentUser.Id);
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
-                .catch(err => {
-                    console.log(`curr user + participants`);
-                    this._onError(err);
-                    return Promise.reject(err);
-                });
+                .catch(err => this._onError.bind(this));
 
             let user = this._usersService.currentUser()
                 .then(user => this._regsService.getUserRegistrationForEvent(this._eventId, user.Id))
@@ -143,10 +134,7 @@ export class EventDetailsComponent implements OnInit {
                 this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
             }
         })
-        .catch(err => {
-            console.log(`reg`);
-            this._onError(err);
-        });
+        .catch(err => this._onError.bind(this));
     }
 
     changeVote() {

@@ -3,15 +3,14 @@ import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 import { NgModule } from "@angular/core";
+import { Router } from "@angular/router";
 
 import { AppComponent } from "./app.component";
-import { SettingsComponent } from './settings';
-import { appRoutes } from './app.routing';
+import { AppRoutingModule } from './app-routing.module';
 
 import {
     EverliveProvider,
     UsersService,
-    AuthGuard,
     PlatformService,
     AlertService,
     EventRegistrationsService,
@@ -30,13 +29,11 @@ import { SharedModule } from './shared';
 @NgModule({
     declarations: [
         SIDEDRAWER_DIRECTIVES,
-        AppComponent,
-        SettingsComponent
+        AppComponent
     ],
     providers: [
         EverliveProvider,
         UsersService,
-        AuthGuard,
         PlatformService,
         AlertService,
         EventRegistrationsService,
@@ -50,13 +47,7 @@ import { SharedModule } from './shared';
     imports: [
         NativeScriptFormsModule,
         NativeScriptModule,
-        NativeScriptRouterModule,
-        NativeScriptRouterModule.forRoot(appRoutes),
-        EventsModule,
-        GroupsModule,
-        UsersModule,
-        SharedModule
+        AppRoutingModule
     ]
 })
 export class AppModule {}
-

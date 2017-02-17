@@ -14,14 +14,9 @@ import {
 } from './';
 
 export const eventsRoutes: Routes = [
-    {
-        path: '',
-        children: [
-            { path: '', canActivate: [AuthGuard], component: EventsComponent },
-            { path: 'add', component: AddEventComponent },
-            { path: ':id', component: EventDetailsComponent },
-            { path: ':id/edit', component: EditEventComponent },
-            { path: ':id/participants', component: EventParticipantsComponent },
-        ]
-    }
+    { path: '', canActivate: [AuthGuard], component: EventsComponent },
+    { path: 'add', component: AddEventComponent },
+    { path: ':id', component: EventDetailsComponent },
+    { path: ':id/edit', component: EditEventComponent },
+    { path: ':id/participants', component: EventParticipantsComponent },
 ];
