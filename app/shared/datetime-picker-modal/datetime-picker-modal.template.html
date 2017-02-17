@@ -1,11 +1,13 @@
-<StackLayout class="cntnr">
-    <!-- TODO: use app-modal -->
-    <StackLayout>
-        <DatePicker #datePicker [(ngModel)]="date" (loaded)="configureDatePicker(datePicker)"></DatePicker>
-        <TimePicker #timePicker></TimePicker>
-    </StackLayout>
+<ScrollView>
+    <StackLayout class="cntnr">
+        <!-- TODO: use app-modal -->
+        <StackLayout>
+            <DatePicker #datePicker [(ngModel)]="date" (loaded)="configureDatePicker(datePicker)"></DatePicker>
+            <TimePicker #timePicker></TimePicker>
+        </StackLayout>
 
-    <StackLayout class="btn-wrp">
-        <Label (tap)="onSelect(datePicker, timePicker)" class="btn btn-primary" text="Add Option"></Label>
+        <StackLayout class="btn-wrp">
+            <Label (tap)="onSelect(datePicker, timePicker)" class="btn btn-primary" text="Add Option"></Label>
+        </StackLayout>
     </StackLayout>
-</StackLayout>
+</ScrollView>
