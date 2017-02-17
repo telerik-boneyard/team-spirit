@@ -2,7 +2,8 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 
-import { RouterModule } from "@angular/router";
+// import { RouterModule } from "@angular/router";
+import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { routes } from './groups.routing';
 import { SharedModule } from '../shared';
 
@@ -22,7 +23,7 @@ import {
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
-    RouterModule.forChild(routes),
+    NativeScriptRouterModule.forChild(routes),
     SharedModule
   ],
   declarations: [
@@ -41,4 +42,8 @@ import {
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class GroupsModule {}
+export class GroupsModule {
+  constructor() {
+    console.log('groups module instantiated');
+  }
+}

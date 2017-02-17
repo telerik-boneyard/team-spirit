@@ -5,7 +5,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { UsersService } from './users.service';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class AuthGuard implements CanActivate {
 
     constructor(
         private _usersService: UsersService,
@@ -23,6 +23,7 @@ export class AuthGuardService implements CanActivate {
         return this._usersService.currentUser()
             .then(u => {
                 let isLoggedIn = !!u;
+                // console.log('isLoggedIn ' + isLoggedIn);
                 if (!isLoggedIn) {
                     this._router.navigateByUrl('user/login');
                 }

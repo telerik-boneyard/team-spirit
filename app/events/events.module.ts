@@ -2,7 +2,7 @@ import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 
-import { RouterModule } from "@angular/router";
+import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { eventsRoutes } from './events.routing';
 import { SharedModule } from '../shared';
 
@@ -22,8 +22,8 @@ import {
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
-    SharedModule,
-    RouterModule.forChild(eventsRoutes)
+    NativeScriptRouterModule.forChild(eventsRoutes),
+    SharedModule
   ],
   declarations: [
     EventsComponent,

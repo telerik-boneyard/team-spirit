@@ -11,7 +11,7 @@ import { appRoutes } from './app.routing';
 import {
     EverliveProvider,
     UsersService,
-    AuthGuardService,
+    AuthGuard,
     PlatformService,
     AlertService,
     EventRegistrationsService,
@@ -36,7 +36,7 @@ import { SharedModule } from './shared';
     providers: [
         EverliveProvider,
         UsersService,
-        AuthGuardService,
+        AuthGuard,
         PlatformService,
         AlertService,
         EventRegistrationsService,
@@ -59,3 +59,4 @@ import { SharedModule } from './shared';
     ]
 })
 export class AppModule {}
+

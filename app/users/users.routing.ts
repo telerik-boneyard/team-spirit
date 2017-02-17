@@ -1,5 +1,4 @@
 import { Routes } from "@angular/router";
-import { EverliveProvider, UsersService, AuthGuardService } from '../services';
 
 import {
     UserDetailsComponent,
@@ -9,7 +8,7 @@ import {
 } from './';
 
 export const routes: Routes = [
-    { path: 'user/login', component: LoginComponent },
-    { path: 'user/edit', canActivate: [ AuthGuardService ], component: EditUserComponent },
-    { path: 'user', canActivate: [ AuthGuardService ], component: UserDetailsComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'edit', component: EditUserComponent },
+    { path: '', component: UserDetailsComponent }
 ];

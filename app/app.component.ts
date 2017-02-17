@@ -39,6 +39,8 @@ export class AppComponent implements OnInit {
     ngOnInit() {
         this._routerExtensions.router.events.subscribe((ev) => {
             if (ev instanceof NavigationEnd) {
+                console.log('navved to ' + ev.url);
+                
                 this.disableDrawer = utilities.shouldDisableDrawer(ev.url);
                 this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
             }

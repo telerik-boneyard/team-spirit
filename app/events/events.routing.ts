@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { AuthGuardService } from '../services';
+import { AuthGuard } from '../services';
 
 import { 
     EventsComponent,
@@ -14,8 +14,10 @@ import {
 } from './';
 
 export const eventsRoutes: Routes = [
-  { path: 'events', canActivate: [ AuthGuardService ], children: [
-            { path: '', component: EventsComponent },
+    {
+        path: '',
+        children: [
+            { path: '', canActivate: [AuthGuard], component: EventsComponent },
             { path: 'add', component: AddEventComponent },
             { path: ':id', component: EventDetailsComponent },
             { path: ':id/edit', component: EditEventComponent },
