@@ -1,4 +1,5 @@
-﻿@import '~/css/core.light.css';
+﻿@import url('~/css/core.light.css');
+@import url('~/platform.css');
 
 .if {
   font-family: 'teamup-font';
