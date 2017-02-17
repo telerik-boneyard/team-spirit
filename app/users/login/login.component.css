@@ -8,10 +8,6 @@ TextField {
 .main-container {
   height: 100%;
   vertical-align: center;
-  background-image: url("res://background");
-  background-repeat: no-repeat;
-  background-position: 50% 50%;
-  background-size: cover;
 }
 
 .form {
