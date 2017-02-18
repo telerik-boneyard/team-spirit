@@ -2,8 +2,8 @@ import { NativeScriptModule } from "nativescript-angular/platform";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
-import { NgModule } from "@angular/core";
-import { Router } from "@angular/router";
+import { NgModule, NgModuleFactoryLoader } from "@angular/core";
+import { NSModuleFactoryLoader } from "nativescript-angular/router";
 
 import { AppComponent } from "./app.component";
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +41,8 @@ import { SharedModule } from './shared';
         FilesService,
         GroupsService,
         ImagePickerService,
-        PushNotificationsService
+        PushNotificationsService,
+        { provide: NgModuleFactoryLoader, useClass: NSModuleFactoryLoader },
     ],
     bootstrap: [ AppComponent ],
     imports: [

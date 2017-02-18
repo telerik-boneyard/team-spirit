@@ -33,6 +33,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
+        this._usersService.isLoggedIn()
+            .do(isLoggedIn => {
+                if (isLoggedIn) {
+                    this._routerExtensions.navigate(['events', { clearHistory: true }]);
+                }
+            });
     }
 
     changeView(signupView: boolean) {
