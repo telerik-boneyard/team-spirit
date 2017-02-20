@@ -10,6 +10,7 @@
     "exclude": [
         "node_modules",
         "platforms",
-        "everlive-js-sdk"
+        "everlive-js-sdk",
+        "**/*.aot.ts"
     ]
 }

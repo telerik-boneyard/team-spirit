@@ -12,9 +12,10 @@ import {
 } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'login',
-    templateUrl: 'users/login/login.template.html',
-    styleUrls: ['users/login/login.component.css']
+    templateUrl: './login.template.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
     user: { Username: string, Password: string, ConfirmPassword: string, DisplayName: string };
@@ -33,6 +34,12 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
+        this._usersService.isLoggedIn()
+            .do(isLoggedIn => {
+                if (isLoggedIn) {
+                    this._routerExtensions.navigate(['events', { clearHistory: true }]);
+                }
+            });
     }
 
     changeView(signupView: boolean) {

@@ -44,13 +44,13 @@ export class UsersService {
 
     resetUserPassword(identifier: string) {
         let obj: any = {};
-        
+
         if (utilities.isEmail(identifier)) {
             obj.Email = identifier;
         } else {
             obj.Username = identifier;
         }
-        
+
         return this._users.resetPassword(obj).then(res => true, err => true);
     }
 
@@ -91,7 +91,7 @@ export class UsersService {
         if (expandExp) {
             this._users.expand(expandExp);
         }
-        
+
         return this._users.getById(id).then(res => {
             return this.serverUserToUserModel(res.result);
         });
@@ -107,7 +107,7 @@ export class UsersService {
         if (!user.DisplayName) {
             errMsg = 'Display Name is mandatory';
         }
-        
+
         return errMsg;
     }
 

@@ -8,9 +8,10 @@ import { EventsService, AlertService, UsersService, GroupsService, FilesService,
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'add-event',
-    templateUrl: 'events/add-event/add-event.template.html',
-    styleUrls: [ 'events/add-event/add-event.component.css' ]
+    templateUrl: './add-event.template.html',
+    styleUrls: [ './add-event.component.css' ]
 })
 export class AddEventComponent {
     newEvent: Event;

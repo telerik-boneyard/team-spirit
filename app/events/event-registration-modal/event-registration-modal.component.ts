@@ -5,9 +5,10 @@ import { AlertService } from '../../services';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'event-registration-modal',
-    templateUrl: 'events/event-registration-modal/event-registration-modal.template.html',
-    styleUrls: [ 'events/event-registration-modal/event-registration-modal.component.css' ]
+    templateUrl: './event-registration-modal.template.html',
+    styleUrls: [ './event-registration-modal.component.css' ]
 })
 export class EventRegistrationModalComponent {
     availableDates: Array<{ value: Date, isSelected: boolean }>;
@@ -23,12 +24,12 @@ export class EventRegistrationModalComponent {
             };
         });
     }
-    
+
     onOk() {
         if (this._noDateIsSelected()) {
             return this._alertsService.showError('You need to select at least one date');
         }
-        
+
         let selectedDates = this.availableDates.map((d, i) => d.isSelected ? i : null).filter(n => n !== null);
         this._params.closeCallback(selectedDates);
     }
@@ -36,7 +37,7 @@ export class EventRegistrationModalComponent {
     onCancel() {
         this._params.closeCallback();
     }
-    
+
     private _noDateIsSelected() {
         return this.availableDates.every(d => !d.isSelected);
     }

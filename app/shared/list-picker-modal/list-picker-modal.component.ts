@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 
 @Component({
+    moduleId: module.id,
     selector: 'list-picker-modal',
-    templateUrl: 'shared/list-picker-modal/list-picker-modal.template.html',
-    styleUrls: [ 'shared/list-picker-modal/list-picker-modal.component.css' ]
+    templateUrl: './list-picker-modal.template.html',
+    styleUrls: [ './list-picker-modal.component.css' ]
 })
 export class ListPickerModalComponent {
     availableOptions: string[] = [];

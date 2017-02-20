@@ -4,13 +4,14 @@ import { User } from '../models';
 import { utilities, constants } from '../';
 
 @Component({
+    moduleId: module.id,
     selector: 'user-list',
-    templateUrl: 'shared/user-list/user-list.template.html',
-    styleUrls: [ 'shared/user-list/user-list.component.css' ]
+    templateUrl: './user-list.template.html',
+    styleUrls: [ './user-list.component.css' ]
 })
 export class UsersListComponent implements OnInit {
     @Input() users: User[] = [];
-    
+
     ngOnInit() {
         // console.log(`user list: ${JSON.stringify(this.users)}`);
     }

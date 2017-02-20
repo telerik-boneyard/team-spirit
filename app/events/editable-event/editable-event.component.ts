@@ -6,9 +6,10 @@ import { Event, Group, User } from '../../shared';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'editable-event',
-    templateUrl: 'events/editable-event/editable-event.template.html',
-    styleUrls: [ 'events/editable-event/editable-event.component.css' ]
+    templateUrl: './editable-event.template.html',
+    styleUrls: [ './editable-event.component.css' ]
 })
 export class EditableEventComponent implements OnInit{
     @Input() event: Event;
@@ -18,7 +19,7 @@ export class EditableEventComponent implements OnInit{
     userGroups: Group[];
     currentUser: User;
     selectedGroup: Group;
-    
+
     private _isEdit: boolean = false;
 
     constructor(

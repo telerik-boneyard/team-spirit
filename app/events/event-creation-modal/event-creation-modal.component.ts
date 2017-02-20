@@ -4,9 +4,10 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 import { constants } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'event-creation-modal',
-    templateUrl: 'events/event-creation-modal/event-creation-modal.template.html',
-    styleUrls: [ 'events/event-creation-modal/event-creation-modal.component.css' ]
+    templateUrl: 'event-creation-modal.template.html',
+    styleUrls: [ 'event-creation-modal.component.css' ]
 })
 export class EventCreationModalComponent {
     groupName: string;

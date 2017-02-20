@@ -7,9 +7,10 @@ import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'events',
-    templateUrl: 'events/events/events.template.html',
-    styleUrls: ['events/events/events.component.css']
+    templateUrl: './events.template.html',
+    styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
     upcomingEvents: Event[];

@@ -3,9 +3,10 @@ import { Component, Input, OnInit } from '@angular/core';
 import { User } from '../models';
 
 @Component({
+    moduleId: module.id,
     selector: 'user-display',
-    templateUrl: 'shared/user-display/user-display.template.html',
-    styleUrls: [ 'shared/user-display/user-display.component.css' ]
+    templateUrl: './user-display.template.html',
+    styleUrls: [ './user-display.component.css' ]
 })
 export class UserDisplayComponent implements OnInit {
     @Input() users: User[] = [];

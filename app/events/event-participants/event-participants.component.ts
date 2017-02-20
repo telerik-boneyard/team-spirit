@@ -8,9 +8,10 @@ import { User, Event, EventRegistration } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'event-participants',
-    templateUrl: 'events/event-participants/event-participants.template.html',
-    styleUrls: ['events/event-participants/event-participants.component.css']
+    templateUrl: './event-participants.template.html',
+    styleUrls: ['./event-participants.component.css']
 })
 export class EventParticipantsComponent implements OnInit {
     event: Event;

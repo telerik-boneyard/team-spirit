@@ -6,9 +6,10 @@ import { TimePicker } from 'ui/time-picker';
 import { AlertService } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'datetime-picker-modal',
-    templateUrl: 'shared/datetime-picker-modal/datetime-picker-modal.template.html',
-    styleUrls: [ 'shared/datetime-picker-modal/datetime-picker-modal.component.css' ]
+    templateUrl: './datetime-picker-modal.template.html',
+    styleUrls: ['./datetime-picker-modal.component.css']
 })
 export class DateTimePickerModalComponent {
     date: Date;
