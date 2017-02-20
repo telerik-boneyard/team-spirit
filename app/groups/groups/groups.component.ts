@@ -32,11 +32,7 @@ export class GroupsComponent implements OnInit {
         this._page.actionBar.title = 'Groups';
         this._route.params.subscribe(p => {
             if ('selectedTabIndex' in p) {
-                let index = Number(p['selectedTabIndex']);
-                // ngIf on the tab view makes it impossible to toggle it with goToTab()
-                // but setting this.selectedIndex doesnt switch tabs after this initial time
-                // so we use a mix of both...
-                this.selectedIndex = index;
+                this.goToTab(Number(p['selectedTabIndex']));
             }
         });
 
@@ -60,6 +56,6 @@ export class GroupsComponent implements OnInit {
     }
 
     goToTab(tabIndex: number) {
-        this.groupsTabView.nativeElement.selectedIndex = tabIndex;
+        this.selectedIndex = tabIndex;
     }
 }

@@ -8,12 +8,20 @@ import { User } from '../models';
     styleUrls: [ 'shared/user-display/user-display.component.css' ]
 })
 export class UserDisplayComponent implements OnInit {
-    @Input() users: User[] = [];
+    private _users: User[] = [];
+    
     @Input('withImages') imgCount: number = null;
     @Input() showNames: boolean = false;
 
+    @Input() set users(newValue: User[]) {
+        this._users = [].concat(newValue);
+    }
+
+    get users() {
+        return this._users;
+    }
+
     ngOnInit() {
-        this.users = [].concat(this.users);
         if (typeof this.imgCount !== 'number') {
             this.imgCount = this.users.length;
         }
