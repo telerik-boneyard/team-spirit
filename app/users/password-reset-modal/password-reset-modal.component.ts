@@ -5,9 +5,10 @@ import { AlertService } from '../../services';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'password-reset-modal',
-    templateUrl: 'users/password-reset-modal/password-reset-modal.template.html',
-    styleUrls: [ 'users/password-reset-modal/password-reset-modal.component.css' ]
+    templateUrl: './password-reset-modal.template.html',
+    styleUrls: [ './password-reset-modal.component.css' ]
 })
 export class PasswordResetModalComponent {
     title: string = 'Forgot your password?';
@@ -19,7 +20,7 @@ export class PasswordResetModalComponent {
         private _params: ModalDialogParams,
         private _alertsService: AlertService
     ) {}
-    
+
     onOk() {
         if (!utilities.isEmail(this.email)) {
             return this._alertsService.showError('Please enter a valid email address');

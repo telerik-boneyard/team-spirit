@@ -4,4 +4,4 @@ import { enableProdMode } from "@angular/core";
 import { AppModuleNgFactory } from './app.module.ngfactory';
 
 enableProdMode();
-platformNativeScript().bootstrapModule(AppModuleNgFactory);
+platformNativeScript().bootstrapModuleFactory(AppModuleNgFactory);

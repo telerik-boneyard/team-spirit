@@ -8,9 +8,10 @@ import { User, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'group-members',
-    templateUrl: 'groups/group-members/group-members.template.html',
-    styleUrls: ['groups/group-members/group-members.component.css']
+    templateUrl: './group-members.template.html',
+    styleUrls: ['./group-members.component.css']
 })
 export class GroupMembersComponent implements OnInit {
     group: Group;

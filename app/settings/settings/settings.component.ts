@@ -7,9 +7,10 @@ import { utilities } from '../../shared';
 import { UsersService, AlertService } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'settings',
-    templateUrl: 'settings/settings/settings.template.html',
-    styleUrls: [ 'settings/settings/settings.component.css' ]
+    templateUrl: './settings.template.html',
+    styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit {
     user: { PushNotificationsEnabled: boolean, EmailNotificationsEnabled: boolean } = {} as any;

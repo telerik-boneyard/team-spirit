@@ -6,9 +6,10 @@ import { ImagePickerService } from '../../services';
 import { utilities, constants } from '../';
 
 @Component({
+    moduleId: module.id,
     selector: 'photo-picker',
-    templateUrl: 'shared/photo-picker/photo-picker.template.html',
-    styleUrls: [ 'shared/photo-picker/photo-picker.component.css' ]
+    templateUrl: './photo-picker.template.html',
+    styleUrls: [ './photo-picker.component.css' ]
 })
 export class PhotoPickerComponent implements OnInit {
     resizedUrl: string;
@@ -38,7 +39,7 @@ export class PhotoPickerComponent implements OnInit {
         if (!this.editable) {
             return;
         }
-        
+
         this._imgPickerService.pickImage()
             .then(obj => {
                 this.resizedUrl = obj.uri;

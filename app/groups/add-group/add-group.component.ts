@@ -9,9 +9,10 @@ import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'add-group',
-    templateUrl: 'groups/add-group/add-group.template.html',
-    styleUrls: ['groups/add-group/add-group.component.css']
+    templateUrl: './add-group.template.html',
+    styleUrls: ['./add-group.component.css']
 })
 export class AddGroupComponent {
     group: Group;

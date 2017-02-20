@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
 
 @Component({
+    moduleId: module.id,
     selector: 'group-creation-modal',
-    templateUrl: 'groups/group-creation-modal/group-creation-modal.template.html',
-    styleUrls: [ 'groups/group-creation-modal/group-creation-modal.component.css' ]
+    templateUrl: './group-creation-modal.template.html',
+    styleUrls: ['./group-creation-modal.component.css']
 })
 export class GroupCreationModalComponent {
     groupName: string;

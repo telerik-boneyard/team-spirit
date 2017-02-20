@@ -6,9 +6,10 @@ import { Group, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'editable-group',
-    templateUrl: 'groups/editable-group/editable-group.template.html',
-    styleUrls: ['groups/editable-group/editable-group.component.css']
+    templateUrl: './editable-group.template.html',
+    styleUrls: ['./editable-group.component.css']
 })
 export class EditableGroupComponent implements OnInit {
     currentUser: User;

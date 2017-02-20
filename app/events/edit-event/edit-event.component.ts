@@ -8,9 +8,10 @@ import { Event, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'edit-event',
-    templateUrl: 'events/edit-event/edit-event.template.html',
-    styleUrls: [ 'events/edit-event/edit-event.component.css' ]
+    templateUrl: 'edit-event.template.html',
+    styleUrls: [ 'edit-event.component.css' ]
 })
 export class EditEventComponent implements OnInit {
     event: Event;

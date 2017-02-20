@@ -8,9 +8,10 @@ import { Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'edit-group',
-    templateUrl: 'groups/edit-group/edit-group.template.html',
-    styleUrls: ['groups/edit-group/edit-group.component.css']
+    templateUrl: './edit-group.template.html',
+    styleUrls: ['./edit-group.component.css']
 })
 export class EditGroupComponent implements OnInit {
     group: Group;

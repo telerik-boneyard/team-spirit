@@ -13,9 +13,10 @@ import {
 } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'edit-user',
-    templateUrl: 'users/edit-user/edit-user.template.html',
-    styleUrls: [ 'users/edit-user/edit-user.component.css' ]
+    templateUrl: './edit-user.template.html',
+    styleUrls: [ './edit-user.component.css' ]
 })
 export class EditUserComponent implements OnInit {
     user: User;

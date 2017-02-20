@@ -4,9 +4,10 @@ import { EventsService, UsersService, EventRegistrationsService } from '../../se
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'event-list',
-    templateUrl: 'events/event-list/event-list.template.html',
-    styleUrls: ['events/event-list/event-list.component.css']
+    templateUrl: './event-list.template.html',
+    styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
     dateFormat: string = utilities.dateFormat;
@@ -17,7 +18,7 @@ export class EventListComponent implements OnInit {
         private _regsService: EventRegistrationsService,
         private _usersService: UsersService
     ) {}
-    
+
     @Input() events: Event[];
     @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
 

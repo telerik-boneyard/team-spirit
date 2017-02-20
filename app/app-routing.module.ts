@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { AuthGuard } from './services';
 import { SettingsComponent } from './settings';
@@ -6,7 +6,7 @@ import { SettingsComponent } from './settings';
 const routes: any = [
     {
         path: 'settings',
-        canActivate: [ AuthGuard ],
+        canActivate: [AuthGuard],
         loadChildren: "./settings/settings.module#SettingsModule",
     },
     {
@@ -25,12 +25,13 @@ const routes: any = [
 ];
 
 @NgModule({
-  imports: [
-    NativeScriptRouterModule.forRoot(routes)
-  ],
-  exports: [
-    NativeScriptRouterModule
-  ],
-  providers: [ AuthGuard ]
+    imports: [
+        NativeScriptRouterModule.forRoot(routes)
+    ],
+    exports: [
+        NativeScriptRouterModule
+    ],
+    providers: [ AuthGuard ],
+    schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppRoutingModule {}

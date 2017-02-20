@@ -1,8 +1,8 @@
 import { NativeScriptModule } from "nativescript-angular/platform";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
 import { NativeScriptRouterModule } from "nativescript-angular/router";
-import { SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
-import { NgModule, NgModuleFactoryLoader } from "@angular/core";
+import { NativeScriptUISideDrawerModule } from 'nativescript-telerik-ui/sidedrawer/angular';
+import { NgModule, NgModuleFactoryLoader, NO_ERRORS_SCHEMA } from "@angular/core";
 import { NSModuleFactoryLoader } from "nativescript-angular/router";
 
 import { AppComponent } from "./app.component";
@@ -28,7 +28,6 @@ import { SharedModule } from './shared';
 
 @NgModule({
     declarations: [
-        SIDEDRAWER_DIRECTIVES,
         AppComponent
     ],
     providers: [
@@ -46,9 +45,11 @@ import { SharedModule } from './shared';
     ],
     bootstrap: [ AppComponent ],
     imports: [
+        NativeScriptUISideDrawerModule,
         NativeScriptFormsModule,
         NativeScriptModule,
         AppRoutingModule
-    ]
+    ],
+    schemas: [ NO_ERRORS_SCHEMA ]
 })
 export class AppModule {}

@@ -19,6 +19,7 @@
       "xhr": ["node_modules/tns-core-modules/xhr"],
       "text": ["node_modules/tns-core-modules/text"],
       "data": ["node_modules/tns-core-modules/data"],
+      "data/observable": ["node_modules/tns-core-modules/data/observable"],
       "fetch": ["node_modules/tns-core-modules/fetch"],
       "trace": ["node_modules/tns-core-modules/trace"],
       "fps-meter": ["node_modules/tns-core-modules/fps-meter"],

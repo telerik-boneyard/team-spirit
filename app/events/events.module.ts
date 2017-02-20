@@ -6,7 +6,7 @@ import { NativeScriptRouterModule } from "nativescript-angular/router";
 import { eventsRoutes } from './events.routing';
 import { SharedModule } from '../shared';
 
-import { 
+import {
     EventsComponent,
     EventDetailsComponent,
     EventRegistrationModalComponent,
