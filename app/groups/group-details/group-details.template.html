@@ -2,7 +2,9 @@
     <ScrollView class="ctnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-            <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
+            <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
+                <label text="Back"></label>
+            </ActionItem>
             <ActionItem (tap)="onEdit()" *ngIf="canEdit()" ios.position="right">
                 <StackLayout>
                     <Label class="button if" text="&#x65;"></Label>
