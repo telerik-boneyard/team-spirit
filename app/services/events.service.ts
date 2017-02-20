@@ -111,11 +111,11 @@ export class EventsService {
             });
     }
 
-    getUpcoming(groupIds: string[]) {
+    getUpcoming(groupIds: string[], page = 0, pageSize = 5) {
         return this._usersService.currentUser()
             .then(user => {
                 let filter = this._getUpcomingFilter(groupIds, user.Id);
-                return this._getWithFilter(filter);
+                return this._getWithFilter(filter, true, null, page, pageSize);
             });
     }
 
@@ -128,7 +128,7 @@ export class EventsService {
         return this._data.aggregate(query).then((r: any) => r.result);
     }
 
-    getPast(userGroupIds: string[]) {
+    getPast(userGroupIds: string[], page = 0, pageSize = 5) {
         if (!userGroupIds.length) {
             return Promise.reject({ message: 'No group ids specified' });
         }
@@ -138,7 +138,7 @@ export class EventsService {
             GroupId: { $in: userGroupIds }
         };
         return this._usersService.currentUser()
-            .then(u => this._getWithFilter(filter, true, { field: 'EventDate', desc: true }));
+            .then(u => this._getWithFilter(filter, true, { field: 'EventDate', desc: true }, page, pageSize));
     }
 
     getParticipants(eventId: string) {
@@ -220,7 +220,7 @@ export class EventsService {
         delete event.ImageUrl;
     }
 
-    private _getWithFilter(filter: any, expand: any = true, sorting?: { field: string, desc?: boolean }|Array<{ field: string, desc?: boolean }>) {
+    private _getWithFilter(filter: any, expand: any = true, sorting?: { field: string, desc?: boolean }|Array<{ field: string, desc?: boolean }>, page = 0, pageSize = 5) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
         
@@ -230,6 +230,8 @@ export class EventsService {
             let sortFunc = sortType.desc ? query.orderDesc : query.order;
             sortFunc.call(query, sortType.field);
         });
+        query.skip(page * pageSize);
+        query.take(pageSize);
 
         if (expand === true) {
             query.expand(this._eventExpandExpression);
