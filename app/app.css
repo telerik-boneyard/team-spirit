@@ -54,32 +54,6 @@ ActivityIndicator {
   color: #F4550F;
 }
 
-.switch {
-  margin: 14 16 14 0;
-  color: #333;
-  background-color: #e0e0e0;
-}
-
-.switch[checked=true] {
-  background-color: #F4550F;
-  color: #F4550F;
-}
-
-.switch[checked=true][isEnabled=false] {
-  background-color: #e0e0e0;
-  color: #fff;
-}
-
-.switch[isEnabled=false] {
-  background-color: #e0e0e0;
-  color: #e0e0e0;
-}
-
-.switch .btn-primary.btn-active:highlighted {
-  border-color: #F4550F;
-  background-color: #F4550F;
-}
-
 .switch-field .switch,
 .switch-field .label {
   vertical-align: middle;

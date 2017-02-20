@@ -5,3 +5,7 @@
 .btn-wrp {
   width: 100%;
 }
+
+.switch[checked=true] {
+  background-color: #F4550F;
+}
