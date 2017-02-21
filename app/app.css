@@ -40,6 +40,9 @@ TabView {
   tab-background-color: #F4550F;
   tab-text-color: rgba(255, 255, 255, .75);
   selected-tab-text-color: #ffffff;
+  height: 100%;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14;
 }
 
 TextField,
