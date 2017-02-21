@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectionStrategy } from '@angular/core';
+import { ScrollView } from 'ui/scroll-view';
+
 import { Event, User } from '../../shared/models';
 import { EventsService, UsersService, EventRegistrationsService } from '../../services';
 import { utilities } from '../../shared';
@@ -7,7 +9,8 @@ import { utilities } from '../../shared';
     moduleId: module.id,
     selector: 'event-list',
     templateUrl: './event-list.template.html',
-    styleUrls: ['./event-list.component.css']
+    styleUrls: ['./event-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EventListComponent implements OnInit {
     dateFormat: string = utilities.dateFormat;
@@ -20,7 +23,9 @@ export class EventListComponent implements OnInit {
     ) {}
 
     @Input() events: Event[];
+    @Input() hasMore: boolean = true;
     @Output() onEventTap: EventEmitter<any> = new EventEmitter<any>();
+    @Output() scrolledToBottom: EventEmitter<any> = new EventEmitter<any>();
 
     ngOnInit() {
         this._usersService.currentUser()
@@ -71,5 +76,9 @@ export class EventListComponent implements OnInit {
         } else {
             return 'TODAY';
         }
+    }
+
+    onLoadMore() {
+        this.scrolledToBottom.emit();
     }
 }

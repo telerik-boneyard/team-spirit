@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ScrollView } from 'ui/scroll-view';
-// import { RadListView } from 'nativescript-telerik-ui/listview';
 
 import { GroupsService, UsersService, AlertService, EventsService } from '../../services';
 import { Group, User } from '../../shared/models';
