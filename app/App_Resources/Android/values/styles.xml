@@ -26,7 +26,8 @@
         <item name="colorPrimary">@color/ns_primary</item>
         <item name="colorPrimaryDark">@color/ns_primaryDark</item>
         <item name="colorAccent">@color/ns_accent</item>
-        <item name="colorControlNormal">#fff</item>
+        <item name="colorControlNormal">#000</item>
+        <item name="actionOverflowButtonStyle">@style/OverflowMenuButton</item>
     </style>
 
     <style name="AppTheme" parent="AppThemeBase">
@@ -41,5 +42,9 @@
     </style>
 
     <style name="NativeScriptToolbarStyle" parent="NativeScriptToolbarStyleBase">
+    </style>
+
+    <style name="OverflowMenuButton" parent="@style/Widget.AppCompat.ActionButton.Overflow">
+        <item name="android:src">@drawable/icon_overflow</item>
     </style>
 </resources>
