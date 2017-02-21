@@ -34,12 +34,6 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
-        this._usersService.isLoggedIn()
-            .do(isLoggedIn => {
-                if (isLoggedIn) {
-                    this._routerExtensions.navigate(['events', { clearHistory: true }]);
-                }
-            });
     }
 
     changeView(signupView: boolean) {
@@ -78,6 +72,9 @@ export class LoginComponent implements OnInit {
             .then((res) => {
                 this._alertsService.showSuccess('Welcome to TeamUP!');
                 return this._usersService.login(this.user.Username, this.user.Password);
+            })
+            .then(() => {
+                this._routerExtensions.navigateByUrl('events');
             })
             .catch((err) => {
                 if (err) {

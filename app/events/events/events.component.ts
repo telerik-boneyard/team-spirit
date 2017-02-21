@@ -73,4 +73,8 @@ export class EventsComponent implements OnInit {
     showDetails(event: Event) {
         this._routerExtensions.navigate([`/events/${event.Id}`]);
     }
+
+    goToAllGroups() {
+        this._routerExtensions.navigate(['groups', { selectedTabIndex: 1 }]);
+    }
 }

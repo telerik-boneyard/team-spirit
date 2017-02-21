@@ -21,7 +21,7 @@ const routes: any = [
         path: 'user',
         loadChildren: "./users/users.module#UsersModule",
     },
-    { path: '', redirectTo: 'user/login', pathMatch: 'full' }
+    { path: '', redirectTo: 'events', pathMatch: 'full' }
 ];
 
 @NgModule({

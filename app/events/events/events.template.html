@@ -13,7 +13,7 @@
         <StackLayout *ngIf="canAdd">
             <Label text="Join a group of your interest and be ready for a great fun events." [textWrap]="true"></Label>
             <StackLayout class="actions">
-                <Label text="Go to Groups" class="btn btn-primary" [nsRouterLink]="['/groups', { selectedTabIndex: 1 }]"></Label>
+                <Label text="Go to Groups" class="btn btn-primary" (tap)="goToAllGroups()"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>
