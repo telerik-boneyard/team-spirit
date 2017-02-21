@@ -31,7 +31,7 @@
 
     <TabView *ngIf="initialized && userGroups.length && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
-            <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)"></event-list>
+            <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMoreUpcoming" (scrolledToBottom)="loadUpcomingEvents()"></event-list>
 
             <StackLayout *ngIf="!upcomingEvents.length" class="no-items">
                 <Label class="if" text="&#x6a;"></Label>
@@ -47,7 +47,7 @@
         </StackLayout>
 
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">
-            <event-list *ngIf="pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)"></event-list>
+            <event-list *ngIf="pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMorePast" (scrolledToBottom)="loadPastEvents()"></event-list>
 
             <StackLayout *ngIf="!pastEvents.length" class="no-items">
                 <Label class="if" text="&#x6a;"></Label>

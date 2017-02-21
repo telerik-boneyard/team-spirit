@@ -13,12 +13,18 @@ import { Group } from '../../shared/models';
     styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-    publicGroups: Group[];
-    userGroups: Group[];
+    @ViewChild("groupsTabView") groupsTabView: ElementRef;
+
+    publicGroups: Group[] = [];
+    userGroups: Group[] = [];
     initialized: boolean = false;
     selectedIndex: number = 0;
-
-    @ViewChild("groupsTabView") groupsTabView: ElementRef;
+    hasMoreUnjoined: boolean = true;
+    hasMoreUserGroups: boolean = true;
+    private _userId: string;
+    private _pageSize = 5;
+    private _unjoinedPage = 0;
+    private _userGroupsPage = 0;
 
     constructor(
         private _page: Page,
@@ -33,23 +39,19 @@ export class GroupsComponent implements OnInit {
         this._page.actionBar.title = 'Groups';
         this._route.params.subscribe(p => {
             if ('selectedTabIndex' in p) {
-                let index = Number(p['selectedTabIndex']);
-                // ngIf on the tab view makes it impossible to toggle it with goToTab()
-                // but setting this.selectedIndex doesnt switch tabs after this initial time
-                // so we use a mix of both...
-                this.selectedIndex = index;
+                this.goToTab(Number(p['selectedTabIndex']));
             }
         });
 
         this._usersService.currentUser()
             .then(u => {
-                let unjoinedGroupsPromise = this._groupsService.getUnjoinedGroups(u.Id)
-                    .then(res => this.publicGroups = res);
-                let userGroupsPromise = this._groupsService.getUserGroups(u.Id)
-                    .then(res => this.userGroups = res);
+                this._userId = u.Id;
+                let unjoinedGroupsPromise = this.loadMoresUnjoinedGroups();
+                let userGroupsPromise = this.loadMoresUserGroups();
                 return Promise.all([unjoinedGroupsPromise, userGroupsPromise]);
             })
-            .then(r => this.initialized = true);
+            .then(r => this.initialized = true)
+            .catch(err => err && this._alertService.showError(err.message));
     }
 
     selectGroup(group: Group) {
@@ -61,6 +63,40 @@ export class GroupsComponent implements OnInit {
     }
 
     goToTab(tabIndex: number) {
-        this.groupsTabView.nativeElement.selectedIndex = tabIndex;
+        this.selectedIndex = tabIndex;
+    }
+
+    loadMoresUserGroups() {
+        this.hasMoreUserGroups = false;
+                console.log(`usr page: ${this._userGroupsPage}`);
+        return this._groupsService.getUserGroups(this._userId, this._userGroupsPage, this._pageSize)
+            .then(groups => {
+                this.userGroups = this.userGroups.concat(groups);
+                this.hasMoreUserGroups = this._hasMore(groups.length, this._pageSize);
+                if (this.hasMoreUserGroups) {
+                    this._userGroupsPage++;
+                }
+                console.log(`loaded usr: ${groups.length}`);
+            })
+            .catch(err => this.hasMoreUserGroups = true);
+    }
+
+    loadMoresUnjoinedGroups() {
+        this.hasMoreUnjoined = false;
+                console.log(`unj page: ${this._unjoinedPage}`);
+        return this._groupsService.getUnjoinedGroups(this._userId, this._unjoinedPage, this._pageSize)
+            .then(groups => {
+                this.publicGroups = this.publicGroups.concat(groups);
+                this.hasMoreUnjoined = this._hasMore(groups.length, this._pageSize);
+                if (this.hasMoreUnjoined) {
+                    this._unjoinedPage++;
+                }
+                console.log(`loaded unj: ${groups.length}`);
+            })
+            .catch(err => this.hasMoreUnjoined = true);
+    }
+
+    private _hasMore(receivedCount: number, pageSize: number) {
+        return receivedCount === pageSize;
     }
 }

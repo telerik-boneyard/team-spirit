@@ -1,3 +1,18 @@
 ﻿.registered-label {
   padding: 8 20 0 15;
 }
+
+.btn-wrp {
+  width: 75%;
+}
+
+.switch {
+  margin: 14 16 14 0;
+  background-color: #e0e0e0;
+}
+
+.switch[checked=true] {
+  background-color: #F4550F;
+  color: #F4550F;
+}
+

@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
+import { ScrollView } from 'ui/scroll-view';
+// import { RadListView } from 'nativescript-telerik-ui/listview';
 
 import { GroupsService, UsersService, AlertService, EventsService } from '../../services';
 import { Group, User } from '../../shared/models';
@@ -13,8 +15,10 @@ import { utilities } from '../../shared';
 })
 export class GroupListComponent implements OnInit {
     @Input() groups: Group[];
-    @Output() onGroupTap: EventEmitter<Group> = new EventEmitter<Group>();
+    @Input() hasMore: boolean = true;
     @Input() areUserGroups: boolean;
+    @Output() onGroupTap: EventEmitter<Group> = new EventEmitter<Group>();
+    @Output() scrolledToBottom: EventEmitter<any> = new EventEmitter<any>();
 
     groupInfoById: any = {};
     initialized = false;
@@ -64,6 +68,10 @@ export class GroupListComponent implements OnInit {
             postfix += 's';
         }
         return (count || 'No') + postfix;
+    }
+
+    onLoadMore() {
+        this.scrolledToBottom.emit();
     }
 
     private _getUserCountByGroup() {

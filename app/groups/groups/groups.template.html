@@ -18,10 +18,11 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView #groupsTabView *ngIf="initialized && (userGroups.length || publicGroups.length)" [selectedIndex]="selectedIndex" class="tab-view">
-        <ScrollView *tabItem="{ title: 'My Groups' }" class="tab-item">
+    <TabView #groupsTabView *ngIf="initialized && (userGroups.length || publicGroups.length)" [(ngModel)]="selectedIndex" class="tab-view">
+        <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
+
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': !userGroups.length }">
-                <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" (onGroupTap)="selectGroup($event)"></group-list>
+                <group-list *ngIf="userGroups.length" [groups]="userGroups" [areUserGroups]="true" [hasMore]="hasMoreUserGroups" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoresUserGroups()"></group-list>
                 <StackLayout *ngIf="!userGroups.length" class="no-items">
                     <Label class="if" text="&#x6e;"></Label>
                     <Label text="It's time to join a group!" [textWrap]="true" class="title"></Label>
@@ -33,10 +34,10 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </ScrollView>
-        <ScrollView *tabItem="{ title: 'All Groups' }" class="tab-item">
+        </StackLayout>
+        <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': !publicGroups.length }">
-                <group-list *ngIf="publicGroups.length" [groups]="publicGroups" (onGroupTap)="selectGroup($event)"></group-list>
+                <group-list *ngIf="publicGroups.length" [groups]="publicGroups" [hasMore]="hasMoreUnjoined" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoresUnjoinedGroups()"></group-list>
                 <StackLayout *ngIf="!publicGroups.length" class="no-items">
                     <Label class="if" text="&#x6e;"></Label>
                     <Label text="No groups yet" [textWrap]="true" class="title"></Label>
@@ -48,7 +49,7 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </ScrollView>
+        </StackLayout>
     </TabView>
 
     <ScrollView class="cntnr">

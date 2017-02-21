@@ -53,42 +53,23 @@ export class GroupsService {
         return this._groupsData.getById(id).then(r => r.result);
     }
 
-    getAllVisible(userId: string) {
-        let filter = {
-            $or: [
-                { IsPublic: true },
-                { Owner: userId }
-            ]
-        };
-        let userGroups: Group[];
-        return this.getUserGroups(userId)
-            .then(joinedGroups => {
-                userGroups = joinedGroups;
-                return this._getGroupsByFilter(filter);
-            })
-            .then(publicAndOwnedGroups => {
-                return this._mergeGroups(publicAndOwnedGroups, userGroups);
-            });
-    }
-
-    getPublicGroups() {
-        let filter = { IsPublic: true };
-        return this._getGroupsByFilter(filter);
-    }
-
-    getUnjoinedGroups(userId: string) {
-        return this._membershipsData.get({ UserId: userId })
-            .then(memberships => {
-                let ids = memberships.result.map(m => m.GroupId);
-                let filter = {
-                    $and: [
-                        { Id: { $nin: ids } },
-                        { $or: [ { IsPublic: true }, { Owner: userId } ] }
-                    ]
-                };
-                return this._getGroupsByFilter(filter);
-            });
-    }
+    // getAllVisible(userId: string) {
+    //     let filter = {
+    //         $or: [
+    //             { IsPublic: true },
+    //             { Owner: userId }
+    //         ]
+    //     };
+    //     let userGroups: Group[];
+    //     return this.getUserGroups(userId)
+    //         .then(joinedGroups => {
+    //             userGroups = joinedGroups;
+    //             return this._getGroupsByFilter(filter);
+    //         })
+    //         .then(publicAndOwnedGroups => {
+    //             return this._mergeGroups(publicAndOwnedGroups, userGroups);
+    //         });
+    // }
 
     getUserCountByGroup(userId: string): Promise<{GroupId: string, UserId: number}[]> {
         return this.getUnjoinedGroups(userId)
@@ -99,12 +80,26 @@ export class GroupsService {
             })
             .then((res: any) => res.result);
     }
+
+    getUnjoinedGroups(userId: string, page = 0, pageSize = 5) {
+        return this._membershipsData.get({ UserId: userId })
+            .then(memberships => {
+                let ids = memberships.result.map(m => m.GroupId);
+                let filter = {
+                    $and: [
+                        { Id: { $nin: ids } },
+                        { $or: [ { IsPublic: true }, { Owner: userId } ] }
+                    ]
+                };
+                return this._getGroupsByFilter(filter, null, page, pageSize);
+            });
+    }
     
-    getUserGroups(userId: string) {
+    getUserGroups(userId: string, page = 0, pageSize = 5) {
         return this._membershipsData.get({ UserId: userId })
             .then(resp => {
                 let userGroupsIds = resp.result.map(reg => reg.GroupId);
-                return this._getGroupsByFilter({ Id: { $in: userGroupsIds }});
+                return this._getGroupsByFilter({ Id: { $in: userGroupsIds }}, null, page, pageSize);
             });
     }
 
@@ -206,10 +201,12 @@ export class GroupsService {
         return joinedGroups;
     }
 
-    private _getGroupsByFilter(filter: any, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[]) {
+    private _getGroupsByFilter(filter: any, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[], page = 0, pageSize = 5) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
         query.expand(this._imageExpandExp);
+        query.skip(page * pageSize);
+        query.take(pageSize);
 
         sorting = sorting || [{ field: 'Name' }];
         sorting = [].concat(sorting);

@@ -1,9 +1,7 @@
-import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core';
-import * as nsImgSource from 'image-source';
-import * as nsImage from 'ui/image';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 
 import { ImagePickerService } from '../../services';
-import { utilities, constants } from '../';
+import { utilities } from '../';
 
 @Component({
     moduleId: module.id,
@@ -11,8 +9,8 @@ import { utilities, constants } from '../';
     templateUrl: './photo-picker.template.html',
     styleUrls: [ './photo-picker.component.css' ]
 })
-export class PhotoPickerComponent implements OnInit {
-    resizedUrl: string;
+export class PhotoPickerComponent {
+    private _resizedUrl: string;
 
     @Input('url') rawUrl: string;
     @Input() type: string;
@@ -27,12 +25,19 @@ export class PhotoPickerComponent implements OnInit {
         private _imgPickerService: ImagePickerService
     ) {}
 
-    ngOnInit() {
+    get resizedUrl() {
         if (!this.rawUrl) {
-            return;
+            return null;
         }
 
-        this.resizedUrl = this._resizeAccordingly(this.rawUrl, this.type);
+        if (!this._resizedUrl) {
+            this._resizedUrl = this._resizeAccordingly(this.rawUrl, this.type);
+        }
+        return this._resizedUrl;
+    }
+
+    set resizedUrl(newValue: string) {
+        this._resizedUrl = newValue;
     }
 
     onEdit(event) {
