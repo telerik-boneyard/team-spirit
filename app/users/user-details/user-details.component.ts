@@ -11,9 +11,10 @@ import {
 } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'user-details',
-    templateUrl: 'users/user-details/user-details.template.html',
-    styleUrls: [ 'users/user-details/user-details.component.css' ]
+    templateUrl: './user-details.template.html',
+    styleUrls: [ './user-details.component.css' ]
 })
 export class UserDetailsComponent implements OnInit {
     user: User;

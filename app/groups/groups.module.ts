@@ -42,8 +42,4 @@ import {
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
-export class GroupsModule {
-  constructor() {
-    console.log('groups module instantiated');
-  }
-}
+export class GroupsModule {}

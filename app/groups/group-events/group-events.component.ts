@@ -8,9 +8,10 @@ import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'group-events',
-    templateUrl: 'groups/group-events/group-events.template.html',
-    styleUrls: ['groups/group-events/group-events.component.css']
+    templateUrl: './group-events.template.html',
+    styleUrls: ['./group-events.component.css']
 })
 export class GroupEventsComponent implements OnInit {
     events: Event[];
@@ -37,7 +38,7 @@ export class GroupEventsComponent implements OnInit {
             this._groupId = params['id'];
             let upcomingPrm = this._eventsService.getUpcoming([this._groupId]);
             let pastPrm = this._eventsService.getPast([this._groupId]);
-            
+
             Promise.all([upcomingPrm, pastPrm])
                 .then(results => this.events = results[0].concat(results[1]))
                 .catch(this._onError.bind(this));

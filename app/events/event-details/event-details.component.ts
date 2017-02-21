@@ -18,9 +18,10 @@ import {
 } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'event-details',
-    templateUrl: 'events/event-details/event-details.template.html',
-    styleUrls: [ 'events/event-details/event-details.component.css' ]
+    templateUrl: './event-details.template.html',
+    styleUrls: [ './event-details.component.css' ]
 })
 export class EventDetailsComponent implements OnInit {
     event: Event;

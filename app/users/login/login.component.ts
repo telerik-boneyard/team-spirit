@@ -12,9 +12,10 @@ import {
 } from '../../services';
 
 @Component({
+    moduleId: module.id,
     selector: 'login',
-    templateUrl: 'users/login/login.template.html',
-    styleUrls: ['users/login/login.component.css']
+    templateUrl: './login.template.html',
+    styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
     user: { Username: string, Password: string, ConfirmPassword: string, DisplayName: string };
@@ -71,6 +72,9 @@ export class LoginComponent implements OnInit {
             .then((res) => {
                 this._alertsService.showSuccess('Welcome to TeamUP!');
                 return this._usersService.login(this.user.Username, this.user.Password);
+            })
+            .then(() => {
+                this._routerExtensions.navigateByUrl('events');
             })
             .catch((err) => {
                 if (err) {

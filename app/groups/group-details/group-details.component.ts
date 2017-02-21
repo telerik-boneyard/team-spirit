@@ -9,9 +9,10 @@ import { Group, User, GroupJoinRequest } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'group-details',
-    templateUrl: 'groups/group-details/group-details.template.html',
-    styleUrls: ['groups/group-details/group-details.component.css']
+    templateUrl: './group-details.template.html',
+    styleUrls: ['./group-details.component.css']
 })
 export class GroupDetailsComponent implements OnInit {
     group: Group;

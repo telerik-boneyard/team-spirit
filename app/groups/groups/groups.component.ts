@@ -7,9 +7,10 @@ import { GroupsService, AlertService, UsersService } from '../../services';
 import { Group } from '../../shared/models';
 
 @Component({
+    moduleId: module.id,
     selector: 'groups',
-    templateUrl: 'groups/groups/groups.template.html',
-    styleUrls: ['groups/groups/groups.component.css']
+    templateUrl: './groups.template.html',
+    styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
     publicGroups: Group[];

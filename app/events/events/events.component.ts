@@ -7,9 +7,10 @@ import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'events',
-    templateUrl: 'events/events/events.template.html',
-    styleUrls: ['events/events/events.component.css']
+    templateUrl: './events.template.html',
+    styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
     upcomingEvents: Event[];
@@ -71,5 +72,9 @@ export class EventsComponent implements OnInit {
 
     showDetails(event: Event) {
         this._routerExtensions.navigate([`/events/${event.Id}`]);
+    }
+
+    goToAllGroups() {
+        this._routerExtensions.navigate(['groups', { selectedTabIndex: 1 }]);
     }
 }

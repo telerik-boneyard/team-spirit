@@ -6,9 +6,10 @@ import { Group, User } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
+    moduleId: module.id,
     selector: 'group-list',
-    templateUrl: 'groups/group-list/group-list.template.html',
-    styleUrls: ['groups/group-list/group-list.component.css']
+    templateUrl: './group-list.template.html',
+    styleUrls: ['./group-list.component.css']
 })
 export class GroupListComponent implements OnInit {
     @Input() groups: Group[];
