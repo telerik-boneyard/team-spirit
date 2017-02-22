@@ -1,5 +1,6 @@
 app/**/*.js
 app/**/*.js.map
+!app/platform-sheet-loader.js
 
 node_modules
 platforms

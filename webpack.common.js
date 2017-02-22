@@ -122,6 +122,7 @@ module.exports = function (platform, destinationApp) {
                         "resolve-url-loader",
                         "nativescript-css-loader",
                         "nativescript-dev-webpack/platform-css-loader",
+                        { loader: "./platform-sheet-loader.js", options: {platform} },
                     ]),
                 },
                 // Other CSS files get bundled using the raw loader

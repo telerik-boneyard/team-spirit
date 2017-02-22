@@ -1,6 +1,5 @@
-@import '~/css/core.light.css';
-
-@import url('~/platform.css');
+@import 'nativescript-theme-core/css/core.light.css';
+@import url('./platform.css');
 
 .if {
   font-family: 'teamup-font';
