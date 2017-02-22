@@ -4,7 +4,7 @@
 }
 
 .group {
-  padding: 10 0;
+  padding: 10 20;
 }
 
 .group-name {
@@ -34,6 +34,7 @@
 }
 
 .group-list-separator {
+  margin: 0 20;
   border-width: 0;
   border-bottom-width: 1;
   border-color: #c8c7cc;

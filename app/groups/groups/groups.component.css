@@ -4,11 +4,7 @@
 }
 
 .tab-item {
-  padding: 10 20;
-}
-
-.tab-items-wrapper {
-  padding: 0 20;
+  padding: 10 0;
 }
 
 .tab-items-wrapper.no-groups {
