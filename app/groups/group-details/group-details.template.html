@@ -25,7 +25,6 @@
             <photo-picker [url]="group.ImageUrl" [type]="'group'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
             <Label class="btn btn-primary join-group" *ngIf="showJoinBtn()" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
-            <Label class="application-sent-msg" *ngIf="!hasJoined && !!userApplication" [text]="getApplicationStatusText()" textWrap="true"></Label>
 
             <GridLayout *ngIf="hasJoined === true" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" columns="*, *">
                 <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="0">
@@ -43,6 +42,11 @@
             </GridLayout>
 
             <StackLayout class="info-container">
+                <StackLayout class="approval-status" orientation="horizontal" *ngIf="!hasJoined && !!userApplication">
+                    <Label class="if approval-icon" [text]="getApplicationStatusIcon()"></Label>
+                    <Label class="approval-text" [text]="getApplicationStatusText()" textWrap="true"></Label>
+                </StackLayout>
+
                 <StackLayout class="info-wrapper">
                     <Label class="info-label" text="Description"></Label>
                     <Label class="info-value" [text]="group.Description" [textWrap]="true"></Label>

@@ -146,13 +146,19 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     getApplicationStatusText() {
-        let text = `Your request to join ${this.group.Name} has `;
+        let text = 'Pending approval';
         if (this.userApplication && this.userApplication.Resolved) {
-            text += 'been denied'; // cause if it was approved, they wouldn't see this message
-        } else {
-            text += 'not been resolved yet';
+            text = 'Membership denied'; // cause if it was approved, they wouldn't see this message
         }
         return text;
+    }
+
+    getApplicationStatusIcon() {
+        let icon = '68';
+        if (this.userApplication && this.userApplication.Resolved) {
+            icon = '67';
+        }
+        return String.fromCharCode(parseInt(icon, 16));
     }
 
     showJoinBtn() {

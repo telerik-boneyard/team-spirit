@@ -71,6 +71,26 @@
   color: #bfbfbf;
 }
 
-.application-sent-msg {
-  color: grey;
+.approval-status {
+  padding: 15 0;
+  border-bottom-width: 1;
+  border-color: #c8c7cc;
+  color: #000;
+}
+
+.approval-icon,
+.approval-text {
+  vertical-align: middle;
+}
+
+.approval-icon {
+  width: 24;
+  height: 24;
+  margin-right: 5;
+  padding-top: 3;
+  border-color: #000;
+  border-width: 1;
+  border-radius: 12;
+  font-size: 16;
+  text-align: center;
 }
