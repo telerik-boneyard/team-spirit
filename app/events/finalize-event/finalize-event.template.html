@@ -10,15 +10,20 @@
     </ActionBarExtension>
 
     <StackLayout *ngIf="event" class="content">
-        <Label text="Choose date and set it as final date for this event. No voting for dates will be allowed after that." textWrap="true"></Label>
-        
-        <Label text="Dates"></Label>
-        <StackLayout *ngFor="let dateInfo of countsBydate" (tap)="selectDate(dateInfo.date)">
-            <GridLayout columns="30, *, 50" rows="auto">
-                <Label col="0" row="0" *ngIf="dateIsSelected(dateInfo.date)" text="&#x68;" class="vote yes if"></Label>
-                <Label col="0" row="0" *ngIf="!dateIsSelected(dateInfo.date)" text=""></Label>
-                <Label col="1" row="0" [text]="dateInfo.date | date:dateFormat"></Label>
-                <Label col="2" row="0" [text]="getCountText(dateInfo.count)" (tap)="listVoters(dateInfo.date)"></Label>
+        <Label text="Choose date and set it as final date for this event. No voting for dates will be allowed after that." textWrap="true" class="hint"></Label>
+
+        <Label text="Dates" class="info-label"></Label>
+        <StackLayout *ngFor="let dateInfo of countsBydate" (tap)="selectDate(dateInfo.date)" class="date-info">
+            <GridLayout columns="30, *, auto" rows="auto">
+                <StackLayout col="0" row="0" *ngIf="dateIsSelected(dateInfo.date)" class="vote">
+                    <Label text="&#x68;" class="if"></Label>
+                </StackLayout>
+                <Label col="0" row="0" class="vote" *ngIf="!dateIsSelected(dateInfo.date)" text=""></Label>
+                <Label col="1" row="0" class="date" [text]="dateInfo.date | date:dateFormat"></Label>
+                <StackLayout col="2" row="0" orientation="horizontal" class="count">
+                    <Label [text]="getCountText(dateInfo.count)" (tap)="listVoters(dateInfo.date)"></Label>
+                    <Label class="if" text="&#x64;" horizontalAlignment="right"></Label>
+                </StackLayout>
             </GridLayout>
         </StackLayout>
     </StackLayout>
