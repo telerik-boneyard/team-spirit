@@ -10,8 +10,12 @@
 
     <StackLayout *ngIf="eventDates.length" class="content">
         <StackLayout *ngFor="let date of eventDates" class="group-wrp">
-            <Label class="info-label" [text]="date | date:dateFormat" textWrap="true"></Label>
-            <Label [text]="getVotesText(date)"></Label>
+            <GridLayout columns="*, 80" rows="auto">
+                <Label col="0" row="0" class="info-label" [text]="date | date:dateFormat" textWrap="true"></Label>
+                <StackLayout col="1" row="0">
+                    <Label class="vote" horizontalAlignment="right" [text]="getVotesText(date)"></Label>
+                </StackLayout>
+            </GridLayout>
             <user-list *ngIf="hasVoters(date)" [users]="getParticipants(date)"></user-list>
             <Label *ngIf="!hasVoters(date)" text="Nobody voted for this date" textWrap="true" class="no-voters"></Label>
         </StackLayout>

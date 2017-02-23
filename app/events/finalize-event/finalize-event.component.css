@@ -2,3 +2,55 @@
   height: 100%;
   background-color: #fff;
 }
+
+.content {
+  padding: 20 0;
+}
+
+.hint {
+  margin: 0 20 20;
+}
+
+.info-label,
+.count {
+  margin: 20;
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
+}
+
+.info-label {
+  margin: 10 20;
+}
+
+.date-info {
+  padding: 0 0 0 20;
+}
+
+.vote,
+.date,
+.count {
+  padding: 15 0;
+}
+
+.date,
+.count {
+  border-bottom-width: 1;
+  border-color: #ebebed;
+}
+
+.vote .if {
+  padding-top: 2;
+  font-size: 20;
+  color: #ff0000;
+}
+
+.count {
+  margin: 0;
+  font-size: 14;
+  color: #9c9c9c;
+}
+
+.count .if {
+  padding: 5 10 0 5;
+}
