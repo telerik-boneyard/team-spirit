@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, SimpleChanges, ViewChild, ElementRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
@@ -13,18 +13,14 @@ import { Group } from '../../shared/models';
     styleUrls: ['./groups.component.css']
 })
 export class GroupsComponent implements OnInit {
-    @ViewChild("groupsTabView") groupsTabView: ElementRef;
-
-    publicGroups: Group[] = [];
-    userGroups: Group[] = [];
-    initialized: boolean = false;
-    selectedIndex: number = 0;
+    publicGroups: Group[];
+    userGroups: Group[];
     hasMoreUnjoined: boolean = true;
     hasMoreUserGroups: boolean = true;
-    private _userId: string;
     private readonly _pageSize = 5;
     private _unjoinedPage = 0;
     private _userGroupsPage = 0;
+    private _selectedIndex = 0;
 
     constructor(
         private _page: Page,
@@ -38,20 +34,34 @@ export class GroupsComponent implements OnInit {
     ngOnInit() {
         this._page.actionBar.title = 'Groups';
         this._route.params.subscribe(p => {
-            if ('selectedTabIndex' in p) {
-                this.goToTab(Number(p['selectedTabIndex']));
+            let setTabOnInit = 'selectedTabIndex' in p;
+            let tabIndex = 0;
+            if (setTabOnInit) {
+                tabIndex = Number(p['selectedTabIndex']);
             }
+            this.goToTab(tabIndex);
         });
+    }
 
-        this._usersService.currentUser()
-            .then(u => {
-                this._userId = u.Id;
-                let unjoinedGroupsPromise = this.loadMoresUnjoinedGroups();
-                let userGroupsPromise = this.loadMoresUserGroups();
-                return Promise.all([unjoinedGroupsPromise, userGroupsPromise]);
-            })
-            .then(r => this.initialized = true)
-            .catch(err => err && this._alertService.showError(err.message));
+    set selectedIndex(val: number) {
+        this._selectedIndex = val;
+        if (this._selectedIndex === 0 && !this.userGroups) { // user groups open
+            this._initialize(true);
+        } else if (this._selectedIndex === 1 && !this.publicGroups) { // all groups open
+            this._initialize(false);
+        }
+    }
+
+    get selectedIndex() {
+        return this._selectedIndex;
+    }
+
+    isInitialized() {
+        return this.userGroups || this.publicGroups;
+    }
+
+    hasAnyGroups() {
+        return (this.userGroups && this.userGroups.length) || (this.publicGroups && this.publicGroups.length);
     }
 
     selectGroup(group: Group) {
@@ -68,35 +78,43 @@ export class GroupsComponent implements OnInit {
 
     loadMoresUserGroups() {
         this.hasMoreUserGroups = false;
-                // console.log(`usr page: ${this._userGroupsPage}`);
-        return this._groupsService.getUserGroups(this._userId, this._userGroupsPage, this._pageSize)
+        return this._usersService.currentUser()
+            .then((u) => this._groupsService.getUserGroups(u.Id, this._userGroupsPage, this._pageSize))
             .then(groups => {
-                this.userGroups = this.userGroups.concat(groups);
+                this.userGroups = (this.userGroups || []).concat(groups);
                 this.hasMoreUserGroups = this._hasMore(groups.length, this._pageSize);
                 if (this.hasMoreUserGroups) {
                     this._userGroupsPage++;
                 }
-                // console.log(`loaded usr: ${groups.length}`);
             })
             .catch(err => this.hasMoreUserGroups = true);
     }
 
     loadMoresUnjoinedGroups() {
         this.hasMoreUnjoined = false;
-                // console.log(`unj page: ${this._unjoinedPage}`);
-        return this._groupsService.getUnjoinedGroups(this._userId, this._unjoinedPage, this._pageSize)
+        return this._usersService.currentUser()
+            .then((u) => this._groupsService.getUnjoinedGroups(u.Id, this._unjoinedPage, this._pageSize))
             .then(groups => {
-                this.publicGroups = this.publicGroups.concat(groups);
+                this.publicGroups = (this.publicGroups || []).concat(groups);
                 this.hasMoreUnjoined = this._hasMore(groups.length, this._pageSize);
                 if (this.hasMoreUnjoined) {
                     this._unjoinedPage++;
                 }
-                // console.log(`loaded unj: ${groups.length}`);
             })
             .catch(err => this.hasMoreUnjoined = true);
     }
 
     private _hasMore(receivedCount: number, pageSize: number) {
         return receivedCount === pageSize;
+    }
+
+    private _initialize(loadUserGroups) {
+        let promise: Promise<any>;
+        if (loadUserGroups) {
+            promise = this.loadMoresUserGroups();
+        } else {
+            promise = this.loadMoresUnjoinedGroups();
+        }
+        return promise.catch(err => err && this._alertService.showError(err.message));
     }
 }

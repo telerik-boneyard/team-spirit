@@ -22,6 +22,7 @@ import {
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
+    NativeScriptRouterModule,
     NativeScriptRouterModule.forChild(eventsRoutes),
     SharedModule
   ],

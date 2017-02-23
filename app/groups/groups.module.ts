@@ -1,9 +1,8 @@
-import { NativeScriptModule } from "nativescript-angular/nativescript.module";
-import { NativeScriptFormsModule } from "nativescript-angular/forms";
-import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
+import { NativeScriptModule } from 'nativescript-angular/nativescript.module';
+import { NativeScriptFormsModule } from 'nativescript-angular/forms';
+import { NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
-// import { RouterModule } from "@angular/router";
-import { NativeScriptRouterModule } from "nativescript-angular/router";
+import { NativeScriptRouterModule } from 'nativescript-angular/router';
 import { routes } from './groups.routing';
 import { SharedModule } from '../shared';
 
@@ -23,6 +22,7 @@ import {
   imports: [
     NativeScriptModule,
     NativeScriptFormsModule,
+    NativeScriptRouterModule,
     NativeScriptRouterModule.forChild(routes),
     SharedModule
   ],

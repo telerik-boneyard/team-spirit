@@ -17,7 +17,7 @@ Everlive.Events.beforeDelete(function(request, context, done) {
     var eventsDB = el.data('Events');
     eventsDB.getById(eventId)
         .then(function(resp) {
-            if (isPastEvent(resp.result)) {
+            if (isPastEvent(resp.result) && request.principal.type === 'user') {
                 Everlive.Response.setErrorResult('Deletion of past events is not allowed');
             }
             done();
