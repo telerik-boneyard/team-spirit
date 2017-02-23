@@ -72,9 +72,12 @@ export class FinalizeEventComponent implements OnInit {
         return text;
     }
 
-    listVoters(date: string) {
-        let params = { onlyDate: date, selectedDate: this._selectedDate };
-        this._routerExtensions.navigate([`events/${this.event.Id}/participants`, params]);
+    listVoters(dateInfo: { date: string, count: number }) {
+        if (dateInfo.count > 0) {
+            let date = dateInfo.date;
+            let params = { onlyDate: date, selectedDate: this._selectedDate };
+            this._routerExtensions.navigate([`events/${this.event.Id}/participants`, params]);
+        }
     }
 
     finalize() {
@@ -82,7 +85,8 @@ export class FinalizeEventComponent implements OnInit {
             return this._alertsService.showError('Please select a final date for the event');
         }
 
-        this._eventsService.finalizeEvent(this._eventId, this._selectedDate)
+        this._alertsService.askConfirmation('Once you set this date, it cannot be changed')
+            .then(() => this._eventsService.finalizeEvent(this._eventId, this._selectedDate))
             .then(res => {
                 if (res) {
                     this._alertsService.showSuccess('Event date was set');

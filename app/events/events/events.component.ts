@@ -60,7 +60,7 @@ export class EventsComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this._routerExtensions.navigateByUrl(`/events/b35553c0-f519-11e6-94e0-bf7b6fa5001b/finalize`);
+        // this._routerExtensions.navigateByUrl(`/events/d71acd60-f9df-11e6-8f26-e37a026d55d1/finalize`);
         // this._routerExtensions.navigateByUrl('/groups');
         // this._routerExtensions.navigateByUrl(`/groups/4e292710-9b69-11e6-901f-5dd3e4bc26b4/events`); // BS
         // this._routerExtensions.navigateByUrl(`/groups/688e7d40-d682-11e6-9347-a37d034954b1/members`); // Test Group
