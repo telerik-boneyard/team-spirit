@@ -13,19 +13,21 @@ import { utilities } from '../../shared';
     styleUrls: ['./events.component.css']
 })
 export class EventsComponent implements OnInit {
-    upcomingEvents: Event[] = [];
-    pastEvents: Event[] = [];
-    userGroups: Group[] = [];
-    initialized: boolean = false;
+    upcomingEvents: Event[];
+    pastEvents: Event[];
+    userGroups: Group[];
     dateFormat: string = utilities.dateFormat;
     canAdd: boolean = false;
     hasMoreUpcoming: boolean = true;
     hasMorePast: boolean = true;
-
+    
+    private _tabIndex = 0;
     private _upcomingPage = 0;
     private _pastPage = 0;
     private _userGroupIds: string[];
     private readonly _pageSize = 5;
+    private _lockPast: boolean = false;
+    private _lockUpcoming: boolean = false;
 
     constructor(
         private _usersService: UsersService,
@@ -35,6 +37,19 @@ export class EventsComponent implements OnInit {
         private _alertsService: AlertService,
         private _page: Page
     ) {}
+
+    set tabIndex(val: number) {
+        this._tabIndex = val;
+        if (this._tabIndex === 0 && !this.upcomingEvents) {
+            this.initializeTab(false);
+        } else if (this._tabIndex === 1 && !this.pastEvents) {
+            this.initializeTab(true);
+        }
+    }
+
+    get tabIndex() {
+        return this._tabIndex;
+    }
 
     onAdd() {
         this._routerExtensions.navigateByUrl('/events/add');
@@ -55,47 +70,35 @@ export class EventsComponent implements OnInit {
                 return this._groupsService.getUserGroups(user.Id);
             })
             .then(userGroups => {
-                if (!userGroups.length) {
-                    return Promise.resolve([]);
-                }
                 this.userGroups = userGroups;
                 this._userGroupIds = userGroups.map(g => g.Id);
-                let pastEventsPrm = this.loadPastEvents();
-                let upcomingEventsPrm = this.loadUpcomingEvents();
-
-                return Promise.all([pastEventsPrm, upcomingEventsPrm]);
+                return this.initializeTab(this.tabIndex === 1);
             })
-            .then((events) => this.initialized = true)
             .catch(err => this._alertsService.showError(err.message));
     }
 
     canAddEvent() {
-        return this.initialized && this.canAdd && this.userGroups.length;
+        return this.isInitialized() && this.canAdd && this.userGroups.length;
     }
 
     showDetails(event: Event) {
         this._routerExtensions.navigate([`/events/${event.Id}`]);
     }
 
-    private _lockUpcoming: boolean = false;
     loadUpcomingEvents() {
         if (!this.hasMoreUpcoming || this._lockUpcoming) {
-            return;
+            return Promise.resolve();
         }
         this._lockUpcoming = true;
-        // this.hasMoreUpcoming = false;
-        // console.log(`getting upc page: ${this._upcomingPage}`);
         return this._eventsService.getUpcoming(this._userGroupIds, this._upcomingPage, this._pageSize)
             .then(events => {
-                // console.log(`got upc: ${events.length}`);
-                // this.upcomingEvents = this.upcomingEvents.concat(events);
-                this.upcomingEvents = [...this.upcomingEvents, ...events];
+                this.upcomingEvents = (this.upcomingEvents || []).concat(events);
+                // this.upcomingEvents = [...this.upcomingEvents, ...events];
                 this.hasMoreUpcoming = !!(events && events.length === this._pageSize);
                 if (this.hasMoreUpcoming) {
                     this._upcomingPage++;
                 }
                 this._lockUpcoming = false;
-                // console.log(`upcpage: ${this._upcomingPage}`);
             })
             .catch(err => {
                 this.hasMoreUpcoming = true;
@@ -104,24 +107,19 @@ export class EventsComponent implements OnInit {
             });
     }
 
-    private _lockPast: boolean = false;
     loadPastEvents() {
         if (!this.hasMorePast || this._lockPast) {
-            return;
+            return Promise.resolve();
         }
         this._lockPast = true;
-        // console.log(`getting upc page: ${this._pastPage}`);
         return this._eventsService.getPast(this._userGroupIds, this._pastPage, this._pageSize)
             .then(events => {
-                // console.log(`got past: ${events.length}`);
-                this.pastEvents = this.pastEvents.concat(events);
-                // this.pastEvents = [...this.pastEvents, ...events];
+                this.pastEvents = (this.pastEvents || []).concat(events);
                 this.hasMorePast = !!(events && events.length === this._pageSize);
                 if (this.hasMorePast) {
                     this._pastPage++;
                 }
                 this._lockPast = false;
-                // console.log(`pastpage: ${this._pastPage}`);
             })
             .catch(err => {
                 this._lockPast = false;
@@ -129,7 +127,25 @@ export class EventsComponent implements OnInit {
             });
     }
 
+    initializeTab(loadPast) {
+        let prm: Promise<any>;
+        if (loadPast) {
+            prm = this.loadPastEvents();
+        } else {
+            prm = this.loadUpcomingEvents();
+        }
+        return prm;
+    }
+
     goToAllGroups() {
         this._routerExtensions.navigate(['groups', { selectedTabIndex: 1 }]);
+    }
+
+    isInitialized() {
+        return this.userGroups && (this.upcomingEvents || this.pastEvents);
+    }
+
+    hasAnyEvents() {
+        return (this.upcomingEvents && this.upcomingEvents.length) || (this.pastEvents && this.pastEvents.length);
     }
 }

@@ -18,9 +18,10 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView #groupsTabView *ngIf="isInitialized()" [(ngModel)]="selectedIndex" class="tab-view">
+    <TabView #groupsTabView [(ngModel)]="selectedIndex" class="tab-view">
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': userGroups && !userGroups.length }">
+                <ActivityIndicator [busy]="!userGroups" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
                 <group-list *ngIf="userGroups && userGroups.length" [groups]="userGroups" [areUserGroups]="true" [hasMore]="hasMoreUserGroups" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoresUserGroups()"></group-list>
                 <StackLayout *ngIf="userGroups && !userGroups.length" class="no-items">
                     <Label class="if" text="&#x6e;"></Label>
@@ -36,6 +37,7 @@
         </StackLayout>
         <StackLayout *tabItem="{ title: 'All Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': publicGroups && !publicGroups.length }">
+                <ActivityIndicator [busy]="!publicGroups" [visibility]="publicGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
                 <group-list *ngIf="publicGroups && publicGroups.length" [groups]="publicGroups" [hasMore]="hasMoreUnjoined" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoresUnjoinedGroups()"></group-list>
                 <StackLayout *ngIf="publicGroups && !publicGroups.length" class="no-items">
                     <Label class="if" text="&#x6e;"></Label>
@@ -51,7 +53,7 @@
         </StackLayout>
     </TabView>
 
-    <ScrollView class="cntnr">
+    <!--<ScrollView class="cntnr">
         <ActivityIndicator [busy]="!isInitialized()" [visibility]="isInitialized() ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
+    </ScrollView>-->
 </ScrollView>

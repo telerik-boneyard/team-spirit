@@ -7,7 +7,7 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="initialized && !upcomingEvents.length && !pastEvents.length && !userGroups.length" class="no-items">
+    <StackLayout *ngIf="isInitialized() && !hasAnyEvents() && !userGroups.length" class="no-items">
         <Label class="if" text="&#x6a;"></Label>
         <Label text="Ready for fun?" [textWrap]="true" class="title"></Label>
         <StackLayout *ngIf="canAdd">
@@ -18,7 +18,7 @@
         </StackLayout>
     </StackLayout>
 
-    <StackLayout *ngIf="initialized && !upcomingEvents.length && !pastEvents.length && userGroups.length" class="no-items">
+    <StackLayout *ngIf="isInitialized() && !hasAnyEvents() && userGroups.length" class="no-items">
         <Label class="if" text="&#x6a;"></Label>
         <Label text="No events yet" [textWrap]="true" class="title"></Label>
         <StackLayout *ngIf="canAdd">
@@ -29,11 +29,12 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView *ngIf="initialized && userGroups.length && (upcomingEvents.length || pastEvents.length)" #tabview [selectedIndex]="0" class="tab-view">
+    <TabView #tabview [(ngModel)]="tabIndex" class="tab-view">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
-            <event-list *ngIf="upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMoreUpcoming" (scrolledToBottom)="loadUpcomingEvents()"></event-list>
+            <ActivityIndicator [busy]="!upcomingEvents" [visibility]="upcomingEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <event-list *ngIf="upcomingEvents && upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMoreUpcoming" (scrolledToBottom)="loadUpcomingEvents()"></event-list>
 
-            <StackLayout *ngIf="!upcomingEvents.length" class="no-items">
+            <StackLayout *ngIf="upcomingEvents && !upcomingEvents.length" class="no-items">
                 <Label class="if" text="&#x6a;"></Label>
                 <Label text="No upcoming events" [textWrap]="true" class="title"></Label>
                 <StackLayout *ngIf="canAdd">
@@ -47,17 +48,14 @@
         </StackLayout>
 
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">
-            <event-list *ngIf="pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMorePast" (scrolledToBottom)="loadPastEvents()"></event-list>
+            <ActivityIndicator [busy]="!pastEvents" [visibility]="pastEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <event-list *ngIf="pastEvents && pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMorePast" (scrolledToBottom)="loadPastEvents()"></event-list>
 
-            <StackLayout *ngIf="!pastEvents.length" class="no-items">
+            <StackLayout *ngIf="pastEvents && !pastEvents.length" class="no-items">
                 <Label class="if" text="&#x6a;"></Label>
                 <Label text="No past events" [textWrap]="true" class="title"></Label>
                 <Label text="Hey, it looks like all the fun lies just around the corner!" [textWrap]="true"></Label>
             </StackLayout>
         </StackLayout>
     </TabView>
-
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!initialized" [visibility]="initialized ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
 </ScrollView>

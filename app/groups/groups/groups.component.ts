@@ -39,7 +39,9 @@ export class GroupsComponent implements OnInit {
             if (setTabOnInit) {
                 tabIndex = Number(p['selectedTabIndex']);
             }
-            this.goToTab(tabIndex);
+            if (!isNaN(tabIndex) && tabIndex !== 0) {
+                this.goToTab(tabIndex);
+            }
         });
     }
 
