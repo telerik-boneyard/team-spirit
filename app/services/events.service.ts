@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Data } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Data';
 import { Query } from '../../node_modules/everlive-sdk/dist/declarations/everlive/query/Query';
+import * as jstz from 'jstz';
 
 import { EverliveProvider } from './everlive-provider.service';
 import { EventRegistrationsService } from './event-registrations.service';
@@ -45,6 +46,7 @@ export class EventsService {
 
     create(event: Event) {
         this._clearExpandedFields(event);
+        (event as any).Timezone = jstz.determine().name();
         return this._data.create(event);
     }
 

@@ -125,18 +125,13 @@ function getDataForUserRegisteredForEvent (context) {
         });
 }
 
-function _offsetDate (dateIsoString, offset) {
-    var oneHour = 3600000;
-    var msInMinute = 60000;
-    var d = new Date(dateIsoString);
-    var offsetDateInMs = d.getTime() + (d.getTimezoneOffset() * msInMinute);
-    return new Date(offsetDateInMs + (oneHour * (offset || 0)));
-}
-
-function _formatDate (dateIsoString, offset) {
-    var dateStr = _offsetDate(dateIsoString, offset).toString();
-    var ind = dateStr.indexOf(' GMT');
-    return dateStr.substring(0, ind);
+function _formatDate (dateIsoString, timezoneName) {
+    var moment = require('moment-timezone');
+    var result;
+    if (dateIsoString) {
+        result = moment.tz(dateIsoString, timezoneName).format('dddd, MMMM Do YYYY, h:mm:ss A');
+    }
+    return result;
 }
 
 function getDataForEventRelated (templateName, context) {
@@ -151,12 +146,12 @@ function getDataForEventRelated (templateName, context) {
         .then(function(organizerRes) {
             var organizer = organizerRes.result;
             event.Organizer = organizer.DisplayName;
-            var offset = organizer.TimezoneOffset;
+            var timezoneName = event.Timezone || organizer.Timezone;
             if (event.EventDate) {
-                event.EventDate = _formatDate(event.EventDate, offset);
+                event.EventDate = _formatDate(event.EventDate, timezoneName);
             } else {
                 event.EventDateChoices = event.EventDateChoices.map(function(dateOption) {
-                    return _formatDate(dateOption, offset);
+                    return _formatDate(dateOption, timezoneName);
                 });
             }
 

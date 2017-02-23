@@ -4,6 +4,7 @@ import { Users } from '../../node_modules/everlive-sdk/dist/declarations/everliv
 import { User as ServerUser } from '../../node_modules/everlive-sdk/dist/declarations/everlive/interfaces/User';
 import { User } from '../shared'
 import { Observable, BehaviorSubject } from 'rxjs';
+import * as jstz from 'jstz';
 
 import { utilities } from '../shared';
 
@@ -38,7 +39,7 @@ export class UsersService {
 
     register(username: string, password: string, displayName: string) {
         let attrs: any = { Email: username, DisplayName: displayName };
-        attrs.TimezoneOffset = (new Date()).getTimezoneOffset();
+        attrs.Timezone = jstz.determine().name();
         return this._users.register(username, password, attrs);
     }
 
