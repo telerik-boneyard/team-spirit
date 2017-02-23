@@ -7,7 +7,7 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="isInitialized() && !hasAnyGroups()" class="no-items">
+    <StackLayout *ngIf="isInitialized() && !hasAnyGroups" class="no-items">
         <Label class="if" text="&#x6e;"></Label>
         <Label text="No groups yet" [textWrap]="true" class="title"></Label>
         <StackLayout>
@@ -52,8 +52,4 @@
             </StackLayout>
         </StackLayout>
     </TabView>
-
-    <!--<ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!isInitialized()" [visibility]="isInitialized() ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>-->
 </ScrollView>

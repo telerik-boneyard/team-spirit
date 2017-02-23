@@ -7,7 +7,7 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="isInitialized() && !hasAnyEvents() && !userGroups.length" class="no-items">
+    <StackLayout *ngIf="isInitialized() && !hasAnyLoadedEvents() && !userGroups.length" class="no-items">
         <Label class="if" text="&#x6a;"></Label>
         <Label text="Ready for fun?" [textWrap]="true" class="title"></Label>
         <StackLayout *ngIf="canAdd">
@@ -18,7 +18,7 @@
         </StackLayout>
     </StackLayout>
 
-    <StackLayout *ngIf="isInitialized() && !hasAnyEvents() && userGroups.length" class="no-items">
+    <StackLayout *ngIf="isInitialized() && hasNoEvents() && userGroups.length" class="no-items">
         <Label class="if" text="&#x6a;"></Label>
         <Label text="No events yet" [textWrap]="true" class="title"></Label>
         <StackLayout *ngIf="canAdd">

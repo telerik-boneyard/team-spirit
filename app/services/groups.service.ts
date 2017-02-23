@@ -53,23 +53,18 @@ export class GroupsService {
         return this._groupsData.getById(id).then(r => r.result);
     }
 
-    // getAllVisible(userId: string) {
-    //     let filter = {
-    //         $or: [
-    //             { IsPublic: true },
-    //             { Owner: userId }
-    //         ]
-    //     };
-    //     let userGroups: Group[];
-    //     return this.getUserGroups(userId)
-    //         .then(joinedGroups => {
-    //             userGroups = joinedGroups;
-    //             return this._getGroupsByFilter(filter);
-    //         })
-    //         .then(publicAndOwnedGroups => {
-    //             return this._mergeGroups(publicAndOwnedGroups, userGroups);
-    //         });
-    // }
+    getAllVisible(userId: string): Promise<Group[]|number>
+    getAllVisible(userId: string, justCount: boolean): Promise<number>
+    getAllVisible(userId: string, justCount = false): Promise<Group[]|number> {
+        let filter = {
+            $or: [
+                { IsPublic: true },
+                { Owner: userId }
+            ]
+        };
+        let func = justCount ? this._groupsData.count : this._groupsData.get;
+        return func.call(this._groupsData, filter).then(res => res.result);
+    }
 
     getUserCountByGroup(userId: string): Promise<{GroupId: string, UserId: number}[]> {
         return this.getUnjoinedGroups(userId)

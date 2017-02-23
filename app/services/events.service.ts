@@ -137,17 +137,16 @@ export class EventsService {
         return this._data.aggregate(query).then((r: any) => r.result);
     }
 
+    hasPastEvents(groupIds: string[]) {
+        return this.getPast(groupIds, 0, 1).then(res => !!res.length);
+    }
+
     getPast(userGroupIds: string[], page?: number, pageSize?: number) {
-        if (!userGroupIds.length) {
-            return Promise.reject({ message: 'No group ids specified' });
-        }
-        
         let filter = {
             EventDate: { $lt: new Date().toISOString() },
             GroupId: { $in: userGroupIds }
         };
-        return this._usersService.currentUser()
-            .then(u => this._getWithFilter(filter, true, { field: 'EventDate', desc: true }, page, pageSize));
+        return this._getWithFilter(filter, true, { field: 'EventDate', desc: true }, page, pageSize);
     }
 
     getParticipants(eventId: string) {

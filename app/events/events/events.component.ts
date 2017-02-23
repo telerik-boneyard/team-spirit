@@ -20,6 +20,7 @@ export class EventsComponent implements OnInit {
     canAdd: boolean = false;
     hasMoreUpcoming: boolean = true;
     hasMorePast: boolean = true;
+    hasPastEvents: boolean = false;
     
     private _tabIndex = 0;
     private _upcomingPage = 0;
@@ -40,6 +41,9 @@ export class EventsComponent implements OnInit {
 
     set tabIndex(val: number) {
         this._tabIndex = val;
+        if (!this._userGroupIds) {
+            return;
+        }
         if (this._tabIndex === 0 && !this.upcomingEvents) {
             this.initializeTab(false);
         } else if (this._tabIndex === 1 && !this.pastEvents) {
@@ -72,6 +76,10 @@ export class EventsComponent implements OnInit {
             .then(userGroups => {
                 this.userGroups = userGroups;
                 this._userGroupIds = userGroups.map(g => g.Id);
+                return this._eventsService.hasPastEvents(this._userGroupIds);
+            })
+            .then((hasPast) => {
+                this.hasPastEvents = hasPast;
                 return this.initializeTab(this.tabIndex === 1);
             })
             .catch(err => this._alertsService.showError(err.message));
@@ -93,7 +101,6 @@ export class EventsComponent implements OnInit {
         return this._eventsService.getUpcoming(this._userGroupIds, this._upcomingPage, this._pageSize)
             .then(events => {
                 this.upcomingEvents = (this.upcomingEvents || []).concat(events);
-                // this.upcomingEvents = [...this.upcomingEvents, ...events];
                 this.hasMoreUpcoming = !!(events && events.length === this._pageSize);
                 if (this.hasMoreUpcoming) {
                     this._upcomingPage++;
@@ -145,7 +152,11 @@ export class EventsComponent implements OnInit {
         return this.userGroups && (this.upcomingEvents || this.pastEvents);
     }
 
-    hasAnyEvents() {
+    hasAnyLoadedEvents() {
         return (this.upcomingEvents && this.upcomingEvents.length) || (this.pastEvents && this.pastEvents.length);
+    }
+
+    hasNoEvents() {
+        return this.upcomingEvents && this.pastEvents && !this.upcomingEvents.length && !this.pastEvents.length;
     }
 }

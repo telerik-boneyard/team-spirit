@@ -17,6 +17,7 @@ export class GroupsComponent implements OnInit {
     userGroups: Group[];
     hasMoreUnjoined: boolean = true;
     hasMoreUserGroups: boolean = true;
+    hasAnyGroups: boolean = false;
     private readonly _pageSize = 5;
     private _unjoinedPage = 0;
     private _userGroupsPage = 0;
@@ -42,6 +43,10 @@ export class GroupsComponent implements OnInit {
             if (!isNaN(tabIndex) && tabIndex !== 0) {
                 this.goToTab(tabIndex);
             }
+            this._usersService.currentUser()
+                .then(user => this._groupsService.getAllVisible(user.Id, true))
+                .then(groupCount => this.hasAnyGroups = groupCount > 0)
+                .catch(err => err && this._alertService.showError(err.message));
         });
     }
 
@@ -60,10 +65,6 @@ export class GroupsComponent implements OnInit {
 
     isInitialized() {
         return this.userGroups || this.publicGroups;
-    }
-
-    hasAnyGroups() {
-        return (this.userGroups && this.userGroups.length) || (this.publicGroups && this.publicGroups.length);
     }
 
     selectGroup(group: Group) {
