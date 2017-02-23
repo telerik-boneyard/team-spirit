@@ -22,7 +22,7 @@ export class GroupsComponent implements OnInit {
     hasMoreUnjoined: boolean = true;
     hasMoreUserGroups: boolean = true;
     private _userId: string;
-    private _pageSize = 5;
+    private readonly _pageSize = 5;
     private _unjoinedPage = 0;
     private _userGroupsPage = 0;
 
@@ -68,7 +68,7 @@ export class GroupsComponent implements OnInit {
 
     loadMoresUserGroups() {
         this.hasMoreUserGroups = false;
-                console.log(`usr page: ${this._userGroupsPage}`);
+                // console.log(`usr page: ${this._userGroupsPage}`);
         return this._groupsService.getUserGroups(this._userId, this._userGroupsPage, this._pageSize)
             .then(groups => {
                 this.userGroups = this.userGroups.concat(groups);
@@ -76,14 +76,14 @@ export class GroupsComponent implements OnInit {
                 if (this.hasMoreUserGroups) {
                     this._userGroupsPage++;
                 }
-                console.log(`loaded usr: ${groups.length}`);
+                // console.log(`loaded usr: ${groups.length}`);
             })
             .catch(err => this.hasMoreUserGroups = true);
     }
 
     loadMoresUnjoinedGroups() {
         this.hasMoreUnjoined = false;
-                console.log(`unj page: ${this._unjoinedPage}`);
+                // console.log(`unj page: ${this._unjoinedPage}`);
         return this._groupsService.getUnjoinedGroups(this._userId, this._unjoinedPage, this._pageSize)
             .then(groups => {
                 this.publicGroups = this.publicGroups.concat(groups);
@@ -91,7 +91,7 @@ export class GroupsComponent implements OnInit {
                 if (this.hasMoreUnjoined) {
                     this._unjoinedPage++;
                 }
-                console.log(`loaded unj: ${groups.length}`);
+                // console.log(`loaded unj: ${groups.length}`);
             })
             .catch(err => this.hasMoreUnjoined = true);
     }

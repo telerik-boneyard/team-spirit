@@ -115,7 +115,12 @@ export class EventsService {
             });
     }
 
-    getUpcoming(groupIds: string[], page = 0, pageSize = 5) {
+    getVoteCount(eventId: string, asArray = false) {
+        let queryStringParams = { eventId, asArray };
+        return this._elProvider.get.businessLogic.invokeCloudFunction('getEventDateVoteCounts',  { queryStringParams });
+    }
+
+    getUpcoming(groupIds: string[], page?: number, pageSize?: number) {
         return this._usersService.currentUser()
             .then(user => {
                 let filter = this._getUpcomingFilter(groupIds, user.Id);
@@ -132,7 +137,7 @@ export class EventsService {
         return this._data.aggregate(query).then((r: any) => r.result);
     }
 
-    getPast(userGroupIds: string[], page = 0, pageSize = 5) {
+    getPast(userGroupIds: string[], page?: number, pageSize?: number) {
         if (!userGroupIds.length) {
             return Promise.reject({ message: 'No group ids specified' });
         }
@@ -195,6 +200,12 @@ export class EventsService {
         return this._data.destroySingle(eventId);
     }
 
+    finalizeEvent(eventId: string, finalDate: string) {
+        let method = 'POST';
+        let data = { eventId, finalDate };
+        return this._elProvider.get.businessLogic.invokeCloudFunction('finalizeEvent', { method, data });
+    }
+
     private _getUpcomingFilter(userGroupIds: string[], ownerId?: string) {
         let registrationFilter: any[] = [ { OpenForRegistration: true }, { RegistrationCompleted: true } ];
         if (ownerId) {
@@ -224,7 +235,7 @@ export class EventsService {
         delete event.ImageUrl;
     }
 
-    private _getWithFilter(filter: any, expand: any = true, sorting?: { field: string, desc?: boolean }|Array<{ field: string, desc?: boolean }>, page = 0, pageSize = 5) {
+    private _getWithFilter(filter: any, expand: any = true, sorting?: { field: string, desc?: boolean }|Array<{ field: string, desc?: boolean }>, page?: number, pageSize?: number) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
         
@@ -234,8 +245,12 @@ export class EventsService {
             let sortFunc = sortType.desc ? query.orderDesc : query.order;
             sortFunc.call(query, sortType.field);
         });
-        query.skip(page * pageSize);
-        query.take(pageSize);
+        if (typeof page === 'number') {
+            query.skip(page * pageSize);
+        }
+        if (typeof pageSize === 'number') {
+            query.take(pageSize);
+        }
 
         if (expand === true) {
             query.expand(this._eventExpandExpression);

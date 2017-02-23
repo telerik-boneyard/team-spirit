@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ScrollView } from 'ui/scroll-view';
 
@@ -12,7 +12,7 @@ import { utilities } from '../../shared';
     templateUrl: './group-list.template.html',
     styleUrls: ['./group-list.component.css']
 })
-export class GroupListComponent implements OnInit {
+export class GroupListComponent implements OnInit, OnChanges {
     @Input() groups: Group[];
     @Input() hasMore: boolean = true;
     @Input() areUserGroups: boolean;
@@ -21,6 +21,8 @@ export class GroupListComponent implements OnInit {
 
     groupInfoById: any = {};
     initialized = false;
+    // UserId is actually the count, due to expand expression imperfection
+    private _groupData: { GroupId: string, UserId: number }[];
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -31,8 +33,13 @@ export class GroupListComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        let promise = this.areUserGroups ? this._getUpcomingEvents() : this._getUserCountByGroup();
-        promise.then(() => this.initialized = true);
+        this._updateGroupsSubtextData().then(() => this.initialized = true);
+    }
+
+    ngOnChanges(changes: SimpleChanges) {
+        if (changes['groups']) {
+            this._updateGroupsSubtextData();
+        }
     }
 
     groupTap(clickedGroup: Group) {
@@ -61,7 +68,7 @@ export class GroupListComponent implements OnInit {
     }
 
     getSubtext(group: Group) {
-        let count: number = this.groupInfoById[group.Id];
+        let count: number = this.groupInfoById[group.Id];        
         let postfix = this.areUserGroups ? ' upcoming event' : ' user';
         if (count !== 1) {
             postfix += 's';
@@ -73,14 +80,23 @@ export class GroupListComponent implements OnInit {
         this.scrolledToBottom.emit();
     }
 
+    private _updateGroupsSubtextData() {
+        return this.areUserGroups ? this._getUpcomingEvents() : this._getUserCountByGroup();
+    }
+
     private _getUserCountByGroup() {
-        return this._usersService.currentUser()
-            .then(u => this._groupsService.getUserCountByGroup(u.Id))
-            .then(groupData => {
+        let prm = Promise.resolve(this._groupData);
+
+        if (!this._groupData) {
+            prm = this._usersService.currentUser()
+                .then(u => this._groupsService.getUserCountByGroup(u.Id));
+        }
+
+        return prm.then(groupData => {
                 this.groups.forEach((g) => {
                     let data = utilities.find(groupData, gd => gd.GroupId === g.Id);
                     if (data) {
-                        this._addGroupInfo(g.Id, data.UserId);
+                        this._addGroupInfo(g.Id, data.UserId); // UserId is the count
                     }
                 });
             })

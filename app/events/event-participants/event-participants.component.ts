@@ -23,6 +23,9 @@ export class EventParticipantsComponent implements OnInit {
     dateGroupings: any = {};
     eventDates: any[] = [];
 
+    private _onlyDate: string;
+    private _selectedDate: string; // prevent selection on finalize event screen :(
+
     constructor(
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
@@ -39,6 +42,8 @@ export class EventParticipantsComponent implements OnInit {
     ngOnInit() {
         this._route.params.subscribe(p => {
             let eventId = p['id'];
+            this._onlyDate = p['onlyDate'];
+            this._selectedDate = p['selectedDate'];
 
             let participantsPrm = this._eventsService.getParticipants(eventId)
                 .then(p => this.participants = p);
@@ -46,12 +51,12 @@ export class EventParticipantsComponent implements OnInit {
             let eventPrm = this._eventsService.getById(eventId)
                 .then(e => {
                     this.event = e;
-                    this._page.actionBar.title = 'Participants for ' + this.event.Name;
+                    let title = 'Participants for ' + this.event.Name;
+                    this._page.actionBar.title = this._onlyDate ? 'Voter list for date' : title;
                 });
 
             let regsPrm = this._regsService.getForEvent(eventId)
                 .then(r => this.registrations = r);
-
 
             Promise.all<any>([eventPrm, participantsPrm, regsPrm])
                 .then(() => {
@@ -61,7 +66,12 @@ export class EventParticipantsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        if (!this._selectedDate) {
+            this._routerExtensions.back();
+        } else {
+            // hack to keep selection in the finalize event screen until we start using page navigation
+            this._routerExtensions.navigate([`events/${this.event.Id}/finalize`, { selectedDate: this._selectedDate }]);
+        }
     }
 
     isInitialized() {
@@ -83,6 +93,19 @@ export class EventParticipantsComponent implements OnInit {
     hasVoters(date: string|Date) {
         let participants = this.getParticipants(date);
         return !!participants && participants.length > 0;
+    }
+
+    getVotesText(date: string|Date) {
+        let participants = this.getParticipants(date);
+        let count = 0;
+        if (participants) {
+            count = participants.length;
+        }
+        let text = `${count} vote`;
+        if (count !== 1) {
+            text += 's';
+        }
+        return text;
     }
 
     getOldDates() {
@@ -131,6 +154,14 @@ export class EventParticipantsComponent implements OnInit {
             this.eventDates = [this.event.EventDate];
         } else {
             this.eventDates = this.event.EventDateChoices;
+        }
+
+        // when trying to display voters from the finalize event screen :/
+        if (this._onlyDate) {
+            let date = utilities.find(this.eventDates, d => d.toISOString() === this._onlyDate);
+            if (date) {
+                this.eventDates = [date];
+            }
         }
     }
 }

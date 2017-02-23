@@ -21,6 +21,6 @@
 
             <Label class="event-list-separator" *ngIf="!isLast" text=""></Label>
         </StackLayout>
-        <Label *ngIf="hasMore" class="load-more-btn" (tap)="onLoadMore()" text="Load more..."></Label>
+        <Label *ngIf="hasLoaderForMore() && hasMore" class="load-more-btn" (tap)="onLoadMore()" text="Load more..."></Label>
     </StackLayout>
 </ScrollView>

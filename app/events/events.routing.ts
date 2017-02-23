@@ -6,11 +6,11 @@ import {
     EventDetailsComponent,
     EventRegistrationModalComponent,
     EventCreationModalComponent,
-    EventListComponent,
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
-    EventParticipantsComponent
+    EventParticipantsComponent,
+    FinalizeEventComponent
 } from './';
 
 export const eventsRoutes: Routes = [
@@ -19,4 +19,5 @@ export const eventsRoutes: Routes = [
     { path: ':id', component: EventDetailsComponent },
     { path: ':id/edit', component: EditEventComponent },
     { path: ':id/participants', component: EventParticipantsComponent },
+    { path: ':id/finalize', component: FinalizeEventComponent }
 ];

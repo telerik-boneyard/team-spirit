@@ -1,8 +1,5 @@
-var rsvp = require('rsvp');
-var Promise = rsvp.Promise;
-
 function makePostReq (data) {
-    return new rsvp.Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var headers = {
             'Content-Type': 'application/json',
             'Authorization': 'MasterKey ' + Everlive.Parameters.masterKey

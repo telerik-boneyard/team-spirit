@@ -23,12 +23,6 @@ Everlive.Events.afterCreate(function(request, response, context, done) {
             eventId: request.data.EventId
         };
         sendNotification(notifData);
-            // .then(done)
-            // .catch(function(err) {
-                // cant log it cause we dont wait for response
-                // console.log('err: ' + JSON.stringify(err));
-                // done();
-            // });
     }
     
     done();

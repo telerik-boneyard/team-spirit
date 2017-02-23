@@ -42,10 +42,6 @@ export class EditableEventComponent implements OnInit{
         this._isEdit = this.event.Id !== undefined;
     }
 
-    getSelectDateText() {
-        return this.dateOptions.length ? 'Add date option' : 'Select date';
-    }
-
     toggleOpenForRegistration() {
         this.event.OpenForRegistration = !this.event.OpenForRegistration;
     }
@@ -70,6 +66,10 @@ export class EditableEventComponent implements OnInit{
     }
 
     onSelectDate() {
+        if (this.event.RegistrationCompleted) {
+            return;
+        }
+        
         this._openDateModal()
             .then((newDateOption: Date) => {
                 this.onAddDateOption(newDateOption);

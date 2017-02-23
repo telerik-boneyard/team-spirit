@@ -64,7 +64,8 @@ TextView {
 .select-date {
   margin-top: 10;
   font-size: 14;
-  text-decoration: underline;
+  border-bottom-width: 1;
+  border-color: #c8c7cc;
 }
 
 .group .field {

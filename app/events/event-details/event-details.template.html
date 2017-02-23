@@ -11,6 +11,7 @@
                 </StackLayout>
             </ActionItem>
 
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canFinalize())" (tap)="goFinalize()" text="Set final date" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canChangeVote())" (tap)="changeVote()" text="Change Date Vote" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister() || rethinkAndDontGo())" (tap)="unregister()" text="I'm not going" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(rethinkAndGo())" (tap)="register()" text="I'm going" android.position="popup"></ActionItem>
@@ -75,7 +76,7 @@
                 </StackLayout>
 
                 <StackLayout class="info-wrapper no-separator">
-                    <Label class="info-label" text="Registered Participants"></Label>
+                    <Label class="info-label" text="Registered Participants" textWrap="true"></Label>
                     <GridLayout columns="auto, *" *ngIf="registeredUsers.length > 0" (tap)="onParticipantsTap()" class="registered-users-wrapper">
                         <StackLayout orientation="horizontal" col="0" class="user-display-wrp">
                             <user-display [users]="registeredUsers" [withImages]="3" class="user-display"></user-display>

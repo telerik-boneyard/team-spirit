@@ -10,15 +10,16 @@
 
     <StackLayout *ngIf="eventDates.length" class="content">
         <StackLayout *ngFor="let date of eventDates" class="group-wrp">
-            <Label class="info-label" [text]="date | date:dateFormat" textWrap="true" textWrap="true"></Label>
+            <Label class="info-label" [text]="date | date:dateFormat" textWrap="true"></Label>
+            <Label [text]="getVotesText(date)"></Label>
             <user-list *ngIf="hasVoters(date)" [users]="getParticipants(date)"></user-list>
             <Label *ngIf="!hasVoters(date)" text="Nobody voted for this date" textWrap="true" class="no-voters"></Label>
         </StackLayout>
 
-        <StackLayout *ngIf="hasOldDates()">
+        <!--<StackLayout *ngIf="hasOldDates()">
             <Label class="info-label" text="Dates that were deprecated" textWrap="true"></Label>
             <Label *ngFor="let date of getOldDates()" [text]="date | date:dateFormat" textWrap="true" class="no-voters"></Label>
-        </StackLayout>
+        </StackLayout>-->
     </StackLayout>
 
     <ScrollView class="cntnr">

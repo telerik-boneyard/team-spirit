@@ -81,4 +81,8 @@ export class EventListComponent implements OnInit {
     onLoadMore() {
         this.scrolledToBottom.emit();
     }
+
+    hasLoaderForMore() {
+        return this.scrolledToBottom.observers.length > 0;
+    }
 }

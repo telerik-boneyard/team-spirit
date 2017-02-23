@@ -1,14 +1,11 @@
-var rsvp = require('rsvp');
-var Promise = rsvp.Promise;
-
 Everlive.CloudFunction.onRequest(function(request, response, done) {
     getData(request.data)
         .then(function(context) {
-            return rsvp.all([sendPush(request.data.alertType, context), sendEmail(context.email)]);
+            return Promise.all([sendPush(request.data.alertType, context), sendEmail(context.email)]);
         })
         .then(done)
         .catch(function(err) {
-            console.log('err: ' + JSON.stringify(err));
+            console.log('err: ' + JSON.stringify(err.message));
             done();
         });
 });
@@ -44,6 +41,12 @@ function getGroupMembers (groupId) {
     return groupMembersDB.withHeaders(headers).get({ GroupId: groupId });
 }
 
+function getEventRegistrationsCount (eventId) {
+    var el = Everlive.Sdk.withMasterKey();
+    var eventRegistrationsDB = el.data('EventRegistrations');
+    return eventRegistrationsDB.count({EventId: eventId});
+}
+
 function getJoinReq(applicantId, groupId) {
     var el = Everlive.Sdk.withMasterKey();
     var groupDB = el.data('GroupJoinRequests');
@@ -76,9 +79,11 @@ function getDataForUserRegisteredForEvent (context) {
     var userId = context.userId;
     var eventId = context.eventId;
     var event, user, members;
+    var eventRegistrationsCount;
+    var eventDate, eventDateChoices;
 
     if (!userId || !eventId) {
-        return rsvp.Promise.reject({ message: 'Missing user or event id' });
+        return Promise.reject({ message: 'Missing user or event id' });
     }
 
     return getEvent(eventId)
@@ -88,13 +93,22 @@ function getDataForUserRegisteredForEvent (context) {
         })
         .then(function(userResult) {
             user = userResult.result;
+            return getEventRegistrationsCount(eventId);
+        })
+        .then(function(eventRegistrationsCountResult) {
+            eventRegistrationsCount = eventRegistrationsCountResult.result;
             return getGroupMembers(event.GroupId);
         })
         .then(function(getMemberEmailsResult) {
             var users = getMemberEmailsResult.result;
-            var emailContext = { // TODO: this can be taken from context, but template needs to be redone
+            var emailContext = {
                 UserName: user.DisplayName,
-                EventName: event.Name
+                EventName: event.Name,
+                EventDate: eventDate,
+                EventDateChoices: eventDateChoices,
+                VotedUsersCount: eventRegistrationsCount,
+                AllUsersCount: users.length,
+                IsMultiChoice: context.isMultiChoice
             };
             var userData = filterForNotification(users, userId);
 
@@ -149,7 +163,8 @@ function getDataForEventRelated (templateName, context) {
             var userData = filterForNotification(members);
             var emailContext = {
                 Event: event,
-                GroupName: group.Name
+                GroupName: group.Name,
+                OrganizerName: organizer.DisplayName
             };
 
             return {
@@ -301,10 +316,15 @@ var getterByAlertType = {
 function sendEmail (data) {
     if (!data.recipients || !data.recipients.length) {
         console.log('not sending email - no recipients');
-        return rsvp.Promise.resolve();
+        return Promise.resolve();
     }
     
-    return new rsvp.Promise(function(resolve, reject) {
+    if (data.recipients.length > 1) {
+        data.context.BccRecipients = data.recipients.join(',');
+        data.recipients = null;
+    }
+    
+    return new Promise(function(resolve, reject) {
         Everlive.Email.sendEmailFromTemplate(data.templateName, data.recipients, data.context, function(err) {
             if (err) {
                 reject(err);
@@ -320,7 +340,7 @@ function sendEmail (data) {
 function sendPush (alertType, context) {
     if (!context.push || !context.push.userIds || !context.push.userIds.length) {
         console.log('not sending push - no recipients');
-        return rsvp.Promise.resolve();
+        return Promise.resolve();
     }
     
     var el = Everlive.Sdk.withMasterKey();
@@ -338,7 +358,7 @@ function getNotificationObject (alertType, context) {
             message = 'The event is ' + context.eventName + '.';
             break;
         case 'EventRegistrationClosed':
-            title = 'Event "' + context.eventName + '" is now finalized!';
+            title = '"' + context.eventName + '" has a final date!';
             message = 'All the details for "' + context.eventName + '" have been decided on.';
             break;
         case 'EventDatesUpdated':
@@ -382,15 +402,17 @@ function formNotification (title, message, userIds) {
 
 function formAndroidNotification(title, message, data) {
     var notif = {
-        data: {
+        notification: {
             title: title,
-            message: message,
-            sound: "default"
+            body: message,
+            sound: 'default',
+            color: '#F4550F',
+            icon: 'icon'
         }
     };
     
     if (data) {
-    	notif.data = objAssign(notif.data, data);
+        notif.data = objAssign(notif.data || {}, data);
     }
     
     return notif;

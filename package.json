@@ -23,7 +23,7 @@
     "@angular/router": "3.4.6",
     "everlive-sdk": "1.9.2",
     "nativescript-angular": "1.4.0",
-    "nativescript-imagepicker": "2.5.0",
+    "nativescript-imagepicker": "2.5.1",
     "nativescript-permissions": "^1.2.0",
     "nativescript-push-notifications": "0.1.2",
     "nativescript-telerik-ui": "next",
@@ -66,8 +66,6 @@
     "prebuild-android-bundle": "npm run webpack-android",
     "prebuild-ios-bundle": "npm run webpack-ios",
     "build-android-bundle": "tns build android --bundle --disable-npm-install",
-    "build-ios-bundle": "tns build ios --bundle --disable-npm-install",
-    "typescript": "~2.1.6",
-    "zone.js": "~0.7.2"
+    "build-ios-bundle": "tns build ios --bundle --disable-npm-install"
   }
 }

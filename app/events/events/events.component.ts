@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
-import { EventsService, UsersService, GroupsService, AlertService } from '../../services';
+import { EventsService, UsersService, GroupsService, AlertService, EverliveProvider } from '../../services';
 import { Event, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
@@ -22,11 +22,10 @@ export class EventsComponent implements OnInit {
     hasMoreUpcoming: boolean = true;
     hasMorePast: boolean = true;
 
-
     private _upcomingPage = 0;
     private _pastPage = 0;
     private _userGroupIds: string[];
-    private readonly _pageSize = 3;
+    private readonly _pageSize = 5;
 
     constructor(
         private _usersService: UsersService,
@@ -42,9 +41,9 @@ export class EventsComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this._routerExtensions.navigateByUrl(`/events/a0c52f80-d905-11e6-a6d8-b1a296ec2f6d/participants`);
+        // this._routerExtensions.navigateByUrl(`/events/b35553c0-f519-11e6-94e0-bf7b6fa5001b/finalize`);
         // this._routerExtensions.navigateByUrl('/groups');
-        // this._routerExtensions.navigateByUrl(`/groups/4e292710-9b69-11e6-901f-5dd3e4bc26b4/members`); // BS
+        // this._routerExtensions.navigateByUrl(`/groups/4e292710-9b69-11e6-901f-5dd3e4bc26b4/events`); // BS
         // this._routerExtensions.navigateByUrl(`/groups/688e7d40-d682-11e6-9347-a37d034954b1/members`); // Test Group
 
         this._page.actionBar.title = 'Events';

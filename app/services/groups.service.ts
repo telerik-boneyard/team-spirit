@@ -81,7 +81,7 @@ export class GroupsService {
             .then((res: any) => res.result);
     }
 
-    getUnjoinedGroups(userId: string, page = 0, pageSize = 5) {
+    getUnjoinedGroups(userId: string, page?: number, pageSize?: number) {
         return this._membershipsData.get({ UserId: userId })
             .then(memberships => {
                 let ids = memberships.result.map(m => m.GroupId);
@@ -95,7 +95,7 @@ export class GroupsService {
             });
     }
     
-    getUserGroups(userId: string, page = 0, pageSize = 5) {
+    getUserGroups(userId: string, page?: number, pageSize?: number) {
         return this._membershipsData.get({ UserId: userId })
             .then(resp => {
                 let userGroupsIds = resp.result.map(reg => reg.GroupId);
@@ -201,12 +201,10 @@ export class GroupsService {
         return joinedGroups;
     }
 
-    private _getGroupsByFilter(filter: any, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[], page = 0, pageSize = 5) {
+    private _getGroupsByFilter(filter: any, sorting?: { field: string, desc?: boolean }|{ field: string, desc?: boolean }[], page?: number, pageSize?: number) {
         let query = this._elProvider.getNewQuery();
         query.where(filter);
         query.expand(this._imageExpandExp);
-        query.skip(page * pageSize);
-        query.take(pageSize);
 
         sorting = sorting || [{ field: 'Name' }];
         sorting = [].concat(sorting);
@@ -214,6 +212,12 @@ export class GroupsService {
             let sortFunc = sortType.desc ? query.orderDesc : query.order;
             sortFunc.call(query, sortType.field);
         });
+        if (typeof page === 'number') {
+            query.skip(page * pageSize);
+        }
+        if (typeof pageSize === 'number') {
+            query.take(pageSize);
+        }
 
         return this._groupsData.get(query).then(res => res.result);
     }

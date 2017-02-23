@@ -11,11 +11,11 @@ import {
     EventDetailsComponent,
     EventRegistrationModalComponent,
     EventCreationModalComponent,
-    EventListComponent,
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
-    EventParticipantsComponent
+    EventParticipantsComponent,
+    FinalizeEventComponent
 } from './';
 
 @NgModule({
@@ -30,11 +30,11 @@ import {
     EventDetailsComponent,
     EventRegistrationModalComponent,
     EventCreationModalComponent,
-    EventListComponent,
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
-    EventParticipantsComponent
+    EventParticipantsComponent,
+    FinalizeEventComponent
   ],
   entryComponents: [
     EventRegistrationModalComponent,

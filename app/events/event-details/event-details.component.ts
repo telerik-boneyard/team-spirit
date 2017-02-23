@@ -214,6 +214,10 @@ export class EventDetailsComponent implements OnInit {
         return this.event && !this.alreadyRegistered && !this.isPastEvent && this._openAndNotComplete();
     }
 
+    canFinalize() {
+        return this.canEdit() && !this.event.RegistrationCompleted && !this.event.EventDate;
+    }
+
     canUnregister() {
         return this._reggedAndNotPast() && this._openAndNotComplete();
     }
@@ -246,6 +250,10 @@ export class EventDetailsComponent implements OnInit {
             .catch(err => err && this._alertsService.showError(err.message));
     }
 
+    goFinalize() {
+        this._routerExtensions.navigateByUrl(`events/${this.event.Id}/finalize`);
+    }
+
     toggleActions() {
         action({
             message: 'What would you like to do?',
@@ -254,10 +262,14 @@ export class EventDetailsComponent implements OnInit {
         }).then((result) => {
             if (result === 'Change Date Vote') {
                 this.changeVote();
-            } else if (result === 'Unregister') {
+            } else if (result === 'I\'m not going') {
                 this.unregister();
             } else if (result === 'Delete Event') {
                 this.deleteEvent();
+            } else if (result === 'I\'m going') {
+                this.register();
+            } else if (result === 'Set final date') {
+                this.goFinalize();
             }
         });
     }
@@ -286,6 +298,10 @@ export class EventDetailsComponent implements OnInit {
 
     private _setupActions() {
         this._actions = [];
+        if (this.canEdit() && !this.event.RegistrationCompleted) {
+            this._actions.push('Set final date');
+        }
+
         if (this.rethinkAndGo()) {
             this._actions.push('I\'m going');
         }
@@ -343,7 +359,7 @@ export class EventDetailsComponent implements OnInit {
 
     private _updateInfoOnRegister() {
         this.alreadyRegistered = true;
-        this.registeredUsers.unshift(this._currentUser);
+        this.registeredUsers = this.registeredUsers.concat(this._currentUser);
         this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
         this._dateChoicesMade.forEach(dc => {
             // this._countByDate[dc] = this._countByDate[dc] || 0;
