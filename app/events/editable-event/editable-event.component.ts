@@ -13,10 +13,10 @@ import { utilities } from '../../shared';
 })
 export class EditableEventComponent implements OnInit{
     @Input() event: Event;
+    @Input() userGroups: Group[];
 
     dateFormat: string = utilities.dateFormat;
     dateOptions: Date[] = [];
-    userGroups: Group[];
     currentUser: User;
     selectedGroup: Group;
 
@@ -28,18 +28,18 @@ export class EditableEventComponent implements OnInit{
         private _usersService: UsersService,
         private _alertService: AlertService,
         private _vcRef: ViewContainerRef
-    ) { }
+    ) {}
 
     ngOnInit() {
         if (typeof this.event.OpenForRegistration !== 'boolean') {
             this.event.OpenForRegistration = true;
         }
-        this._getCurrentUserGroups().then(groups => {
-            this.userGroups = groups;
-            this._markSelectedGroupIfPresent(this.event, this.userGroups);
-        });
+        this._isEdit = this.event.Id !== undefined; // must be before prefilling group
+        if (this.userGroups.length === 1) {
+            this.event.GroupId = this.userGroups[0].Id;
+        }
+        this._markSelectedGroupIfPresent(this.event, this.userGroups);
         this._handleEventDatesIfPresent(this.event);
-        this._isEdit = this.event.Id !== undefined;
     }
 
     toggleOpenForRegistration() {
@@ -139,14 +139,6 @@ export class EditableEventComponent implements OnInit{
 
     private _showError(msg: string) {
         this._alertService.showError(msg);
-    }
-
-    private _getCurrentUserGroups() {
-        return this._usersService.currentUser()
-            .then(user => {
-                this.currentUser = user;
-                return this._groupsService.getUserGroups(user.Id);
-            });
     }
 
     private _handleEventDatesIfPresent(event: Event) {

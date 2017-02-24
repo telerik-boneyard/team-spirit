@@ -1,4 +1,5 @@
 import { Component, ViewContainerRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
@@ -16,6 +17,7 @@ import { utilities } from '../../shared';
 export class AddEventComponent {
     newEvent: Event;
     isAndroid: boolean = false;
+    userGroups: Group[];
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -26,6 +28,7 @@ export class AddEventComponent {
         private _usersService: UsersService,
         private _platform: PlatformService,
         private _vcRef: ViewContainerRef,
+        private _route: ActivatedRoute,
         private _page: Page
     ) {
         this.newEvent = new Event();
@@ -34,6 +37,12 @@ export class AddEventComponent {
 
     ngOnInit() {
         this._page.actionBar.title = 'New Event';
+        this._getCurrentUserGroups();
+        this._route.params.subscribe(p => {
+            if ('prefillGroup' in p) {
+                this.newEvent.GroupId = p['prefillGroup'];
+            }
+        });
     }
 
     onCreate() {
@@ -79,5 +88,11 @@ export class AddEventComponent {
 
     onCancel() {
         this._routerExtensions.back();
+    }
+
+    private _getCurrentUserGroups() {
+        return this._usersService.currentUser()
+            .then(user => this._groupsService.getUserGroups(user.Id))
+            .then(groups => this.userGroups = groups);
     }
 }

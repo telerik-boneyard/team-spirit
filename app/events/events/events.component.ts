@@ -157,6 +157,6 @@ export class EventsComponent implements OnInit {
     }
 
     hasNoEvents() {
-        return this.upcomingEvents && this.pastEvents && !this.upcomingEvents.length && !this.pastEvents.length;
+        return this.upcomingEvents && !this.upcomingEvents.length && !this.hasPastEvents;
     }
 }

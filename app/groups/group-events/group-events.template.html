@@ -11,7 +11,7 @@
             <Label text="No events for group {{ group.Name }}" [textWrap]="true" class="title"></Label>
             <Label text="Be first and organize a memorable event for you and your friends." [textWrap]="true"></Label>
             <StackLayout class="actions">
-                <Label text="Organize Event" class="btn btn-primary" [nsRouterLink]="['/events/add']"></Label>
+                <Label text="Organize Event" (tap)="goCreateEvent()" class="btn btn-primary"></Label>
             </StackLayout>
         </StackLayout>
     </StackLayout>

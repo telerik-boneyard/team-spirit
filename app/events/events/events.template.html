@@ -31,7 +31,7 @@
 
     <TabView #tabview [(ngModel)]="tabIndex" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
-            <ActivityIndicator [busy]="!upcomingEvents" [visibility]="upcomingEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <ActivityIndicator [busy]="!upcomingEvents && tabIndex === 0" [visibility]="upcomingEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
             <event-list *ngIf="upcomingEvents && upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMoreUpcoming" (scrolledToBottom)="loadUpcomingEvents()"></event-list>
 
             <StackLayout *ngIf="upcomingEvents && !upcomingEvents.length" class="no-items">
@@ -48,7 +48,7 @@
         </StackLayout>
 
         <StackLayout *tabItem="{ title: 'Past' }" class="main-container">
-            <ActivityIndicator [busy]="!pastEvents" [visibility]="pastEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <ActivityIndicator [busy]="!pastEvents && tabIndex === 1" [visibility]="pastEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
             <event-list *ngIf="pastEvents && pastEvents.length" [events]="pastEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMorePast" (scrolledToBottom)="loadPastEvents()"></event-list>
 
             <StackLayout *ngIf="pastEvents && !pastEvents.length" class="no-items">

@@ -9,12 +9,12 @@
         </ActionItem>
     </ActionBarExtension>
     <ScrollView class="cntnr">
-        <StackLayout *ngIf="event">
-            <editable-event [event]="event"></editable-event>
+        <StackLayout *ngIf="event && userGroups">
+            <editable-event  [event]="event" [userGroups]="userGroups"></editable-event>
             <Label class="btn-delete" (tap)="delete()" text="Delete event"></Label>
         </StackLayout>
         <ScrollView>
-            <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <ActivityIndicator [busy]="!event || userGroups" [visibility]="event || userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
         </ScrollView>
     </ScrollView>
 </StackLayout>

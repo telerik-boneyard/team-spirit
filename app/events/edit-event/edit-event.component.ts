@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
-import { EventsService, AlertService, FilesService, PlatformService } from '../../services';
-import { Event, User } from '../../shared/models';
+import { EventsService, AlertService, FilesService, PlatformService, UsersService, GroupsService } from '../../services';
+import { Event, User, Group } from '../../shared/models';
 import { utilities } from '../../shared';
 
 @Component({
@@ -16,6 +16,7 @@ import { utilities } from '../../shared';
 export class EditEventComponent implements OnInit {
     event: Event;
     isAndroid: boolean = false;
+    userGroups: Group[];
 
     constructor(
         private _route: ActivatedRoute,
@@ -24,6 +25,8 @@ export class EditEventComponent implements OnInit {
         private _filesService: FilesService,
         private _platform: PlatformService,
         private _eventsService: EventsService,
+        private _usersService: UsersService,
+        private _groupsService: GroupsService,
         private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
@@ -31,6 +34,7 @@ export class EditEventComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBar.title = 'Edit Event';
+        this._getCurrentUserGroups();
         this._route.params.subscribe(p => {
             this._eventsService.getById(p['id'])
                 .then((event: Event) => {
@@ -88,5 +92,11 @@ export class EditEventComponent implements OnInit {
 
     onCancel() {
         this._routerExtensions.back();
+    }
+
+    private _getCurrentUserGroups() {
+        return this._usersService.currentUser()
+            .then(user => this._groupsService.getUserGroups(user.Id))
+            .then(groups => this.userGroups = groups);
     }
 }

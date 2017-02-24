@@ -60,6 +60,10 @@ export class GroupEventsComponent implements OnInit {
         this._routerExtensions.navigateByUrl(`/groups/${this._groupId}`);
     }
 
+    goCreateEvent() {
+         this._routerExtensions.navigate(['/events/add', { prefillGroup: this._groupId } ]);
+    }
+
     private _onError(err) {
         if (err) {
             this._alertsService.showError(err.message);
