@@ -15,8 +15,6 @@ export class AppModalComponent {
     @Input() text: string;
     @Input() fullscreen: boolean = true;
 
-    private _
-
     constructor(private _params?: ModalDialogParams) {
         if (!this._params) {
             return;

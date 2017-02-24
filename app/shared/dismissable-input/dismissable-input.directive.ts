@@ -16,6 +16,6 @@ export class DismissableInputDirective {
 
     ngOnInit() {
         let anchor = viewModule.getViewById(this._field.page, 'dismissableAnchor');
-        anchor.on('tap',() => this._field.dismissSoftInput());
+        anchor.on('tap', () => this._field.dismissSoftInput());
     }
 }
