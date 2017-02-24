@@ -5,6 +5,7 @@ var path = require("path");
 var CopyWebpackPlugin = require("copy-webpack-plugin");
 var ExtractTextPlugin = require("extract-text-webpack-plugin");
 var AotPlugin = require("@ngtools/webpack").AotPlugin;
+var BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = function (platform, destinationApp) {
     if (!destinationApp) {
@@ -20,6 +21,13 @@ module.exports = function (platform, destinationApp) {
     entry["app.css"] = "./app.css";
 
     var plugins = [
+        new BundleAnalyzerPlugin({
+                analyzerMode: "static",
+                openAnalyzer: false,
+                generateStatsFile: true,
+                reportFilename: path.join(__dirname, "report", platform + '-report.html'),
+                statsFilename: path.join(__dirname, "report", platform + '-stats.json'),
+            }),
         new ExtractTextPlugin("app.css"),
         //Vendor libs go to the vendor.js chunk
         new webpack.optimize.CommonsChunkPlugin({

@@ -3,7 +3,8 @@ import { EverliveProvider } from './everlive-provider.service';
 import { Users } from '../../node_modules/everlive-sdk/dist/declarations/everlive/types/Users';
 import { User as ServerUser } from '../../node_modules/everlive-sdk/dist/declarations/everlive/interfaces/User';
 import { User } from '../shared'
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable } from "rxjs/Observable";
+import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import * as jstz from 'jstz';
 
 import { utilities } from '../shared';
