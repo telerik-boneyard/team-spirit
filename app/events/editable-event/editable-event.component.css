@@ -65,11 +65,11 @@ TextView {
   margin-top: 10;
   font-size: 14;
   border-bottom-width: 1;
-  border-color: #c8c7cc;
+  border-color: #ebebed;
 }
 
 .group .field {
-  border-color: #c8c7cc;
+  border-color: #ebebed;
   border-bottom-width: 1;
   min-height: 30;
 }

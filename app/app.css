@@ -50,7 +50,7 @@ TextView {
   margin-bottom: 10;
   font-size: 16;
   border-width: 0 0 1 0;
-  border-color: #c8c7cc;
+  border-color: #ebebed;
 }
 
 ActivityIndicator {
@@ -164,4 +164,13 @@ ActivityIndicator {
   border-bottom-width: 1;
   border-color: #ebebed;
   height: 1;
+}
+
+.load-more-btn {
+  padding: 10 0;
+  border-top-width: 1;
+  border-color: #ebebed;
+  font-size: 14;
+  text-align: center;
+  color: #F4550F;
 }
