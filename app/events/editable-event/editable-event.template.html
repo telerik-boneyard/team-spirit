@@ -1,15 +1,15 @@
-<StackLayout class="cntnr">
+<StackLayout class="cntnr" id="dismissableAnchor">
     <photo-picker class="event-image" [(url)]="event.ImageUrl" [type]="'event'" [editable]="true" [noImageText]="event.ImageUrl ? 'Change Photo' : 'Add Photo'" [noImageIcon]="'&#x77;'"></photo-picker>
 
     <StackLayout class="form info-cntnr">
         <StackLayout class="input-field">
             <Label class="label" text="Name"></Label>
-            <TextField class="field" [(ngModel)]="event.Name"></TextField>
+            <TextField [dismissable] class="field" [(ngModel)]="event.Name"></TextField>
         </StackLayout>
 
         <StackLayout class="input-field">
             <Label class="label" text="Description"></Label>
-            <TextView class="field" [(ngModel)]="event.Description" [editable]="true"></TextView>
+            <TextView [dismissable] class="field" [(ngModel)]="event.Description" [editable]="true"></TextView>
         </StackLayout>
 
         <StackLayout class="input-field group with-popup">
@@ -19,12 +19,12 @@
 
         <StackLayout class="input-field">
             <Label class="label" text="Location Name"></Label>
-            <TextView class="field" [(ngModel)]="event.LocationName" [editable]="true"></TextView>
+            <TextView [dismissable] class="field" [(ngModel)]="event.LocationName" [editable]="true"></TextView>
         </StackLayout>
 
         <StackLayout class="input-field">
             <Label class="label" text="Location Url"></Label>
-            <TextField class="field" [(ngModel)]="event.LocationURL" keyboardType="url"></TextField>
+            <TextField [dismissable] class="field" [(ngModel)]="event.LocationURL" keyboardType="url"></TextField>
         </StackLayout>
 
         <StackLayout class="input-field date with-popup">

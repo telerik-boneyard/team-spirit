@@ -9,7 +9,8 @@ import {
     PhotoPickerComponent,
     UserDisplayComponent,
     UsersListComponent,
-    EventListComponent
+    EventListComponent,
+    DismissableInputDirective
 } from './';
 
 @NgModule({
@@ -24,7 +25,8 @@ import {
     PhotoPickerComponent,
     UserDisplayComponent,
     UsersListComponent,
-    EventListComponent
+    EventListComponent,
+    DismissableInputDirective
   ],
   entryComponents: [
     AppModalComponent,
@@ -36,7 +38,8 @@ import {
     PhotoPickerComponent,
     UserDisplayComponent,
     UsersListComponent,
-    EventListComponent
+    EventListComponent,
+    DismissableInputDirective
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })
