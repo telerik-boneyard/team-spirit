@@ -18,7 +18,7 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView #groupsTabView [(ngModel)]="selectedIndex" class="tab-view">
+    <TabView #groupsTabView [(ngModel)]="selectedIndex" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': userGroups && !userGroups.length }">
                 <ActivityIndicator [busy]="!userGroups" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>

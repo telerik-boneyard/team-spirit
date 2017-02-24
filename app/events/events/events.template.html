@@ -29,7 +29,7 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView #tabview [(ngModel)]="tabIndex" class="tab-view">
+    <TabView #tabview [(ngModel)]="tabIndex" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'Upcoming' }" class="main-container">
             <ActivityIndicator [busy]="!upcomingEvents" [visibility]="upcomingEvents ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
             <event-list *ngIf="upcomingEvents && upcomingEvents.length" [events]="upcomingEvents" (onEventTap)="showDetails($event)" [hasMore]="hasMoreUpcoming" (scrolledToBottom)="loadUpcomingEvents()"></event-list>

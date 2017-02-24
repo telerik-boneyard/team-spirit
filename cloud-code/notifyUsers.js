@@ -126,12 +126,13 @@ function getDataForUserRegisteredForEvent (context) {
 }
 
 function _formatDate (dateIsoString, timezoneName) {
-    var moment = require('moment-timezone');
-    var result;
-    if (dateIsoString) {
-        result = moment.tz(dateIsoString, timezoneName).format('dddd, MMMM Do YYYY, h:mm:ss A');
+    if (!dateIsoString) {
+        return 'Unknown';
     }
-    return result;
+
+    var moment = require('moment-timezone');
+    var date = moment(dateIsoString).tz(timezoneName || 'UTC');
+    return date.format('dddd, MMMM Do YYYY, h:mm:ss A');
 }
 
 function getDataForEventRelated (templateName, context) {
