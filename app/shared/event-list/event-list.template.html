@@ -10,9 +10,9 @@
                 <Label [text]="getRemainingTime(event)" class="event-remaining-time" [attr.col]="getEventDate(event) ? 1 : 0"></Label>
             </GridLayout>
 
-            <photo-picker [evName]="event.Name" [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
+            <photo-picker *ngIf="event.ImageUrl" [evName]="event.Name" [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
 
-            <Label [text]="event.Description" textWrap="true" class="event-description"></Label>
+            <Label *ngIf="event.Description" [text]="event.Description" textWrap="true" class="event-description"></Label>
             <GridLayout columns="auto, auto, *" class="event-organiser">
                 <user-display [users]="event.Organizer" [showNames]="true"></user-display>
                 <Label text=" | " col="1" textWrap="true" class="user-name"></Label>
