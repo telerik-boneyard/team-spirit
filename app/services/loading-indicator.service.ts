@@ -1,5 +1,5 @@
 import { Injectable, EventEmitter } from '@angular/core';
-import { EverliveProvider } from './';
+import { EverliveProvider, PlatformService } from './';
 import { Stopwatch, constants } from '../shared';
 
 @Injectable()
@@ -12,10 +12,16 @@ export class LoadingIndicatorService {
     private _loadingMode = false;
 
     constructor(
-        private _elProvider: EverliveProvider
+        private _elProvider: EverliveProvider,
+        platformService: PlatformService
     ) {
         this.extendedLoading = new EventEmitter<void>();
         this.allLoaded = new EventEmitter<void>();
+
+        if (platformService.isIos) {
+            return;
+        }
+        
         this.threshold = constants.extendedLoadingThreshold;
 
         this._elProvider.get.on('beforeExec', (query) => {
