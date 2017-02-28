@@ -11,5 +11,5 @@ export const modalsTimeout = 3000;
 export const extendedLoadingThreshold = 1500;
 
 export const systemErrorMsgs = {
-    'Iterator timed out': 'We are unable to fulfill this request at this time. Please try again later'
+    'Iterator timed out': 'The operation took too long. Please try again later'
 };

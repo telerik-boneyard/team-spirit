@@ -67,12 +67,9 @@ export class GroupsService {
     }
 
     getUserCountByGroup(userId: string): Promise<{GroupId: string, UserId: number}[]> {
-        return this.getUnjoinedGroups(userId)
-            .then(groups => {
-                let query = this._elProvider.getNewAggregateQuery();
-                query.groupBy('GroupId').count('UserId');
-                return this._membershipsData.aggregate(query);
-            })
+        let query = this._elProvider.getNewAggregateQuery();
+        query.groupBy('GroupId').count('UserId');
+        return this._membershipsData.aggregate(query)
             .then((res: any) => res.result);
     }
 
