@@ -73,3 +73,7 @@ TextView {
   border-bottom-width: 1;
   min-height: 30;
 }
+
+.group .field.readonly {
+  border-bottom-width: 0;
+}

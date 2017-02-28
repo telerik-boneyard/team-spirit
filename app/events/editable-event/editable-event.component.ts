@@ -20,7 +20,7 @@ export class EditableEventComponent implements OnInit{
     currentUser: User;
     selectedGroup: Group;
 
-    private _isEdit: boolean = false;
+    isEdit: boolean = false;
 
     constructor(
         private _groupsService: GroupsService,
@@ -34,7 +34,7 @@ export class EditableEventComponent implements OnInit{
         if (typeof this.event.OpenForRegistration !== 'boolean') {
             this.event.OpenForRegistration = true;
         }
-        this._isEdit = this.event.Id !== undefined; // must be before prefilling group
+        this.isEdit = this.event.Id !== undefined; // must be before prefilling group
         if (this.userGroups.length === 1) {
             this.event.GroupId = this.userGroups[0].Id;
         }
@@ -57,6 +57,10 @@ export class EditableEventComponent implements OnInit{
     }
 
     onSelectGroup() {
+        if (this.isEdit) {
+            return;
+        }
+        
         this._openGroupModal()
             .then((selectedIndex: number) => {
                 if (selectedIndex > -1) {
@@ -89,7 +93,7 @@ export class EditableEventComponent implements OnInit{
     private _validateDateOption(date: Date) {
         if (this._isDuplicateDate(date)) {
             return 'Date already added';
-        } else if (!this._isEdit && date <= new Date()) {
+        } else if (!this.isEdit && date <= new Date()) {
             return 'Date is in the past';
         }
     }
@@ -109,7 +113,7 @@ export class EditableEventComponent implements OnInit{
 
     private _openDateModal() {
         let ctx = {
-            isEdit: this._isEdit,
+            isEdit: this.isEdit,
             validator: this._validateDateOption.bind(this)
         };
         return this._openModal(ctx, DateTimePickerModalComponent);

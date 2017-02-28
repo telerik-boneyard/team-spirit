@@ -14,7 +14,7 @@
 
         <StackLayout class="input-field group with-popup">
             <Label class="label" text="Group"></Label>
-            <Label class="field" (tap)="onSelectGroup()" [text]="getSelectedGroupName()"></Label>
+            <Label class="field" (tap)="onSelectGroup()" [class.readonly]="isEdit" [text]="getSelectedGroupName()"></Label>
         </StackLayout>
 
         <StackLayout class="input-field">

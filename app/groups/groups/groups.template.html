@@ -22,7 +22,7 @@
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': userGroups && !userGroups.length }">
                 <ActivityIndicator [busy]="!userGroups && selectedIndex === 0" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-                <group-list *ngIf="userGroups && userGroups.length" [groups]="userGroups" [areUserGroups]="true" [hasMore]="hasMoreUserGroups" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoresUserGroups()"></group-list>
+                <group-list *ngIf="userGroups && userGroups.length" [groups]="userGroups" [areUserGroups]="true" [hasMore]="hasMoreUserGroups" (onGroupTap)="selectGroup($event)" (scrolledToBottom)="loadMoreUserGroups()"></group-list>
                 <StackLayout *ngIf="userGroups && !userGroups.length" class="no-items">
                     <Label class="if" text="&#x6e;"></Label>
                     <Label text="It's time to join a group!" [textWrap]="true" class="title"></Label>
