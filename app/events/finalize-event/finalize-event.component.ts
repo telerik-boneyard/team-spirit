@@ -75,7 +75,10 @@ export class FinalizeEventComponent implements OnInit {
     listVoters(dateInfo: { date: string, count: number }) {
         if (dateInfo.count > 0) {
             let date = dateInfo.date;
-            let params = { onlyDate: date, selectedDate: this._selectedDate };
+            let params: { onlyDate: string, selectedDate?: string } = { onlyDate: date };
+            if (this._selectedDate) {
+                params.selectedDate = this._selectedDate;
+            }
             this._routerExtensions.navigate([`events/${this.event.Id}/participants`, params]);
         }
     }

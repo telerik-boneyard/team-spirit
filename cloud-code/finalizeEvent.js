@@ -21,13 +21,11 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
         .then(function(res) {
             event = res.result;
             if (!event) {
-                setErrorResponse(response, 'Event not found');
-                return done();
+                return Promise.reject('Event not found');
             }
             
             if (request.principal.id !== event.OrganizerId && request.principal.type === 'user') {
-                setErrorResponse(response, 'You are not the organizer of this event');
-                return done();
+                return Promise.reject('You are not the organizer of this event');
             }
             
             var finalDateInEventDateOptions = event.EventDateChoices.filter(function(date) {
@@ -35,8 +33,7 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
             });
 
             if (!finalDateInEventDateOptions.length) {
-                setErrorResponse(response, 'The selected final date is not in the event date options');
-                return done();
+                return Promise.reject('The selected final date is not in the event date options');
             }
 
             var updObj = {
@@ -46,11 +43,11 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
             return eventsDb.rawUpdate(updObj, { Id: eventId });
         })
         .then(function(res) {
-            console.log('updated cout: ' + res.result);
+            // console.log('updated count: ' + res.result);
             return regsDb.destroy({ EventId: eventId, Choices: { $ne: finalDate } });
         })
         .then(function(res) {
-            console.log(JSON.stringify(res));
+            // console.log(JSON.stringify(res));
             done();
         })
         .catch(function(err) {
