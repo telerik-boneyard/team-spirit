@@ -26,7 +26,7 @@ export class EventsComponent implements OnInit {
     private _upcomingPage = 0;
     private _pastPage = 0;
     private _userGroupIds: string[];
-    private readonly _pageSize = 5;
+    private readonly _pageSize = 7;
     private _lockPast: boolean = false;
     private _lockUpcoming: boolean = false;
 

@@ -18,10 +18,12 @@ export class GroupsComponent implements OnInit {
     hasMoreUnjoined: boolean = true;
     hasMoreUserGroups: boolean = true;
     hasAnyGroups: boolean = false;
-    private readonly _pageSize = 5;
+    private readonly _pageSize = 7;
     private _unjoinedPage = 0;
     private _userGroupsPage = 0;
     private _selectedIndex = 0;
+    private _lockUnjoinedGroups = false;
+    private _lockUserGroups = false;
 
     constructor(
         private _page: Page,
@@ -80,7 +82,10 @@ export class GroupsComponent implements OnInit {
     }
 
     loadMoreUserGroups() {
-        this.hasMoreUserGroups = false;
+        if (!this.hasMoreUserGroups || this._lockUserGroups) {
+            return Promise.resolve();
+        }
+        this._lockUserGroups = false;
         return this._usersService.currentUser()
             .then((u) => this._groupsService.getUserGroups(u.Id, this._userGroupsPage, this._pageSize))
             .then(groups => {
@@ -94,7 +99,10 @@ export class GroupsComponent implements OnInit {
     }
 
     loadMoresUnjoinedGroups() {
-        this.hasMoreUnjoined = false;
+        if (!this.hasMoreUnjoined || this._lockUnjoinedGroups) {
+            return Promise.resolve();
+        }
+        this._lockUnjoinedGroups = false;
         return this._usersService.currentUser()
             .then((u) => this._groupsService.getUnjoinedGroups(u.Id, this._unjoinedPage, this._pageSize))
             .then(groups => {
