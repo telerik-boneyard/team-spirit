@@ -404,6 +404,12 @@ function formAndroidNotification(title, message, data) {
             sound: 'default',
             color: '#F4550F',
             icon: 'ic_stat_notify'
+        },
+        data: {
+            title: title,
+            message: message,
+            sound: 'default',
+            color: '#F4550F'
         }
     };
     
