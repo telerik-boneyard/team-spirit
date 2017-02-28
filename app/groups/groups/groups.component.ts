@@ -79,7 +79,7 @@ export class GroupsComponent implements OnInit {
         this.selectedIndex = tabIndex;
     }
 
-    loadMoresUserGroups() {
+    loadMoreUserGroups() {
         this.hasMoreUserGroups = false;
         return this._usersService.currentUser()
             .then((u) => this._groupsService.getUserGroups(u.Id, this._userGroupsPage, this._pageSize))
@@ -114,7 +114,7 @@ export class GroupsComponent implements OnInit {
     private _initialize(loadUserGroups) {
         let promise: Promise<any>;
         if (loadUserGroups) {
-            promise = this.loadMoresUserGroups();
+            promise = this.loadMoreUserGroups();
         } else {
             promise = this.loadMoresUnjoinedGroups();
         }

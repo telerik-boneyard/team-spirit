@@ -79,3 +79,19 @@ export function shallowCopy (obj) {
     }
     return res;
 };
+
+export function startsWith (str: string, substr: string) {
+    return str.indexOf(substr) === 0;
+}
+
+export function prettifySystemErrors (rawErrorMsg: string) {
+    let errorsToPrettify = Object.keys(constants.systemErrorMsgs);
+    let result: string = rawErrorMsg;
+    let keyIndex = findIndex(errorsToPrettify, errMsg => startsWith(rawErrorMsg, errMsg));
+
+    if (keyIndex !== -1) {
+        let prettifyKey = errorsToPrettify[keyIndex];
+        result = constants.systemErrorMsgs[prettifyKey];
+    }
+    return result;
+}

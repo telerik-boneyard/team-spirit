@@ -35,7 +35,7 @@ export class DateTimePickerModalComponent {
 
     configureDatePicker(picker: DatePicker) {
         let now = new Date();
-        let oneYear = 31536000000;
+        const oneYear = 31536000000;
 
         picker.date = now;
         if (!this._isEdit) {

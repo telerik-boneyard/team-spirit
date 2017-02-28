@@ -21,7 +21,7 @@
     "@angular/platform-browser": "2.4.6",
     "@angular/platform-browser-dynamic": "2.4.6",
     "@angular/router": "3.4.6",
-    "everlive-sdk": "1.9.3",
+    "everlive-sdk": "https://github.com/georgiwe/backend-services-js-sdk.git",
     "jstz": "1.0.9",
     "nativescript-angular": "1.4.0",
     "nativescript-imagepicker": "~2.5.1",

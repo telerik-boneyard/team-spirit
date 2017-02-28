@@ -1,8 +1,9 @@
-<StackLayout class="app-modal-cntnr" [ngClass]="{ 'no-fullscreen': !fullscreen }">
+<StackLayout class="app-modal-cntnr" [ngClass]="{ 'no-fullscreen': !fullscreen, 'just-loading': justLoading }">
     <Label *ngIf="title" class="app-modal-title" [text]="title" textWrap="true"></Label>
     <Label *ngIf="text" class="app-modal-text" [text]="text" textWrap="true"></Label>
 
     <ng-content></ng-content>
+    <ActivityIndicator [busy]="justLoading" [visibility]="!justLoading ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
     <StackLayout class="controls-wrapper" *ngIf="buttons">
         <StackLayout class="btn-wrp">

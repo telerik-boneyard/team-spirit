@@ -403,7 +403,7 @@ function formAndroidNotification(title, message, data) {
             body: message,
             sound: 'default',
             color: '#F4550F',
-            icon: 'icon'
+            icon: 'ic_stat_notify'
         }
     };
     

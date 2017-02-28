@@ -64,7 +64,7 @@ export class EventListComponent implements OnInit {
         let eventDate = this.getEventDate(event);
 
         if (!eventDate) {
-            return 'TBD';
+            return 'DATE TBD';
         }
 
         let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);

@@ -15,6 +15,8 @@ export class AppModalComponent {
     @Input() text: string;
     @Input() fullscreen: boolean = true;
 
+    outsideClose: EventEmitter<void>;
+
     constructor(private _params?: ModalDialogParams) {
         if (!this._params) {
             return;
@@ -39,11 +41,15 @@ export class AppModalComponent {
     }
 
     private _applyContextOptions(ctx: any) {
-        let validProps = ['title', 'text', 'buttons', 'fullscreen'];
+        let validProps = ['title', 'text', 'buttons', 'fullscreen', 'justLoading', 'outsideClose'];
         for (let prop of validProps) {
             if (prop in ctx && prop) {
                 this[prop] = ctx[prop];
             }
+        }
+
+        if (ctx.outsideClose) {
+            this.outsideClose.subscribe(() => this._params.closeCallback(true));
         }
 
         if (ctx.closeTimeout) {
