@@ -3,7 +3,7 @@ import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/mod
 
 import * as dialogs from 'ui/dialogs';
 
-import { AppModalComponent } from '../shared';
+import { utilities, AppModalComponent } from '../shared';
 
 @Injectable()
 export class AlertService {
@@ -17,6 +17,7 @@ export class AlertService {
     }
     
     showError(message: string) {
+        message = utilities.prettifySystemErrors(message);
         return this._showMessage(message, 'Error');
     }
 

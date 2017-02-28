@@ -10,3 +10,4 @@ export * from './image-picker.service';
 export * from './push-notifications.service';
 export * from './platform.service';
 export * from './auth-guard.service';
+export * from './loading-indicator.service';

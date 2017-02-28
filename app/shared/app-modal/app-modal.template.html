@@ -3,6 +3,7 @@
     <Label *ngIf="text" class="app-modal-text" [text]="text" textWrap="true"></Label>
 
     <ng-content></ng-content>
+    <ActivityIndicator [busy]="justLoading" [visibility]="!justLoading ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
 
     <StackLayout class="controls-wrapper" *ngIf="buttons">
         <StackLayout class="btn-wrp">

@@ -12,6 +12,7 @@ export * from './user-display/user-display.component';
 export * from './user-list/user-list.component';
 export * from './dismissable-input/dismissable-input.directive';
 export * from './shared.module';
+export * from './stopwatch';
 
 export const utilities = utils;
 export const constants = allConstants;
