@@ -9,8 +9,7 @@ import { utilities } from '../../shared';
     moduleId: module.id,
     selector: 'event-list',
     templateUrl: './event-list.template.html',
-    styleUrls: ['./event-list.component.css'],
-    changeDetection: ChangeDetectionStrategy.OnPush
+    styleUrls: ['./event-list.component.css']
 })
 export class EventListComponent implements OnInit {
     dateFormat: string = utilities.dateFormat;
