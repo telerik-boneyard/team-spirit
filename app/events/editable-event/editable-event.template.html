@@ -41,7 +41,7 @@
             <user-display [users]="currentUser" [showNames]="true"></user-display>
         </StackLayout>
 
-        <StackLayout class="input-field switch-field" orientation="horizontal" (tap)="toggleOpenForRegistration()">
+        <StackLayout *ngIf="!event.RegistrationCompleted" class="input-field switch-field" orientation="horizontal" (tap)="toggleOpenForRegistration()">
             <Switch class="switch" [(ngModel)]="event.OpenForRegistration"></Switch>
             <Label class="label" text="Open for Registration"></Label>
         </StackLayout>
