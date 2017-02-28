@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { ImagePickerService } from '../../services';
 import { utilities } from '../';
@@ -9,7 +9,7 @@ import { utilities } from '../';
     templateUrl: './photo-picker.template.html',
     styleUrls: [ './photo-picker.component.css' ]
 })
-export class PhotoPickerComponent {
+export class PhotoPickerComponent implements OnInit {
     private _resizedUrl: string;
 
     @Input('url') rawUrl: string;
@@ -38,6 +38,10 @@ export class PhotoPickerComponent {
 
     set resizedUrl(newValue: string) {
         this._resizedUrl = newValue;
+    }
+
+    ngOnInit() {
+        this.noImageText = this.noImageText || ''; // patch for NS blowing up if setting text-decoration of undefined
     }
 
     onEdit(event) {
