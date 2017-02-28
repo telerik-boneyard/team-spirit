@@ -46,6 +46,7 @@ export class AddEventComponent {
     }
 
     onCreate() {
+        let eventCreationResult = null;
         this._usersService.currentUser()
             .then((currentUser) => {
                 this.newEvent.OrganizerId = currentUser.Id;
@@ -77,11 +78,12 @@ export class AddEventComponent {
             })
             .then((data) => {
                 let group: Group = data[0];
+                eventCreationResult = data[1].result;
                 let ctx: any = { groupName: group.Name, openForRegistration: this.newEvent.OpenForRegistration };
                 return this._alertService.showModal(ctx, this._vcRef, EventCreationModalComponent);
             })
             .then(() => {
-                this._routerExtensions.navigateByUrl('/events');
+                this._routerExtensions.navigateByUrl(`/events/${eventCreationResult.Id}`);
             })
             .catch(err => err && this._alertService.showError(err.message));
     }
