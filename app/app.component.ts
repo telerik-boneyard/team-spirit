@@ -33,11 +33,11 @@ export class AppComponent implements OnInit {
     ) {
         this.isAndroid = this._platform.isAndroid;
         this._loadingService.extendedLoading.subscribe(() => {
-            let modalOptions = {
+            let modalContext = {
                 justLoading: true,
                 outsideClose: this._loadingService.allLoaded
             };
-            this._alertsService.showModal(modalOptions, this._vcRef);
+            this._alertsService.showModal(modalContext, this._vcRef);
         });
     }
 
