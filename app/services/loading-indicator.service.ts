@@ -18,8 +18,13 @@ export class LoadingIndicatorService {
         this.allLoaded = new EventEmitter<void>();
         this.threshold = constants.extendedLoadingThreshold;
 
-        this._elProvider.get.on('beforeExecute', (query) => {
-            this._queueLoading();
+        this._elProvider.get.on('beforeExec', (query) => {
+            if (!query || query.canceled !== true) {
+                this._queueLoading();
+            }
+        });
+
+        this._elProvider.get.on('beforeExecute', query => {
             if (query.contentTypeName === 'Files') {
                 this._loadingMode = true;
                 this.extendedLoading.emit();
@@ -52,7 +57,7 @@ export class LoadingIndicatorService {
     private _dequeueLoading() {
         this._ongoingRequestsCount = Math.max(this._ongoingRequestsCount - 1, 0);
 
-        if (this._ongoingRequestsCount === 0) {
+        if (this._ongoingRequestsCount === 0 && this._loadingMode) {
             this._stopwatch.stop();
             this._emitAllLoaded();
         }

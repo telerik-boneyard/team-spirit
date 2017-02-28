@@ -118,6 +118,13 @@ export class EventDetailsComponent implements OnInit {
 
         dateSelectionPromise.then(dateChoices => {
             if (dateChoices) {
+                let ctx = {
+                    title: 'Hooooray!',
+                    text: 'You have successfully registered for this event.',
+                    closeTimeout: constants.modalsTimeout
+                };
+
+                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
                 return this._eventsService.registerForEvent(this.event.Id, dateChoices);
             } else {
                 return Promise.resolve(false);
@@ -125,14 +132,7 @@ export class EventDetailsComponent implements OnInit {
         })
         .then(didRegister => {
             if (didRegister) { // would be false if user closed modal
-                let ctx = {
-                    title: 'Hooooray!',
-                    text: 'You have successfully registered for this event.',
-                    closeTimeout: constants.modalsTimeout
-                };
-
                 this._updateInfoOnRegister();
-                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
             }
         })
         .catch(err => this._onError.bind(this));
