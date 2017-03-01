@@ -11,7 +11,10 @@
     <ScrollView class="cntnr">
         <StackLayout *ngIf="group">
             <editable-group [group]="group"></editable-group>
-            <Label class="btn-delete" text="Delete group" (tap)="delete()"></Label>
+            <StackLayout class="btn-delete" orientation="horizontal" (tap)="delete()">
+                <Label class="if" text="&#x72;"></Label>
+                <Label text="Delete event"></Label>
+            </StackLayout>
         </StackLayout>
         <ScrollView>
             <ActivityIndicator [busy]="!group" [visibility]="group ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
