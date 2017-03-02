@@ -1,17 +1,17 @@
-<ScrollView class="main">
-    <StackLayout>
-        <ActionBarExtension>
-            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
-            <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()"></ActionItem>
-            <ActionItem (tap)="onCreate()" ios.position="right">
-                <StackLayout>
-                    <Label text="Done" class="button"></Label>
-                </StackLayout>
-            </ActionItem>
-        </ActionBarExtension>
-        <StackLayout>
+<StackLayout class="cntnr">
+    <ActionBarExtension>
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onCancel()"></ActionItem>
+        <ActionItem (tap)="onCreate()" ios.position="right">
+            <StackLayout>
+                <Label text="Done" class="button"></Label>
+            </StackLayout>
+        </ActionItem>
+    </ActionBarExtension>
+    <ScrollView class="cntnr">
+        <StackLayout *ngIf="userGroups">
             <editable-event *ngIf="userGroups" [event]="newEvent" [userGroups]="userGroups"></editable-event>
         </StackLayout>
         <ActivityIndicator [busy]="!userGroups" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </StackLayout>
-</ScrollView>
+    </ScrollView>
+</StackLayout>
