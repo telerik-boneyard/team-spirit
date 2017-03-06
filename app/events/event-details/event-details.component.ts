@@ -108,34 +108,13 @@ export class EventDetailsComponent implements OnInit {
     }
 
     register() {
-        let dateSelectionPromise: Promise<string[]> = null;
-
-        if (this.event.EventDate) {
-            dateSelectionPromise = Promise.resolve([this.event.EventDate]);
-        } else {
-            dateSelectionPromise = this._openDateSelectionModal();
-        }
-
-        dateSelectionPromise.then(dateChoices => {
-            if (dateChoices) {
-                let ctx = {
-                    title: 'Hooooray!',
-                    text: 'You have successfully registered for this event.',
-                    closeTimeout: constants.modalsTimeout
-                };
-
-                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
-                return this._eventsService.registerForEvent(this.event.Id, dateChoices);
-            } else {
-                return Promise.resolve(false);
-            }
-        })
-        .then(didRegister => {
-            if (didRegister) { // would be false if user closed modal
-                this._updateInfoOnRegister();
-            }
-        })
-        .catch(err => this._onError.bind(this));
+        this._register()
+            .then(didRegister => {
+                if (didRegister) { // would be false if user closed modal
+                    this._updateInfoOnRegister();
+                }
+            })
+            .catch(err => this._onError.bind(this));
     }
 
     changeVote() {
@@ -152,15 +131,6 @@ export class EventDetailsComponent implements OnInit {
                 }
             })
             .then(() => {
-                // let oldChoices: string[] = this._userRegForThisEvent.Choices;
-                // oldChoices.forEach(oc => {
-                //     this._countByDate[oc]--;
-                // });
-                // updatedChoices.forEach(uc => {
-                //     if (this._countByDate[uc]) {
-                //         this._countByDate[uc] = (this._countByDate[uc] || 0) + 1;
-                //     }
-                // });
                 this._updateCountsByDate();
                 this._userRegForThisEvent.Choices = updatedChoices;
                 this._alertsService.showSuccess('Date vote updated');
@@ -324,10 +294,52 @@ export class EventDetailsComponent implements OnInit {
             .then(result => this._countByDate = result.countByDate);
     }
 
-    private _openDateSelectionModal(isChangeVote = false) {
+    private _makeRegistrationRequest(dates: string[]) {
+        return this._eventsService.registerForEvent(this.event.Id, dates)
+            .then(() => this._showSuccessfulRegistrationModal());
+    }
+
+    private _register() {
+        // TODO: refactor
+        if (this.event.EventDate) {
+            return this._makeRegistrationRequest([this.event.EventDate]);
+        }
+        return new Promise<string[]>((resolve, reject) => {
+            this._openDateSelectionModal(false, (dateChoices) => {
+                if (dateChoices) {
+                    let dates = this._mapDateChoicesToDates(dateChoices);
+                    return this._makeRegistrationRequest(dates).then(resolve, reject);
+                }
+            });
+        });
+    }
+
+    private _showSuccessfulRegistrationModal() {
+        let ctx = {
+            title: 'Hooooray!',
+            text: 'You have successfully registered for this event.',
+            closeTimeout: constants.modalsTimeout
+        };
+
+        return this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
+    }
+
+    private _mapDateChoicesToDates(dateChoices: number[]) {
+        let result: string[] = null;
+
+        if (dateChoices && dateChoices.length) {
+            this._dateChoicesMade = [];
+            dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
+            result = this._dateChoicesMade;
+        }
+        return result;
+    }
+
+    private _openDateSelectionModal(isChangeVote = false, onRegister?: (dateChoices: number[]) => Promise<any>) {
         let opts: ModalDialogOptions = {
             context: {
-                availableDates: this.event.EventDateChoices
+                availableDates: this.event.EventDateChoices,
+                onRegister: onRegister
             },
             fullscreen: true,
             viewContainerRef: this._vcRef
@@ -338,17 +350,7 @@ export class EventDetailsComponent implements OnInit {
         }
 
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
-            .then((dateChoices: number[]) => {
-                let result: string[] = null;
-
-                if (dateChoices && dateChoices.length) {
-                    this._dateChoicesMade = [];
-                    dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
-                    result = this._dateChoicesMade;
-                }
-
-                return Promise.resolve(result);
-            });
+            .then((dateChoices: number[]) => this._mapDateChoicesToDates(dateChoices));
     }
 
     private _onError(err) {
@@ -362,8 +364,6 @@ export class EventDetailsComponent implements OnInit {
         this.registeredUsers = this.registeredUsers.concat(this._currentUser);
         this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
         this._dateChoicesMade.forEach(dc => {
-            // this._countByDate[dc] = this._countByDate[dc] || 0;
-            // this._countByDate[dc]++;
             this._userRegForThisEvent.Choices.push(dc);
         });
         this._updateCountsByDate();
@@ -373,9 +373,6 @@ export class EventDetailsComponent implements OnInit {
     private _updateInfoOnUnregister() {
         this.alreadyRegistered = false;
         this.registeredUsers = this.registeredUsers.filter(u => u.Id !== this._currentUser.Id);
-        // this._userRegForThisEvent.Choices.forEach(userChoice => {
-        //     this._countByDate[userChoice] = Math.max(0, this._countByDate[userChoice] - 1);
-        // });
         this._updateCountsByDate();
         this._setupActions();
         this._userRegForThisEvent = null;
