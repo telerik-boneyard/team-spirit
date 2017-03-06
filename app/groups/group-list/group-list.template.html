@@ -9,7 +9,8 @@
                 <Label row="0" col="1" [text]="group.Name" class="group-name" textWrap="true"></Label>
                 <Label row="1" col="1" [text]="getSubtext(group)" class="group-subtext" textWrap="true"></Label>
 
-                <Label *ngIf="!areUserGroups" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
+                <Label *ngIf="!areUserGroups && !userHasMadeRequest(group.Id)" rowSpan="2" row="0" col="2" [text]="getJoinBtnText(group)" (tap)="onJoin(group)" class="join-btn"></Label>
+                <Label *ngIf="!areUserGroups && userRequestIsPending(group.Id)" rowSpan="2" row="0" col="2" text="Pending Approval"></Label>
             </GridLayout>
             <Label class="group-list-separator" text=""></Label>
         </StackLayout>

@@ -148,6 +148,15 @@ export class GroupsService {
             .then(resp => resp.result[0]);
     }
 
+    getUserApplications(userId: string, groupIds?: string[]) {
+        let filter: any = { ApplicantId: userId };
+        if (groupIds && groupIds.length) {
+            filter.GroupId = { $in: groupIds };
+        }
+        return this._groupJoinRequests.get(filter)
+            .then(r => r.result);
+    }
+
     validateGroupEntry(group: Group) {
         let errMsg: string = null;
 

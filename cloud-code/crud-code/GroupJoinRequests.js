@@ -1,3 +1,9 @@
+Everlive.Events.beforeCreate(function(request, context, done) {
+    request.data.Approved = !!request.data.Approved;
+    request.data.Resolved = !!request.data.Resolved;
+    done();
+});
+
 Everlive.Events.afterUpdate(function(request, response, context, done) {
 	var el = Everlive.Sdk.withMasterKey();
 	var reqsDb = el.data('GroupJoinRequests');

@@ -21,8 +21,9 @@ export class GroupListComponent implements OnInit, OnChanges {
 
     groupInfoById: any = {};
     initialized = false;
-    // UserId is actually the count, due to expand expression imperfection
+    // UserId is actually the count, due to how expand expressions work
     private _groupData: { GroupId: string, UserId: number }[];
+    private _groupRequestStatuses: {[propName: string]: boolean} = {};
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -34,6 +35,15 @@ export class GroupListComponent implements OnInit, OnChanges {
 
     ngOnInit() {
         this._updateGroupsSubtextData().then(() => this.initialized = true);
+        if (!this.areUserGroups) { // TODO: make this pageable
+            this._usersService.currentUser()
+                .then(user => this._groupsService.getUserApplications(user.Id))
+                .then(userRequests => {
+                    userRequests.forEach(req => {
+                        this._groupRequestStatuses[req.GroupId] = req.Resolved;
+                    });
+                });
+        }
     }
 
     ngOnChanges(changes: SimpleChanges) {
@@ -47,7 +57,13 @@ export class GroupListComponent implements OnInit, OnChanges {
     }
 
     getJoinBtnText(group: Group) {
-        return group.RequiresApproval ? 'Ask to join' : 'Join now';
+        let text: string;
+        if (this.userHasMadeRequest(group.Id)) {
+            text = this._getRequestStatusText(group.Id);
+        } else {
+            text = group.RequiresApproval ? 'Ask to join' : 'Join now';
+        }
+        return text;
     }
 
     onJoin(group: Group) {
@@ -80,6 +96,23 @@ export class GroupListComponent implements OnInit, OnChanges {
         this.scrolledToBottom.emit();
     }
 
+    userHasMadeRequest(groupId: string) {
+        return this._groupRequestStatuses[groupId] !== undefined;
+    }
+
+    userRequestIsPending(groupId: string) {
+        return this._groupRequestStatuses[groupId] === false;
+    }
+
+    private _getRequestStatusText(groupId: string) {
+        let resolved = this._groupRequestStatuses[groupId];
+        let text = '';
+        if (resolved === false) {
+            text = 'Pending Approval';
+        }
+        return text;
+    }
+
     private _updateGroupsSubtextData() {
         return this.areUserGroups ? this._getUpcomingEvents() : this._getUserCountByGroup();
     }
@@ -103,8 +136,11 @@ export class GroupListComponent implements OnInit, OnChanges {
             .catch(err => {this._alertsService.showError(err.message)});
     }
 
-    private _getUpcomingEvents() {
-        let ids = this.groups.map(g => g.Id);
+    private _getUpcomingEvents(onlyIds?: string[]) {
+        // TODO: this always fetches data for all visible groups.
+        // can either fetch it all for user groups in the beginning
+        // (like user count) or only fetch for new groups
+        let ids = onlyIds || this.groups.map(g => g.Id);
         return this._eventsService.getUpcomingCountsByGroups(ids)
             .then(evData => {
                 evData.forEach(d => {
