@@ -23,7 +23,8 @@
   background-color: #ededed;
 }
 
-.user >>> .no-image.large .icon {
+.user >>> .no-image.large .icon.if {
+  margin-top: 20;
   font-size: 80;
 }
 
