@@ -39,6 +39,7 @@ export class EventDetailsComponent implements OnInit {
     private _userRegForThisEvent: EventRegistration;
     private _dateChoicesMade: string[] = [];
     private _actions: string[] = [];
+    private _isVoting: boolean = false;
 
     constructor(
         private _route: ActivatedRoute,
@@ -68,7 +69,7 @@ export class EventDetailsComponent implements OnInit {
                         this._updateCountsByDate();
                     }
                 })
-                .catch(err => this._onError.bind(this));
+                .catch(err => err && this._alertsService.showError(err.message));
 
             let currentUser = this._usersService.currentUser()
                 .then(currentUser => {
@@ -80,7 +81,7 @@ export class EventDetailsComponent implements OnInit {
                     this.alreadyRegistered = this.registeredUsers.some(u => u.Id === this._currentUser.Id);
                     this.remainingUsersCount = Math.max(0, this.registeredUsers.length - 3);
                 })
-                .catch(err => this._onError.bind(this));
+                .catch(err => err && this._alertsService.showError(err.message));
 
             let user = this._usersService.currentUser()
                 .then(user => this._regsService.getUserRegistrationForEvent(this._eventId, user.Id))
@@ -108,13 +109,16 @@ export class EventDetailsComponent implements OnInit {
     }
 
     register() {
+        if (this._isVoting) {
+            return;
+        }
         this._register()
             .then(didRegister => {
                 if (didRegister) { // would be false if user closed modal
                     this._updateInfoOnRegister();
                 }
             })
-            .catch(err => this._onError.bind(this));
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     changeVote() {
@@ -304,13 +308,15 @@ export class EventDetailsComponent implements OnInit {
         if (this.event.EventDate) {
             return this._makeRegistrationRequest([this.event.EventDate]);
         }
+        this._isVoting = true;
         return new Promise<string[]>((resolve, reject) => {
             this._openDateSelectionModal(false, (dateChoices) => {
                 if (dateChoices) {
                     let dates = this._mapDateChoicesToDates(dateChoices);
                     return this._makeRegistrationRequest(dates).then(resolve, reject);
                 }
-            });
+            })
+            .then(() => this._isVoting = false, () => this._isVoting = false);
         });
     }
 
@@ -351,12 +357,6 @@ export class EventDetailsComponent implements OnInit {
 
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
             .then((dateChoices: number[]) => this._mapDateChoicesToDates(dateChoices));
-    }
-
-    private _onError(err) {
-        if (err) {
-            this._alertsService.showError(err && err.message);
-        }
     }
 
     private _updateInfoOnRegister() {

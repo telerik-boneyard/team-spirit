@@ -14,6 +14,7 @@ export class EventRegistrationModalComponent {
     availableDates: Array<{ value: Date, isSelected: boolean }>;
     dateFormat = utilities.dateFormat;
     title: string;
+    private _locked: boolean = false;
 
     constructor(private _params: ModalDialogParams, private _alertsService: AlertService) {
         this.title = this._params.context.title || 'Registration';
@@ -29,6 +30,10 @@ export class EventRegistrationModalComponent {
         if (this._noDateIsSelected()) {
             return this._alertsService.showError('You need to select at least one date');
         }
+        if (this._locked) {
+            return;
+        }
+        this._locked = true;
         let selectedDates = this.availableDates.map((d, i) => d.isSelected ? i : null).filter(n => n !== null);
         // hack to avoid flicker between closing this modal and opening success modal
         // -- dont close this modal, before opening reg success modal
@@ -44,7 +49,9 @@ export class EventRegistrationModalComponent {
     }
 
     onCancel() {
-        this._params.closeCallback();
+        if (!this._locked) {
+            this._params.closeCallback();
+        }
     }
 
     private _noDateIsSelected() {

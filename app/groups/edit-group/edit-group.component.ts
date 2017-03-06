@@ -43,6 +43,10 @@ export class EditGroupComponent implements OnInit {
     }
 
     save() {
+        if (!this.group) {
+            return;
+        }
+        
         let validationErr = this._groupsService.validateGroupEntry(this.group);
         if (validationErr) {
             return this._alertsService.showError(validationErr);

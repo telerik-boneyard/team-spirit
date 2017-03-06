@@ -46,6 +46,9 @@ export class EditEventComponent implements OnInit {
     }
 
     save() {
+        if (!this.event) {
+            return;
+        }
         let validationErr = this._eventsService.validateEvent(this.event);
         if (validationErr) {
             return this._alertsService.showError(validationErr);
