@@ -34,9 +34,9 @@ export class GroupListComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit() {
-        this._updateGroupsSubtextData().then(() => this.initialized = true);
+        let applicationsPrm = Promise.resolve<any>();
         if (!this.areUserGroups) { // TODO: make this pageable
-            this._usersService.currentUser()
+            applicationsPrm = this._usersService.currentUser()
                 .then(user => this._groupsService.getUserApplications(user.Id))
                 .then(userRequests => {
                     userRequests.forEach(req => {
@@ -44,6 +44,7 @@ export class GroupListComponent implements OnInit, OnChanges {
                     });
                 });
         }
+        Promise.all([applicationsPrm, this._updateGroupsSubtextData()]).then(() => this.initialized = true);
     }
 
     ngOnChanges(changes: SimpleChanges) {
