@@ -89,6 +89,14 @@ export class EventsComponent implements OnInit {
         return this.isInitialized() && this.canAdd && this.userGroups.length;
     }
 
+    hasNotJoinedGroup() {
+        return this.isInitialized() && !this.hasAnyLoadedEvents() && !this.userGroups.length; // protected by isInitialized
+    }
+
+    joinedGroupsHaveNoEvents() {
+        return this.isInitialized() && this.hasNoEvents() && this.userGroups.length; // protected by isInitialized
+    }
+
     showDetails(event: Event) {
         this._routerExtensions.navigate([`/events/${event.Id}`]);
     }
