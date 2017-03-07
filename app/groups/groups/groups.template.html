@@ -7,7 +7,9 @@
         </ActionItem>
     </ActionBarExtension>
 
-    <StackLayout *ngIf="isInitialized() && !hasAnyGroups" class="no-items">
+    <ActivityIndicator [busy]="hasAnyGroups === null" [visibility]="hasAnyGroups !== null ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+
+    <StackLayout *ngIf="hasAnyGroups === false" class="no-items">
         <Label class="if" text="&#x6e;"></Label>
         <Label text="No groups yet" [textWrap]="true" class="title"></Label>
         <StackLayout>
@@ -18,7 +20,7 @@
         </StackLayout>
     </StackLayout>
 
-    <TabView #groupsTabView [(ngModel)]="selectedIndex" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
+    <TabView *ngIf="hasAnyGroups === true" #groupsTabView [(ngModel)]="selectedIndex" class="tab-view" tabsBackgroundColor="#F4550F" selectedTabTextColor="#fff" tabTextColor="#ccc" selectedColor="#eee">
         <StackLayout *tabItem="{ title: 'My Groups' }" class="tab-item">
             <StackLayout class="tab-items-wrapper" [ngClass]="{ 'no-groups': userGroups && !userGroups.length }">
                 <ActivityIndicator [busy]="!userGroups && selectedIndex === 0" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>

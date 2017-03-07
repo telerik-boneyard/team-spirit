@@ -17,7 +17,7 @@ export class GroupsComponent implements OnInit {
     userGroups: Group[];
     hasMoreUnjoined: boolean = true;
     hasMoreUserGroups: boolean = true;
-    hasAnyGroups: boolean = false;
+    hasAnyGroups: boolean = null;
     private readonly _pageSize = 7;
     private _unjoinedPage = 0;
     private _userGroupsPage = 0;
