@@ -85,7 +85,7 @@ export class GroupsComponent implements OnInit {
         if (!this.hasMoreUserGroups || this._lockUserGroups) {
             return Promise.resolve();
         }
-        this._lockUserGroups = false;
+        this._lockUserGroups = true;
         return this._usersService.currentUser()
             .then((u) => this._groupsService.getUserGroups(u.Id, this._userGroupsPage, this._pageSize))
             .then(groups => {
@@ -94,15 +94,19 @@ export class GroupsComponent implements OnInit {
                 if (this.hasMoreUserGroups) {
                     this._userGroupsPage++;
                 }
+                this._lockUserGroups = false;
             })
-            .catch(err => this.hasMoreUserGroups = true);
+            .catch(err => {
+                this._lockUserGroups = false;
+                this.hasMoreUserGroups = true
+            });
     }
 
     loadMoresUnjoinedGroups() {
         if (!this.hasMoreUnjoined || this._lockUnjoinedGroups) {
             return Promise.resolve();
         }
-        this._lockUnjoinedGroups = false;
+        this._lockUnjoinedGroups = true;
         return this._usersService.currentUser()
             .then((u) => this._groupsService.getUnjoinedGroups(u.Id, this._unjoinedPage, this._pageSize))
             .then(groups => {
@@ -111,8 +115,12 @@ export class GroupsComponent implements OnInit {
                 if (this.hasMoreUnjoined) {
                     this._unjoinedPage++;
                 }
+                this._lockUnjoinedGroups = false;
             })
-            .catch(err => this.hasMoreUnjoined = true);
+            .catch(err => {
+                this._lockUnjoinedGroups = false;
+                this.hasMoreUnjoined = true;
+            });
     }
 
     private _hasMore(receivedCount: number, pageSize: number) {
