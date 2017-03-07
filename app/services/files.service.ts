@@ -11,10 +11,10 @@ export class FilesService {
         private _imagesService: ImagePickerService
     ) {}
 
-    upload(base64File: string, filename?: string) {
+    upload(base64File: string, format: string, filename?: string) {
         let data = {
-            Filename: filename || `teamupimg${Date.now()}.png`,
-            ContentType: 'image/png',
+            Filename: filename || `teamupimg${Date.now()}.${format}`,
+            ContentType: `image/${format}`,
             base64: base64File
         };
 
@@ -29,7 +29,7 @@ export class FilesService {
     }
 
     uploadFromUri(uri: string) {
-        let base64 = this._imagesService.getBase64FromUri(uri);
-        return this.upload(base64);
+        let imgData = this._imagesService.getBase64FromUri(uri);
+        return this.upload(imgData.base64, imgData.format);
     }
 }

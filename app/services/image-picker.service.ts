@@ -4,10 +4,11 @@ import * as nsPermissions from 'nativescript-permissions';
 import * as nsPicker from 'nativescript-imagepicker';
 import * as nsImgSource from 'image-source';
 import * as nsPlatform from 'platform';
-import * as fs from 'file-system';
 
 import { EverliveProvider } from './';
-declare const android: any;
+import { constants } from '../shared';
+
+declare const android: any, CGSizeMake: any, UIGraphicsBeginImageContextWithOptions: any, CGRectMake: any, UIGraphicsEndImageContext: any, UIGraphicsGetImageFromCurrentImageContext: any;
 
 @Injectable()
 export class ImagePickerService {
@@ -28,7 +29,26 @@ export class ImagePickerService {
 
     getBase64FromUri(uri: string) {
         let imgSrc = nsImgSource.fromFileOrResource(uri);
-        return imgSrc.toBase64String('png');
+        let imgRatio = imgSrc.width / imgSrc.height;
+        imgSrc = this.resizeImage(imgSrc, constants.imageWidth, constants.imageWidth / imgRatio);
+        let format = (uri.match(/[^\.]+$/i)[0]) || 'png';
+        let result = {
+            format: format,
+            base64: imgSrc.toBase64String(format)
+        };
+        return result;
+    }
+
+    resizeImage(image: nsImgSource.ImageSource, newWidth: number, newHeight: number) {
+        let result: any = null;
+        if (image.android) {
+            result = this._resizeAndroid(image.android, newWidth, newHeight);
+        } else {
+            result = this._resizeAndroid(image.ios, newWidth, newHeight);
+        }
+        let resizedImgSrc = new nsImgSource.ImageSource();
+        resizedImgSrc.setNativeSource(result);
+        return resizedImgSrc;
     }
 
     private _pick(mode: string): Promise<{ name: string, uri: string }[]> {
@@ -51,61 +71,33 @@ export class ImagePickerService {
 
     private _presentPicker(context: any) {
         return context.authorize()
-            .then(() => {
-                return context.present();
-            });
+            .then(() => context.present());
     }
 
     private _processImages(selection: any[]): Promise<{ name: string, uri: string }[]> {
         let processedImgs: Promise<any>[] = selection.map((selectedItem) => {
-            return selectedItem.getImage().then(imgSource => {
-                return this._processImage(imgSource);
+            return Promise.resolve({
+                uri: selectedItem.fileUri,
+                thumb: selectedItem.thumb
             });
         });
 
         return Promise.all(processedImgs);
     }
 
-    private _processImage(imageSource: any): Promise<{ name: string, uri: string }> {
-        let name = `teamupimg${Date.now()}.png`;
-        let folder = fs.knownFolders.documents();
-        let uri = fs.path.join(folder.path, name);
-        let saved = imageSource.saveToFile(uri, 'png');
-        let imgItem = null;
-
-        if (saved) {
-            imgItem = { name, uri };
-        } else {
-            console.log('didnt save!!!');
-        }
-        
-        return imgItem;
+    private _resizeAndroid(originalImage: any, newWidth: number, newHeight: number) {
+        var resizedBitmap = android.graphics.Bitmap.createScaledBitmap(originalImage, newWidth, newHeight, true);
+        return resizedBitmap;
     }
 
-    // private _sendImage(name, uri) {        
-    //     let base64;
+    private _resizeIos(originalImage: any, newWidth: number, newHeight: number) {
+        let cgSize = CGSizeMake(newWidth, newHeight);
+        UIGraphicsBeginImageContextWithOptions(cgSize, false, 0.0);
 
-    //     try {
-    //         let imgSrc = nsImgSource.fromFileOrResource(uri);
-    //         base64 = imgSrc.toBase64String('png');
-    //     } catch (ex) {
-    //         console.log('err parsing as base64: ' + JSON.stringify(ex.message));
-    //         return Promise.reject({ message: 'Could not read image' });
-    //     }
+        originalImage.drawInRect(CGRectMake(0, 0, newWidth, newHeight));
+        let newImageSource = UIGraphicsGetImageFromCurrentImageContext();
 
-    //     return Promise.resolve();
-    // }
-
-    // private _sendImages(imgData: { name: any, uri: any }[]) {
-    //     let sendPromises: Promise<any>[] = [];
-
-    //     imgData.forEach(data => {
-    //         if (data) {
-    //             console.log(`id: ${JSON.stringify(data)}`);
-    //             sendPromises.push(this._sendImage(data.name, data.uri));
-    //         }
-    //     });
-
-    //     return Promise.all(sendPromises);
-    // }
+        UIGraphicsEndImageContext();
+        return newImageSource;
+    }
 }

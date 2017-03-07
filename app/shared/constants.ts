@@ -10,6 +10,8 @@ export const modalsTimeout = 3000;
 
 export const extendedLoadingThreshold = 1500;
 
+export const imageWidth = 400;
+
 export const systemErrorMsgs = {
     'Iterator timed out': 'The operation took too long. Please try again later.',
     'Invalid request body': 'Something out of the ordinary happened. Please excuse us.'
