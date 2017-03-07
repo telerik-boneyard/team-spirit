@@ -1,4 +1,4 @@
-<app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="title" [buttons]="{ ok: 'Submit', cancel: 'Maybe later' }">
+<app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="title" [buttons]="buttons">
     <StackLayout class="reg-modal">
         <ListView class="date-options-list" [items]="availableDates" separatorColor="transparent">
             <template let-option="item" class="form">

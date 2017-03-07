@@ -12,7 +12,7 @@
             </ActionItem>
 
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canFinalize())" (tap)="goFinalize()" text="Set final date" android.position="popup"></ActionItem>
-            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canChangeVote())" (tap)="changeVote()" text="Change Date Vote" android.position="popup"></ActionItem>
+            <ActionItem *ngIf="isAndroid" [visibility]="showIf(canChangeVote())" (tap)="changeVote()" text="Change vote" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canUnregister() || rethinkAndDontGo())" (tap)="unregister()" text="I'm not going" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(rethinkAndGo())" (tap)="register()" text="I'm going" android.position="popup"></ActionItem>
             <ActionItem *ngIf="isAndroid" [visibility]="showIf(canEdit())" (tap)="deleteEvent()" text="Delete Event" android.position="popup"></ActionItem>
@@ -30,7 +30,7 @@
                     <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
                 </StackLayout>
                 <StackLayout left="0" top="20" height="40">
-                    <Label *ngIf="alreadyRegistered" text="Registered" class="registered-label"></Label>
+                    <Label *ngIf="alreadyRegistered" text="Voted" class="registered-label"></Label>
                 </StackLayout>
             </AbsoluteLayout>
 

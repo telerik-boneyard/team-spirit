@@ -137,7 +137,7 @@ export class EventDetailsComponent implements OnInit {
             .then(() => {
                 this._updateCountsByDate();
                 this._userRegForThisEvent.Choices = updatedChoices;
-                this._alertsService.showSuccess('Date vote updated');
+                this._alertsService.showSuccess('Vote updated');
             })
             .catch(err => err && this._alertsService.showError(err.message));
     }
@@ -234,7 +234,7 @@ export class EventDetailsComponent implements OnInit {
             actions: this._actions,
             cancelButtonText: 'Cancel'
         }).then((result) => {
-            if (result === 'Change Date Vote') {
+            if (result === 'Change vote') {
                 this.changeVote();
             } else if (result === 'I\'m not going') {
                 this.unregister();
@@ -281,7 +281,7 @@ export class EventDetailsComponent implements OnInit {
         }
 
         if (this.canChangeVote()) {
-            this._actions.push('Change Date Vote');
+            this._actions.push('Change vote');
         }
 
         if (this.canUnregister() || this.rethinkAndDontGo()) {
@@ -322,8 +322,8 @@ export class EventDetailsComponent implements OnInit {
 
     private _showSuccessfulRegistrationModal() {
         let ctx = {
-            title: 'Hooooray!',
-            text: 'You have successfully registered for this event.',
+            title: 'HOOOORAY!',
+            text: 'You have successfully voted for event date.',
             closeTimeout: constants.modalsTimeout
         };
 
@@ -352,7 +352,8 @@ export class EventDetailsComponent implements OnInit {
         };
 
         if (isChangeVote) {
-            opts.context.title = 'Change date vote';
+            opts.context.title = 'Change vote';
+            opts.context.buttons = { ok: 'Submit new vote' };
         }
 
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
