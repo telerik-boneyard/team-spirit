@@ -398,18 +398,20 @@ function formNotification (title, message, userIds) {
 
 function formAndroidNotification(title, message, data) {
     var notif = {
-        notification: {
-            title: title,
-            body: message,
-            sound: 'default',
-            color: '#F4550F',
-            icon: 'ic_stat_notify'
-        },
+        // notification: {
+        //     title: title,
+        //     body: message,
+        //     sound: 'default',
+        //     color: '#F4550F',
+        //     icon: 'ic_stat_notify'
+        // },
         data: {
             title: title,
             message: message,
             sound: 'default',
-            color: '#F4550F'
+            color: '#F4550F',
+            smallIcon: 'ic_stat_notify',
+            largeIcon: 'icon'
         }
     };
     

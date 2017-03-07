@@ -46,7 +46,7 @@ export class EventsService {
 
     create(event: Event) {
         this._clearExpandedFields(event);
-        (event as any).Timezone = jstz.determine().name();
+        event.Timezone = jstz.determine().name();
         return this._data.create(event);
     }
 

@@ -13,4 +13,5 @@ export class Event extends ItemModel {
     RegistrationCompleted: boolean;
     OrganizerId: string;
     GroupId: string;
+    Timezone: string;
 }
