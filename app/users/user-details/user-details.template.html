@@ -1,44 +1,47 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <ActionItem (tap)="onEdit()" ios.position="right">
-            <StackLayout>
-                <Label class="button if" text="&#x65;"></Label>
-            </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-
-    <StackLayout *ngIf="user">
-        <AbsoluteLayout width="100%" height="130">
-            <StackLayout left="0" top="60" width="100%" height="90" class="user-pad"></StackLayout>
-            <StackLayout left="0" top="0" width="100%" class="user">
-                <photo-picker [url]="user.ImageUrl" [type]="'user'" [noImageIcon]="'&#x6c;'"></photo-picker>
-            </StackLayout>
-        </AbsoluteLayout>
-
-        <StackLayout class="user-info-cnt">
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Name"></Label>
-                <Label class="user-info-value" [text]="getUserDisplayName()"></Label>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Phone"></Label>
-                <Label class="user-info-value" [text]="user.Phone"></Label>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Email"></Label>
-                <Label class="user-info-value" [text]="user.Username"></Label>
-            </StackLayout>
-            <StackLayout class="user-info-block">
-                <Label class="user-label" text="Membership"></Label>
-                <StackLayout *ngIf="!membershipExpanded" orientation="horizontal">
-                    <Label *ngIf="userGroups.length" class="user-info-value" [text]="userGroups[0].Name"></Label>
-                    <Label *ngIf="userGroups.length > 1" class="user-info-value expandable" [text]="getRemainingGroupsText()" (tap)="toggleExpandedMembership()"></Label>
+<page-layout>
+    <StackLayout class="cntnr">
+        <ActionBarExtension>
+            <!-- the *ngIf="true" makes it visible with the new navigation -->
+            <ActionItem *ngIf="true" (tap)="onEdit()" ios.position="right">
+                <StackLayout>
+                    <Label class="button if" text="&#x65;"></Label>
                 </StackLayout>
-                <Label class="user-info-value" *ngIf="membershipExpanded" [text]="getAllMembershipNames()" (tap)="toggleExpandedMembership()" [textWrap]="true"></Label>
-                <Label *ngIf="!userGroups || !userGroups.length" text="Not a member of any group, yet"></Label>
+            </ActionItem>
+        </ActionBarExtension>
+
+        <StackLayout *ngIf="user">
+            <AbsoluteLayout width="100%" height="130">
+                <StackLayout left="0" top="60" width="100%" height="90" class="user-pad"></StackLayout>
+                <StackLayout left="0" top="0" width="100%" class="user">
+                    <photo-picker [url]="user.ImageUrl" [type]="'user'" [noImageIcon]="'&#x6c;'"></photo-picker>
+                </StackLayout>
+            </AbsoluteLayout>
+
+            <StackLayout class="user-info-cnt">
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Name"></Label>
+                    <Label class="user-info-value" [text]="getUserDisplayName()"></Label>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Phone"></Label>
+                    <Label class="user-info-value" [text]="user.Phone"></Label>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Email"></Label>
+                    <Label class="user-info-value" [text]="user.Username"></Label>
+                </StackLayout>
+                <StackLayout class="user-info-block">
+                    <Label class="user-label" text="Membership"></Label>
+                    <StackLayout *ngIf="!membershipExpanded" orientation="horizontal">
+                        <Label *ngIf="userGroups.length" class="user-info-value" [text]="userGroups[0].Name"></Label>
+                        <Label *ngIf="userGroups.length > 1" class="user-info-value expandable" [text]="getRemainingGroupsText()" (tap)="toggleExpandedMembership()"></Label>
+                    </StackLayout>
+                    <Label class="user-info-value" *ngIf="membershipExpanded" [text]="getAllMembershipNames()" (tap)="toggleExpandedMembership()" [textWrap]="true"></Label>
+                    <Label *ngIf="!userGroups || !userGroups.length" text="Not a member of any group, yet"></Label>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
-    </StackLayout>
 
-    <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-</StackLayout>
+        <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </StackLayout>
+</page-layout>

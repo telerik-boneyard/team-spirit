@@ -1,5 +1,6 @@
 import { NativeScriptModule } from "nativescript-angular/nativescript.module";
 import { NativeScriptFormsModule } from "nativescript-angular/forms";
+import { NativeScriptUISideDrawerModule, SIDEDRAWER_DIRECTIVES } from 'nativescript-telerik-ui/sidedrawer/angular';
 import { NgModule, NO_ERRORS_SCHEMA } from "@angular/core";
 
 import {
@@ -10,13 +11,18 @@ import {
     UserDisplayComponent,
     UsersListComponent,
     EventListComponent,
-    DismissableInputDirective
+    DismissableInputDirective,
+    PageLayoutComponent
 } from './';
 
 @NgModule({
+  providers: [
+    SIDEDRAWER_DIRECTIVES
+  ],
   imports: [
     NativeScriptModule,
-    NativeScriptFormsModule
+    NativeScriptFormsModule,
+    NativeScriptUISideDrawerModule
   ],
   declarations: [
     AppModalComponent,
@@ -26,7 +32,8 @@ import {
     UserDisplayComponent,
     UsersListComponent,
     EventListComponent,
-    DismissableInputDirective
+    DismissableInputDirective,
+    PageLayoutComponent
   ],
   entryComponents: [
     AppModalComponent,
@@ -39,7 +46,8 @@ import {
     UserDisplayComponent,
     UsersListComponent,
     EventListComponent,
-    DismissableInputDirective
+    DismissableInputDirective,
+    PageLayoutComponent
   ],
   schemas: [NO_ERRORS_SCHEMA]
 })

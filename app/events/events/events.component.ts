@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
+import * as viewModule from 'ui/core/view';
 
 import { EventsService, UsersService, GroupsService, AlertService, EverliveProvider } from '../../services';
 import { Event, Group } from '../../shared/models';

@@ -1,18 +1,20 @@
-<StackLayout class="cntnr">
-    <StackLayout *ngIf="user" class="form">
-        <StackLayout orientation="horizontal" class="input-field switch-field">
-            <Switch class="switch" [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
-            <Label class="label" text="Receive email notifications" textWrap="true"></Label>
-        </StackLayout>
-        <StackLayout orientation="horizontal" class="input-field switch-field">
-            <Switch class="switch" [(ngModel)]="user.PushNotificationsEnabled"></Switch>
-            <Label class="label" text="Receive push notifications" textWrap="true"></Label>
+<page-layout>
+    <StackLayout class="cntnr">
+        <StackLayout *ngIf="user" class="form">
+            <StackLayout orientation="horizontal" class="input-field switch-field">
+                <Switch class="switch" [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
+                <Label class="label" text="Receive email notifications" textWrap="true"></Label>
+            </StackLayout>
+            <StackLayout orientation="horizontal" class="input-field switch-field">
+                <Switch class="switch" [(ngModel)]="user.PushNotificationsEnabled"></Switch>
+                <Label class="label" text="Receive push notifications" textWrap="true"></Label>
+            </StackLayout>
+
+            <Label class="btn btn-primary" (tap)="onSave()" text="Save Settings"></Label>
         </StackLayout>
 
-        <Label class="btn btn-primary" (tap)="onSave()" text="Save Settings"></Label>
+        <ScrollView class="cntnr">
+            <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
     </StackLayout>
-
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
-</StackLayout>
+</page-layout>

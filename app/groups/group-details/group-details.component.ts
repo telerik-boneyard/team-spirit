@@ -142,7 +142,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.navigateByUrl(`/groups`);
+        this._routerExtensions.back();
     }
 
     getApplicationStatusText() {

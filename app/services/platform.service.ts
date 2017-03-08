@@ -24,4 +24,8 @@ export class PlatformService {
     get osVersion() {
         return nsPlatform.device.osVersion;
     }
+
+    get sdkVersion() {
+        return Number(nsPlatform.device.sdkVersion);
+    }
 }

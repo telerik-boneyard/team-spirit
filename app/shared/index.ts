@@ -10,6 +10,7 @@ export * from './photo-picker/photo-picker.component';
 export * from './event-list/event-list.component';
 export * from './user-display/user-display.component';
 export * from './user-list/user-list.component';
+export * from './page-layout/page-layout.component';
 export * from './dismissable-input/dismissable-input.directive';
 export * from './shared.module';
 export * from './stopwatch';

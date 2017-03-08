@@ -1,0 +1,47 @@
+<StackLayout>
+    <ActionBar (loaded)="actionBarLoaded($event)" title="">
+        <NavigationButton *ngIf="!disableDrawer && isAndroid" icon="res://icon_menu" (tap)="toggleDrawer()"></NavigationButton>
+        <ActionItem *ngIf="!disableDrawer && !isAndroid" ios.position="left" (tap)="toggleDrawer()">
+            <StackLayout>
+                <Label class="button if" text="&#x62;"></Label>
+            </StackLayout>
+        </ActionItem>
+    </ActionBar>
+    <RadSideDrawer #drawer>
+        <DockLayout tkDrawerContent class="drawer">
+            <StackLayout class="sideStackLayout" width="100%" dock="top">
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('events')">
+                    <Label class="btn-icon if" text="&#x6b;"></Label>
+                    <Label class="btn-text" text="Events"></Label>
+                </StackLayout>
+
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('groups')">
+                    <Label class="btn-icon if" text="&#x6e;"></Label>
+                    <Label class="btn-text" text="Groups"></Label>
+                </StackLayout>
+
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('user')">
+                    <Label class="btn-icon if" text="&#x6c;"></Label>
+                    <Label class="btn-text" text="My Profile"></Label>
+                </StackLayout>
+
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('settings')">
+                    <Label class="btn-icon if" text="&#x6f;"></Label>
+                    <Label class="btn-text" text="Settings"></Label>
+                </StackLayout>
+
+                <StackLayout orientation="horizontal" class="btn" (tap)="logout()">
+                    <Label class="btn-icon if" text="&#x75;"></Label>
+                    <Label class="btn-text" text="Log out"></Label>
+                </StackLayout>
+            </StackLayout>
+            <StackLayout dock="bottom" verticalAlignment="bottom">
+                <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>
+            </StackLayout>
+        </DockLayout>
+
+        <StackLayout tkMainContent>
+            <ng-content></ng-content>
+        </StackLayout>
+    </RadSideDrawer>
+</StackLayout>
