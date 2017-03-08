@@ -13,6 +13,7 @@
   height: 200;
   background-color: rgba(0, 0, 0, .05);
   background-image: url("res://background_no_image");
+  background-size: 370 216;
 }
 
 .no-image .icon,
