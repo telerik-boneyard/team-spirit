@@ -156,7 +156,11 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        if (this._routerExtensions.canGoBack()) {
+            this._routerExtensions.back();
+        } else {
+            this._routerExtensions.navigate(['/events'], { clearHistory: true });
+        }
     }
 
     countsInitialized() {

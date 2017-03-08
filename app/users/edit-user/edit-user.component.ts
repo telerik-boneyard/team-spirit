@@ -60,7 +60,7 @@ export class EditUserComponent implements OnInit {
                 return this._usersService.updateUser(this.user);
             })
             .then(res => this._alertsService.showSuccess('Details updated'))
-            .then(() => this._routerExtensions.navigateByUrl('user'))
+            .then(() => this._routerExtensions.navigate(['user'], { clearHistory: true }))
             .catch(err => err && this._alertsService.showError(err.message));
     }
 

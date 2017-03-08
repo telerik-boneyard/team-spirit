@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         this._usersService.login(this.user.Username, this.user.Password)
             .then((loginResult) => {
                 this._push.subscribe(loginResult.result.principal_id).catch(err => err);
-                this._routerExtensions.navigate(['events', { clearHistory: true }]);
+                this._routerExtensions.navigate(['events'], { clearHistory: true });
             })
             .catch((e) => {
                 if (e.message && e.message.toLowerCase() === 'invalid username or password.') {
@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
                 return this._usersService.login(this.user.Username, this.user.Password);
             })
             .then(() => {
-                this._routerExtensions.navigateByUrl('events');
+                this._routerExtensions.navigate(['events'], { clearHistory: true });
             })
             .catch((err) => {
                 if (err) {

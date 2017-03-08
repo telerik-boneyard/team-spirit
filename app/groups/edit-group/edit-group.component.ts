@@ -72,7 +72,7 @@ export class EditGroupComponent implements OnInit {
                 return this._alertsService.showSuccess(`Group "${this.group.Name}" updated!`);
             })
             .then(() => {
-                this._routerExtensions.navigate([`/groups/${this.group.Id}`]);
+                this._routerExtensions.navigate([`/groups/${this.group.Id}`], { clearHistory: true });
             })
             .catch(err => {
                 if (err) {

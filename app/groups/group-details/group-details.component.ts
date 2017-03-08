@@ -142,7 +142,11 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.back();
+        if (this._routerExtensions.canGoBack()) {
+            this._routerExtensions.back();
+        } else {
+            this._routerExtensions.navigate(['/groups'], { clearHistory: true });
+        }
     }
 
     getApplicationStatusText() {
