@@ -59,6 +59,7 @@ TextView {
 .select-date {
   margin-top: 10;
   font-size: 14;
+  min-height: 20;
   border-bottom-width: 1;
   border-color: #ebebed;
 }

@@ -29,7 +29,7 @@ export class PageLayoutComponent implements OnInit {
     isAndroid: boolean = false;
     _actionBarNativeObject = null;
 
-    private readonly _animations = ['fade', 'flipRight', 'flipLeft', 'slideLeft', 'slideRight', 'slideTop', 'slideBottom'];
+    private readonly _animations = ['fade', 'slideTop', 'slideBottom'];
 
     constructor(
         private _usersService: UsersService,
@@ -43,15 +43,17 @@ export class PageLayoutComponent implements OnInit {
     ) {
         this.isAndroid = this._platform.isAndroid;
         if (this.isAndroid && this._platform.sdkVersion >= 21) {
-            this._animations.push('explode');
+            this._animations = ['explode'];
         } else if (this._platform.isIos) {
-            this._animations.push('curlUp', 'curlDown');
+            this._animations = ['curlUp', 'curlDown'];
         }
     }
 
     ngOnInit() {
         this.disableDrawer = utilities.shouldDisableDrawer(this._router.url);
-        this.toggleActionBarShadow(this._router.url);
+        if (this._platform.isAndroid && this._platform.sdkVersion >= 21) {
+            this.toggleActionBarShadow(this._router.url);
+        }
         this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
         
         this._loadingService.extendedLoading.subscribe(() => {
@@ -66,6 +68,7 @@ export class PageLayoutComponent implements OnInit {
     navigate(newRoute: string) {
         let animation = utilities.getRandomElement(this._animations);
         this._routerExtensions.navigate([newRoute], {
+            clearHistory: true,
             transition: {
                 name: animation,
                 duration: 350,

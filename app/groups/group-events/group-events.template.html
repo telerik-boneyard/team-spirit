@@ -1,7 +1,6 @@
 <StackLayout class="cntnr">
     <ActionBarExtension>
         <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-        <ActionItem *ngIf="!isAndroid" ios.systemIcon="1" ios.position="left" (tap)="onBack()"></ActionItem>
     </ActionBarExtension>
 
     <StackLayout *ngIf="events">
