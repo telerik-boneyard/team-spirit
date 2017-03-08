@@ -70,12 +70,12 @@ export class LoadingIndicatorService {
     }
 
     private _emitExtendedLoading() {
-        this.extendedLoading.emit();
+        // this.extendedLoading.emit();
         this._loadingMode = true;
     }
 
     private _emitAllLoaded() {
-        this.allLoaded.emit();
+        // this.allLoaded.emit();
         this._loadingMode = false;
     }
 }

@@ -42,6 +42,14 @@ export function showIf (shouldShow: boolean) {
     return shouldShow ? 'visible' : 'collapse';
 };
 
+export function getRandomInteger (max = 100, min = 0) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function getRandomElement<T> (arr: T[]) {
+    return arr[getRandomInteger(0, arr.length)];
+};
+
 export function find<T> (arr: T[], predicate: (item: T) => any): T {
     for (let item of arr) {
         if (predicate(item)) {

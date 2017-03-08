@@ -23,9 +23,13 @@ import {
     styleUrls: [ './page-layout.component.css' ]
 })
 export class PageLayoutComponent implements OnInit {
+    @ViewChild('drawer') drawer: RadSideDrawerComponent;
+
     disableDrawer: boolean = false;
     isAndroid: boolean = false;
     _actionBarNativeObject = null;
+
+    private readonly _animations = ['fade', 'flipRight', 'flipLeft', 'slideLeft', 'slideRight', 'slideTop', 'slideBottom'];
 
     constructor(
         private _usersService: UsersService,
@@ -38,6 +42,18 @@ export class PageLayoutComponent implements OnInit {
         private _router: Router
     ) {
         this.isAndroid = this._platform.isAndroid;
+        if (this.isAndroid && this._platform.sdkVersion >= 21) {
+            this._animations.push('explode');
+        } else if (this._platform.isIos) {
+            this._animations.push('curlUp', 'curlDown');
+        }
+    }
+
+    ngOnInit() {
+        this.disableDrawer = utilities.shouldDisableDrawer(this._router.url);
+        this.toggleActionBarShadow(this._router.url);
+        this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
+        
         this._loadingService.extendedLoading.subscribe(() => {
             let modalContext = {
                 justLoading: true,
@@ -47,20 +63,18 @@ export class PageLayoutComponent implements OnInit {
         });
     }
 
-    @ViewChild('drawer') drawer: RadSideDrawerComponent;
-
-    ngOnInit() {
-        this.disableDrawer = utilities.shouldDisableDrawer(this._router.url);
-        this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
-    }
-
     navigate(newRoute: string) {
-        this._routerExtensions.navigateByUrl(newRoute);
-        // this.drawer.sideDrawer.closeDrawer();
+        let animation = utilities.getRandomElement(this._animations);
+        this._routerExtensions.navigate([newRoute], {
+            transition: {
+                name: animation,
+                duration: 350,
+                curve: 'easeOut'
+            }
+        });
     }
 
     toggleDrawer() {
-        // console.log('toggle called');
         this.drawer.sideDrawer.toggleDrawerState();
     }
 
@@ -71,6 +85,9 @@ export class PageLayoutComponent implements OnInit {
     }
 
     toggleActionBarShadow(url: string) {
+        if (!this._actionBarNativeObject) {
+            return;
+        }
         let path = url.split(';').filter(entry => entry.trim() != '')[0];
         if (path === '/events' || path === '/groups' || path === '/user' || path === '/user/edit') {
             this._actionBarNativeObject.setElevation(0);

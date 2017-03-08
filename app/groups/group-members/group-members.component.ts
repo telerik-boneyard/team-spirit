@@ -70,6 +70,6 @@ export class GroupMembersComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.navigateByUrl(`/groups/${this._groupId}`);
+        this._routerExtensions.back();
     }
 }
