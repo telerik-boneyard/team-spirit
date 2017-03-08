@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
     ngOnInit() {
         this._page.actionBarHidden = true;
+        // TODO: removing this breaks the module. will look into it later
         utilities.shouldDisableDrawer('qweqwewee');
         this._routerExtensions.router.events.subscribe((ev) => {
             if (ev instanceof NavigationEnd) {

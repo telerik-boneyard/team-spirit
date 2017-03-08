@@ -1,12 +1,10 @@
 <app-modal (ok)="onOk($event)" (cancel)="onCancel($event)" [title]="title" [buttons]="buttons">
-    <StackLayout class="reg-modal">
-        <ListView class="date-options-list" [items]="availableDates" separatorColor="transparent">
-            <template let-option="item" class="form">
-                <StackLayout orientation="horizontal" class="input-field switch-field">
-                    <Switch class="switch" [(ngModel)]="option.isSelected"></Switch>
-                    <Label class="label" [text]="option.value | date:dateFormat"></Label>
-                </StackLayout>
-            </template>
-        </ListView>
-    </StackLayout>
+    <ScrollView class="date-options-scroll-area">
+        <StackLayout class="reg-modal">
+            <StackLayout *ngFor="let option of availableDates" orientation="horizontal" class="input-field switch-field form">
+                <Switch class="switch" [(ngModel)]="option.isSelected"></Switch>
+                <Label class="label" [text]="option.value | date:dateFormat"></Label>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
 </app-modal>

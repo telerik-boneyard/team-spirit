@@ -3,6 +3,9 @@
   padding-right: 20;
 }
 
-.date-options-list {
-   height: 40%;
+.date-options-scroll-area {
+  height: 45%;
+  border-top-width: 1;
+  border-bottom-width: 1;
+  border-color: #eee;
 }
