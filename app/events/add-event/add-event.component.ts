@@ -83,7 +83,8 @@ export class AddEventComponent {
                 return this._alertService.showModal(ctx, this._vcRef, EventCreationModalComponent);
             })
             .then(() => {
-                this._routerExtensions.navigate([`/events/${eventCreationResult.Id}`], { clearHistory: true });
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate([`/events/${eventCreationResult.Id}`], { clearHistory: true, transition });
             })
             .catch(err => err && this._alertService.showError(err.message));
     }

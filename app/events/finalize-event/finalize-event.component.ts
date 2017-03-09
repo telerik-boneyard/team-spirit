@@ -53,7 +53,7 @@ export class FinalizeEventComponent implements OnInit {
     }
 
     onBack() {
-        this._routerExtensions.navigateByUrl(`events/${this._eventId}`);
+        this._routerExtensions.back();
     }
 
     selectDate(date: string) {
@@ -75,11 +75,8 @@ export class FinalizeEventComponent implements OnInit {
     listVoters(dateInfo: { date: string, count: number }) {
         if (dateInfo.count > 0) {
             let date = dateInfo.date;
-            let params: { onlyDate: string, selectedDate?: string } = { onlyDate: date };
-            if (this._selectedDate) {
-                params.selectedDate = this._selectedDate;
-            }
-            this._routerExtensions.navigate([`events/${this.event.Id}/participants`, params]);
+            let transition = utilities.getPageTransition();
+            this._routerExtensions.navigate([`events/${this.event.Id}/participants`, { onlyDate: date }], { transition });
         }
     }
 
@@ -93,7 +90,8 @@ export class FinalizeEventComponent implements OnInit {
             .then(res => {
                 if (res) {
                     this._alertsService.showSuccess('Event date was set');
-                    this._routerExtensions.navigateByUrl(`events/${this._eventId}`);
+                    let transition = utilities.getReversePageTransition();
+                    this._routerExtensions.navigate([`events/${this._eventId}`], { clearHistory: true, transition });
                 } else {
                     this._alertsService.showError('Event date was not set. Please try again later');
                 }

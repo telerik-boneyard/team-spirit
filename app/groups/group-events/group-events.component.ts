@@ -53,16 +53,17 @@ export class GroupEventsComponent implements OnInit {
     }
 
     onEventTap(event: Event) {
-        this._routerExtensions.navigateByUrl(`/events/${event.Id}`);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`/events/${event.Id}`], { transition });
     }
 
     onBack() {
-        // this._routerExtensions.navigateByUrl(`/groups/${this._groupId}`);
         this._routerExtensions.back();
     }
 
     goCreateEvent() {
-         this._routerExtensions.navigate(['/events/add', { prefillGroup: this._groupId } ]);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate(['/events/add', { prefillGroup: this._groupId } ], { transition });
     }
 
     private _onError(err) {

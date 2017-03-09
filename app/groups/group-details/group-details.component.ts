@@ -23,6 +23,7 @@ export class GroupDetailsComponent implements OnInit {
     userApplication: GroupJoinRequest = null;
     private _currentUser: User;
     private _disableJoinBtn: boolean = false;
+    private _membershipChanged: boolean = false;
 
     constructor(
         private _usersService: UsersService,
@@ -74,7 +75,10 @@ export class GroupDetailsComponent implements OnInit {
         this._alertsService.askConfirmation(`Delete "${this.group.Name}"?`)
             .then(() => this._groupsService.delete(this.group.Id))
             .then(() => this._alertsService.showSuccess(`Group "${this.group.Name}" deleted!`))
-            .then(() => this._routerExtensions.navigate(['/groups']))
+            .then(() => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate(['/groups'], { clearHistory: true, transition });
+            })
             .catch(err => err && this._alertsService.showError(err.message));
     }
 
@@ -86,12 +90,17 @@ export class GroupDetailsComponent implements OnInit {
         return '';
     }
 
+    canGoBack() {
+        return this._routerExtensions.canGoBack();
+    }
+
     canEdit() {
         return this.group && this._currentUser && this.group.Owner === this._currentUser.Id;
     }
 
     onEdit() {
-        this._routerExtensions.navigateByUrl(`groups/${this.group.Id}/edit`);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`groups/${this.group.Id}/edit`], { transition });
     }
 
     getJoinBtnText() {
@@ -104,7 +113,8 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onViewEvents() {
-        this._routerExtensions.navigate([`groups/${this.group.Id}/events`]);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`groups/${this.group.Id}/events`], { transition });
     }
 
     onViewRequests() {
@@ -129,6 +139,7 @@ export class GroupDetailsComponent implements OnInit {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
                 this.userApplication = null;
+                this._membershipChanged = true;
              })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);
@@ -137,15 +148,17 @@ export class GroupDetailsComponent implements OnInit {
 
     onMembersTap() {
         if (this.members.length) {
-            this._routerExtensions.navigateByUrl(`/groups/${this.group.Id}/members`);
+            let transition = utilities.getPageTransition();
+            this._routerExtensions.navigate([`/groups/${this.group.Id}/members`], { transition });
         }
     }
 
     onBack() {
-        if (this._routerExtensions.canGoBack()) {
+        if (this._routerExtensions.canGoBack() && !this._membershipChanged) {
             this._routerExtensions.back();
         } else {
-            this._routerExtensions.navigate(['/groups'], { clearHistory: true });
+            let transition = utilities.getReversePageTransition();
+            this._routerExtensions.navigate(['/groups'], { clearHistory: true, transition });
         }
     }
 
@@ -202,6 +215,7 @@ export class GroupDetailsComponent implements OnInit {
                     this._addCurrentUserAsRegistered();
                 }
                 this._disableJoinBtn = false;
+                this._membershipChanged = true;
                 return resp;
             });
     }

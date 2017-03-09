@@ -40,6 +40,7 @@ export class EventDetailsComponent implements OnInit {
     private _dateChoicesMade: string[] = [];
     private _actions: string[] = [];
     private _isVoting: boolean = false;
+    private _participationChanged: boolean = false;
 
     constructor(
         private _route: ActivatedRoute,
@@ -93,7 +94,8 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        this._routerExtensions.navigate([`/events/${this.event.Id}/edit`]);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`/events/${this.event.Id}/edit`], { transition });
     }
 
     canGoBack() {
@@ -163,7 +165,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onBack() {
-        if (this._routerExtensions.canGoBack()) {
+        if (this._routerExtensions.canGoBack() && !this._participationChanged) {
             this._routerExtensions.back();
         } else { // simulate going back
             let transition = utilities.getReversePageTransition();
@@ -375,6 +377,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     private _updateInfoOnRegister() {
+        this._participationChanged = true;
         this.alreadyRegistered = true;
         this.registeredUsers = this.registeredUsers.concat(this._currentUser);
         this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
@@ -386,6 +389,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     private _updateInfoOnUnregister() {
+        this._participationChanged = true;
         this.alreadyRegistered = false;
         this.registeredUsers = this.registeredUsers.filter(u => u.Id !== this._currentUser.Id);
         this._updateCountsByDate();

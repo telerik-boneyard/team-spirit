@@ -39,7 +39,8 @@ export class UserDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        this._routerExtensions.navigateByUrl('user/edit');
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate(['user/edit'], { transition });
     }
 
     getResizedImageUrl() {

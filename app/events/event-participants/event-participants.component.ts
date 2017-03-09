@@ -24,7 +24,6 @@ export class EventParticipantsComponent implements OnInit {
     eventDates: any[] = [];
 
     private _onlyDate: string;
-    private _selectedDate: string; // prevent selection on finalize event screen :(
 
     constructor(
         private _route: ActivatedRoute,
@@ -40,10 +39,10 @@ export class EventParticipantsComponent implements OnInit {
     }
 
     ngOnInit() {
+        this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             let eventId = p['id'];
             this._onlyDate = p['onlyDate'];
-            this._selectedDate = p['selectedDate'];
 
             let participantsPrm = this._eventsService.getParticipants(eventId)
                 .then(p => this.participants = p);
@@ -66,12 +65,7 @@ export class EventParticipantsComponent implements OnInit {
     }
 
     onBack() {
-        if (!this._selectedDate) {
-            this._routerExtensions.back();
-        } else {
-            // hack to keep selection in the finalize event screen until we start using page navigation
-            this._routerExtensions.navigate([`events/${this.event.Id}/finalize`, { selectedDate: this._selectedDate }]);
-        }
+        this._routerExtensions.back();
     }
 
     isInitialized() {

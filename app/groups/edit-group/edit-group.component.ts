@@ -72,7 +72,8 @@ export class EditGroupComponent implements OnInit {
                 return this._alertsService.showSuccess(`Group "${this.group.Name}" updated!`);
             })
             .then(() => {
-                this._routerExtensions.navigate([`/groups/${this.group.Id}`]);
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate([`/groups/${this.group.Id}`], { clearHistory: true, transition });
             })
             .catch(err => {
                 if (err) {
@@ -85,7 +86,10 @@ export class EditGroupComponent implements OnInit {
         this._alertsService.askConfirmation(`Delete "${this.group.Name}"?`)
             .then(() => this._groupsService.delete(this.group.Id))
             .then(() => this._alertsService.showSuccess(`Group "${this.group.Name}" deleted!`))
-            .then(() => this._routerExtensions.navigate(['/groups']))
+            .then(() => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate(['/groups'], { clearHistory: true, transition });
+            })
             .catch(err => err && this._alertsService.showError(err.message));
     }
 

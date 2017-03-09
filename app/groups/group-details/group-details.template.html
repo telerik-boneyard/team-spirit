@@ -2,6 +2,12 @@
     <ScrollView class="cntnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem *ngIf="!isAndroid && !canGoBack()" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
+                <StackLayout orientation="horizontal">
+                    <Image src="res://icon_back"></Image>
+                    <label text="Groups"></label>
+                </StackLayout>
+            </ActionItem>
             <ActionItem (tap)="onEdit()" *ngIf="canEdit()" ios.position="right">
                 <StackLayout>
                     <Label class="button if" text="&#x65;"></Label>

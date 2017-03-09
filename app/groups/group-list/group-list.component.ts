@@ -78,7 +78,8 @@ export class GroupListComponent implements OnInit, OnChanges {
                 if (isMember) {
                     return Promise.reject({ message: 'Already a member' });
                 } else {
-                    this._routerExtensions.navigate([`/groups/${group.Id}`, { joinRedirect: true }]);
+                    let transition = utilities.getPageTransition();
+                    this._routerExtensions.navigate([`/groups/${group.Id}`, { joinRedirect: true }], { transition });
                 }
             })
             .catch(err => this._alertsService.showError(err && err.message));

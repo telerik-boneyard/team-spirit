@@ -3,6 +3,7 @@ import { CanActivate } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 
 import { UsersService } from './users.service';
+import { utilities } from '../shared';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,7 +18,8 @@ export class AuthGuard implements CanActivate {
             .then(u => {
                 let isLoggedIn = !!u;
                 if (!isLoggedIn) {
-                    this._router.navigateByUrl('user/login');
+                    let transition = utilities.getReversePageTransition();
+                    this._router.navigate(['user/login'], { transition });
                 }
                 return isLoggedIn;
             });

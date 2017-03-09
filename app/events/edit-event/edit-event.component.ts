@@ -90,7 +90,10 @@ export class EditEventComponent implements OnInit {
         this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
             .then(() => this._eventsService.deleteById(this.event.Id))
             .then(() => this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`))
-            .then(() => this._routerExtensions.navigate(['/events']))
+            .then(() => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate(['/events'], { clearHistory: true, transition });
+            })
             .catch(err => err && this._alertsService.showError(err.message));
     }
 

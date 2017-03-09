@@ -4,7 +4,7 @@ import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 
 import { GroupsService, AlertService, UsersService } from '../../services';
-import { Group } from '../../shared/models';
+import { Group, utilities } from '../../shared';
 
 @Component({
     moduleId: module.id,
@@ -70,11 +70,11 @@ export class GroupsComponent implements OnInit {
     }
 
     selectGroup(group: Group) {
-        this._routerExtensions.navigate([`/groups/${group.Id}`]);
+        this._navigate(`/groups/${group.Id}`);
     }
 
     onAdd() {
-        this._routerExtensions.navigateByUrl('/groups/add');
+        this._navigate('/groups/add');
     }
 
     goToTab(tabIndex: number) {
@@ -121,6 +121,11 @@ export class GroupsComponent implements OnInit {
                 this._lockUnjoinedGroups = false;
                 this.hasMoreUnjoined = true;
             });
+    }
+
+    private _navigate(url: string) {
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([url], { transition });
     }
 
     private _hasMore(receivedCount: number, pageSize: number) {

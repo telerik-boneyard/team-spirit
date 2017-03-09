@@ -68,7 +68,8 @@ export class AddGroupComponent {
                 }
             })
             .then(() => {
-                this._routerExtensions.navigate([`/groups/${createdId}`]);
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate([`/groups/${createdId}`], { clearHistory: true, transition });
             })
             .catch(err => {
                 if (err) {
