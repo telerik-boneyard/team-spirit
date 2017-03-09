@@ -108,7 +108,10 @@ export class EventDetailsComponent implements OnInit {
         this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
             .then(() => this._eventsService.deleteById(this.event.Id))
             .then(() => this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`))
-            .then(() => this._routerExtensions.navigate(['/events']))
+            .then(() => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate(['/events'], { clearHistory: true, transition });
+            })
             .catch(err => err && this._alertsService.showError(err.message));
     }
 
@@ -186,7 +189,8 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onParticipantsTap() {
-        this._routerExtensions.navigateByUrl(`/events/${this.event.Id}/participants`);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`/events/${this.event.Id}/participants`], { transition });
     }
 
     rethinkMode() {
@@ -234,7 +238,8 @@ export class EventDetailsComponent implements OnInit {
     }
 
     goFinalize() {
-        this._routerExtensions.navigateByUrl(`events/${this.event.Id}/finalize`);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`events/${this.event.Id}/finalize`], { transition });
     }
 
     toggleActions() {
