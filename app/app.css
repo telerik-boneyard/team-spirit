@@ -131,16 +131,24 @@ ActivityIndicator {
 }
 
 .drawer {
-  padding: 20;
-  background-image: url("res://background");
-  background-size: cover;
+  background-color: #f1f1f2;
+}
+
+.drawer .user-wrp {
+  height: 105;
+  margin: 0 0 10;
+  border-bottom-width: 1;
+  border-color: #e3e3e6;
+  background-color: #f1f1f2;
+  background-image: url("res://background_no_image");
+  background-size: 400 234;
 }
 
 .drawer .btn {
   margin: 0;
-  padding: 20 0;
+  padding: 20 10;
   font-size: 18;
-  color: #fff;
+  color: #000;
   text-align: left;
   background-color: rgba(255, 0, 0, 0.0);
   border-color: rgba(255, 0, 0, 0.0);
@@ -153,7 +161,7 @@ ActivityIndicator {
 }
 
 .drawer .btn-icon {
-  width: 50;
+  width: 60;
   font-size: 30;
   text-align: center;
 }
@@ -163,7 +171,10 @@ ActivityIndicator {
 }
 
 .drawer .logo {
-  width: 140;
+  height: 60;
+  margin: 0 0 0 25;
+  font-size: 80;
+  color: #949495;
 }
 
 .list-separator {

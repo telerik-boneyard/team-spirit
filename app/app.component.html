@@ -9,6 +9,8 @@
 <RadSideDrawer #drawer>
     <DockLayout tkDrawerContent class="drawer">
         <StackLayout class="sideStackLayout" width="100%" dock="top">
+            <StackLayout class="user-wrp">
+            </StackLayout>
             <StackLayout orientation="horizontal" class="btn" [nsRouterLink]="['events']" (tap)="closeDrawer()">
                 <Label class="btn-icon if" text="&#x6b;"></Label>
                 <Label class="btn-text" text="Events"></Label>
@@ -35,7 +37,7 @@
             </StackLayout>
         </StackLayout>
         <StackLayout dock="bottom" verticalAlignment="bottom">
-            <Image src="res://logo" width="60" class="logo" horizontalAlignment="left"></Image>
+            <Label class="logo if" text="&#x4e;" horizontalAlignment="left"></Label>
         </StackLayout>
     </DockLayout>
     <StackLayout tkMainContent>
