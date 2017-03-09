@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
 import { action } from 'ui/dialogs';
+import * as frameModule from 'ui/frame';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User, GroupJoinRequest } from '../../shared/models';
@@ -20,10 +21,10 @@ export class GroupDetailsComponent implements OnInit {
     members: User[] = [];
     isAndroid: boolean = false;
     iosPopupOpen: boolean = false;
+    membershipChanged: boolean = false;
     userApplication: GroupJoinRequest = null;
     private _currentUser: User;
     private _disableJoinBtn: boolean = false;
-    private _membershipChanged: boolean = false;
 
     constructor(
         private _usersService: UsersService,
@@ -139,7 +140,10 @@ export class GroupDetailsComponent implements OnInit {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
                 this.userApplication = null;
-                this._membershipChanged = true;
+                this.membershipChanged = true;
+                if (this._page.ios) {
+                    this._hideIosBackBtn();
+                }
              })
             .catch((err) => {
                 this._alertsService.showError(err && err.message);
@@ -154,7 +158,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onBack() {
-        if (this._routerExtensions.canGoBack() && !this._membershipChanged) {
+        if (this._routerExtensions.canGoBack() && !this.membershipChanged) {
             this._routerExtensions.back();
         } else {
             let transition = utilities.getReversePageTransition();
@@ -215,8 +219,17 @@ export class GroupDetailsComponent implements OnInit {
                     this._addCurrentUserAsRegistered();
                 }
                 this._disableJoinBtn = false;
-                this._membershipChanged = true;
+                this.membershipChanged = true;
+                if (this._page.ios) {
+                    this._hideIosBackBtn();
+                }
                 return resp;
             });
+    }
+
+    private _hideIosBackBtn() {
+        let ctrl = frameModule.topmost().ios.controller;
+        ctrl.navigationItem.hidesBackButton = true;
+        this._page.ios.navigationItem.hidesBackButton = true;
     }
 }

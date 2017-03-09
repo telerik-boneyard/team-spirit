@@ -5,6 +5,7 @@ import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/mod
 import * as nsUtils from 'utils/utils';
 import { Page } from 'ui/page';
 import { action } from 'ui/dialogs';
+import * as frameModule from 'ui/frame';
 
 import { Event, User, EventRegistration } from '../../shared/models';
 import { utilities, constants, AppModalComponent } from '../../shared';
@@ -31,6 +32,7 @@ export class EventDetailsComponent implements OnInit {
     alreadyRegistered = false;
     isPastEvent = false;
     registeredUsersExpanded = false;
+    participationChanged: boolean = false;
     isAndroid: boolean = false;
 
     private _eventId: string = null;
@@ -40,7 +42,6 @@ export class EventDetailsComponent implements OnInit {
     private _dateChoicesMade: string[] = [];
     private _actions: string[] = [];
     private _isVoting: boolean = false;
-    private _participationChanged: boolean = false;
 
     constructor(
         private _route: ActivatedRoute,
@@ -165,7 +166,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onBack() {
-        if (this._routerExtensions.canGoBack() && !this._participationChanged) {
+        if (this._routerExtensions.canGoBack() && !this.participationChanged) {
             this._routerExtensions.back();
         } else { // simulate going back
             let transition = utilities.getReversePageTransition();
@@ -377,7 +378,10 @@ export class EventDetailsComponent implements OnInit {
     }
 
     private _updateInfoOnRegister() {
-        this._participationChanged = true;
+        this.participationChanged = true;
+        if (this._page.ios) {
+            this._hideIosBackBtn();
+        }
         this.alreadyRegistered = true;
         this.registeredUsers = this.registeredUsers.concat(this._currentUser);
         this._userRegForThisEvent = this._userRegForThisEvent || ({ Choices: [] } as EventRegistration);
@@ -389,11 +393,20 @@ export class EventDetailsComponent implements OnInit {
     }
 
     private _updateInfoOnUnregister() {
-        this._participationChanged = true;
+        this.participationChanged = true;
+        if (this._page.ios) {
+            this._hideIosBackBtn();
+        }
         this.alreadyRegistered = false;
         this.registeredUsers = this.registeredUsers.filter(u => u.Id !== this._currentUser.Id);
         this._updateCountsByDate();
         this._setupActions();
         this._userRegForThisEvent = null;
+    }
+
+    private _hideIosBackBtn() {
+        let ctrl = frameModule.topmost().ios.controller;
+        ctrl.navigationItem.hidesBackButton = true;
+        this._page.ios.navigationItem.hidesBackButton = true;
     }
 }

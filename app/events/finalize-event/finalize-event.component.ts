@@ -84,17 +84,18 @@ export class FinalizeEventComponent implements OnInit {
         if (!this._selectedDate) {
             return this._alertsService.showError('Please select a final date for the event');
         }
-
         this._alertsService.askConfirmation('Once you set this date, it cannot be changed')
             .then(() => this._eventsService.finalizeEvent(this._eventId, this._selectedDate))
             .then(res => {
                 if (res) {
-                    this._alertsService.showSuccess('Event date was set');
-                    let transition = utilities.getReversePageTransition();
-                    this._routerExtensions.navigate([`events/${this._eventId}`], { clearHistory: true, transition });
+                    return this._alertsService.showSuccess('Event date was set');
                 } else {
-                    this._alertsService.showError('Event date was not set. Please try again later');
+                    return Promise.reject({ message: 'Event date was not set. Please try again later' });
                 }
+            })
+            .then(res => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate([`events/${this._eventId}`], { clearHistory: true, transition });
             })
             .catch(err => err && this._alertsService.showError(err.message));
     }
