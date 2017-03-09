@@ -60,7 +60,10 @@ export class EditUserComponent implements OnInit {
                 return this._usersService.updateUser(this.user);
             })
             .then(res => this._alertsService.showSuccess('Details updated'))
-            .then(() => this._routerExtensions.navigate(['user']))
+            .then(() => {
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate(['user'], { transition: true, clearHistory: true });
+            })
             .catch(err => err && this._alertsService.showError(err.message));
     }
 
