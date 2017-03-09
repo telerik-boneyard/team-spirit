@@ -27,26 +27,20 @@ export class PageLayoutComponent implements OnInit {
 
     disableDrawer: boolean = false;
     isAndroid: boolean = false;
-    _actionBarNativeObject = null;
 
-    private readonly _animations = ['fade', 'slideTop', 'slideBottom'];
+    private _actionBarNativeObject = null;
 
     constructor(
-        private _usersService: UsersService,
-        private _routerExtensions: RouterExtensions,
-        private _platform: PlatformService,
         private _loadingService: LoadingIndicatorService,
-        private _vcRef: ViewContainerRef,
+        private _routerExtensions: RouterExtensions,
         private _alertsService: AlertService,
-        private _page: Page,
-        private _router: Router
+        private _usersService: UsersService,
+        private _platform: PlatformService,
+        private _vcRef: ViewContainerRef,
+        private _router: Router,
+        private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
-        if (this.isAndroid && this._platform.sdkVersion >= 21) {
-            this._animations = ['explode'];
-        } else if (this._platform.isIos) {
-            this._animations = ['curlUp', 'curlDown'];
-        }
     }
 
     ngOnInit() {
@@ -66,14 +60,10 @@ export class PageLayoutComponent implements OnInit {
     }
 
     navigate(newRoute: string) {
-        let animation = utilities.getRandomElement(this._animations);
+        let transition = utilities.getMenuTransition();
         this._routerExtensions.navigate([newRoute], {
             clearHistory: true,
-            transition: {
-                name: animation,
-                duration: 350,
-                curve: 'easeOut'
-            }
+            transition
         });
     }
 
@@ -84,7 +74,7 @@ export class PageLayoutComponent implements OnInit {
     logout() {
         this._usersService.logout()
             .then(e => true, e => true)
-            .then(() => this._routerExtensions.navigateByUrl('user/login'));
+            .then(() => this.navigate('user/login'));
     }
 
     toggleActionBarShadow(url: string) {

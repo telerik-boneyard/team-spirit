@@ -32,10 +32,6 @@ export class LoginComponent implements OnInit {
         this.user = {} as any;
     }
 
-    test() {
-        console.log('called');
-    }
-
     ngOnInit() {
         this._page.actionBarHidden = true;
     }
@@ -52,12 +48,9 @@ export class LoginComponent implements OnInit {
         this._usersService.login(this.user.Username, this.user.Password)
             .then((loginResult) => {
                 this._push.subscribe(loginResult.result.principal_id).catch(err => err);
-                this._routerExtensions.navigate(['events'], { clearHistory: true });
+                this._goToEvents();
             })
             .catch((e) => {
-                if (e.message && e.message.toLowerCase() === 'invalid username or password.') {
-                    e.message = 'Invalid e-mail or password.'; // :|
-                }
                 this._alertsService.showError(e && e.message);
             });
     }
@@ -78,7 +71,7 @@ export class LoginComponent implements OnInit {
                 return this._usersService.login(this.user.Username, this.user.Password);
             })
             .then(() => {
-                this._routerExtensions.navigate(['events'], { clearHistory: true });
+                this._goToEvents();
             })
             .catch((err) => {
                 if (err) {
@@ -103,5 +96,10 @@ export class LoginComponent implements OnInit {
                 return this._alertsService.showModal(ctx, this._vcRef);
             })
             .catch(err => err && this._alertsService.showError(err.message));
+    }
+
+    private _goToEvents() {
+        let transition = utilities.getMenuTransition();
+        this._routerExtensions.navigate(['events'], { clearHistory: true, transition });
     }
 }

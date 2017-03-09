@@ -57,7 +57,8 @@ export class EventsComponent implements OnInit {
     }
 
     onAdd() {
-        this._routerExtensions.navigateByUrl('/events/add');
+        let transition = utilities.getTransition();
+        this._routerExtensions.navigate(['/events/add'], { transition });
     }
 
     ngOnInit() {
@@ -99,7 +100,8 @@ export class EventsComponent implements OnInit {
     }
 
     showDetails(event: Event) {
-        this._routerExtensions.navigate([`/events/${event.Id}`]);
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`/events/${event.Id}`], { transition });
     }
 
     loadUpcomingEvents() {

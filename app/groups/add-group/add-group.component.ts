@@ -68,7 +68,7 @@ export class AddGroupComponent {
                 }
             })
             .then(() => {
-                this._routerExtensions.navigate([`/groups/${createdId}`], { clearHistory: true });
+                this._routerExtensions.navigate([`/groups/${createdId}`]);
             })
             .catch(err => {
                 if (err) {

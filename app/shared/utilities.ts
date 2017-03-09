@@ -47,7 +47,7 @@ export function getRandomInteger (max = 100, min = 0) {
 }
 
 export function getRandomElement<T> (arr: T[]) {
-    return arr[getRandomInteger(0, arr.length)];
+    return arr[getRandomInteger(0, arr.length - 1)];
 };
 
 export function find<T> (arr: T[], predicate: (item: T) => any): T {
@@ -78,8 +78,8 @@ export function isResourceUrl (url: string) {
     return url && resourceRegExp.test(url);
 }
 
-export function shallowCopy (obj) {
-    let res: any = {};
+export function shallowCopy<T> (obj: T) {
+    let res: T = {} as T;
     for (let prop in obj) {
         if (obj.hasOwnProperty(prop)) {
             res[prop] = obj[prop];
@@ -102,4 +102,20 @@ export function prettifySystemErrors (rawErrorMsg: string) {
         result = constants.systemErrorMsgs[prettifyKey];
     }
     return result;
+}
+
+export function getTransition(name?: string, duration?: number, curve?: string) {
+    return {
+        name: name || 'slideLeft',
+        duration: duration || 350,
+        curve: curve || 'easeOut'
+    };
+}
+
+export function getMenuTransition() {
+    return getTransition('slideRight');
+}
+
+export function getPageTransition() {
+    return getTransition();
 }
