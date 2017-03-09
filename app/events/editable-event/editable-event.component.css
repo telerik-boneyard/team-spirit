@@ -57,18 +57,20 @@ TextView {
 }
 
 .select-date {
+  height: 25;
   margin-top: 10;
-  font-size: 14;
   border-bottom-width: 1;
   border-color: #ebebed;
+}
+
+.select-date .info-icon {
+  width: 20;
+  height: 20;
+  font-size: 16;
+  color: #bfbfbf;
+  text-align: right;
 }
 
 .group .field {
-  border-color: #ebebed;
-  border-bottom-width: 1;
   min-height: 30;
-}
-
-.group .field.readonly {
-  border-bottom-width: 0;
 }
