@@ -119,3 +119,7 @@ export function getMenuTransition() {
 export function getPageTransition() {
     return getTransition();
 }
+
+export function getReversePageTransition() {
+    return getTransition('slideRight');
+}

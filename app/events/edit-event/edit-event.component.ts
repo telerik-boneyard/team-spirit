@@ -76,7 +76,8 @@ export class EditEventComponent implements OnInit {
                 return this._alertsService.showSuccess(`Event "${this.event.Name}" updated!`);
             })
             .then((res) => {
-                this._routerExtensions.navigate([`/events/${this.event.Id}`]);
+                let transition = utilities.getReversePageTransition();
+                this._routerExtensions.navigate([`/events/${this.event.Id}`], { clearHistory: true, transition });
             })
             .catch(err => {
                 if (err) {

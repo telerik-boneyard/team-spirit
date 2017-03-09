@@ -96,6 +96,10 @@ export class EventDetailsComponent implements OnInit {
         this._routerExtensions.navigate([`/events/${this.event.Id}/edit`]);
     }
 
+    canGoBack() {
+        return this._routerExtensions.canGoBack();
+    }
+
     canEdit() {
         return this._currentUser && this.event && !this.isPastEvent && this.event.Owner === this._currentUser.Id;
     }
@@ -158,8 +162,9 @@ export class EventDetailsComponent implements OnInit {
     onBack() {
         if (this._routerExtensions.canGoBack()) {
             this._routerExtensions.back();
-        } else {
-            this._routerExtensions.navigate(['/events'], { clearHistory: true });
+        } else { // simulate going back
+            let transition = utilities.getReversePageTransition();
+            this._routerExtensions.navigate(['/events'], { clearHistory: true, transition });
         }
     }
 
