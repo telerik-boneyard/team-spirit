@@ -1,33 +1,36 @@
-<ScrollView class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-        <ActionItem (tap)="finalize()" ios.position="right">
-            <StackLayout>
-                <Label text="Done" class="button"></Label>
-            </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-
-    <StackLayout *ngIf="event" class="content">
-        <Label text="Choose date and set it as final date for this event. No voting for dates will be allowed after that." textWrap="true" class="hint"></Label>
-
-        <Label text="Dates" class="info-label"></Label>
-        <StackLayout *ngFor="let dateInfo of countsBydate" (tap)="selectDate(dateInfo.date)" class="date-info">
-            <GridLayout columns="30, *, auto" rows="auto">
-                <StackLayout col="0" row="0" *ngIf="dateIsSelected(dateInfo.date)" class="vote">
-                    <Label text="&#x68;" class="if"></Label>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <ScrollView id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem (tap)="finalize()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
                 </StackLayout>
-                <Label col="0" row="0" class="vote" *ngIf="!dateIsSelected(dateInfo.date)" text=""></Label>
-                <Label col="1" row="0" class="date" [text]="dateInfo.date | date:dateFormat"></Label>
-                <DockLayout col="2" row="0" orientation="horizontal" class="count">
-                    <Label dock="left" [text]="getCountText(dateInfo.count)" (tap)="listVoters(dateInfo)"></Label>
-                    <Label dock="right" *ngIf="dateInfo && dateInfo.count > 0" class="if" text="&#x64;" horizontalAlignment="right"></Label>
-                </DockLayout>
-            </GridLayout>
-        </StackLayout>
-    </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
 
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        <StackLayout *ngIf="event" class="content">
+            <Label text="Choose date and set it as final date for this event. No voting for dates will be allowed after that." textWrap="true" class="hint"></Label>
+
+            <Label text="Dates" class="info-label"></Label>
+            <StackLayout *ngFor="let dateInfo of countsBydate" (tap)="selectDate(dateInfo.date)" class="date-info">
+                <GridLayout columns="30, *, auto" rows="auto">
+                    <StackLayout col="0" row="0" *ngIf="dateIsSelected(dateInfo.date)" class="vote">
+                        <Label text="&#x68;" class="if"></Label>
+                    </StackLayout>
+                    <Label col="0" row="0" class="vote" *ngIf="!dateIsSelected(dateInfo.date)" text=""></Label>
+                    <Label col="1" row="0" class="date" [text]="dateInfo.date | date:dateFormat"></Label>
+                    <DockLayout col="2" row="0" orientation="horizontal" class="count">
+                        <Label dock="left" [text]="getCountText(dateInfo.count)" (tap)="listVoters(dateInfo)"></Label>
+                        <Label dock="right" *ngIf="dateInfo && dateInfo.count > 0" class="if" text="&#x64;" horizontalAlignment="right"></Label>
+                    </DockLayout>
+                </GridLayout>
+            </StackLayout>
+        </StackLayout>
+
+        <ScrollView class="cntnr">
+            <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
     </ScrollView>
-</ScrollView>
+</StackLayout>

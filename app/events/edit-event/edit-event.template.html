@@ -1,22 +1,26 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
-        <ActionItem (tap)="save()" ios.position="right">
-            <StackLayout>
-                <Label text="Done" class="button"></Label>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    
+    <StackLayout id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+            <ActionItem (tap)="save()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
+        <ScrollView class="cntnr">
+            <StackLayout *ngIf="event && userGroups">
+                <editable-event  [event]="event" [userGroups]="userGroups"></editable-event>
+                <StackLayout class="btn-delete" orientation="horizontal" (tap)="delete()">
+                    <Label class="if" text="&#x72;"></Label>
+                    <Label text="Delete event"></Label>
+                </StackLayout>
             </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-    <ScrollView class="cntnr">
-        <StackLayout *ngIf="event && userGroups">
-            <editable-event  [event]="event" [userGroups]="userGroups"></editable-event>
-            <StackLayout class="btn-delete" orientation="horizontal" (tap)="delete()">
-                <Label class="if" text="&#x72;"></Label>
-                <Label text="Delete event"></Label>
-            </StackLayout>
-        </StackLayout>
-        <ScrollView>
-            <ActivityIndicator [busy]="!event || userGroups" [visibility]="event || userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            <ScrollView>
+                <ActivityIndicator [busy]="!event || userGroups" [visibility]="event || userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+            </ScrollView>
         </ScrollView>
-    </ScrollView>
+    </StackLayout>
 </StackLayout>

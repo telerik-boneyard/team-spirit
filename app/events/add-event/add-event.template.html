@@ -1,16 +1,19 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
-        <ActionItem (tap)="onCreate()" ios.position="right">
-            <StackLayout>
-                <Label text="Done" class="button"></Label>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <StackLayout id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+            <ActionItem (tap)="onCreate()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
+        <ScrollView class="cntnr">
+            <StackLayout *ngIf="userGroups">
+                <editable-event *ngIf="userGroups" [event]="newEvent" [userGroups]="userGroups"></editable-event>
             </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-    <ScrollView class="cntnr">
-        <StackLayout *ngIf="userGroups">
-            <editable-event *ngIf="userGroups" [event]="newEvent" [userGroups]="userGroups"></editable-event>
-        </StackLayout>
-        <ActivityIndicator [busy]="!userGroups" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
+            <ActivityIndicator [busy]="!userGroups" [visibility]="userGroups ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </StackLayout>
 </StackLayout>

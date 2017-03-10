@@ -1,5 +1,6 @@
 <StackLayout>
-    <ScrollView class="cntnr">
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <ScrollView id="hideonloading" class="cntnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
             <ActionItem *ngIf="!isAndroid && (participationChanged || !canGoBack())" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
