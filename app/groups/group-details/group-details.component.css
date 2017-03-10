@@ -79,13 +79,6 @@
 }
 
 .approval-icon {
-  width: 24;
-  height: 24;
   margin-right: 5;
-  padding-top: 3;
-  border-color: #000;
-  border-width: 1;
-  border-radius: 12;
-  font-size: 16;
-  text-align: center;
+  font-size: 24;
 }
