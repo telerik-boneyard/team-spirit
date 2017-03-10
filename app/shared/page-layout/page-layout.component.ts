@@ -8,7 +8,7 @@ import * as viewModule from 'ui/core/view';
 
 import { Page } from 'ui/page';
 
-import { utilities } from '../';
+import { utilities, User } from '../';
 import {
     UsersService,
     AlertService,
@@ -26,6 +26,7 @@ export class PageLayoutComponent implements OnInit {
 
     disableDrawer: boolean = false;
     isAndroid: boolean = false;
+    user: User;
 
     private _actionBarNativeObject = null;
     private _isSettingsScrn = /^\/settings.*/i
@@ -55,6 +56,10 @@ export class PageLayoutComponent implements OnInit {
         if (this._actionBarNativeObject) {
             this.toggleActionBarShadow(this._router.url);
         }
+
+        this._usersService.currentUser()
+            .then(user => this.user = user)
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 
     navigate(newRoute: string) {
@@ -88,5 +93,9 @@ export class PageLayoutComponent implements OnInit {
             this._actionBarNativeObject = args.object._nativeView;
             this.toggleActionBarShadow(this._router.url);
         }
+    }
+
+    isActive(urlRoot: string) {
+        return this._router.url.indexOf('/' + urlRoot) === 0;
     }
 }

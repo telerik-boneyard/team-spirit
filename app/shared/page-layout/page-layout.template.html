@@ -11,23 +11,27 @@
         <DockLayout tkDrawerContent class="drawer">
             <StackLayout class="sideStackLayout" width="100%" dock="top">
                 <StackLayout class="user-wrp">
+                    <StackLayout *ngIf="user">
+                        <photo-picker class="user-image" [url]="user.ImageUrl" [type]="'user'" [noImageIcon]="'&#x46;'"></photo-picker>
+                        <Label class="user-name" [text]="user.DisplayName || user.Username"></Label>
+                    </StackLayout>
                 </StackLayout>
-                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('events')">
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('events')" [class.active]="isActive('events')">
                     <Label class="btn-icon if" text="&#x6b;"></Label>
                     <Label class="btn-text" text="Events"></Label>
                 </StackLayout>
 
-                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('groups')">
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('groups')" [class.active]="isActive('groups')">
                     <Label class="btn-icon if" text="&#x6e;"></Label>
                     <Label class="btn-text" text="Groups"></Label>
                 </StackLayout>
 
-                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('user')">
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('user')" [class.active]="isActive('user')">
                     <Label class="btn-icon if" text="&#x6c;"></Label>
                     <Label class="btn-text" text="My Profile"></Label>
                 </StackLayout>
 
-                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('settings')">
+                <StackLayout orientation="horizontal" class="btn" (tap)="navigate('settings')" [class.active]="isActive('settings')">
                     <Label class="btn-icon if" text="&#x6f;"></Label>
                     <Label class="btn-text" text="Settings"></Label>
                 </StackLayout>

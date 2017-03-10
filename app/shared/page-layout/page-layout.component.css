@@ -1,0 +1,12 @@
+.active {
+    color: #F4550F;
+}
+
+.user-image >>> Image {
+    width: 70;
+    height: 70;
+}
+
+.user-name {
+    text-align: center;
+}
