@@ -30,7 +30,10 @@ export class ImagePickerService {
     getBase64FromUri(uri: string) {
         let imgSrc = nsImgSource.fromFileOrResource(uri);
         let imgRatio = imgSrc.width / imgSrc.height;
-        imgSrc = this.resizeImage(imgSrc, constants.imageWidth, constants.imageWidth / imgRatio);
+        let width = constants.imageWidth;
+        let height = constants.imageWidth / imgRatio;
+
+        imgSrc = this.resizeImage(imgSrc, width, height);
         let format = (uri.match(/[^\.]+$/i)[0]) || 'png';
         let result = {
             format: format,

@@ -1,37 +1,40 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
-        <ActionItem (tap)="save()" ios.position="right">
-            <StackLayout>
-                <Label text="Done" class="button"></Label>
-            </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <StackLayout id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+            <ActionItem (tap)="save()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
 
-    <ScrollView>
-        <StackLayout *ngIf="user" id="dismissableAnchor">
-            <AbsoluteLayout width="100%" height="130">
-                <StackLayout left="0" top="60" width="100%" height="90" class="user-pad"></StackLayout>
-                <StackLayout left="0" top="0" width="100%" class="user">
-                    <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)" [noImageIcon]="user.ImageUrl ? '' : '&#x6c;'"></photo-picker>
-                </StackLayout>
-            </AbsoluteLayout>
-            <StackLayout class="user-info-cnt">
-                <StackLayout class="user-info-block">
-                    <Label class="user-label" text="Name"></Label>
-                    <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
-                </StackLayout>
-                <StackLayout class="user-info-block">
-                    <Label class="user-label" text="Email"></Label>
-                    <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.Username" keyboardType="email"></TextField>
-                </StackLayout>
-                <StackLayout class="user-info-block">
-                    <Label class="user-label" text="Phone"></Label>
-                    <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
+        <ScrollView>
+            <StackLayout *ngIf="user" id="dismissableAnchor">
+                <AbsoluteLayout width="100%" height="130">
+                    <StackLayout left="0" top="60" width="100%" height="90" class="user-pad"></StackLayout>
+                    <StackLayout left="0" top="0" width="100%" class="user">
+                        <photo-picker [(url)]="user.ImageUrl" [type]="'user'" [editable]="true" (uplodad)="onImageUpload($event)" [noImageIcon]="user.ImageUrl ? '' : '&#x6c;'"></photo-picker>
+                    </StackLayout>
+                </AbsoluteLayout>
+                <StackLayout class="user-info-cnt">
+                    <StackLayout class="user-info-block">
+                        <Label class="user-label" text="Name"></Label>
+                        <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.DisplayName"></TextField>
+                    </StackLayout>
+                    <StackLayout class="user-info-block">
+                        <Label class="user-label" text="Email"></Label>
+                        <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.Username" keyboardType="email"></TextField>
+                    </StackLayout>
+                    <StackLayout class="user-info-block">
+                        <Label class="user-label" text="Phone"></Label>
+                        <TextField [dismissable] class="user-info-editable-value" [(ngModel)]="user.Phone" keyboardType="phone"></TextField>
+                    </StackLayout>
                 </StackLayout>
             </StackLayout>
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
 
-    <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        <ActivityIndicator [busy]="!user" [visibility]="user ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </StackLayout>
 </StackLayout>

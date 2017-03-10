@@ -1,21 +1,24 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-    </ActionBarExtension>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <StackLayout id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+        </ActionBarExtension>
 
-    <StackLayout *ngIf="events">
-        <event-list *ngIf="events.length" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
-        <StackLayout *ngIf="!events.length" class="no-items">
-            <Label class="if" text="&#x6a;"></Label>
-            <Label text="No events for group {{ group.Name }}" [textWrap]="true" class="title"></Label>
-            <Label text="Be first and organize a memorable event for you and your friends." [textWrap]="true"></Label>
-            <StackLayout class="actions">
-                <Label text="Organize Event" (tap)="goCreateEvent()" class="btn btn-primary"></Label>
+        <StackLayout *ngIf="events">
+            <event-list *ngIf="events.length" [events]="events" (onEventTap)="onEventTap($event)"></event-list>
+            <StackLayout *ngIf="!events.length" class="no-items">
+                <Label class="if" text="&#x6a;"></Label>
+                <Label text="No events for group {{ group.Name }}" [textWrap]="true" class="title"></Label>
+                <Label text="Be first and organize a memorable event for you and your friends." [textWrap]="true"></Label>
+                <StackLayout class="actions">
+                    <Label text="Organize Event" (tap)="goCreateEvent()" class="btn btn-primary"></Label>
+                </StackLayout>
             </StackLayout>
         </StackLayout>
-    </StackLayout>
 
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!events" [visibility]="events ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
+        <ScrollView class="cntnr">
+            <ActivityIndicator [busy]="!events" [visibility]="events ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </StackLayout>
 </StackLayout>

@@ -16,11 +16,14 @@ export class LoadingScreenComponent implements OnInit {
     private _hideElement: View;
     private _extendedLoadingSub: any;
     private _allLoaded: any;
+    private _defaultActionBarHidden: boolean = false;
     
     constructor(
         private _loadingService: LoadingIndicatorService,
         private _page: Page
-    ) {}
+    ) {
+        this._defaultActionBarHidden = this._page.actionBarHidden;
+    }
 
     ngOnInit() {
         this._hideElement = this._page.getViewById(this.hideElementId);
@@ -49,14 +52,16 @@ export class LoadingScreenComponent implements OnInit {
     }
 
     private _startLoading() {
+        // console.log('LOADING start');
         this._hideElement.visibility = 'collapse';
         this.showLoader = true;
         this._page.actionBarHidden = true;
     }
 
     private _endLoading() {
+        // console.log('LOADING end');
         this._hideElement.visibility = 'visible';
         this.showLoader = false;
-        this._page.actionBarHidden = false;
+        this._page.actionBarHidden = this._defaultActionBarHidden;
     }
 }

@@ -1,18 +1,21 @@
-<ScrollVIew class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-        <!--<ActionItem (tap)="onAdd()" *ngIf="canAdd"
-            ios.systemIcon="4" android.systemIcon="ic_menu_add"
-            ios.position="right">
-        </ActionItem>-->
-    </ActionBarExtension>
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+    <ScrollVIew id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <!--<ActionItem (tap)="onAdd()" *ngIf="canAdd"
+                ios.systemIcon="4" android.systemIcon="ic_menu_add"
+                ios.position="right">
+            </ActionItem>-->
+        </ActionBarExtension>
 
-    <StackLayout *ngIf="members" class="content">
-        <user-list *ngIf="members" [users]="members"></user-list>
-        <Label *ngIf="noAdmin" text="Group administrator is not a member." class="no-admin"></Label>
-    </StackLayout>
+        <StackLayout *ngIf="members" class="content">
+            <user-list *ngIf="members" [users]="members"></user-list>
+            <Label *ngIf="noAdmin" text="Group administrator is not a member." class="no-admin"></Label>
+        </StackLayout>
 
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!members" [visibility]="members ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
-</ScrollVIew>
+        <ScrollView class="cntnr">
+            <ActivityIndicator [busy]="!members" [visibility]="members ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </ScrollVIew>
+</StackLayout>

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
         private _page: Page
     ) {
         this.user = {} as any;
+        this._page.actionBarHidden = true;
     }
 
     ngOnInit() {

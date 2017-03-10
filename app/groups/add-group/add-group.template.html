@@ -1,15 +1,19 @@
-<StackLayout class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
-        <ActionItem (tap)="onCreate()" ios.position="right">
+<StackLayout>
+    <loading-screen hideElement="hideonloading"></loading-screen>
+
+    <StackLayout id="hideonloading" class="cntnr">
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
+            <ActionItem (tap)="onCreate()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
+        <ScrollView class="cntnr">
             <StackLayout>
-                <Label text="Done" class="button"></Label>
+                <editable-group [group]="group"></editable-group>
             </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-    <ScrollView class="cntnr">
-        <StackLayout>
-            <editable-group [group]="group"></editable-group>
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+    </StackLayout>
 </StackLayout>
