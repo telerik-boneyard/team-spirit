@@ -1,13 +1,12 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, OnInit, ElementRef } from '@angular/core';
 import { TextField } from 'ui/text-field';
 import { Page } from 'ui/page';
 import * as viewModule from 'ui/core/view';
-import * as gesturesModule from 'ui/gestures';
 
 @Directive({
     selector: '[dismissable]'
 })
-export class DismissableInputDirective {
+export class DismissableInputDirective implements OnInit {
     private _field: any;
     
     constructor(el: ElementRef) {

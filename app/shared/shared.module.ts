@@ -22,7 +22,8 @@ import {
     UsersListComponent,
     EventListComponent,
     DismissableInputDirective,
-    PageLayoutComponent
+    PageLayoutComponent,
+    LoadingScreenComponent
 } from './';
 
 @NgModule({
@@ -43,7 +44,8 @@ import {
         UsersListComponent,
         EventListComponent,
         DismissableInputDirective,
-        PageLayoutComponent
+        PageLayoutComponent,
+        LoadingScreenComponent
     ],
     entryComponents: [
         AppModalComponent,
@@ -57,7 +59,8 @@ import {
         UsersListComponent,
         EventListComponent,
         DismissableInputDirective,
-        PageLayoutComponent
+        PageLayoutComponent,
+        LoadingScreenComponent
     ],
     schemas: [NO_ERRORS_SCHEMA]
 })

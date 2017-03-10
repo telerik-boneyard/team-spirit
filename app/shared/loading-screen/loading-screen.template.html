@@ -1,0 +1,3 @@
+<StackLayout *ngIf="showLoader" class="cntnr">
+    <ActivityIndicator [busy]="showLoader" [visibility]="!showLoader ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+</StackLayout>

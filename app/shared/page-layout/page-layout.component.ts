@@ -12,8 +12,7 @@ import { utilities } from '../';
 import {
     UsersService,
     AlertService,
-    PlatformService,
-    LoadingIndicatorService
+    PlatformService
 } from '../../services';
 
 @Component({
@@ -31,7 +30,6 @@ export class PageLayoutComponent implements OnInit {
     private _actionBarNativeObject = null;
 
     constructor(
-        private _loadingService: LoadingIndicatorService,
         private _routerExtensions: RouterExtensions,
         private _alertsService: AlertService,
         private _usersService: UsersService,
@@ -49,14 +47,6 @@ export class PageLayoutComponent implements OnInit {
             this.toggleActionBarShadow(this._router.url);
         }
         this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
-        
-        this._loadingService.extendedLoading.subscribe(() => {
-            let modalContext = {
-                justLoading: true,
-                outsideClose: this._loadingService.allLoaded
-            };
-            this._alertsService.showModal(modalContext, this._vcRef);
-        });
     }
 
     navigate(newRoute: string) {

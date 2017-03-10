@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ChangeDetectionStrategy } from '@angular/core';
-import { ScrollView } from 'ui/scroll-view';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 import { Event, User } from '../../shared/models';
 import { EventsService, UsersService, EventRegistrationsService } from '../../services';

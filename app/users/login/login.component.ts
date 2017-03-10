@@ -99,7 +99,7 @@ export class LoginComponent implements OnInit {
     }
 
     private _goToEvents() {
-        let transition = utilities.getMenuTransition();
+        let transition = utilities.getPageTransition();
         this._routerExtensions.navigate(['events'], { clearHistory: true, transition });
     }
 }

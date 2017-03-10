@@ -4,6 +4,7 @@ import * as allConstants from './constants';
 export * from './constants';
 export * from './models';
 export * from './app-modal/app-modal.component';
+export * from './loading-screen/loading-screen.component';
 export * from './datetime-picker-modal/datetime-picker-modal.component';
 export * from './list-picker-modal/list-picker-modal.component';
 export * from './photo-picker/photo-picker.component';
