@@ -11,7 +11,7 @@ TextField {
 }
 
 .form {
-  padding: 20 0;
+  padding: 0 0 20;
 }
 
 .form StackLayout {
@@ -20,14 +20,15 @@ TextField {
 }
 
 .logo-wrp {
-  width: 260;
-  margin-right: 55;
-  margin-left: 55;
+  width: 100%;
+  margin: -60 0 20;
+  text-align: center;
 }
 
 .logo {
-  margin-top: 20;
-  margin-bottom: 30;
+  height: 160;
+  color: #fff;
+  font-size: 285;
 }
 
 .input-field {

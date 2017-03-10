@@ -14,7 +14,10 @@
 
         <StackLayout class="input-field group with-popup">
             <Label class="label" text="Group"></Label>
-            <Label class="field" (tap)="onSelectGroup()" [class.readonly]="isEdit" [text]="getSelectedGroupName()"></Label>
+            <StackLayout orientation="horizontal" width="100%" class="select-date" (tap)="onSelectGroup()">
+                <Label class="field" width="95%" [class.readonly]="isEdit" [text]="getSelectedGroupName()"></Label>
+                <Label class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>
+            </StackLayout>
         </StackLayout>
 
         <StackLayout class="input-field">
@@ -33,7 +36,9 @@
                 <Label class="field" [text]="date | date:dateFormat"></Label>
                 <Label *ngIf="!event.RegistrationCompleted" class="remove if" text="&#x67;" (tap)="removeDateOption(ind)"></Label>
             </StackLayout>
-            <Label *ngIf="!event.RegistrationCompleted" class="select-date" text="" (tap)="onSelectDate(date)"></Label>
+            <StackLayout *ngIf="!event.RegistrationCompleted" class="select-date" (tap)="onSelectDate(date)">
+                <Label class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>
+            </StackLayout>
         </StackLayout>
 
         <StackLayout *ngIf="currentUser" class="input-field user">

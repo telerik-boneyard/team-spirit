@@ -175,9 +175,9 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     getApplicationStatusIcon() {
-        let icon = '68';
+        let icon = '42';
         if (this.userApplication && this.userApplication.Resolved) {
-            icon = '67';
+            icon = '41';
         }
         return String.fromCharCode(parseInt(icon, 16));
     }
