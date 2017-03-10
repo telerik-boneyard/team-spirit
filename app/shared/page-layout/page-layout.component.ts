@@ -28,6 +28,8 @@ export class PageLayoutComponent implements OnInit {
     isAndroid: boolean = false;
 
     private _actionBarNativeObject = null;
+    private _isSettingsScrn = /^\/settings.*/i
+    private _isBackNav: boolean = false;
 
     constructor(
         private _routerExtensions: RouterExtensions,
@@ -39,14 +41,20 @@ export class PageLayoutComponent implements OnInit {
         private _page: Page
     ) {
         this.isAndroid = this._platform.isAndroid;
+        this._page.on('navigatingTo', (args) => {
+            this._isBackNav = args.isBackNavigation;
+            if (this._actionBarNativeObject) {
+                this.toggleActionBarShadow(this._router.url);
+            }
+        });
     }
 
     ngOnInit() {
         this.disableDrawer = utilities.shouldDisableDrawer(this._router.url);
-        if (this._platform.isAndroid && this._platform.sdkVersion >= 21) {
+        this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
+        if (this._actionBarNativeObject) {
             this.toggleActionBarShadow(this._router.url);
         }
-        this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
     }
 
     navigate(newRoute: string) {
@@ -68,20 +76,16 @@ export class PageLayoutComponent implements OnInit {
     }
 
     toggleActionBarShadow(url: string) {
-        if (!this._actionBarNativeObject) {
-            return;
-        }
-        let path = url.split(';').filter(entry => entry.trim() != '')[0];
-        if (path === '/events' || path === '/groups' || path === '/user' || path === '/user/edit') {
-            this._actionBarNativeObject.setElevation(0);
-        } else {
+        if (this._isSettingsScrn.test(url) && !this._isBackNav) {
             this._actionBarNativeObject.setElevation(20);
+        } else {
+            this._actionBarNativeObject.setElevation(0);
         }
     }
 
     actionBarLoaded(args) {
-        this._actionBarNativeObject = args.object._nativeView;
         if (this.isAndroid && this._platform.sdkVersion >= 21) {
+            this._actionBarNativeObject = args.object._nativeView;
             this.toggleActionBarShadow(this._router.url);
         }
     }
