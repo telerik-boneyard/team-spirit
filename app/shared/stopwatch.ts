@@ -1,6 +1,5 @@
 export class Stopwatch {
-    private _timer: number = null;
-    // private _startTime: number;
+    private _timerId: number = null;
 
     constructor(
         private _period: number,
@@ -8,39 +7,21 @@ export class Stopwatch {
     ) {}
 
     start() {
-        this._timer = setTimeout(() => {
+        if (this._timerId !== null) {
+            return;
+        }
+        this._timerId = setTimeout(() => {
             this._onTimerEnd();
         }, this._period);
     }
 
     stop() {
-        clearInterval(this._timer);
-        this._timer = null;
+        clearInterval(this._timerId);
+        this._timerId = null;
     }
 
     restart() {
         this.stop();
         this.start();
     }
-
-    // get elapsed() {
-    //     let result: number = 0;
-    //     if (typeof this._startTime === 'number') {
-    //         result = Date.now() - this._startTime;
-    //     }
-    //     return result;
-    // }
-
-    // start() {
-    //     this._startTime = Date.now();
-    // }
-
-    // stop() {
-    //     this._startTime = null;
-    // }
-
-    // restart() {
-    //     this.stop();
-    //     this.start();
-    // }
 }

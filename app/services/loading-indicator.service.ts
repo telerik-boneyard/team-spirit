@@ -17,11 +17,6 @@ export class LoadingIndicatorService {
     ) {
         this.extendedLoading = new EventEmitter<void>();
         this.allLoaded = new EventEmitter<void>();
-
-        if (platformService.isIos) {
-            return;
-        }
-        
         this.threshold = constants.extendedLoadingThreshold;
 
         this._elProvider.get.on('beforeExec', (query) => {
@@ -62,7 +57,6 @@ export class LoadingIndicatorService {
 
     private _dequeueLoading() {
         this._ongoingRequestsCount = Math.max(this._ongoingRequestsCount - 1, 0);
-
         if (this._ongoingRequestsCount === 0 && this._loadingMode) {
             this._stopwatch.stop();
             this._emitAllLoaded();
