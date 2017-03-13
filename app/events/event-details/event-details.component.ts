@@ -7,11 +7,12 @@ import { Page } from 'ui/page';
 import { action } from 'ui/dialogs';
 import * as frameModule from 'ui/frame';
 
-import { Event, User, EventRegistration } from '../../shared/models';
+import { Event, Group, User, EventRegistration } from '../../shared/models';
 import { utilities, constants, AppModalComponent } from '../../shared';
 import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 import {
     EventsService,
+    GroupsService,
     UsersService,
     AlertService,
     PlatformService,
@@ -47,6 +48,7 @@ export class EventDetailsComponent implements OnInit {
         private _route: ActivatedRoute,
         private _alertsService: AlertService,
         private _eventsService: EventsService,
+        private _groupsService: GroupsService,
         private _usersService: UsersService,
         private _modalService: ModalDialogService,
         private _vcRef: ViewContainerRef,
@@ -318,8 +320,13 @@ export class EventDetailsComponent implements OnInit {
     }
 
     private _makeRegistrationRequest(dates: string[]) {
-        return this._eventsService.registerForEvent(this.event.Id, dates)
-            .then(() => this._showSuccessfulRegistrationModal());
+        let regPromise = this._eventsService.registerForEvent(this.event.Id, dates);
+        let groupPromise = this._groupsService.getById(this.event.GroupId);
+        return Promise.all([regPromise, groupPromise])
+            .then(results => {
+                let group: Group = results[1];
+                return this._showSuccessfulRegistrationModal(group.Name);
+            });
     }
 
     private _register() {
@@ -339,10 +346,14 @@ export class EventDetailsComponent implements OnInit {
         });
     }
 
-    private _showSuccessfulRegistrationModal() {
+    private _showSuccessfulRegistrationModal(groupName?: string) {
+        let text = 'You have successfully voted for event date.';
+        if (this.event.EventDate) {
+            text = `Your friends from ${groupName} will be notified that you are going`;
+        }
         let ctx = {
             title: 'HOOOORAY!',
-            text: 'You have successfully voted for event date.',
+            text: text,
             closeTimeout: constants.modalsTimeout
         };
 
