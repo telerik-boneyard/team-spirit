@@ -45,8 +45,12 @@ export class FinalizeEventComponent implements OnInit {
 
             Promise.all<any>([evPrm, countsPrm])
                 .then((res) => {
-                    this.event = res[0];
                     this.countsBydate = res[1];
+                    let event: Event = res[0];
+                    if (event.EventDateChoices) {
+                        event.EventDateChoices = event.EventDateChoices.sort(utilities.compareForSort);
+                    }
+                    this.event = event;
                 })
                 .catch(err => err && this._alertsService.showError(err.message));
         });
