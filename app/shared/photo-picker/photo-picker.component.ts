@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
-import { ImagePickerService } from '../../services';
+import { PlatformService, ImagePickerService } from '../../services';
 import { utilities } from '../';
 
 @Component({
@@ -11,6 +11,7 @@ import { utilities } from '../';
 })
 export class PhotoPickerComponent implements OnInit {
     private _resizedUrl: string;
+    screenWidth: number = 0;
 
     @Input('url') rawUrl: string;
     @Input() type: string;
@@ -22,8 +23,11 @@ export class PhotoPickerComponent implements OnInit {
     @Output('urlChange') onUpload = new EventEmitter<any>();
 
     constructor(
-        private _imgPickerService: ImagePickerService
-    ) {}
+        private _imgPickerService: ImagePickerService,
+        private _platform: PlatformService
+    ) {
+        this.screenWidth = this._platform.screenWidth;
+    }
 
     get resizedUrl() {
         if (!this.rawUrl) {
@@ -85,16 +89,17 @@ export class PhotoPickerComponent implements OnInit {
     }
 
     private _resizeForGroup(url: string, small: boolean = false) {
-        let size = small ? 50 : 300;
         let dims: any = null;
         if (small) {
-            dims = { w: size, h: size };
+            dims = { w: 50, h: 50 };
+        } else {
+            dims = { w: this.screenWidth, h: 200 };
         }
         return this._resize(url, dims);
     }
 
     private _resizeForEvent(url: string) {
-        return this._resize(url);
+        return this._resize(url, { w: this.screenWidth, h: 200 });
     }
 
     private _resize(url: string, dims?: { w: number, h: number }) {

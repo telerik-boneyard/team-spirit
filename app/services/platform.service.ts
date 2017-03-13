@@ -12,7 +12,7 @@ export class PlatformService {
     get isIos() {
         return !this.isAndroid;
     }
-    
+
     get deviceId() {
         return nsPlatform.device.uuid;
     }
@@ -27,5 +27,9 @@ export class PlatformService {
 
     get sdkVersion() {
         return Number(nsPlatform.device.sdkVersion);
+    }
+
+    get screenWidth() {
+        return Number(nsPlatform.screen.mainScreen.widthDIPs);
     }
 }
