@@ -124,16 +124,42 @@ export class EventDetailsComponent implements OnInit {
     }
 
     register() {
-        if (this._isVoting) {
-            return;
+        let dateSelectionPromise: Promise<string[]> = null;
+
+        if (this.event.EventDate) {
+            dateSelectionPromise = Promise.resolve([this.event.EventDate]);
+        } else {
+            dateSelectionPromise = this._openDateSelectionModal();
         }
-        this._register()
-            .then(didRegister => {
-                if (didRegister) { // would be false if user closed modal
-                    this._updateInfoOnRegister();
-                }
-            })
-            .catch(err => err && this._alertsService.showError(err.message));
+
+        dateSelectionPromise.then(dateChoices => {
+            if (!dateChoices) { // user closed modal
+                return Promise.reject(null);
+            }
+            let promises: Promise<any>[] = [this._eventsService.registerForEvent(this.event.Id, dateChoices)];
+            if (this.event.EventDate) {
+                promises.push(this._groupsService.getById(this.event.GroupId));
+            }
+            return Promise.all(promises);
+        })
+        .then(results => {            
+            let group: Group = results[1];
+            let text = 'You have successfully registered for this event.';
+
+            if (group) {
+                text = `Your friends from ${group.Name} will be notified that you are going`;
+            }
+
+            let ctx = {
+                title: 'Hooooray!',
+                text: text,
+                closeTimeout: constants.modalsTimeout
+            };
+
+            this._updateInfoOnRegister();
+            this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
+        })
+        .catch(err => err && this._alertsService.showError(err.message));
     }
 
     changeVote() {
@@ -319,63 +345,10 @@ export class EventDetailsComponent implements OnInit {
             .then(result => this._countByDate = result.countByDate);
     }
 
-    private _makeRegistrationRequest(dates: string[]) {
-        let regPromise = this._eventsService.registerForEvent(this.event.Id, dates);
-        let groupPromise = this._groupsService.getById(this.event.GroupId);
-        return Promise.all([regPromise, groupPromise])
-            .then(results => {
-                let group: Group = results[1];
-                return this._showSuccessfulRegistrationModal(group.Name);
-            });
-    }
-
-    private _register() {
-        // TODO: refactor
-        if (this.event.EventDate) {
-            return this._makeRegistrationRequest([this.event.EventDate]);
-        }
-        this._isVoting = true;
-        return new Promise<string[]>((resolve, reject) => {
-            this._openDateSelectionModal(false, (dateChoices) => {
-                if (dateChoices) {
-                    let dates = this._mapDateChoicesToDates(dateChoices);
-                    return this._makeRegistrationRequest(dates).then(resolve, reject);
-                }
-            })
-            .then(() => this._isVoting = false, () => this._isVoting = false);
-        });
-    }
-
-    private _showSuccessfulRegistrationModal(groupName?: string) {
-        let text = 'You have successfully voted for event date.';
-        if (this.event.EventDate) {
-            text = `Your friends from ${groupName} will be notified that you are going`;
-        }
-        let ctx = {
-            title: 'HOOOORAY!',
-            text: text,
-            closeTimeout: constants.modalsTimeout
-        };
-
-        return this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
-    }
-
-    private _mapDateChoicesToDates(dateChoices: number[]) {
-        let result: string[] = null;
-
-        if (dateChoices && dateChoices.length) {
-            this._dateChoicesMade = [];
-            dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
-            result = this._dateChoicesMade;
-        }
-        return result;
-    }
-
-    private _openDateSelectionModal(isChangeVote = false, onRegister?: (dateChoices: number[]) => Promise<any>) {
+    private _openDateSelectionModal(isChangeVote = false) {
         let opts: ModalDialogOptions = {
             context: {
-                availableDates: this.event.EventDateChoices,
-                onRegister: onRegister
+                availableDates: this.event.EventDateChoices
             },
             fullscreen: true,
             viewContainerRef: this._vcRef
@@ -387,7 +360,17 @@ export class EventDetailsComponent implements OnInit {
         }
 
         return this._modalService.showModal(EventRegistrationModalComponent, opts)
-            .then((dateChoices: number[]) => this._mapDateChoicesToDates(dateChoices));
+            .then((dateChoices: number[]) => {
+                let result: string[] = null;
+
+                if (dateChoices && dateChoices.length) {
+                    this._dateChoicesMade = [];
+                    dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
+                    result = this._dateChoicesMade;
+                }
+
+                return Promise.resolve(result);
+            });
     }
 
     private _updateInfoOnRegister() {
