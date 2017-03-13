@@ -1,7 +1,7 @@
 <StackLayout>
     <ActionBar (loaded)="actionBarLoaded($event)" title="">
-        <NavigationButton *ngIf="!disableDrawer && isAndroid" icon="res://icon_menu" (tap)="toggleDrawer()"></NavigationButton>
-        <ActionItem *ngIf="!disableDrawer && !isAndroid" ios.position="left" (tap)="toggleDrawer()">
+        <NavigationButton *ngIf="isAndroid" icon="res://icon_menu" (tap)="toggleDrawer()"></NavigationButton>
+        <ActionItem *ngIf="!isAndroid" ios.position="left" (tap)="toggleDrawer()">
             <StackLayout>
                 <Label class="button if" text="&#x62;"></Label>
             </StackLayout>

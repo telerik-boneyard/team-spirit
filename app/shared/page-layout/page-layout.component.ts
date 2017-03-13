@@ -51,8 +51,11 @@ export class PageLayoutComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.disableDrawer = utilities.shouldDisableDrawer(this._router.url);
-        this.drawer.sideDrawer.gesturesEnabled = !this.disableDrawer;
+        // hack to make drawer respond to actions - otherwise,
+        // sometimes it cannot be opened before tapping the button
+        this.toggleDrawer();
+        this.toggleDrawer();
+
         if (this._actionBarNativeObject) {
             this.toggleActionBarShadow(this._router.url);
         }
