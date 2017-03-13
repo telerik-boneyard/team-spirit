@@ -50,13 +50,13 @@ export class PhotoPickerComponent implements OnInit {
         }
 
         this._imgPickerService.pickImage()
-            .then(obj => {
-                this.resizedUrl = obj.uri;
-                this.onUpload.emit(obj.uri);
+            .then(pickResult => {
+                this.resizedUrl = pickResult.uri;
+                this.onUpload.emit(pickResult.uri);
             })
             .catch(err => {
                 if (err) {
-                    console.log('pick err: ' + JSON.stringify(err));
+                    console.log('pick err: ' + err.message);
                 }
             });
     }

@@ -4,8 +4,10 @@ import * as nsPermissions from 'nativescript-permissions';
 import * as nsPicker from 'nativescript-imagepicker';
 import * as nsImgSource from 'image-source';
 import * as nsPlatform from 'platform';
+import * as fs from 'file-system';
 
 import { EverliveProvider } from './';
+import { PlatformService } from './platform.service';
 import { constants } from '../shared';
 
 declare const android: any, CGSizeMake: any, UIGraphicsBeginImageContextWithOptions: any, CGRectMake: any, UIGraphicsEndImageContext: any, UIGraphicsGetImageFromCurrentImageContext: any;
@@ -15,7 +17,8 @@ export class ImagePickerService {
     private _imageItems: any[] = [];
     
     constructor(
-        private _elProvider: EverliveProvider
+        private _elProvider: EverliveProvider,
+        private _platform: PlatformService
     ) {}
 
     pickImage() {
@@ -34,7 +37,7 @@ export class ImagePickerService {
         let height = constants.imageWidth / imgRatio;
 
         imgSrc = this.resizeImage(imgSrc, width, height);
-        let format = (uri.match(/[^\.]+$/i)[0]) || 'png';
+        let format = this._getExtension(uri) || 'png';
         let result = {
             format: format,
             base64: imgSrc.toBase64String(format)
@@ -54,11 +57,15 @@ export class ImagePickerService {
         return resizedImgSrc;
     }
 
-    private _pick(mode: string): Promise<{ name: string, uri: string }[]> {
+    private _getExtension(fileUri: string) {
+        return fileUri.match(/[^\.]+$/i)[0];
+    }
+
+    private _pick(mode: string): Promise<{ thumb: any, uri: string }[]> {
         let ctx = nsPicker.create({ mode });
         let authPromise = Promise.resolve<any>();
 
-        if (nsPlatform.device.os === 'Android' && (+nsPlatform.device.sdkVersion >= 23))  {
+        if (nsPlatform.device.os === 'Android' && (this._platform.sdkVersion >= 23))  {
             let text = 'We need these permissions to read from storage';
             let permType = android.Manifest.permission.READ_EXTERNAL_STORAGE;
             authPromise = nsPermissions.requestPermission(permType, text);
@@ -77,16 +84,45 @@ export class ImagePickerService {
             .then(() => context.present());
     }
 
-    private _processImages(selection: any[]): Promise<{ name: string, uri: string }[]> {
-        let processedImgs: Promise<any>[] = selection.map((selectedItem) => {
-            return Promise.resolve({
-                uri: selectedItem.fileUri,
-                thumb: selectedItem.thumb
-            });
+    private _processImages(selection: any[]) {
+        let processedImgs = selection.map((selectedItem) => {
+            return this._moveImgToTempFolder(selectedItem)
+                .then(moveResult => {
+                    return {
+                        uri: moveResult.uri,
+                        thumb: selectedItem.thumb
+                    };
+                });
+            // let descriptor: { uri: string, thumb: any } = {
+            //     uri: selectedItem.fileUri,
+            //     thumb: selectedItem.thumb
+            // };
+            // return Promise.resolve(descriptor);
         });
 
         return Promise.all(processedImgs);
     }
+ 
+    private _moveImgToTempFolder(selectedImg: any): Promise<{ name: string, uri: string }> {
+        return selectedImg.getImage()
+            .then((imageSrc: nsImgSource.ImageSource) => {
+                let extension = ((selectedImg.fileUri && this._getExtension(selectedImg.fileUri)) || 'png').toLowerCase();
+                let name = `teamupimg${Date.now()}.${extension}`;
+                let tempFolder = fs.knownFolders.temp();
+                let uri = fs.path.join(tempFolder.path, name);
+                
+                let saved = imageSrc.saveToFile(uri, extension);
+                var imgItem: { name: string, uri: string } = null;
+
+                if (saved) {
+                    imgItem = { name, uri };
+                } else {
+                    console.log('didnt save!!!');
+                }
+
+                return imgItem;
+            });
+     }
 
     private _resizeAndroid(originalImage: any, newWidth: number, newHeight: number) {
         var resizedBitmap = android.graphics.Bitmap.createScaledBitmap(originalImage, newWidth, newHeight, true);

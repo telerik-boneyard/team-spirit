@@ -21,7 +21,8 @@ TextView {
 
 .event-image >>> .container.large .image-wrp,
 .event-image >>> .container.large .image-wrp AbsoluteLayout,
-.event-image >>> .container.large .image-wrp AbsoluteLayout .icon-wrp {
+.event-image >>> .container.large .image-wrp AbsoluteLayout .icon-wrp,
+.event-image >>> .image {
   width: 100%;
   height: 200;
 }
