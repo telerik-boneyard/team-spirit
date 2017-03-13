@@ -63,6 +63,7 @@ TextView {
   font-size: 20;
 }
 
+.select-group,
 .select-date {
   height: 25;
   margin-top: 10;
@@ -71,6 +72,12 @@ TextView {
   border-color: #ebebed;
 }
 
+.select-group .field {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.select-group .info-icon,
 .select-date .info-icon {
   width: 20;
   height: 20;
