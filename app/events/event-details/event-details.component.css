@@ -68,6 +68,7 @@
 .registered-users-wrapper .info-icon {
   width: 20;
   height: 20;
+  margin-top: 4;
   font-size: 16;
   color: #bfbfbf;
 }
@@ -114,5 +115,6 @@
 
 .going-label {
   color: #000;
+  margin-top: 4;
   margin-left: 5;
 }

@@ -45,7 +45,8 @@ TabView {
 }
 
 TextField,
-TextView {
+TextView,
+Label.field {
   padding: 10 0;
   margin-bottom: 10;
   font-size: 16;
@@ -71,6 +72,10 @@ ActivityIndicator {
 .input-field.switch-field .label {
   font-size: 16;
   color: #000;
+}
+
+.input-field.user .label {
+  padding-bottom: 10;
 }
 
 .btn {
