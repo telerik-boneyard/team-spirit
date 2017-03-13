@@ -49,6 +49,9 @@ export class EventParticipantsComponent implements OnInit {
 
             let eventPrm = this._eventsService.getById(eventId)
                 .then(e => {
+                    if (e.EventDateChoices) {
+                        e.EventDateChoices = e.EventDateChoices.sort(utilities.compareForSort);
+                    }
                     this.event = e;
                     let title = 'Participants for ' + this.event.Name;
                     this._page.actionBar.title = this._onlyDate ? 'Voter list for date' : title;

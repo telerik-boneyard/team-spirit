@@ -44,7 +44,7 @@ export class GroupMembersComponent implements OnInit {
                 });
             let membersPrm = this._groupsService.getGroupMembers(this._groupId)
                 .then(members => this.members = members.sort((m1, m2) => {
-                    return utilities.compareStringsForSort(m1.DisplayName, m2.DisplayName);
+                    return utilities.compareForSort(m1.DisplayName, m2.DisplayName);
                 }));
 
             Promise.all<any>([this._usersService.currentUser(), groupPrm, membersPrm])

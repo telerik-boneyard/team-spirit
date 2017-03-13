@@ -40,4 +40,8 @@ export class UserDisplayComponent implements OnInit {
         let remainingCount = this.users.length - this.imgCount;
         return ` and ${remainingCount} more`;
     }
+
+    shouldShowNames() {
+        return this.showNames || this.users.length === 1;
+    }
 }

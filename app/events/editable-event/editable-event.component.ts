@@ -93,7 +93,7 @@ export class EditableEventComponent implements OnInit{
     private _validateDateOption(date: Date) {
         if (this._isDuplicateDate(date)) {
             return 'Date already added';
-        } else if (!this.isEdit && date <= new Date()) {
+        } else if (date <= new Date()) {
             return 'Date is in the past';
         }
     }
@@ -127,6 +127,7 @@ export class EditableEventComponent implements OnInit{
 
     private _addDateOptionToEvent(date: Date) {
         this.dateOptions.push(date);
+        this.dateOptions = this.dateOptions.sort(utilities.compareForSort);
         this._applyDateOptionsToEvent();
     }
 
@@ -149,7 +150,7 @@ export class EditableEventComponent implements OnInit{
         if (event.EventDate) {
             this.dateOptions = [new Date(event.EventDate)];
         } else if (event.EventDateChoices) {
-            this.dateOptions = event.EventDateChoices.map(d => new Date(d));
+            this.dateOptions = event.EventDateChoices.map(d => new Date(d)).sort(utilities.compareForSort);
         }
     }
 

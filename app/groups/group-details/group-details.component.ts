@@ -109,8 +109,9 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     getDetailsText() {
-        let text = `This group is ${this.group.IsPublic ? 'public' : 'private'} and ${this.group.RequiresApproval ? 'requires approval' : 'does not require approval'} to join.`;
-        return text;
+        let isPublicText = this.group.IsPublic ? 'public' : 'private';
+        let approvalText = this.group.RequiresApproval ? 'requires approval' : 'does not require approval';
+        return `This group is ${isPublicText} and ${approvalText} to join.`;
     }
 
     onViewEvents() {
@@ -119,7 +120,7 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onViewRequests() {
-        this._alertsService.showError('Not implemented yet. Please follow the development :)');
+        this._alertsService.showError('Not implemented yet');
     }
 
     onJoin(): Promise<any> {

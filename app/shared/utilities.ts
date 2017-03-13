@@ -8,11 +8,11 @@ export const dateFormat = 'MMM dd, yyyy, hh:mm a';
 
 export const eventMandatoryFields = [ 'OrganizerId', 'LocationName', 'Name', 'GroupId' ];
 
-export function compareStringsForSort (str1: string, str2: string) {
+export function compareForSort (o1: any, o2: any) {
     let result: number;
-    if (str1 < str2) {
+    if (o1 < o2) {
         result = -1;
-    } else if (str1 > str2) {
+    } else if (o1 > o2) {
         result = 1;
     } else {
         result = 0;

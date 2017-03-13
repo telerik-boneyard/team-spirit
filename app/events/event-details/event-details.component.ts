@@ -64,6 +64,9 @@ export class EventDetailsComponent implements OnInit {
             this._eventId = p['id'];
             let event = this._eventsService.getById(this._eventId)
                 .then((event) => {
+                    if (event.EventDateChoices) {
+                        event.EventDateChoices = event.EventDateChoices.sort(utilities.compareForSort);
+                    }
                     this.event = event;
                     this._page.actionBar.title = event.Name;
                     this.isPastEvent = this._eventsService.isPastEvent(this.event);
