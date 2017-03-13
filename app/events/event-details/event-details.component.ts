@@ -160,7 +160,6 @@ export class EventDetailsComponent implements OnInit {
         if (!utilities.urlHasProtocol(url)) {
             url = 'http://' + url;
         }
-        console.log('opening url: ' + url);
         nsUtils.openUrl(url);
     }
 
