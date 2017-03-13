@@ -53,8 +53,7 @@ export class PageLayoutComponent implements OnInit {
     ngOnInit() {
         // hack to make drawer respond to actions - otherwise,
         // sometimes it cannot be opened before tapping the button
-        this.toggleDrawer();
-        this.toggleDrawer();
+        this.drawer.sideDrawer.closeDrawer();
 
         if (this._actionBarNativeObject) {
             this.toggleActionBarShadow(this._router.url);

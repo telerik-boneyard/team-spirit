@@ -16,6 +16,10 @@ export class DismissableInputDirective implements OnInit {
     }
 
     ngOnInit() {
+        this._field.page.on('navigatingFrom', () => {
+            this._field.dismissSoftInput();
+        });
+
         let anchor = this._field.page.getViewById(this.anchorName || 'dismissableAnchor');
         anchor.on('tap', (args) => {
             if (this._platform.isAndroid) {

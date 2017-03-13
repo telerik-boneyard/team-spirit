@@ -4,7 +4,7 @@ export const disabledDawerRoutes = [
     new RegExp('^/((events)|(groups)|(user))/.+', 'i')
 ];
 
-export const androidProjNumber = '832404619163';
+export const androidProjNumber = '246590852129';
 
 export const modalsTimeout = 3000;
 
