@@ -1,0 +1,32 @@
+.content {
+  padding: 20;
+}
+
+.hint {
+  margin: 0 0 20;
+}
+
+.info-label,
+.votes {
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
+}
+
+.info-label {
+  margin: 10 0 20;
+}
+
+.date-info {
+  padding: 10 0 0;
+  border-width: 0 0 1 0;
+  border-color: #ebebed;
+}
+
+.date {
+  font-size: 20;
+}
+
+.votes {
+  color: #9c9c9c;
+}

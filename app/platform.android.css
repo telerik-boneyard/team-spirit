@@ -11,6 +11,10 @@
   background-color: #e0e0e0;
 }
 
+.event-date-selection .switch {
+  margin: 0;
+}
+
 .switch[checked=true] {
   background-color: #F4550F;
   color: #F4550F;
