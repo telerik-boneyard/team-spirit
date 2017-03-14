@@ -1,5 +1,5 @@
 <ScrollView class="cntnr">
-    <StackLayout class="cntnr">
+    <StackLayout>
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
             <ActionItem *ngIf="event" (tap)="onDone()" ios.position="right">
