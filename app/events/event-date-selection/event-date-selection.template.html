@@ -1,0 +1,26 @@
+<ScrollView class="cntnr">
+    <StackLayout>
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem *ngIf="event" (tap)="onDone()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
+
+        <Label text="Select all dates that work for you. The event organizer will pick the final date." textWrap="true"></Label>
+
+        <StackLayout *ngIf="event">
+            <Label text="Dates"></Label>
+            
+            <GridLayout *ngFor="let option of dateOptions" rows="30, 30" columns="*, 65">
+                <Label row="0" col="0" [text]="option.date | date:dateFormat"></Label>
+                <Switch row="0" col="1" [(ngModel)]="option.selected"></Switch>
+                <Label *ngIf="votesInitialized()" row="1" col="0" colSpan="2" [text]="getVotesText(option.date)"></Label>
+            </GridLayout>
+        </StackLayout>
+
+        <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+    </StackLayout>
+</ScrollView>

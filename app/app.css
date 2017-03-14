@@ -143,7 +143,7 @@ ActivityIndicator {
 }
 
 .load-more-btn {
-  padding: 10 0;
+  padding: 25 0;
   border-top-width: 1;
   border-color: #ebebed;
   font-size: 14;

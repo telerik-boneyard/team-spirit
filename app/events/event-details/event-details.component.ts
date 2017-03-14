@@ -9,7 +9,6 @@ import * as frameModule from 'ui/frame';
 
 import { Event, Group, User, EventRegistration } from '../../shared/models';
 import { utilities, constants, AppModalComponent } from '../../shared';
-import { EventRegistrationModalComponent } from '../event-registration-modal/event-registration-modal.component';
 import {
     EventsService,
     GroupsService,
@@ -100,8 +99,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onEdit() {
-        let transition = utilities.getPageTransition();
-        this._routerExtensions.navigate([`/events/${this.event.Id}/edit`], { transition });
+        this._navigate(`/events/${this.event.Id}/edit`);
     }
 
     canGoBack() {
@@ -116,71 +114,93 @@ export class EventDetailsComponent implements OnInit {
         this._alertsService.askConfirmation(`Delete event "${this.event.Name}"?`)
             .then(() => this._eventsService.deleteById(this.event.Id))
             .then(() => this._alertsService.showSuccess(`Deleted "${this.event.Name}" successfully.`))
-            .then(() => {
-                let transition = utilities.getReversePageTransition();
-                this._routerExtensions.navigate(['/events'], { clearHistory: true, transition });
-            })
+            .then(() => this._navigate('/events', true))
             .catch(err => err && this._alertsService.showError(err.message));
     }
 
     register() {
-        let dateSelectionPromise: Promise<string[]> = null;
-
-        if (this.event.EventDate) {
-            dateSelectionPromise = Promise.resolve([this.event.EventDate]);
-        } else {
-            dateSelectionPromise = this._openDateSelectionModal();
+        if (!this.event.EventDate) {
+            return this._navigate(`/events/${this.event.Id}/date-selection`, false, { eventObj: this.event });
         }
+        
+        let promises: Promise<any>[] = [
+            this._eventsService.registerForEvent(this.event.Id, [this.event.EventDate]),
+            this._groupsService.getById(this.event.GroupId)
+        ];
 
-        dateSelectionPromise.then(dateChoices => {
-            if (!dateChoices) { // user closed modal
-                return Promise.reject(null);
-            }
-            let promises: Promise<any>[] = [this._eventsService.registerForEvent(this.event.Id, dateChoices)];
-            if (this.event.EventDate) {
-                promises.push(this._groupsService.getById(this.event.GroupId));
-            }
-            return Promise.all(promises);
-        })
-        .then(results => {            
-            let group: Group = results[1];
-            let text = 'You have successfully registered for this event.';
+        Promise.all(promises)
+            .then(results => {            
+                let group: Group = results[1];
 
-            if (group) {
-                text = `Your friends from ${group.Name} will be notified that you are going`;
-            }
+                let ctx = {
+                    title: 'Hooooray!',
+                    text: `Your friends from ${group.Name} will be notified that you are going`,
+                    closeTimeout: constants.modalsTimeout
+                };
 
-            let ctx = {
-                title: 'Hooooray!',
-                text: text,
-                closeTimeout: constants.modalsTimeout
-            };
+                this._updateInfoOnRegister();
+                this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
+            })
+            .catch(err => err && this._alertsService.showError(err.message));
+        
+        // let dateSelectionPromise: Promise<string[]> = null;
 
-            this._updateInfoOnRegister();
-            this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
-        })
-        .catch(err => err && this._alertsService.showError(err.message));
+        // if (this.event.EventDate) {
+        //     dateSelectionPromise = Promise.resolve([this.event.EventDate]);
+        // } else {
+        //     dateSelectionPromise = this._openDateSelectionModal();
+        // }
+
+        // dateSelectionPromise.then(dateChoices => {
+        //     if (!dateChoices) { // user closed modal
+        //         return Promise.reject(null);
+        //     }
+        //     let promises: Promise<any>[] = [this._eventsService.registerForEvent(this.event.Id, dateChoices)];
+        //     if (this.event.EventDate) {
+        //         promises.push(this._groupsService.getById(this.event.GroupId));
+        //     }
+        //     return Promise.all(promises);
+        // })
+        // .then(results => {            
+        //     let group: Group = results[1];
+        //     let text = 'You have successfully registered for this event.';
+
+        //     if (group) {
+        //         text = `Your friends from ${group.Name} will be notified that you are going`;
+        //     }
+
+        //     let ctx = {
+        //         title: 'Hooooray!',
+        //         text: text,
+        //         closeTimeout: constants.modalsTimeout
+        //     };
+
+        //     this._updateInfoOnRegister();
+        //     this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
+        // })
+        // .catch(err => err && this._alertsService.showError(err.message));
     }
 
     changeVote() {
-        let updatedChoices: string[];
+        this._navigate(`/events/${this.event.Id}/date-selection`, false, { eventObj: this.event, userReg: this._userRegForThisEvent });
+        // let updatedChoices: string[];
 
-        this._openDateSelectionModal(true)
-            .then(dateChoices => {
-                if (!dateChoices) {
-                    return Promise.reject(false); // dont show an error, user closed the modal
-                }
-                if (dateChoices.length) {
-                    updatedChoices = dateChoices;
-                    return this._regsService.updateChoices(this.event.Id, this._currentUser.Id, dateChoices);
-                }
-            })
-            .then(() => {
-                this._updateCountsByDate();
-                this._userRegForThisEvent.Choices = updatedChoices;
-                this._alertsService.showSuccess('Vote updated');
-            })
-            .catch(err => err && this._alertsService.showError(err.message));
+        // this._openDateSelectionModal(true)
+        //     .then(dateChoices => {
+        //         if (!dateChoices) {
+        //             return Promise.reject(false); // dont show an error, user closed the modal
+        //         }
+        //         if (dateChoices.length) {
+        //             updatedChoices = dateChoices;
+        //             return this._regsService.updateChoices(this.event.Id, this._currentUser.Id, dateChoices);
+        //         }
+        //     })
+        //     .then(() => {
+        //         this._updateCountsByDate();
+        //         this._userRegForThisEvent.Choices = updatedChoices;
+        //         this._alertsService.showSuccess('Vote updated');
+        //     })
+        //     .catch(err => err && this._alertsService.showError(err.message));
     }
 
     showLocation() {
@@ -199,8 +219,7 @@ export class EventDetailsComponent implements OnInit {
         if (this._routerExtensions.canGoBack() && !this.participationChanged) {
             this._routerExtensions.back();
         } else { // simulate going back
-            let transition = utilities.getReversePageTransition();
-            this._routerExtensions.navigate(['/events'], { clearHistory: true, transition });
+            this._navigate('/events', true);
         }
     }
 
@@ -222,8 +241,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     onParticipantsTap() {
-        let transition = utilities.getPageTransition();
-        this._routerExtensions.navigate([`/events/${this.event.Id}/participants`], { transition });
+        this._navigate(`/events/${this.event.Id}/participants`);
     }
 
     rethinkMode() {
@@ -271,8 +289,7 @@ export class EventDetailsComponent implements OnInit {
     }
 
     goFinalize() {
-        let transition = utilities.getPageTransition();
-        this._routerExtensions.navigate([`events/${this.event.Id}/finalize`], { transition });
+        this._navigate(`events/${this.event.Id}/finalize`);
     }
 
     toggleActions() {
@@ -345,33 +362,33 @@ export class EventDetailsComponent implements OnInit {
             .then(result => this._countByDate = result.countByDate);
     }
 
-    private _openDateSelectionModal(isChangeVote = false) {
-        let opts: ModalDialogOptions = {
-            context: {
-                availableDates: this.event.EventDateChoices
-            },
-            fullscreen: true,
-            viewContainerRef: this._vcRef
-        };
+    // private _openDateSelectionModal(isChangeVote = false) {
+    //     let opts: ModalDialogOptions = {
+    //         context: {
+    //             availableDates: this.event.EventDateChoices
+    //         },
+    //         fullscreen: true,
+    //         viewContainerRef: this._vcRef
+    //     };
 
-        if (isChangeVote) {
-            opts.context.title = 'Change vote';
-            opts.context.buttons = { ok: 'Submit new vote' };
-        }
+    //     if (isChangeVote) {
+    //         opts.context.title = 'Change vote';
+    //         opts.context.buttons = { ok: 'Submit new vote' };
+    //     }
 
-        return this._modalService.showModal(EventRegistrationModalComponent, opts)
-            .then((dateChoices: number[]) => {
-                let result: string[] = null;
+    //     return this._modalService.showModal(EventRegistrationModalComponent, opts)
+    //         .then((dateChoices: number[]) => {
+    //             let result: string[] = null;
 
-                if (dateChoices && dateChoices.length) {
-                    this._dateChoicesMade = [];
-                    dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
-                    result = this._dateChoicesMade;
-                }
+    //             if (dateChoices && dateChoices.length) {
+    //                 this._dateChoicesMade = [];
+    //                 dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
+    //                 result = this._dateChoicesMade;
+    //             }
 
-                return Promise.resolve(result);
-            });
-    }
+    //             return Promise.resolve(result);
+    //         });
+    // }
 
     private _updateInfoOnRegister() {
         this.participationChanged = true;
@@ -404,5 +421,21 @@ export class EventDetailsComponent implements OnInit {
         let ctrl = frameModule.topmost().ios.controller;
         ctrl.navigationItem.hidesBackButton = true;
         this._page.ios.navigationItem.hidesBackButton = true;
+    }
+
+    private _navigate(toUrl: string, back = false, data?: any) {
+        let clearHistory = !!back;
+        let transition: { name: string, duration: number, curve: string };
+        if (back) {
+            transition = utilities.getReversePageTransition();
+        } else {
+            transition = utilities.getPageTransition();
+        }
+        let params: any[] = [toUrl];
+        let dataToSend = utilities.stringifyValues(data);
+        if (dataToSend) {
+            params.push(dataToSend);
+        }
+        this._routerExtensions.navigate(params, { transition, clearHistory });
     }
 }

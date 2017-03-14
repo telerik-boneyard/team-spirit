@@ -123,3 +123,14 @@ export function getPageTransition() {
 export function getReversePageTransition() {
     return getTransition('slideRight');
 }
+
+export function stringifyValues(data: { [key: string]: any }) {
+    if (!data) {
+        return;
+    }
+    let result: { [key: string]: any } = {};
+    Object.keys(data).forEach(k => {
+        result[k] = JSON.stringify(data[k]);
+    });
+    return result;
+}

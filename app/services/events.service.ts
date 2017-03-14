@@ -82,12 +82,6 @@ export class EventsService {
             .then(resp => resp.result.map(expandedReg => expandedReg.Event));
     }
 
-    getByGroupId(groupId: string) {
-        let filter = { GroupId: groupId };
-        let sort = [{ field: 'EventDateChoices', desc: true }, { field: 'EventDate', desc: true }];
-        return this._getWithFilter(filter, true, sort);
-    }
-
     getById(eventId: string) {
         return this._data.expand(this._eventExpandExpression)
             .getById(eventId)
@@ -117,7 +111,7 @@ export class EventsService {
             });
     }
 
-    getVoteCount(eventId: string, asArray = false) {
+    getVoteCount(eventId: string, asArray = false): Promise<{ [isoDate: string]: number }> {
         let queryStringParams = { eventId, asArray };
         return this._elProvider.get.businessLogic.invokeCloudFunction('getEventDateVoteCounts',  { queryStringParams });
     }
@@ -153,6 +147,14 @@ export class EventsService {
 
     getParticipants(eventId: string) {
         return this._registrationsService.getParticipants(eventId);
+    }
+
+    getUserRegistration(eventId: string, userId: string) {
+        return this._registrationsService.getUserRegistrationForEvent(eventId, userId);
+    }
+
+    updateUserVote(eventId: string, userId: string, newDateChoices: string[]) {
+        return this._registrationsService.updateChoices(eventId, userId, newDateChoices);
     }
 
     registerForEvent(eventId: string, dateChoices: string[]) {

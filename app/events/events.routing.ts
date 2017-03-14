@@ -4,20 +4,19 @@ import { AuthGuard } from '../services';
 import { 
     EventsComponent,
     EventDetailsComponent,
-    EventRegistrationModalComponent,
-    EventCreationModalComponent,
     AddEventComponent,
-    EditableEventComponent,
     EditEventComponent,
     EventParticipantsComponent,
+    EventDateSelectionComponent,
     FinalizeEventComponent
 } from './';
 
 export const eventsRoutes: Routes = [
-    { path: '', canActivate: [AuthGuard], component: EventsComponent },
+    { path: '', component: EventsComponent, canActivate: [AuthGuard] },
     { path: 'add', component: AddEventComponent },
     { path: ':id', component: EventDetailsComponent },
     { path: ':id/edit', component: EditEventComponent },
+    { path: ':id/finalize', component: FinalizeEventComponent },
     { path: ':id/participants', component: EventParticipantsComponent },
-    { path: ':id/finalize', component: FinalizeEventComponent }
+    { path: ':id/date-selection', component: EventDateSelectionComponent },
 ];

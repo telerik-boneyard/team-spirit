@@ -11,7 +11,7 @@ import { utilities } from '../../shared';
     templateUrl: './editable-event.template.html',
     styleUrls: [ './editable-event.component.css' ]
 })
-export class EditableEventComponent implements OnInit{
+export class EditableEventComponent implements OnInit {
     @Input() event: Event;
     @Input() userGroups: Group[];
 

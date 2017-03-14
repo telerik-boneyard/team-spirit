@@ -9,13 +9,13 @@ import { SharedModule } from '../shared';
 import {
     EventsComponent,
     EventDetailsComponent,
-    EventRegistrationModalComponent,
     EventCreationModalComponent,
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
     EventParticipantsComponent,
-    FinalizeEventComponent
+    FinalizeEventComponent,
+    EventDateSelectionComponent
 } from './';
 
 @NgModule({
@@ -29,16 +29,15 @@ import {
   declarations: [
     EventsComponent,
     EventDetailsComponent,
-    EventRegistrationModalComponent,
     EventCreationModalComponent,
     AddEventComponent,
     EditableEventComponent,
     EditEventComponent,
     EventParticipantsComponent,
-    FinalizeEventComponent
+    FinalizeEventComponent,
+    EventDateSelectionComponent
   ],
   entryComponents: [
-    EventRegistrationModalComponent,
     EventCreationModalComponent
   ],
   schemas: [NO_ERRORS_SCHEMA]
