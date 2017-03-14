@@ -21,8 +21,8 @@
                     </StackLayout>
                     <Label col="0" row="0" class="vote" *ngIf="!dateIsSelected(dateInfo.date)" text=""></Label>
                     <Label col="1" row="0" class="date" [text]="dateInfo.date | date:dateFormat"></Label>
-                    <DockLayout col="2" row="0" orientation="horizontal" class="count">
-                        <Label dock="left" [text]="getCountText(dateInfo.count)" (tap)="listVoters(dateInfo)"></Label>
+                    <DockLayout col="2" row="0" orientation="horizontal" class="count" (tap)="listVoters(dateInfo)">
+                        <Label dock="left" [text]="getCountText(dateInfo.count)"></Label>
                         <Label dock="right" *ngIf="dateInfo && dateInfo.count > 0" class="if" text="&#x64;" horizontalAlignment="right"></Label>
                     </DockLayout>
                 </GridLayout>
