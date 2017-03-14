@@ -23,7 +23,7 @@ export class EventCreationModalComponent {
     }
 
     getText() {
-        let msg = `Your friends from ${this.groupName} will be notified for this event`;
+        let msg = `Your friends from ${this.groupName} will be notified of this event`;
         if (!this.openForRegistration) {
             msg += ` when you open it for registration`;
         }

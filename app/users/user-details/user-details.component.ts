@@ -30,7 +30,7 @@ export class UserDetailsComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this._page.actionBar.title = 'My Profile';
+        this._page.actionBar.title = 'My profile';
         this._usersService.currentUser()
             .then(u => this.user = u)
             .then(() => this._groupsService.getUserGroups(this.user.Id))

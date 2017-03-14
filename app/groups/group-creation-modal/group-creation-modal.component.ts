@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
+import { constants } from '../../shared';
 
 @Component({
     moduleId: module.id,
@@ -7,15 +8,25 @@ import { ModalDialogParams } from 'nativescript-angular/modal-dialog';
     templateUrl: './group-creation-modal.template.html',
     styleUrls: ['./group-creation-modal.component.css']
 })
-export class GroupCreationModalComponent {
+export class GroupCreationModalComponent implements OnInit {
     groupName: string;
 
     constructor(private _params: ModalDialogParams) {
         this.groupName = this._params.context.groupName;
     }
 
+    ngOnInit() {
+        setTimeout(() => {
+            this.onCancel();
+        }, constants.modalsTimeout);
+    }
+
     getText() {
-        return `You have successfully created ${this.groupName}.`;
+        let text = `You have successfully created "${this.groupName}"`;
+        if (this.groupName.indexOf('group') === -1) {
+            text += ' group';
+        }
+        return text + '.';
     }
 
     onOk() {

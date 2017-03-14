@@ -88,6 +88,9 @@ export class FinalizeEventComponent implements OnInit {
         if (!this._selectedDate) {
             return this._alertsService.showError('Please select a final date for the event');
         }
+        if (new Date(this._selectedDate) < new Date()) {
+            return this._alertsService.showError('Please select a date which is in the future');
+        }
         this._alertsService.askConfirmation('Once you set this date, it cannot be changed')
             .then(() => this._eventsService.finalizeEvent(this._eventId, this._selectedDate))
             .then(res => {

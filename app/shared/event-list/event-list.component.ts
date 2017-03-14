@@ -43,8 +43,14 @@ export class EventListComponent implements OnInit {
         return this._userEventsById && this._userEventsById[eventId];
     }
 
-    isPastEvent(event: Event) {
-        return this._eventsService.isPastEvent(event);
+    getLabelText(event: Event) {
+        let text: string;
+        if (this._eventsService.isPastEvent(event)) {
+            text = 'You went';
+        } else {
+            text = event.EventDate ? 'Going' : 'Voted';
+        }
+        return text;
     }
 
     getEventDate(event: Event) {
@@ -62,7 +68,7 @@ export class EventListComponent implements OnInit {
         let eventDate = this.getEventDate(event);
 
         if (!eventDate) {
-            return 'DATE TBD';
+            return 'DATE: OPEN FOR VOTING';
         }
 
         let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);

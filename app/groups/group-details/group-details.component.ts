@@ -7,7 +7,7 @@ import * as frameModule from 'ui/frame';
 
 import { GroupsService, AlertService, EverliveProvider, UsersService, PlatformService } from '../../services';
 import { Group, User, GroupJoinRequest } from '../../shared/models';
-import { utilities } from '../../shared';
+import { utilities, AndroidBackOverrider } from '../../shared';
 
 @Component({
     moduleId: module.id,
@@ -15,7 +15,7 @@ import { utilities } from '../../shared';
     templateUrl: './group-details.template.html',
     styleUrls: ['./group-details.component.css']
 })
-export class GroupDetailsComponent implements OnInit {
+export class GroupDetailsComponent extends AndroidBackOverrider implements OnInit {
     group: Group;
     hasJoined: boolean = null;
     members: User[] = [];
@@ -36,6 +36,7 @@ export class GroupDetailsComponent implements OnInit {
         private _groupsService: GroupsService,
         private _page: Page
     ) {
+        super(_page, _platform.isAndroid);
         this.isAndroid = this._platform.isAndroid;
     }
 

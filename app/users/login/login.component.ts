@@ -90,7 +90,7 @@ export class LoginComponent implements OnInit {
             .then(() => {
                 let ctx = {
                     title: 'Password request sent',
-                    text: 'Check your email for the link to reset your password.',
+                    text: 'We have sent instructions to the email address that you provided.',
                     buttons: { ok: 'OK, thanks!' },
                     fullscreen: false
                 };

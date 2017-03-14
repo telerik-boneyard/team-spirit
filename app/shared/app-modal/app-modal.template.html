@@ -1,4 +1,4 @@
-<StackLayout class="app-modal-cntnr" [ngClass]="{ 'no-fullscreen': !fullscreen, 'just-loading': justLoading }">
+<StackLayout id="dismissableAnchor" class="app-modal-cntnr" [ngClass]="{ 'no-fullscreen': !fullscreen, 'just-loading': justLoading }">
     <Label *ngIf="title" class="app-modal-title" [text]="title" textWrap="true"></Label>
     <Label *ngIf="text" class="app-modal-text" [text]="text" textWrap="true"></Label>
 

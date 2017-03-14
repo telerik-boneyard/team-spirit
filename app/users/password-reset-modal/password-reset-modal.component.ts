@@ -11,10 +11,10 @@ import { utilities } from '../../shared';
     styleUrls: [ './password-reset-modal.component.css' ]
 })
 export class PasswordResetModalComponent {
-    title: string = 'Forgot your password?';
-    text: string = 'Enter your email to request a password reset.';
+    title: string = 'Reset your password';
+    text: string = 'Enter the email address that you signed up with.';
     email: string;
-    buttons = { ok: 'Reset my password', cancel: 'Cancel' };
+    buttons = { ok: 'Send reset instructions', cancel: 'Cancel' };
 
     constructor(
         private _params: ModalDialogParams,

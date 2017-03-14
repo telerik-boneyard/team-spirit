@@ -9,7 +9,7 @@ import { action } from 'ui/dialogs';
 import * as frameModule from 'ui/frame';
 
 import { Event, Group, User, EventRegistration } from '../../shared/models';
-import { utilities, constants, AppModalComponent } from '../../shared';
+import { utilities, constants, AppModalComponent, AndroidBackOverrider } from '../../shared';
 import {
     EventsService,
     GroupsService,
@@ -25,7 +25,7 @@ import {
     templateUrl: './event-details.template.html',
     styleUrls: [ './event-details.component.css' ]
 })
-export class EventDetailsComponent implements OnInit {
+export class EventDetailsComponent extends AndroidBackOverrider implements OnInit {
     event: Event;
     dateFormat = utilities.dateFormat;
     registeredUsers: User[] = [];
@@ -57,6 +57,7 @@ export class EventDetailsComponent implements OnInit {
         private _regsService: EventRegistrationsService,
         private _page: Page
     ) {
+        super(_page, _platform.isAndroid);
         this.isAndroid = this._platform.isAndroid;
     }
 
@@ -183,6 +184,36 @@ export class EventDetailsComponent implements OnInit {
         return text;
     }
 
+    getVotingText() {
+        let text: string;
+        if (this.alreadyRegistered) {
+            text = 'Voting still open. You voted.';
+        } else {
+            text = 'Final date not set yet. Vote now!';
+        }
+        return text;
+    }
+
+    getLabelText() {
+        let text: string;
+        if (this._eventsService.isPastEvent(this.event)) {
+            text = 'You went';
+        } else {
+            text = this.event.EventDate ? 'Going' : 'Voted';
+        }
+        return text;
+    }
+
+    getParticipantsText() {
+        let text = (this.registeredUsers.length === 1 ? 'is' : 'are');
+        if (this.event.EventDate || this.event.RegistrationCompleted) {
+            text += ' going';
+        } else {
+            text = 'voted';
+        }
+        return text;
+    }
+
     userVotedForDate(date: Date) {
         return !!this._userRegForThisEvent && this._userRegForThisEvent.Choices.some((r: any) => r.toISOString() === date.toISOString());
     }
@@ -217,6 +248,10 @@ export class EventDetailsComponent implements OnInit {
 
     rethinkAndDontGo() {
         return this.rethinkMode() && this.alreadyRegistered;
+    }
+
+    eventRequiresVoting() {
+        return this.event && !this.event.EventDate;
     }
 
     unregister() {

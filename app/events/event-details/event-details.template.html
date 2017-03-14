@@ -34,7 +34,7 @@
                     <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
                 </StackLayout>
                 <StackLayout left="0" top="20" height="40">
-                    <Label *ngIf="alreadyRegistered" text="Voted" class="registered-label"></Label>
+                    <Label *ngIf="alreadyRegistered" [text]="getLabelText()" class="registered-label"></Label>
                 </StackLayout>
             </AbsoluteLayout>
 
@@ -44,7 +44,8 @@
                 <StackLayout class="info-wrapper">
                     <GridLayout columns="auto, auto, *" rows="auto, auto">
                         <Label class="info-label" text="Date" col="0" row="0"></Label>
-                        <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
+                        <Label *ngIf="eventRequiresVoting()" row="1" col="0" [text]="getVotingText()"></Label>
+                        <!--<Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>-->
                         <!-- <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label> -->
                     </GridLayout>
                     <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])">
@@ -80,11 +81,11 @@
                 </StackLayout>
 
                 <StackLayout class="info-wrapper no-separator">
-                    <Label class="info-label" text="Registered Participants" textWrap="true"></Label>
+                    <Label class="info-label" text="Participants" textWrap="true"></Label>
                     <GridLayout columns="auto, *" *ngIf="registeredUsers.length > 0" (tap)="onParticipantsTap()" class="registered-users-wrapper">
                         <StackLayout orientation="horizontal" col="0" class="user-display-wrp">
                             <user-display [users]="registeredUsers" [withImages]="3" class="user-display"></user-display>
-                            <Label class="info-value going-label" [text]="(registeredUsers.length === 1 ? 'is' : 'are') + ' going'"></Label>
+                            <Label class="info-value going-label" [text]="getParticipantsText()"></Label>
                         </StackLayout>
                         <Label class="info-icon if" text="&#x64;" col="1"></Label>
                     </GridLayout>

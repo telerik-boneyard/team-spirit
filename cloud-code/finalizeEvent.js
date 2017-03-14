@@ -11,6 +11,11 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
         return done();
     }
 
+    if (new Date(finalDate) <= new Date()) {
+        setErrorResponse(response, 'Please specify a date which is in the future');
+        return done();
+    }
+
     var el = Everlive.Sdk.withMasterKey();
     var eventsDb = el.data('Events');
     var regsDb = el.data('EventRegistrations');
