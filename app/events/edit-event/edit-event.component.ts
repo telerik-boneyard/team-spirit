@@ -37,7 +37,7 @@ export class EditEventComponent implements OnInit {
         this._getCurrentUserGroups();
         this._route.params.subscribe(p => {
             this._eventsService.getById(p['id'])
-                .then((event: Event) => {
+                .then(event => {
                     this.event = event;
                 }, (err) => {
                     this._alertsService.showError(err.message);

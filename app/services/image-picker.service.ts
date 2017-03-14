@@ -50,7 +50,7 @@ export class ImagePickerService {
         if (image.android) {
             result = this._resizeAndroid(image.android, newWidth, newHeight);
         } else {
-            result = this._resizeAndroid(image.ios, newWidth, newHeight);
+            result = this._resizeIos(image.ios, newWidth, newHeight);
         }
         let resizedImgSrc = new nsImgSource.ImageSource();
         resizedImgSrc.setNativeSource(result);
@@ -65,7 +65,7 @@ export class ImagePickerService {
         let ctx = nsPicker.create({ mode });
         let authPromise = Promise.resolve<any>();
 
-        if (nsPlatform.device.os === 'Android' && (this._platform.sdkVersion >= 23))  {
+        if (this._platform.isAndroid && (this._platform.sdkVersion >= 23))  {
             let text = 'We need these permissions to read from storage';
             let permType = android.Manifest.permission.READ_EXTERNAL_STORAGE;
             authPromise = nsPermissions.requestPermission(permType, text);
