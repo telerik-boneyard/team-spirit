@@ -36,6 +36,7 @@
                 <Label *ngIf="!event.RegistrationCompleted" class="remove if" text="&#x4d;" (tap)="removeDateOption(ind)"></Label>
                 <Label class="field" [text]="date | date:dateFormat"></Label>
             </StackLayout>
+            <Label *ngIf="event.RegistrationCompleted" class="list-separator" text=""></Label>
             <StackLayout *ngIf="!event.RegistrationCompleted" class="select-date" (tap)="onSelectDate(date)" orientation="horizontal">
                 <Label class="add-date" width="95%" text="Add date"></Label>
                 <Label class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>

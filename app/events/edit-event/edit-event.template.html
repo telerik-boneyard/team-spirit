@@ -1,6 +1,6 @@
 <StackLayout>
     <loading-screen hideElement="hideonloading"></loading-screen>
-    
+
     <StackLayout id="hideonloading" class="cntnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
@@ -12,7 +12,7 @@
         </ActionBarExtension>
         <ScrollView class="cntnr">
             <StackLayout *ngIf="event && userGroups">
-                <editable-event  [event]="event" [userGroups]="userGroups"></editable-event>
+                <editable-event [event]="event" [userGroups]="userGroups"></editable-event>
                 <StackLayout class="btn-delete" orientation="horizontal" (tap)="delete()">
                     <Label class="if" text="&#x72;"></Label>
                     <Label text="Delete event"></Label>

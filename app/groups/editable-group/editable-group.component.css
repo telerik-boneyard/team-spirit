@@ -39,3 +39,7 @@ TextView {
 .user .label {
   margin-bottom: 5;
 }
+
+.list-separator {
+  margin-top: 10;
+}
