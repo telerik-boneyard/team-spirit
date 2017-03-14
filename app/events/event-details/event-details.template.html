@@ -45,7 +45,7 @@
                     <GridLayout columns="auto, auto, *" rows="auto, auto">
                         <Label class="info-label" text="Date" col="0" row="0"></Label>
                         <Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>
-                        <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label>
+                        <!-- <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label> -->
                     </GridLayout>
                     <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])">
                         <Label *ngIf="alreadyRegistered && userVotedForDate(date)" text="&#x68;" class="vote yes if"></Label>

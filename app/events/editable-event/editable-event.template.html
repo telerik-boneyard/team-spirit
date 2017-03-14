@@ -33,10 +33,11 @@
         <StackLayout class="input-field date with-popup">
             <Label class="label" text="Event Date"></Label>
             <StackLayout orientation="horizontal" *ngFor="let date of dateOptions; let ind = index">
+                <Label *ngIf="!event.RegistrationCompleted" class="remove if" text="&#x4d;" (tap)="removeDateOption(ind)"></Label>
                 <Label class="field" [text]="date | date:dateFormat"></Label>
-                <Label *ngIf="!event.RegistrationCompleted" class="remove if" text="&#x67;" (tap)="removeDateOption(ind)"></Label>
             </StackLayout>
-            <StackLayout *ngIf="!event.RegistrationCompleted" class="select-date" (tap)="onSelectDate(date)">
+            <StackLayout *ngIf="!event.RegistrationCompleted" class="select-date" (tap)="onSelectDate(date)" orientation="horizontal">
+                <Label class="add-date" width="95%" text="Add date"></Label>
                 <Label class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>
             </StackLayout>
         </StackLayout>
