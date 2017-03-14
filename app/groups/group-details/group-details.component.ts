@@ -136,7 +136,8 @@ export class GroupDetailsComponent implements OnInit {
     }
 
     onLeave() {
-        this._groupsService.leaveGroup(this.group.Id, this._currentUser.Id)
+        this._alertsService.askConfirmation(`Leave ${this.group.Name}?`)
+            .then(() => this._groupsService.leaveGroup(this.group.Id, this._currentUser.Id))
             .then(() => {
                 this.hasJoined = false;
                 this.members = this.members.filter(m => m.Id !== this._currentUser.Id);
@@ -146,9 +147,7 @@ export class GroupDetailsComponent implements OnInit {
                     this._hideIosBackBtn();
                 }
              })
-            .catch((err) => {
-                this._alertsService.showError(err && err.message);
-            });
+            .catch((err) => err && this._alertsService.showError(err.message));
     }
 
     onMembersTap() {
