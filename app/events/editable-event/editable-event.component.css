@@ -43,7 +43,9 @@ TextView {
 }
 
 .date .field,
-.date .remove {
+.date .remove,
+.select-date .if,
+.select-date .text {
   vertical-align: middle;
 }
 
@@ -58,9 +60,15 @@ TextView {
 }
 
 .date .remove {
-  margin-right: 10;
+  margin-right: 5;
   color: #ff0000;
   font-size: 20;
+}
+
+.border-bottom {
+  padding-bottom: 5;
+  border-bottom-width: 1;
+  border-color: #ebebed;
 }
 
 .select-group,
@@ -70,6 +78,10 @@ TextView {
   font-size: 14;
   border-bottom-width: 1;
   border-color: #ebebed;
+}
+
+.select-date {
+  height: 30;
 }
 
 .select-group .field {
@@ -84,6 +96,15 @@ TextView {
   font-size: 16;
   color: #bfbfbf;
   text-align: right;
+}
+
+.select-date .text {
+  font-size: 16;
+}
+
+.select-date .if {
+  margin-right: 5;
+  font-size: 20;
 }
 
 .group .field {
