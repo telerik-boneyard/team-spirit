@@ -58,7 +58,7 @@ TextView {
 }
 
 .date .remove {
-  margin-left: 10;
+  margin-right: 10;
   color: #ff0000;
   font-size: 20;
 }
@@ -89,4 +89,8 @@ TextView {
 .group .field {
   min-height: 30;
   border-width: 0;
+}
+
+.date .add-date {
+  color: #888;
 }
