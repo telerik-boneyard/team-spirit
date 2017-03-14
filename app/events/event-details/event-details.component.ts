@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
 import { RouterExtensions } from 'nativescript-angular/router';
 import { ModalDialogService, ModalDialogOptions } from 'nativescript-angular/modal-dialog';
 import * as nsUtils from 'utils/utils';
@@ -63,6 +64,7 @@ export class EventDetailsComponent implements OnInit {
         this._page.actionBar.title = '';
         this._route.params.subscribe(p => {
             this._eventId = p['id'];
+
             let event = this._eventsService.getById(this._eventId)
                 .then((event) => {
                     if (event.EventDateChoices) {
@@ -142,65 +144,10 @@ export class EventDetailsComponent implements OnInit {
                 this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
             })
             .catch(err => err && this._alertsService.showError(err.message));
-        
-        // let dateSelectionPromise: Promise<string[]> = null;
-
-        // if (this.event.EventDate) {
-        //     dateSelectionPromise = Promise.resolve([this.event.EventDate]);
-        // } else {
-        //     dateSelectionPromise = this._openDateSelectionModal();
-        // }
-
-        // dateSelectionPromise.then(dateChoices => {
-        //     if (!dateChoices) { // user closed modal
-        //         return Promise.reject(null);
-        //     }
-        //     let promises: Promise<any>[] = [this._eventsService.registerForEvent(this.event.Id, dateChoices)];
-        //     if (this.event.EventDate) {
-        //         promises.push(this._groupsService.getById(this.event.GroupId));
-        //     }
-        //     return Promise.all(promises);
-        // })
-        // .then(results => {            
-        //     let group: Group = results[1];
-        //     let text = 'You have successfully registered for this event.';
-
-        //     if (group) {
-        //         text = `Your friends from ${group.Name} will be notified that you are going`;
-        //     }
-
-        //     let ctx = {
-        //         title: 'Hooooray!',
-        //         text: text,
-        //         closeTimeout: constants.modalsTimeout
-        //     };
-
-        //     this._updateInfoOnRegister();
-        //     this._alertsService.showModal(ctx, this._vcRef, AppModalComponent);
-        // })
-        // .catch(err => err && this._alertsService.showError(err.message));
     }
 
     changeVote() {
         this._navigate(`/events/${this.event.Id}/date-selection`, false, { eventObj: this.event, userReg: this._userRegForThisEvent });
-        // let updatedChoices: string[];
-
-        // this._openDateSelectionModal(true)
-        //     .then(dateChoices => {
-        //         if (!dateChoices) {
-        //             return Promise.reject(false); // dont show an error, user closed the modal
-        //         }
-        //         if (dateChoices.length) {
-        //             updatedChoices = dateChoices;
-        //             return this._regsService.updateChoices(this.event.Id, this._currentUser.Id, dateChoices);
-        //         }
-        //     })
-        //     .then(() => {
-        //         this._updateCountsByDate();
-        //         this._userRegForThisEvent.Choices = updatedChoices;
-        //         this._alertsService.showSuccess('Vote updated');
-        //     })
-        //     .catch(err => err && this._alertsService.showError(err.message));
     }
 
     showLocation() {
@@ -361,34 +308,6 @@ export class EventDetailsComponent implements OnInit {
         return this._eventsService.getDateChoicesVotes(this.event.Id)
             .then(result => this._countByDate = result.countByDate);
     }
-
-    // private _openDateSelectionModal(isChangeVote = false) {
-    //     let opts: ModalDialogOptions = {
-    //         context: {
-    //             availableDates: this.event.EventDateChoices
-    //         },
-    //         fullscreen: true,
-    //         viewContainerRef: this._vcRef
-    //     };
-
-    //     if (isChangeVote) {
-    //         opts.context.title = 'Change vote';
-    //         opts.context.buttons = { ok: 'Submit new vote' };
-    //     }
-
-    //     return this._modalService.showModal(EventRegistrationModalComponent, opts)
-    //         .then((dateChoices: number[]) => {
-    //             let result: string[] = null;
-
-    //             if (dateChoices && dateChoices.length) {
-    //                 this._dateChoicesMade = [];
-    //                 dateChoices.forEach(c => this._dateChoicesMade.push(this.event.EventDateChoices[c]));
-    //                 result = this._dateChoicesMade;
-    //             }
-
-    //             return Promise.resolve(result);
-    //         });
-    // }
 
     private _updateInfoOnRegister() {
         this.participationChanged = true;

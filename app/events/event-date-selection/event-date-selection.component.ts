@@ -138,7 +138,8 @@ export class EventDateSelectionComponent implements OnInit {
 
     private _changeVote(selectedDates: string[]) {
         return this._usersService.currentUser()
-            .then(user => this._eventsService.updateUserVote(this.event.Id, user.Id, selectedDates));
+            .then(user => this._eventsService.updateUserVote(this.event.Id, user.Id, selectedDates))
+            .then(() => this._alertsService.showSuccess('Vote updated'));
     }
 
     private _getParam<T>(params: { [key: string]: any }, paramName: string): T {
