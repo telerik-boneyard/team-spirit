@@ -152,10 +152,8 @@ ActivityIndicator {
 }
 
 .btn-delete {
-  margin: 0 20 20;
+  margin: -20 20 20;
   padding-top: 20;
-  border-top-width: 1;
-  border-color: #ebebed;
   color: #ff0000;
 }
 
