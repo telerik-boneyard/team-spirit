@@ -163,3 +163,8 @@ ActivityIndicator {
   margin-right: 10;
   font-size: 20;
 }
+
+.ios-back-btn .icon {
+  width: 15;
+  height: 15;
+}
