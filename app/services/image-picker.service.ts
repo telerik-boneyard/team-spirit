@@ -5,6 +5,7 @@ import * as nsPicker from 'nativescript-imagepicker';
 import * as nsImgSource from 'image-source';
 import * as nsPlatform from 'platform';
 import * as fs from 'file-system';
+import { ImageFormat } from 'ui/enums';
 
 import { EverliveProvider } from './';
 import { PlatformService } from './platform.service';
@@ -86,6 +87,7 @@ export class ImagePickerService {
 
     private _processImages(selection: any[]) {
         let processedImgs = selection.map((selectedItem) => {
+
             return this._moveImgToTempFolder(selectedItem)
                 .then(moveResult => {
                     return {
@@ -111,8 +113,9 @@ export class ImagePickerService {
                 let tempFolder = fs.knownFolders.temp();
                 let uri = fs.path.join(tempFolder.path, name);
                 
-                let saved = imageSrc.saveToFile(uri, extension);
-                var imgItem: { name: string, uri: string } = null;
+                let format = this._mapExtensionToNsFormat(extension);
+                let saved = imageSrc.saveToFile(uri, format);
+                let imgItem: { name: string, uri: string } = null;
 
                 if (saved) {
                     imgItem = { name, uri };
@@ -138,5 +141,12 @@ export class ImagePickerService {
 
         UIGraphicsEndImageContext();
         return newImageSource;
+    }
+
+    private _mapExtensionToNsFormat(extension: string) {
+        if (extension.toLowerCase() === 'jpg') {
+            extension = 'jpeg';
+        }
+        return ImageFormat[extension];
     }
 }
