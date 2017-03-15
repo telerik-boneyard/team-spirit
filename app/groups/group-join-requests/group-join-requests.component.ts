@@ -2,10 +2,11 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RouterExtensions } from 'nativescript-angular/router';
 import { Page } from 'ui/page';
+import * as frameModule from 'ui/frame';
 
 import { EventsService, GroupsService, AlertService, PlatformService } from '../../services';
 import { GroupJoinRequest } from '../../shared/models';
-import { utilities } from '../../shared';
+import { utilities, AndroidBackOverrider } from '../../shared';
 
 @Component({
     moduleId: module.id,
@@ -13,14 +14,14 @@ import { utilities } from '../../shared';
     templateUrl: './group-join-requests.template.html',
     styleUrls: ['./group-join-requests.component.css']
 })
-export class GroupJoinRequestsComponent implements OnInit {
+export class GroupJoinRequestsComponent extends AndroidBackOverrider implements OnInit {
     requests: GroupJoinRequest[];
     isAndroid: boolean = false;
+    hasResolvedSome: boolean = false;
     private _groupId: string;
     private _currPage: number = 0;
     private _pageSize: number = 10;
     private _totalCount: number = null;
-    private _hasResolvedSome: boolean = false;
 
     constructor(
         private _page: Page,
@@ -31,6 +32,7 @@ export class GroupJoinRequestsComponent implements OnInit {
         private _routerExtensions: RouterExtensions,
         private _changeDetectionRef: ChangeDetectorRef
     ) {
+        super(_page, _platform.isAndroid);
         this.isAndroid = this._platform.isAndroid;
     }
     
@@ -47,7 +49,7 @@ export class GroupJoinRequestsComponent implements OnInit {
     }
 
     onBack() {
-        let clearHistory = this._hasResolvedSome;
+        let clearHistory = this.hasResolvedSome;
         let transition = utilities.getReversePageTransition();
         this._routerExtensions.navigate([`/groups/${this._groupId}`], { transition, clearHistory });
     }
@@ -69,7 +71,8 @@ export class GroupJoinRequestsComponent implements OnInit {
             .then((resp) => {
                 request.Approved = approve;
                 request.Resolved = true;
-                this._hasResolvedSome = true;
+                this.hasResolvedSome = true;
+                this._hideIosBackBtn();
             })
             .catch(err => err && this._alertsService.showError(err.message));
     }
@@ -86,5 +89,11 @@ export class GroupJoinRequestsComponent implements OnInit {
                 this._currPage++;
             })
             .catch(err => err && this._alertsService.showError(err.message));
+    }
+
+    private _hideIosBackBtn() {
+        let ctrl = frameModule.topmost().ios.controller;
+        ctrl.navigationItem.hidesBackButton = true;
+        this._page.ios.navigationItem.hidesBackButton = true;
     }
 }

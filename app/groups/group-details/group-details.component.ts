@@ -222,7 +222,7 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
                 }
                 this._disableJoinBtn = false;
                 this.membershipChanged = true;
-                if (this._page.ios) {
+                if (this._platform.isIos) {
                     this._hideIosBackBtn();
                 }
                 return resp;
