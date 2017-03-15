@@ -22,6 +22,7 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     private _currPage: number = 0;
     private _pageSize: number = 10;
     private _totalCount: number = null;
+    private _lockLoadMore: boolean = false;
     private _lockedRequests: { [requestId: string]: boolean } = {};
 
     constructor(
@@ -94,12 +95,22 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     }
 
     private _loadRequests() {
+        if (this._lockLoadMore) {
+            return;
+        }
+        this._lockLoadMore = true;
         return this._groupsService.getRequests(this._groupId, this._currPage, this._pageSize)
             .then(requests => {
                 this.requests = (this.requests || []).concat(requests);
                 this._currPage++;
+                this._lockLoadMore = false;
             })
-            .catch(err => err && this._alertsService.showError(err.message));
+            .catch(err => {
+                if (err) {
+                    this._alertsService.showError(err.message);
+                }
+                this._lockLoadMore = false;
+            });
     }
 
     private _hideIosBackBtn() {

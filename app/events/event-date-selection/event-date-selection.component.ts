@@ -22,6 +22,7 @@ export class EventDateSelectionComponent implements OnInit {
 
     private _votesByDate: { [isoDate: string]: number };
     private _userReg: EventRegistration;
+    private _lockDone: boolean = false;
 
     constructor(
         private _page: Page,
@@ -96,6 +97,10 @@ export class EventDateSelectionComponent implements OnInit {
     }
 
     onDone() {
+        if (this._lockDone) {
+            return;
+        }
+        this._lockDone = true;
         let selectedDates = this.dateOptions.filter(o => o.selected).map(o => o.date);
         if (!selectedDates.length) {
             return this._alertsService.showError('You must select at least one date');
@@ -105,7 +110,12 @@ export class EventDateSelectionComponent implements OnInit {
             let transition = utilities.getReversePageTransition();
             this._routerExtensions.navigate([`/events/${this.event.Id}`], { transition, clearHistory: true });
         })
-        .catch(e => e && this._alertsService.showError(e.message));
+        .catch(err => {
+            if (err) {
+                this._alertsService.showError(err.message);
+            }
+            this._lockDone = false;
+        });
     }
 
     onBack() {

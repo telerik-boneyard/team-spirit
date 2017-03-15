@@ -64,22 +64,13 @@ export class EventListComponent implements OnInit {
     }
 
     getRemainingTime(event: Event) {
-        let oneDay = 24 * 60 * 60 * 1000;
         let eventDate = this.getEventDate(event);
 
         if (!eventDate) {
             return 'DATE: OPEN FOR VOTING';
         }
 
-        let days = Math.round((eventDate.getTime() - Date.now()) / oneDay);
-
-        if (days > 0) {
-            return days + ' days left';
-        } else if (days < 0) {
-            return Math.abs(days) + ' days ago';
-        } else {
-            return 'TODAY';
-        }
+        return utilities.getRelativeTimeText(eventDate);
     }
 
     onLoadMore() {
