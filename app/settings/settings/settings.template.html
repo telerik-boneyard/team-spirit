@@ -5,15 +5,13 @@
         <StackLayout id="hideonloading" class="cntnr">
             <StackLayout *ngIf="user" class="form">
                 <StackLayout orientation="horizontal" class="input-field switch-field">
-                    <Switch class="switch" [(ngModel)]="user.EmailNotificationsEnabled"></Switch>
-                    <Label class="label" text="Receive email notifications" textWrap="true"></Label>
+                    <Label class="label" text="Receive push notifications" textWrap="true"></Label>
+                    <Switch class="switch" [(ngModel)]="pushEnabled"></Switch>
                 </StackLayout>
                 <StackLayout orientation="horizontal" class="input-field switch-field">
-                    <Switch class="switch" [(ngModel)]="user.PushNotificationsEnabled"></Switch>
-                    <Label class="label" text="Receive push notifications" textWrap="true"></Label>
+                    <Label class="label" text="Receive email notifications" textWrap="true"></Label>
+                    <Switch class="switch" [(ngModel)]="emailEnabled"></Switch>
                 </StackLayout>
-
-                <Label class="btn btn-primary" (tap)="onSave()" text="Save Settings"></Label>
             </StackLayout>
 
             <ScrollView class="cntnr">

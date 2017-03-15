@@ -14,7 +14,9 @@ import { UsersService, AlertService } from '../../services';
 })
 export class SettingsComponent implements OnInit {
     user: { PushNotificationsEnabled: boolean, EmailNotificationsEnabled: boolean } = {} as any;
-    private _currentUser: User;
+    private _currentUserId: string;
+    private _pushEnabled: boolean;
+    private _emailEnabled: boolean;
 
     constructor(
         private _usersService: UsersService,
@@ -22,31 +24,44 @@ export class SettingsComponent implements OnInit {
         private _page: Page
     ) {}
 
+    get pushEnabled() {
+        return this._pushEnabled;
+    }
+
+    get emailEnabled() {
+        return this._emailEnabled;
+    }
+
+    set pushEnabled(val: boolean) {
+        if (typeof this._pushEnabled === 'boolean') { // dont update on initialization
+            this._updateSettings(val, this.emailEnabled);
+        }
+        this._pushEnabled = val;
+    }
+
+    set emailEnabled(val: boolean) {
+        if (typeof this._emailEnabled === 'boolean') { // dont update on initialization
+            this._updateSettings(this.pushEnabled, val);
+        }
+        this._emailEnabled = val;
+    }
+
     ngOnInit() {
         this._page.actionBar.title = 'Settings';
         this._usersService.currentUser().then(user => {
-            this._currentUser = user;
-            this.user = {
-                PushNotificationsEnabled: this._currentUser.PushNotificationsEnabled,
-                EmailNotificationsEnabled: this._currentUser.EmailNotificationsEnabled
-            };
+            this._currentUserId = user.Id;
+            this._pushEnabled = user.PushNotificationsEnabled;
+            this._emailEnabled = user.EmailNotificationsEnabled;
         });
     }
 
-    onSave() {
+    private _updateSettings(pushEnabled: boolean, emailEnabled: boolean) {
         let updateObj = {
-            Id: this._currentUser.Id,
-            PushNotificationsEnabled: this.user.PushNotificationsEnabled,
-            EmailNotificationsEnabled: this.user.EmailNotificationsEnabled
+            Id: this._currentUserId,
+            PushNotificationsEnabled: pushEnabled,
+            EmailNotificationsEnabled: emailEnabled
         };
         this._usersService.updateUser(updateObj)
-            .then(() => this._alertsService.showSuccess('Settings saved'))
-            .catch(err => {
-                if (err) {
-                    this._alertsService.showError(err.message);
-                }
-                this.user.EmailNotificationsEnabled = this._currentUser.EmailNotificationsEnabled;
-                this.user.PushNotificationsEnabled = this._currentUser.PushNotificationsEnabled;
-            });
+            .catch(err => err && this._alertsService.showError(err.message));
     }
 }
