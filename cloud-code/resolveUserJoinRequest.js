@@ -20,16 +20,24 @@ Everlive.CloudFunction.onRequest(function(request, response, done) {
     var requestsDb = el.data('GroupJoinRequests');
     var groupsDb = el.data('Groups');
 
+    var req, group;
+
     requestsDb.getById(reqId)
         .then(function(resp) {
-            var req = resp.result;
+            req = resp.result;
             if (req.Resolved) {
                 return Promise.reject({ message: 'This request has already been resolved' });
+            }
+            return groupsDb.getById(req.GroupId);
+        })
+        .then(function(resp) {
+            group = resp.result;
+            if (request.principal.type === 'user' && group.Owner !== request.principal.id) {
+                return Promise.reject({ message: 'You are not authorized for this operation' });
             }
             req.Approved = approved;
             req.Resolved = true;
             return requestsDb.updateSingle(req);
-
         })
         .then(function(resp) {
             var updatedCount = resp.result;

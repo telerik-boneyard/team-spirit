@@ -96,6 +96,9 @@ export function startsWith (str: string, substr: string) {
 }
 
 export function prettifySystemErrors (rawErrorMsg: string) {
+    if (!rawErrorMsg) {
+        return rawErrorMsg;
+    }
     let errorsToPrettify = Object.keys(constants.systemErrorMsgs);
     let result: string = rawErrorMsg;
     let keyIndex = findIndex(errorsToPrettify, errMsg => startsWith(rawErrorMsg, errMsg));

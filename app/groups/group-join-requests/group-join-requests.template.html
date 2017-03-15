@@ -5,8 +5,8 @@
             <ActionBarExtension>
                 <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
                 <ActionItem *ngIf="!isAndroid && hasApprovedSome" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
-                    <StackLayout orientation="horizontal">
-                        <Image src="res://icon_back"></Image>
+                    <StackLayout class="ios-back-btn" orientation="horizontal">
+                        <Image class="icon" src="res://icon_back"></Image>
                         <label text="Groups"></label>
                     </StackLayout>
                 </ActionItem>
