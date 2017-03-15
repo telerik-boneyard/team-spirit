@@ -1,28 +1,31 @@
 <ScrollView class="cntnr">
-    <ActionBarExtension>
-        <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-        <ActionItem *ngIf="event" (tap)="onDone()" ios.position="right">
-            <StackLayout>
-                <Label text="Done" class="button"></Label>
+    <StackLayout>
+        <loading-screen hideElement="hideonloading"></loading-screen>
+        <ActionBarExtension>
+            <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            <ActionItem *ngIf="event" (tap)="onDone()" ios.position="right">
+                <StackLayout>
+                    <Label text="Done" class="button"></Label>
+                </StackLayout>
+            </ActionItem>
+        </ActionBarExtension>
+
+        <StackLayout id="hideonloading" *ngIf="event" class="content event-date-selection">
+            <Label text="Select all dates that work for you. The event organizer will pick the final date." textWrap="true" class="hint"></Label>
+
+            <StackLayout *ngIf="event">
+                <Label text="Dates" class="info-label"></Label>
+
+                <GridLayout *ngFor="let option of dateOptions" rows="30, 30" columns="*, 65" class="date-info">
+                    <Label row="0" col="0" [text]="option.date | date:dateFormat" class="date"></Label>
+                    <Switch class="switch" row="0" col="1" [(ngModel)]="option.selected"></Switch>
+                    <Label class="votes" *ngIf="votesInitialized()" row="1" col="0" colSpan="2" [text]="getVotesText(option.date)"></Label>
+                </GridLayout>
             </StackLayout>
-        </ActionItem>
-    </ActionBarExtension>
-
-    <StackLayout *ngIf="event" class="content event-date-selection">
-        <Label text="Select all dates that work for you. The event organizer will pick the final date." textWrap="true" class="hint"></Label>
-
-        <StackLayout *ngIf="event">
-            <Label text="Dates" class="info-label"></Label>
-
-            <GridLayout *ngFor="let option of dateOptions" rows="30, 30" columns="*, 65" class="date-info">
-                <Label row="0" col="0" [text]="option.date | date:dateFormat" class="date"></Label>
-                <Switch class="switch" row="0" col="1" [(ngModel)]="option.selected"></Switch>
-                <Label class="votes" *ngIf="votesInitialized()" row="1" col="0" colSpan="2" [text]="getVotesText(option.date)"></Label>
-            </GridLayout>
         </StackLayout>
-    </StackLayout>
 
-    <ScrollView class="cntnr">
-        <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
-    </ScrollView>
+        <ScrollView class="cntnr">
+            <ActivityIndicator [busy]="!event" [visibility]="event ? 'collapse' : 'visible'" horizontalAlignment="center" verticalAlignment="center"></ActivityIndicator>
+        </ScrollView>
+    </StackLayout>
 </ScrollView>

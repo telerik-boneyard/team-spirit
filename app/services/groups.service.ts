@@ -35,8 +35,8 @@ export class GroupsService {
     constructor(
         private _elProvider: EverliveProvider
     ) {
-        this._membershipsData = this._elProvider.getData<GroupMembership>('GroupMembers');
         this._groupsData = this._elProvider.getData<Group>('Groups');
+        this._membershipsData = this._elProvider.getData<GroupMembership>('GroupMembers');
         this._groupJoinRequests = this._elProvider.getData<GroupJoinRequest>('GroupJoinRequests');
     }
 
@@ -155,6 +155,37 @@ export class GroupsService {
         }
         return this._groupJoinRequests.get(filter)
             .then(r => r.result);
+    }
+
+
+    getRequests(groupId: string, page = 0, pageSize = 10, expandExp?: any) {
+        expandExp = expandExp || {
+            ApplicantId: {
+                TargetTypeName: 'Users',
+                ReturnAs: 'Applicant',
+                Expand: this._imageExpandExp
+            }
+        };
+        let query = this._elProvider.getNewQuery()
+            .where({ GroupId: groupId, Resolved: false })
+            .skip(page * pageSize)
+            .take(pageSize)
+            .orderDesc('CreatedAt')
+            .expand(expandExp)
+        return this._groupJoinRequests.get(query).then(r => r.result);
+    }
+
+    getUnresolvedRequestsCount(groupId: string) {
+        return this._groupJoinRequests.count({ GroupId: groupId, Resolved: false })
+            .then(r => r.result);
+    }
+
+    resolveJoinRequest(requestId: string, approved: boolean) {
+        let queryStringParams = {
+            reqId: requestId,
+            approved: approved
+        };
+        return this._elProvider.get.businessLogic.invokeCloudFunction('resolveUserJoinRequest', { queryStringParams });
     }
 
     validateGroupEntry(group: Group) {

@@ -1,0 +1,25 @@
+<ScrollView class="cntnr">
+    <StackLayout>
+        <loading-screen hideElement="hideonloading"></loading-screen>
+        <StackLayout id="hideonloading" *ngIf="requests">
+            <Label text="Waiting for approval"></Label>
+            <ActionBarExtension>
+                <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
+            </ActionBarExtension>
+
+            <DockLayout *ngFor="let req of requests">
+                <user-display dock="left" [users]="req.Applicant" [showNames]="true"></user-display>
+                <!--<Label dock="left" [text]="req.Applicant.DisplayName || req.Applicant.Username"></Label>-->
+                <Label dock="left" [text]="getTimeSinceCreation(req.CreatedAt)"></Label>
+                <StackLayout *ngIf="!req.Resolved" dock="right" orientation="horizontal">
+                    <Label text="N" (tap)="resolve(req, false)"></Label>
+                    <Label text="Y" (tap)="resolve(req, true)"></Label>
+                </StackLayout>
+                <Label *ngIf="req.Resolved" dock="right" [text]="getApprovalText(req)"></Label>
+            </DockLayout>
+            <Label *ngIf="hasMore()" class="load-more-btn" (tap)="onLoadMore()" text="Load more..."></Label>
+
+            <Label *ngIf="!requests.length" text="There are no unresolved join requests at this time" textWrap="true"></Label>
+        </StackLayout>
+    </StackLayout>
+</ScrollView>

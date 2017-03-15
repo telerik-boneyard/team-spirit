@@ -8,7 +8,8 @@ import {
     AddGroupComponent,
     GroupCreationModalComponent,
     GroupEventsComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    GroupJoinRequestsComponent
 } from './';
 
 export const routes: Routes = [
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: ':id', component: GroupDetailsComponent },
     { path: ':id/edit', component: EditGroupComponent },
     { path: ':id/events', component: GroupEventsComponent },
-    { path: ':id/members', component: GroupMembersComponent }
+    { path: ':id/members', component: GroupMembersComponent },
+    { path: ':id/join-requests', component: GroupJoinRequestsComponent }
 ];

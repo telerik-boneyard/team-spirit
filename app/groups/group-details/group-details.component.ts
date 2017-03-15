@@ -121,7 +121,8 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
     }
 
     onViewRequests() {
-        this._alertsService.showError('Not implemented yet');
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate([`groups/${this.group.Id}/join-requests`], { transition });
     }
 
     onJoin(): Promise<any> {

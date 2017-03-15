@@ -13,4 +13,5 @@ require("nativescript-angular/forms");
 require("nativescript-angular/router");
 
 require("everlive-sdk");
+require("moment");
 require("jstz");

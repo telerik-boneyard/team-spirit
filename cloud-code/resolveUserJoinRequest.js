@@ -13,7 +13,7 @@ Everlive.CloudFunction.onRequest(function(request, response, done) {
         setErrorResponse(response, 'Please specify if the join request should be approved or denied');
         return done();
     } else {
-        approved = approved === 'true' ? true : false;
+        approved = approved === 'true';
     }
 
     var el = Everlive.Sdk.withMasterKey();

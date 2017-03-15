@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 import { constants } from './';
 
 export function getAsResizeUrl (rawUrl: string, opts = { width: constants.imageWidth, height: 200 }) {
@@ -31,7 +33,8 @@ export function isEmail (str: string) {
 };
 
 export function isNonemptyString (str: any) {
-    return (typeof str === 'string') && str !== '';
+    let trimmed: string;
+    return (typeof str === 'string') && (trimmed = str.replace(/ +/g, '')) && trimmed !== '';
 };
 
 export function shouldDisableDrawer (activeRouteUrl: string) {
@@ -133,4 +136,8 @@ export function stringifyValues(data: { [key: string]: any }) {
         result[k] = JSON.stringify(data[k]);
     });
     return result;
+}
+
+export function getRelativeTimeText (dateOrIsoStr: Date|string) {
+    return moment(dateOrIsoStr).fromNow();
 }

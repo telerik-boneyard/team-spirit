@@ -15,7 +15,8 @@ import {
     AddGroupComponent,
     GroupCreationModalComponent,
     GroupEventsComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    GroupJoinRequestsComponent
 } from './';
 
 @NgModule({
@@ -35,7 +36,8 @@ import {
     AddGroupComponent,
     GroupCreationModalComponent,
     GroupEventsComponent,
-    GroupMembersComponent
+    GroupMembersComponent,
+    GroupJoinRequestsComponent
   ],
   entryComponents: [
     GroupCreationModalComponent

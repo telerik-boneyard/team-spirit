@@ -7,5 +7,6 @@ export * from './add-group/add-group.component';
 export * from './group-creation-modal/group-creation-modal.component';
 export * from './group-events/group-events.component';
 export * from './group-members/group-members.component';
+export * from './group-join-requests/group-join-requests.component';
 export * from './groups.module';
 export * from './groups.routing';
