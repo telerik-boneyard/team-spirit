@@ -52,6 +52,7 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
 
     onBack() {
         if (this.hasApprovedSome) {
+            
             let clearHistory = this.hasApprovedSome;
             let transition = utilities.getReversePageTransition();
             this._routerExtensions.navigate([`/groups/${this._groupId}`], { transition, clearHistory });
