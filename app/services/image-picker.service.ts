@@ -38,9 +38,10 @@ export class ImagePickerService {
         let height = constants.imageWidth / imgRatio;
 
         imgSrc = this.resizeImage(imgSrc, width, height);
-        let format = this._getExtension(uri) || 'png';
+        let extension = this._getExtension(uri) || 'png';
+        let format = this._mapExtensionToNsFormat(extension);
         let result = {
-            format: format,
+            extension: extension,
             base64: imgSrc.toBase64String(format)
         };
         return result;
