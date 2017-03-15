@@ -17,7 +17,7 @@ import { utilities, AndroidBackOverrider } from '../../shared';
 export class GroupJoinRequestsComponent extends AndroidBackOverrider implements OnInit {
     requests: GroupJoinRequest[];
     isAndroid: boolean = false;
-    hasResolvedSome: boolean = false;
+    hasApprovedSome: boolean = false;
     private _groupId: string;
     private _currPage: number = 0;
     private _pageSize: number = 10;
@@ -51,9 +51,13 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     }
 
     onBack() {
-        let clearHistory = this.hasResolvedSome;
-        let transition = utilities.getReversePageTransition();
-        this._routerExtensions.navigate([`/groups/${this._groupId}`], { transition, clearHistory });
+        if (this.hasApprovedSome) {
+            let clearHistory = this.hasApprovedSome;
+            let transition = utilities.getReversePageTransition();
+            this._routerExtensions.navigate([`/groups/${this._groupId}`], { transition, clearHistory });
+        } else {
+            this._routerExtensions.back();
+        }
     }
 
     hasMore() {
@@ -77,8 +81,10 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
             .then((resp) => {
                 request.Approved = approve;
                 request.Resolved = true;
-                this.hasResolvedSome = true;
-                this._hideIosBackBtn();
+                this.hasApprovedSome = true;
+                if (this._platform.isIos) {
+                    this._hideIosBackBtn();
+                }
                 this._lockedRequests[request.Id] = false;
             })
             .catch(err => {
