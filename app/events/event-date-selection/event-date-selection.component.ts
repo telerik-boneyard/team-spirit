@@ -38,6 +38,7 @@ export class EventDateSelectionComponent implements OnInit {
     
     ngOnInit() {
         this._route.params.subscribe(p => {
+            this._page.actionBar.title = '';
             let eventId: string = p['id'];
 
             let eventRegObj = this._getParam<EventRegistration>(p, 'userReg');
@@ -71,6 +72,7 @@ export class EventDateSelectionComponent implements OnInit {
             Promise.all<any>([eventPromise, eventRegPromise]).then(results => {
                 let ev: Event = results[0];
                 this._userReg = results[1];
+                this._setPageTitle(!!this._userReg);
 
                 this.dateOptions = ev.EventDateChoices.map((d: Date|string) => {
                     let result: any = { date: d, selected: false };

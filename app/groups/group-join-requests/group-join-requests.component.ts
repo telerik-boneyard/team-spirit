@@ -22,6 +22,7 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     private _currPage: number = 0;
     private _pageSize: number = 10;
     private _totalCount: number = null;
+    private _lockedRequests: { [requestId: string]: boolean } = {};
 
     constructor(
         private _page: Page,
@@ -67,14 +68,24 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     }
 
     resolve(request: GroupJoinRequest, approve: boolean) {
+        if (this._lockedRequests[request.Id]) {
+            return;
+        }
+        this._lockedRequests[request.Id] = true;
         this._groupsService.resolveJoinRequest(request.Id, approve)
             .then((resp) => {
                 request.Approved = approve;
                 request.Resolved = true;
                 this.hasResolvedSome = true;
                 this._hideIosBackBtn();
+                this._lockedRequests[request.Id] = false;
             })
-            .catch(err => err && this._alertsService.showError(err.message));
+            .catch(err => {
+                if (err) {
+                    this._alertsService.showError(err.message);
+                }
+                this._lockedRequests[request.Id] = false;
+            });
     }
 
     getApprovalText(request: GroupJoinRequest) {

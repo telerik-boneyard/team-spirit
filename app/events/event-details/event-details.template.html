@@ -44,7 +44,7 @@
                 <StackLayout class="info-wrapper">
                     <GridLayout columns="auto, auto, *" rows="auto, auto">
                         <Label class="info-label" text="Date" col="0" row="0"></Label>
-                        <Label *ngIf="eventRequiresVoting()" row="1" col="0" [text]="getVotingText()"></Label>
+                        <Label *ngIf="eventRequiresVoting()" row="1" col="0" [text]="getVotingText()" textWrap="true"></Label>
                         <!--<Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>-->
                         <!-- <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label> -->
                     </GridLayout>
