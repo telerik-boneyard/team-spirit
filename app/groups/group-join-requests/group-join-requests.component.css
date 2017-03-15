@@ -1,0 +1,47 @@
+.content {
+  padding: 20;
+}
+
+.info-label {
+  margin: 10 0 20;
+  font-size: 12;
+  color: #F4550F;
+  text-transform: uppercase;
+}
+
+.item {
+  padding: 10 0;
+  border-width: 0 0 1 0;
+  border-color: #ebebed;
+}
+
+.user-display,
+.time-since-creation,
+.resolve {
+  vertical-align: middle;
+}
+
+.time-since-creation {
+  margin-left: 5;
+  font-size: 12;
+}
+
+.btn-resolve {
+  font-size: 20;
+}
+
+.btn-resolve.no {
+  margin-right: 21;
+}
+
+.btn-resolve.yes {
+  color: #F4550F;
+}
+
+.status {
+  padding-top: 7;
+  font-size: 12;
+  color: #9d9d9d;
+  text-align: right;
+  text-transform: uppercase;
+}

@@ -2,7 +2,6 @@
     <StackLayout>
         <loading-screen hideElement="hideonloading"></loading-screen>
         <StackLayout id="hideonloading" *ngIf="requests">
-            <Label text="Waiting for approval"></Label>
             <ActionBarExtension>
                 <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
                 <ActionItem *ngIf="!isAndroid && hasResolvedSome" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
@@ -12,19 +11,23 @@
                     </StackLayout>
                 </ActionItem>
             </ActionBarExtension>
+            <StackLayout class="content">
+                <Label class="info-label" text="Waiting for approval"></Label>
+                <GridLayout columns="*, 61" *ngFor="let req of requests" class="item">
+                    <StackLayout col="0" orientation="horizontal">
+                        <user-display class="user-display" [users]="req.Applicant" [showNames]="true"></user-display>
+                        <Label class="time-since-creation" [text]="getTimeSinceCreation(req.CreatedAt)"></Label>
+                    </StackLayout>
+                    <StackLayout col="1" class="resolve" *ngIf="!req.Resolved" orientation="horizontal">
+                        <Label class="if btn-resolve no" text="&#x41;" (tap)="resolve(req, false)"></Label>
+                        <Label class="if btn-resolve yes" text="&#x4c;" (tap)="resolve(req, true)"></Label>
+                    </StackLayout>
+                    <Label col="1" class="status" *ngIf="req.Resolved" [text]="getApprovalText(req)"></Label>
+                </GridLayout>
+                <Label *ngIf="hasMore()" class="load-more-btn" (tap)="onLoadMore()" text="Load more..."></Label>
 
-            <DockLayout *ngFor="let req of requests">
-                <user-display dock="left" [users]="req.Applicant" [showNames]="true"></user-display>
-                <Label dock="left" [text]="getTimeSinceCreation(req.CreatedAt)"></Label>
-                <StackLayout *ngIf="!req.Resolved" dock="right" >
-                    <Label text="N" (tap)="resolve(req, false)"></Label>
-                    <Label text="Y" (tap)="resolve(req, true)"></Label>
-                </StackLayout>
-                <Label *ngIf="req.Resolved" dock="right" [text]="getApprovalText(req)"></Label>
-            </DockLayout>
-            <Label *ngIf="hasMore()" class="load-more-btn" (tap)="onLoadMore()" text="Load more..."></Label>
-
-            <Label *ngIf="!requests.length" text="There are no unresolved join requests at this time" textWrap="true"></Label>
+                <Label *ngIf="!requests.length" text="There are no unresolved join requests at this time" textWrap="true"></Label>
+            </StackLayout>
         </StackLayout>
     </StackLayout>
 </ScrollView>
