@@ -27,11 +27,12 @@
 }
 
 .btn-resolve {
+  padding: 5;
   font-size: 20;
 }
 
 .btn-resolve.no {
-  margin-right: 21;
+  margin-right: 15;
 }
 
 .btn-resolve.yes {

@@ -61,8 +61,14 @@ TextView {
 
 .date .remove {
   margin-right: 5;
+  margin-bottom: 0;
+  padding: 3 5;
   color: #ff0000;
   font-size: 20;
+}
+
+.date .remove .if {
+  margin-top: 7;
 }
 
 .border-bottom {
