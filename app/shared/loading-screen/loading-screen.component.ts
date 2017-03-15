@@ -13,7 +13,6 @@ import { LoadingIndicatorService } from '../../services';
 export class LoadingScreenComponent implements OnInit {
     @Input('hideElement') hideElementId: string;
     showLoader: boolean = false;
-    private _hideElement: View;
     private _extendedLoadingSub: any;
     private _allLoaded: any;
     private _defaultActionBarHidden: boolean = false;
@@ -26,7 +25,6 @@ export class LoadingScreenComponent implements OnInit {
     }
 
     ngOnInit() {
-        this._hideElement = this._page.getViewById(this.hideElementId);
         this._subscribeToLoadingEvents();
 
         this._page.on('navigatingTo', data => {
@@ -53,14 +51,20 @@ export class LoadingScreenComponent implements OnInit {
 
     private _startLoading() {
         // console.log('LOADING start');
-        this._hideElement.visibility = 'collapse';
+        let elemToHide = this._page.getViewById(this.hideElementId);
+        if (elemToHide) {
+            elemToHide.visibility = 'collapse';
+        }
         this.showLoader = true;
         this._page.actionBarHidden = true;
     }
 
     private _endLoading() {
         // console.log('LOADING end');
-        this._hideElement.visibility = 'visible';
+        let elemToHide = this._page.getViewById(this.hideElementId);
+        if (elemToHide) {
+            elemToHide.visibility = 'visible';
+        }
         this.showLoader = false;
         this._page.actionBarHidden = this._defaultActionBarHidden;
     }
