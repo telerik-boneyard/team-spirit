@@ -115,3 +115,12 @@ TextView {
 .date .add-date {
   color: #888;
 }
+
+.switch-wrp {
+  padding-top: 10;
+  padding-bottom: 2;
+}
+
+.switch-wrp .switch {
+  margin: 0;
+}
