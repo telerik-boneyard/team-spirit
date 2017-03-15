@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as fs from 'file-system';
 
 import { EverliveProvider } from './everlive-provider.service';
 import { ImagePickerService } from './image-picker.service';
@@ -31,5 +32,10 @@ export class FilesService {
     uploadFromUri(uri: string) {
         let imgData = this._imagesService.getBase64FromUri(uri);
         return this.upload(imgData.base64, imgData.extension);
+    }
+
+    emptyAppTempFolder() {
+        let tempFolder = fs.knownFolders.temp();
+        return tempFolder.clear();
     }
 }

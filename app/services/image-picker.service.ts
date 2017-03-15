@@ -33,11 +33,6 @@ export class ImagePickerService {
 
     getBase64FromUri(uri: string) {
         let imgSrc = nsImgSource.fromFileOrResource(uri);
-        let imgRatio = imgSrc.width / imgSrc.height;
-        let width = constants.imageWidth;
-        let height = constants.imageWidth / imgRatio;
-
-        imgSrc = this.resizeImage(imgSrc, width, height);
         let extension = this._getExtension(uri) || 'png';
         let format = this._mapExtensionToNsFormat(extension);
         let result = {
@@ -57,6 +52,13 @@ export class ImagePickerService {
         let resizedImgSrc = new nsImgSource.ImageSource();
         resizedImgSrc.setNativeSource(result);
         return resizedImgSrc;
+    }
+
+    private _getUploadImgDimensions(originalImageWidth: number, originalImageHeight: number) {
+        let imgRatio = originalImageWidth / originalImageHeight;
+        let width = constants.imageWidth;
+        let height = constants.imageWidth / imgRatio;
+        return { width, height };
     }
 
     private _getExtension(fileUri: string) {
@@ -87,28 +89,16 @@ export class ImagePickerService {
     }
 
     private _processImages(selection: any[]) {
-        let processedImgs = selection.map((selectedItem) => {
-
-            return this._moveImgToTempFolder(selectedItem)
-                .then(moveResult => {
-                    return {
-                        uri: moveResult.uri,
-                        thumb: selectedItem.thumb
-                    };
-                });
-            // let descriptor: { uri: string, thumb: any } = {
-            //     uri: selectedItem.fileUri,
-            //     thumb: selectedItem.thumb
-            // };
-            // return Promise.resolve(descriptor);
-        });
-
+        let processedImgs = selection.map((selectedItem) => this._moveImgToTempFolder(selectedItem));
         return Promise.all(processedImgs);
     }
  
     private _moveImgToTempFolder(selectedImg: any): Promise<{ name: string, uri: string }> {
         return selectedImg.getImage()
             .then((imageSrc: nsImgSource.ImageSource) => {
+                let newDimensions = this._getUploadImgDimensions(imageSrc.width, imageSrc.height);
+                imageSrc = this.resizeImage(imageSrc, newDimensions.width, newDimensions.height);
+
                 let extension = ((selectedImg.fileUri && this._getExtension(selectedImg.fileUri)) || 'png').toLowerCase();
                 let name = `teamupimg${Date.now()}.${extension}`;
                 let tempFolder = fs.knownFolders.temp();
