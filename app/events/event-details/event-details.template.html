@@ -34,7 +34,7 @@
                     <photo-picker [url]="event.ImageUrl" [type]="'event'" [noImageIcon]="'&#x77;'" [noImageText]="'No image available'"></photo-picker>
                 </StackLayout>
                 <StackLayout left="0" top="20" height="40">
-                    <Label *ngIf="alreadyRegistered" [text]="getLabelText()" class="registered-label"></Label>
+                    <Label *ngIf="alreadyRegistered" [text]="getLabelText()" class="ribbon ribbon-event" [ngClass]="{ 'ribbon-past-event': isPastEvent }"></Label>
                 </StackLayout>
             </AbsoluteLayout>
 

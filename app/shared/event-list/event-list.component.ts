@@ -43,6 +43,10 @@ export class EventListComponent implements OnInit {
         return this._userEventsById && this._userEventsById[eventId];
     }
 
+    isPastEvent(event: Event) {
+        return this._eventsService.isPastEvent(event);
+    }
+
     getLabelText(event: Event) {
         let text: string;
         if (this._eventsService.isPastEvent(event)) {

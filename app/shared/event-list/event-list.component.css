@@ -33,16 +33,33 @@
   color: #F4550F;
 }
 
-.registered-label {
-  width: 53;
+.ribbon {
   height: 20;
-  margin-top: 5;
-  padding: 1 0 0 7;
+  margin-top: 2;
   color: #F4550F;
   font-size: 12;
-  background-image: url("res://background_registered_label_list");
+}
+
+.ribbon-left,
+.ribbon-middle,
+.ribbon-right {
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+}
+
+.ribbon-left {
+  background-image: url("res://background_registered_label_list_left");
+}
+
+.ribbon-middle {
+  padding-top: 1;
+  background-image: url("res://background_registered_label_list_middle");
+  background-repeat: repeat-x;
+  text-align: center;
+}
+
+.ribbon-right {
+  background-image: url("res://background_registered_label_list_right");
 }
 
 .event-remaining-time {

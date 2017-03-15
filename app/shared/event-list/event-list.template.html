@@ -3,7 +3,11 @@
         <StackLayout *ngFor="let event of events; let isLast = last; trackBy: event?.Id" (tap)="eventTap(event)">
             <WrapLayout class="event-name-wrp">
                 <Label [text]="event.Name" textWrap="true" class="event-name"></Label>
-                <Label *ngIf="userIsRegistered(event.Id)" class="registered-label" [text]="getLabelText(event)"></Label>
+                <GridLayout *ngIf="userIsRegistered(event.Id)" class="ribbon" [attr.columns]="(isPastEvent(event)) ? '4, 53, 15' : '4, 33, 15'">
+                    <Label col="0" class="ribbon-left" text=""></Label>
+                    <Label col="1" class="ribbon-middle" [text]="getLabelText(event)" textWrap="true"></Label>
+                    <Label col="2" class="ribbon-right" text=""></Label>
+                </GridLayout>
             </WrapLayout>
             <GridLayout columns="auto, *" class="event-date-wrp">
                 <Label *ngIf="getEventDate(event)" [text]="getEventDate(event) | date:dateFormat | uppercase" col="0" class="event-date" textWrap="true"></Label>
