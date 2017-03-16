@@ -19,7 +19,12 @@
 
         <StackLayout class="input-field with-popup">
             <Label class="label" text="Membership Approval"></Label>
-            <Label class="field" (tap)="onSelectApproval()" [text]="getApprovalType(group.RequiresApproval)"></Label>
+            <!-- <Label class="field" (tap)="onSelectApproval()" [text]="getApprovalType(group.RequiresApproval)"></Label> -->
+
+            <StackLayout orientation="horizontal" width="100%" class="membership-approval" (tap)="onSelectApproval()">
+                <Label class="field" [text]="getApprovalType(group.RequiresApproval)"></Label>
+                <Label class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>
+            </StackLayout>
         </StackLayout>
 
         <StackLayout *ngIf="currentUser" class="input-field user">

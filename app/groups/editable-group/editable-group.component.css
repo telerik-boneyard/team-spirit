@@ -43,3 +43,26 @@ TextView {
 .list-separator {
   margin-top: 10;
 }
+
+.membership-approval {
+  height: 25;
+  margin-top: 10;
+  font-size: 14;
+  border-bottom-width: 1;
+  border-color: #ebebed;
+}
+
+.membership-approval .field {
+  width: 94%;
+  margin-bottom: 0;
+  border-width: 0;
+  padding: 0;
+}
+
+.membership-approval .info-icon {
+  width: 20;
+  height: 20;
+  font-size: 16;
+  color: #bfbfbf;
+  text-align: right;
+}
