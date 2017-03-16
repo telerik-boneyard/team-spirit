@@ -15,7 +15,7 @@
         <StackLayout class="input-field group with-popup">
             <Label class="label" text="Group"></Label>
             <StackLayout orientation="horizontal" width="100%" class="select-group" (tap)="onSelectGroup()">
-                <Label class="field" width="95%" [text]="getSelectedGroupName()"></Label>
+                <Label class="field" [text]="getSelectedGroupName()"></Label>
                 <Label *ngIf="!isEdit" class="info-icon if" text="&#x64;" horizontalAlignment="right"></Label>
             </StackLayout>
         </StackLayout>

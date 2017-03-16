@@ -91,6 +91,7 @@ TextView {
 }
 
 .select-group .field {
+  width: 94%;
   margin-bottom: 0;
   padding: 0;
 }
