@@ -3,7 +3,7 @@
     <ScrollView id="hideonloading" class="cntnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-            <ActionItem *ngIf="!isAndroid && (membershipChanged || !canGoBack())" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
+            <ActionItem *ngIf="!isAndroid && (membershipChanged || (group && !canGoBack()))" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
                 <StackLayout class="ios-back-btn" orientation="horizontal">
                     <Image class="icon" src="res://icon_back"></Image>
                     <label text="Groups"></label>

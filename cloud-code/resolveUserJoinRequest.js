@@ -47,6 +47,8 @@ Everlive.CloudFunction.onRequest(function(request, response, done) {
                 response.statusCode = 400;
             }
             response.result = result;
+
+            sendNotificationsToUsers(req.GroupId, req.ApplicantId, req.Approved); // dont wait for result
             done();
         })
         .catch(function(err) {
@@ -54,6 +56,32 @@ Everlive.CloudFunction.onRequest(function(request, response, done) {
             done();
         });
 });
+
+function sendNotificationsToUsers(groupId, userId, wasApproved) {
+    var reqData = {
+        alertType: 'GroupJoinRequestResolved', // TODO: differentiate between templateName and alert type
+        groupId: groupId,
+        userId: userId,
+        wasApproved: wasApproved
+    };
+    notifyUsers(reqData);
+}
+
+function notifyUsers (data) {
+    return new Promise(function(resolve, reject) {
+        var headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'MasterKey ' + Everlive.Parameters.masterKey
+        };
+        Everlive.Http.post(Everlive.Parameters.apiBaseUrlSecure + '/v1/' + Everlive.Parameters.apiKey + '/Functions/notifyUsers', { headers: headers, body: data }, function(err, resp) {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(resp.body);
+            }
+        });
+    });
+}
 
 function setErrorResponse(response, errObj) {
     if (typeof errObj === 'string') {

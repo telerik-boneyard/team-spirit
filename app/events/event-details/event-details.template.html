@@ -3,9 +3,9 @@
     <ScrollView id="hideonloading" class="cntnr">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onBack()"></NavigationButton>
-            <ActionItem *ngIf="!isAndroid && (participationChanged || !canGoBack())" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
-                <StackLayout orientation="horizontal">
-                    <Image src="res://icon_back"></Image>
+            <ActionItem *ngIf="!isAndroid && (participationChanged || (event && !canGoBack()))" ios.systemIcon="1" ios.position="left" (tap)="onBack()">
+                <StackLayout class="ios-back-btn" orientation="horizontal">
+                    <Image class="icon" src="res://icon_back"></Image>
                     <label text="Events"></label>
                 </StackLayout>
             </ActionItem>

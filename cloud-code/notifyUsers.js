@@ -132,7 +132,7 @@ function _formatDate (dateIsoString, timezoneName) {
 
     var moment = require('moment-timezone');
     var date = moment(dateIsoString).tz(timezoneName || 'UTC');
-    return date.format('dddd, MMMM Do YYYY, h:mm:ss A');
+    return date.format('MMM D, YYYY, ddd, hh:mm A');
 }
 
 function getDataForEventRelated (templateName, context) {
@@ -224,17 +224,10 @@ function getDataForUserAskedToJoinGroup (context) {
             return getJoinReq(user.Id, group.Id);
         })
         .then(function(reqRes) {
-            var cloudFuncUrl = Everlive.Parameters.apiBaseUrlSecure + '/v1/' + Everlive.Parameters.apiKey
-                + '/Functions/resolveUserJoinRequest?reqId=' + reqRes.result[0].Id // there should be exactly one
-                // + 'applicantId=' + user.Id
-                // + '&groupId=' + group.Id
-                + '&approved=';
             var emailContext = {
                 UserName: user.DisplayName,
                 UserEmail: user.Email, // or Username - it is actually email
-                GroupName: group.Name,
-                ApproveLink: encodeURI(cloudFuncUrl + 'true'),
-                DenyLink: encodeURI(cloudFuncUrl + 'false')
+                GroupName: group.Name
             };
             return {
                 groupName: group.Name,
@@ -293,25 +286,95 @@ function getDataForUserUnregisteredFromEvent (context) {
         });
 }
 
+function getDataForGroupJoinRequestResolved (context) {
+    var group, user;
+    var promises = [
+        getGroup(context.groupId),
+        getUser(context.userId)
+    ];
+
+    return Promise.all(promises)
+        .then(function(resp) {
+            group = resp[0].result;
+            user = resp[1].result;
+            
+            if (!group || !user) {
+                return Promise.reject({ message: 'Could not find group or user' });
+            }
+
+            var userData = filterForNotification([user]);
+            var emailContext = {
+                UserName: user.DisplayName || user.Username,
+                GroupName: group.Name,
+                WasApproved: context.wasApproved
+            };
+
+            return {
+                groupName: group.Name,
+                wasApproved: context.wasApproved,
+                push: { userIds: userData.userIds },
+                email: {
+                    templateName: 'GroupJoinRequestResolved',
+                    recipients: userData.recipients,
+                    context: emailContext
+                }
+            };
+        });
+}
+
+function getDataForEventHasBeenCancelled (context) {
+    var event = context.event;
+    if (!event) {
+        return Promise.reject({ message: 'No event has been passed!' });
+    }
+
+    return Promise.all([getGroupMembers(event.GroupId), getUser(event.OrganizerId), getGroup(event.GroupId)])
+        .then(function(results) {
+            var groupMembers = results[0].result;
+            var organizer = results[1].result;
+            var group = results[2].result;
+
+            var userData = filterForNotification(groupMembers, event.OrganizerId);
+            var emailContext = {
+                EventName: event.Name,
+                GroupName: group.Name,
+                OrganizerName: organizer.DisplayName || organizer.Username
+            };
+
+            return {
+                groupName: group.Name,
+                eventName: event.Name,
+                organizerName: organizer.DisplayName || organizer.Username,
+                push: { userIds: userData.userIds },
+                email: {
+                    templateName: 'EventHasBeenCancelled',
+                    recipients: userData.recipients,
+                    context: emailContext
+                }
+            };
+        });
+}
+
 function getData (context) {
     return getterByAlertType['getDataFor' + context.alertType](context);
 }
 
 var getterByAlertType = {
-    getDataForUserRegisteredForEvent: getDataForUserRegisteredForEvent,
-    getDataForEventRegistrationOpen: getDataForEventRelated.bind(null, 'EventRegistrationOpen'),
     getDataForEventRegistrationClosed: getDataForEventRelated.bind(null, 'EventRegistrationClosed'),
+    getDataForEventRegistrationOpen: getDataForEventRelated.bind(null, 'EventRegistrationOpen'),
     getDataForEventDatesUpdated: getDataForEventRelated.bind(null, 'EventDatesUpdated'),
-    getDataForUserJoinedGroup: getDataForUserJoinedGroup,
+    getDataForUserUnregisteredFromEvent: getDataForUserUnregisteredFromEvent,
+    getDataForGroupJoinRequestResolved: getDataForGroupJoinRequestResolved,
+    getDataForUserRegisteredForEvent: getDataForUserRegisteredForEvent,
+    getDataForEventHasBeenCancelled: getDataForEventHasBeenCancelled,
     getDataForUserAskedToJoinGroup: getDataForUserAskedToJoinGroup,
-    getDataForUserUnregisteredFromEvent: getDataForUserUnregisteredFromEvent
+    getDataForUserJoinedGroup: getDataForUserJoinedGroup
 };
 
 // === EMAIL ======================================================
 
 function sendEmail (data) {
     if (!data.recipients || !data.recipients.length) {
-        console.log('not sending email - no recipients');
         return Promise.resolve();
     }
     
@@ -323,6 +386,7 @@ function sendEmail (data) {
     return new Promise(function(resolve, reject) {
         Everlive.Email.sendEmailFromTemplate(data.templateName, data.recipients, data.context, function(err) {
             if (err) {
+                console.log('sendEmail error : ' + JSON.stringify(err));
                 reject(err);
             } else {
                 resolve();
@@ -334,8 +398,8 @@ function sendEmail (data) {
 // === PUSH ======================================================
 
 function sendPush (alertType, context) {
+    
     if (!context.push || !context.push.userIds || !context.push.userIds.length) {
-        console.log('not sending push - no recipients');
         return Promise.resolve();
     }
     
@@ -376,6 +440,14 @@ function getNotificationObject (alertType, context) {
         case 'UserUnregisteredFromEvent':
             title = context.userName + ' decided not to come';
             message = context.userName + ' is not coming to ' + context.eventName;
+            break;
+        case 'GroupJoinRequestResolved':
+            title = context.wasApproved ? 'You\'re in!' : 'Tough ruling';
+            message = (context.wasApproved ? 'Your' : 'Unfortunately, your') + ' request to join ' + context.groupName + ' was ' + (context.wasApproved ? 'approved!' : 'denied');
+            break;
+        case 'EventHasBeenCancelled':
+            title = context.eventName + ' was cancelled!';
+            message = context.organizerName + ' cancelled the event for ' + context.groupName;
             break;
 
 

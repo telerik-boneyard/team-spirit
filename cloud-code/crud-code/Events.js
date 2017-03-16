@@ -10,18 +10,33 @@ Everlive.Events.afterCreate(function(request, response, context, done) {
 
 Everlive.Events.beforeDelete(function(request, context, done) {
     var eventId = getIdFromRequest(request);
-    if (!eventId) {
-        return done();
-    }
+    var idsFilter = request.filterExpression && request.filterExpression._id && request.filterExpression._id.$in;
+
     var el = Everlive.Sdk.withMasterKey();
     var eventsDB = el.data('Events');
-    eventsDB.getById(eventId)
-        .then(function(resp) {
-            if (isPastEvent(resp.result) && request.principal.type === 'user') {
-                Everlive.Response.setErrorResult('Deletion of past events is not allowed');
-            }
-            done();
-        });
+    var eventsPromise;
+    if (eventId) {
+        eventsPromise = eventsDB.getById(eventId);
+    } else {
+        eventsPromise = eventsDB.get(request.filterExpression);
+    }
+    eventsPromise.then(function(resp) {
+        var events = [].concat(resp.result);
+        var hasInvalidDeletions = false;
+        if (request.principal.type === 'user') {
+            events.forEach(function() {
+                if (isPastEvent(resp.result)) {
+                    hasInvalidDeletions = true;
+                }
+            });
+        }
+        if (hasInvalidDeletions) {
+            Everlive.Response.setErrorResult('Deletion of past events is not allowed');
+        } else {
+            context.deletedEvents = events;
+        }
+        done();
+    });
 });
 
 Everlive.Events.afterDelete(function(request, response, context, done) {
@@ -38,6 +53,17 @@ Everlive.Events.afterDelete(function(request, response, context, done) {
     
     var el = Everlive.Sdk.withMasterKey();
     el.data('EventRegistrations').destroy({ EventId: { $in: idsToDelete } })
+        .then(function() {
+            (context.deletedEvents || []).forEach(function(event) {
+                // dont wait for results of notifications
+                // sendNotificationsToUsers(evId, undefined, 'EventHasBeenCancelled');
+                var notifData = {
+                    alertType: 'EventHasBeenCancelled', // TODO: differentiate between templateName and alert type
+                    event: event
+                };
+                notifyUsers(notifData);
+            });
+        })
         .then(done)
         .catch(function(err) {
             console.log('could not delete event registration: ' + err.message);
