@@ -1,5 +1,10 @@
 ﻿.ribbon.ribbon-event {
   padding: 0 20 0 15;
+  background-position: -40 0;
+}
+
+.ribbon.ribbon-past-event {
+  background-position: -20 0;
 }
 
 .btn-wrp {

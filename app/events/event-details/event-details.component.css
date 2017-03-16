@@ -110,12 +110,10 @@
   background-image: url("res://background_registered_label_event");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: -105 0;
 }
 
 .ribbon.ribbon-past-event {
   width: 100;
-  background-position: -60 0;
 }
 
 .going-label {
