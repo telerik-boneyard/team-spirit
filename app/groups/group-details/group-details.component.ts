@@ -124,9 +124,15 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
         this._routerExtensions.navigate([`groups/${this.group.Id}/events`], { transition });
     }
 
+    hasAnyJoinRequests() {
+        return typeof this.requestCount === 'number' && this.requestCount > 0;
+    }
+
     onViewRequests() {
-        let transition = utilities.getPageTransition();
-        this._routerExtensions.navigate([`groups/${this.group.Id}/join-requests`], { transition });
+        if (this.hasAnyJoinRequests()) {
+            let transition = utilities.getPageTransition();
+            this._routerExtensions.navigate([`groups/${this.group.Id}/join-requests`], { transition });
+        }
     }
 
     onJoin(): Promise<any> {

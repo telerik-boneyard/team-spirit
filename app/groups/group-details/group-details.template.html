@@ -39,7 +39,7 @@
                     <Label class="btn-icon if" text="&#x76;"></Label>
                     <Label class="btn-text" text="Leave Group"></Label>
                 </StackLayout>
-                <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="1">
+                <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" [ngClass]="{ disabled: !hasAnyJoinRequests() }" (tap)="onViewRequests()" col="1">
                     <AbsoluteLayout>
                         <Label class="btn-icon if" text="&#x6d;" top="0" left="0" width="100%"></Label>
                         <StackLayout top="0" left="0" width="100%" *ngIf="requestCount">
