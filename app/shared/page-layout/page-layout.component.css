@@ -4,7 +4,7 @@
 
 .btn {
   margin: 0;
-  padding: 15 10;
+  padding: 12 10;
   font-size: 18;
   color: #000;
   text-align: left;
@@ -21,12 +21,8 @@
 .btn-icon {
   width: 65;
   padding-top: 2;
-  font-size: 26;
+  font-size: 24;
   text-align: center;
-}
-
-.btn-text {
-  font-size: 20;
 }
 
 .logo {

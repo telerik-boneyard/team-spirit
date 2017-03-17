@@ -24,9 +24,10 @@
 }
 
 .date {
-  font-size: 20;
+  font-size: 18;
 }
 
 .votes {
+  margin-top: -3;
   color: #9c9c9c;
 }
