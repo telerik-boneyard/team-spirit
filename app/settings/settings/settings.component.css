@@ -3,9 +3,16 @@
 }
 
 .input-field.switch-field {
-  padding: 0;
+  padding: 13 0 15;
+  border-width: 0 0 1 0;
+  border-color: #ebebed;
 }
 
-.btn {
-  margin: 20 0 0;
+.input-field.switch-field .label,
+.input-field.switch-field .switch {
+  vertical-align: middle;
+}
+
+.input-field.switch-field .switch {
+  margin: 0;
 }

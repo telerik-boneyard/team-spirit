@@ -1,17 +1,17 @@
 <page-layout>
     <StackLayout>
         <loading-screen hideElement="hideonloading"></loading-screen>
-        
+
         <StackLayout id="hideonloading" class="cntnr">
             <StackLayout *ngIf="user" class="form">
-                <StackLayout orientation="horizontal" class="input-field switch-field">
+                <DockLayout class="input-field switch-field">
                     <Label class="label" text="Receive push notifications" textWrap="true"></Label>
-                    <Switch class="switch" [(ngModel)]="pushEnabled"></Switch>
-                </StackLayout>
-                <StackLayout orientation="horizontal" class="input-field switch-field">
+                    <Switch class="switch" dock="right" [(ngModel)]="pushEnabled"></Switch>
+                </DockLayout>
+                <DockLayout columns="*, auto" class="input-field switch-field">
                     <Label class="label" text="Receive email notifications" textWrap="true"></Label>
                     <Switch class="switch" [(ngModel)]="emailEnabled"></Switch>
-                </StackLayout>
+                </DockLayout>
             </StackLayout>
 
             <ScrollView class="cntnr">
