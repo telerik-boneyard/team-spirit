@@ -11,6 +11,10 @@
   text-align: center;
 }
 
+.action-bar .btn.disabled {
+  color: #bfbfbf;
+}
+
 .action-bar .btn-text.count {
   background-color: #F4550F;
   color: #fff;
