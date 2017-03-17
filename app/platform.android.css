@@ -1,4 +1,13 @@
-﻿.ribbon.ribbon-event {
+﻿.drawer .user-wrp {
+  background-size: 400 234;
+}
+
+.no-image.large,
+.cntnr.user-profile {
+  background-size: 370 216;
+}
+
+.ribbon.ribbon-event {
   padding: 8 20 0 15;
   background-position: -105 0;
 }

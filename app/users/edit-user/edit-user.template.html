@@ -1,6 +1,6 @@
 <StackLayout>
     <loading-screen hideElement="hideonloading"></loading-screen>
-    <StackLayout id="hideonloading" class="cntnr">
+    <StackLayout id="hideonloading" class="cntnr user-profile">
         <ActionBarExtension>
             <NavigationButton *ngIf="isAndroid" icon="res://icon_back" (tap)="onCancel()"></NavigationButton>
             <ActionItem (tap)="save()" ios.position="right">

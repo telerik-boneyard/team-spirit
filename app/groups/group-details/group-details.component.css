@@ -5,9 +5,11 @@
 .action-bar .btn {
   height: 65;
   margin: 0;
-  font-size: 11;
+  border-top-width: 1;
+  border-color: rgba(255, 255, 255, .5);
   background-color: #ededed;
   color: #F4550F;
+  font-size: 11;
   text-align: center;
 }
 
