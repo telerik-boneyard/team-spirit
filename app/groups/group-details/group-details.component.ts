@@ -23,6 +23,7 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
     iosPopupOpen: boolean = false;
     membershipChanged: boolean = false;
     userApplication: GroupJoinRequest = null;
+    requestCount: number;
     private _currentUser: User;
     private _disableJoinBtn: boolean = false;
 
@@ -44,6 +45,9 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
         this._page.actionBar.title = '';
         this._activatedRoute.params.subscribe(p => {
             let groupId = p['id'];
+
+            this._groupsService.getUnresolvedRequestsCount(groupId)
+                .then(count => this.requestCount = count);
 
             let userPrm = this._usersService.currentUser()
                 .then(user => this._currentUser = user);
