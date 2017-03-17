@@ -31,17 +31,17 @@
             <Label class="btn btn-primary join-group" *ngIf="showJoinBtn()" [text]="getJoinBtnText()" (tap)="onJoin()"></Label>
 
             <GridLayout *ngIf="hasJoined === true" class="action-bar" [ngClass]="{ 'admin': !canEdit() }" columns="*, *">
-                <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="0">
-                    <Label class="btn-icon if" text="&#x6d;"></Label>
-                    <Label class="btn-text" text="See requests"></Label>
-                </StackLayout>
-                <StackLayout class="btn" (tap)="onViewEvents()" [attr.col]="(group.RequiresApproval && canEdit()) ? 1 : 0" [attr.colSpan]="canEdit() ? 2 : 1">
+                <StackLayout class="btn" (tap)="onViewEvents()" col="0" [attr.colSpan]="!group.RequiresApproval && canEdit() ? 2 : 1">
                     <Label class="btn-icon if" text="&#x6b;"></Label>
                     <Label class="btn-text" text="See Events"></Label>
                 </StackLayout>
                 <StackLayout *ngIf="!canEdit()" class="btn" (tap)="onLeave()" [attr.col]="1">
                     <Label class="btn-icon if" text="&#x76;"></Label>
                     <Label class="btn-text" text="Leave Group"></Label>
+                </StackLayout>
+                <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="1">
+                    <Label class="btn-icon if" text="&#x6d;"></Label>
+                    <Label class="btn-text" text="See requests"></Label>
                 </StackLayout>
             </GridLayout>
 
