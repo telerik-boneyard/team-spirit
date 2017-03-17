@@ -19,11 +19,11 @@
                         <Label class="time-since-creation" [text]="getTimeSinceCreation(req.CreatedAt)"></Label>
                     </StackLayout>
                     <StackLayout col="1" class="resolve" *ngIf="!req.Resolved" orientation="horizontal">
-                        <StackLayout class=" btn-resolve no">
-                            <Label class="if" text="&#x41;" (tap)="resolve(req, false)"></Label>
+                        <StackLayout class=" btn-resolve no" (tap)="resolve(req, false)">
+                            <Label class="if" text="&#x41;"></Label>
                         </StackLayout>
                         <StackLayout class="btn-resolve yes" (tap)="resolve(req, true)">
-                            <Label class="if" text="&#x4c;" (tap)="resolve(req, true)"></Label>
+                            <Label class="if" text="&#x4c;"></Label>
                         </StackLayout>
                     </StackLayout>
                     <Label col="1" class="status" *ngIf="req.Resolved" [text]="getApprovalText(req)"></Label>
