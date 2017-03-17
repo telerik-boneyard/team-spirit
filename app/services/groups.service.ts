@@ -157,7 +157,6 @@ export class GroupsService {
             .then(r => r.result);
     }
 
-
     getRequests(groupId: string, page = 0, pageSize = 10, expandExp?: any) {
         expandExp = expandExp || {
             ApplicantId: {
@@ -171,7 +170,7 @@ export class GroupsService {
             .skip(page * pageSize)
             .take(pageSize)
             .orderDesc('CreatedAt')
-            .expand(expandExp)
+            .expand(expandExp);
         return this._groupJoinRequests.get(query).then(r => r.result);
     }
 

@@ -76,7 +76,9 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
             return;
         }
         this._lockedRequests[request.Id] = true;
-        this._groupsService.resolveJoinRequest(request.Id, approve)
+        let text = this._getApprovalConfirmationText(request, approve);
+        this._alertsService.askConfirmation(text)
+            .then(() => this._groupsService.resolveJoinRequest(request.Id, approve))
             .then((resp) => {
                 request.Approved = approve;
                 request.Resolved = true;
@@ -97,6 +99,12 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     getApprovalText(request: GroupJoinRequest) {
         let text = request.Approved ? 'Approved' : 'Denied';
         return text;
+    }
+
+    private _getApprovalConfirmationText(request: GroupJoinRequest, approve: boolean) {
+        let approval = (approve ? 'Approve' : 'Deny');
+        let userName = request.Applicant.DisplayName || request.Applicant.Username;
+        return approval + ` ${userName}'s request to join?`;
     }
 
     private _loadRequests() {

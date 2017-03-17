@@ -118,20 +118,18 @@ Everlive.Events.afterUpdate(function(request, response, context, done) {
                         sendNotificationsToUsers(eventId, event.GroupId, 'EventDatesUpdated');
                     } else {
                         var byDate = {};
-                        oldDates.forEach(function(date) {
-                            byDate[date] = true;
+                        var notified = false;
+                        newDates = newDates.map(function(d) {
+                            return d.toISOString();
                         });
-                        for (var i = 0; i < newDates.length; i++) {
-                            var key = newDates[i].toISOString();
-                            if (byDate[key]) {
-                                delete byDate[key];
-                            } else {
-                                sendNotificationsToUsers(eventId, event.GroupId, 'EventDatesUpdated');
-                                break;
-                            }
-                        }
-                        if (_.size(byDate)) {
+                        var datesRemoved = _.difference(oldDates, newDates);
+                        if (datesRemoved.length) {
                             sendNotificationsToUsers(eventId, event.GroupId, 'EventDatesUpdated');
+                        } else {
+                            var datesAdded = _.difference(newDates, oldDates);
+                            if (datesAdded.length) {
+                                sendNotificationsToUsers(eventId, event.GroupId, 'EventDatesUpdated');
+                            }
                         }
                     }
                 }

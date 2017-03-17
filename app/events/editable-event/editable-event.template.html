@@ -52,7 +52,7 @@
             <user-display [users]="currentUser" [showNames]="true"></user-display>
         </StackLayout>
 
-        <StackLayout *ngIf="!event.RegistrationCompleted" class="input-field switch-field" (tap)="toggleOpenForRegistration()">
+        <StackLayout *ngIf="!event.RegistrationCompleted" class="input-field switch-field">
             <Label class="label" text="Visibility"></Label>
             <GridLayout columns="*, 65" class="switch-wrp border-bottom">
                 <Label col="0" text="Visible to group members"></Label>

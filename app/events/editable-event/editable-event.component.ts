@@ -42,10 +42,6 @@ export class EditableEventComponent implements OnInit {
         this._handleEventDatesIfPresent(this.event);
     }
 
-    toggleOpenForRegistration() {
-        this.event.OpenForRegistration = !this.event.OpenForRegistration;
-    }
-
     onAddDateOption(date: Date) {
         let clone = new Date(date.getTime());
         this._addDateOptionToEvent(clone);
