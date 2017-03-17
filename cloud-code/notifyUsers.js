@@ -135,6 +135,7 @@ function _formatDate (dateIsoString, timezoneName) {
     return date.format('MMM D, YYYY, ddd, hh:mm A');
 }
 
+// templateName and alertType should have a 1 to 1 relation, but for now we use them interchangably
 function getDataForEventRelated (templateName, context) {
     var event, group, members, organizer;
     return Promise.all([getEvent(context.eventId), getGroup(context.groupId), getGroupMembers(context.groupId)])
@@ -156,7 +157,7 @@ function getDataForEventRelated (templateName, context) {
                 });
             }
 
-            var userData = filterForNotification(members);
+            var userData = filterForNotification(members, organizer.Id);
             var emailContext = {
                 Event: event,
                 GroupName: group.Name,
@@ -229,6 +230,7 @@ function getDataForUserAskedToJoinGroup (context) {
                 UserEmail: user.Email, // or Username - it is actually email
                 GroupName: group.Name
             };
+            // intentionally not adhering to user notification preferences
             return {
                 groupName: group.Name,
                 userName: user.DisplayName,
