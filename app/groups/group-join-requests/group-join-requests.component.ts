@@ -104,7 +104,11 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
     private _getApprovalConfirmationText(request: GroupJoinRequest, approve: boolean) {
         let approval = (approve ? 'Approve' : 'Deny');
         let userName = request.Applicant.DisplayName || request.Applicant.Username;
-        return approval + ` ${userName}'s request to join?`;
+        let text = approval + ` ${userName}'s request to join?`;
+        if (!approve) {
+            text += ' They will not be able to send another request.';
+        }
+        return text;
     }
 
     private _loadRequests() {
