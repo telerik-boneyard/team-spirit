@@ -40,9 +40,13 @@
                     <Label class="btn-text" text="Leave Group"></Label>
                 </StackLayout>
                 <StackLayout *ngIf="group.RequiresApproval && canEdit()" class="btn" (tap)="onViewRequests()" col="1">
-                    <Label class="btn-icon if" text="&#x6d;"></Label>
+                    <AbsoluteLayout>
+                        <Label class="btn-icon if" text="&#x6d;" top="0" left="0" width="100%"></Label>
+                        <StackLayout top="0" left="0" width="100%">
+                            <Label *ngIf="requestCount" class="btn-text count" [text]="requestCount"></Label>
+                        </StackLayout>
+                    </AbsoluteLayout>
                     <Label class="btn-text" text="See requests"></Label>
-                    <Label *ngIf="requestCount" class="btn-text" [text]="requestCount"></Label>
                 </StackLayout>
             </GridLayout>
 
