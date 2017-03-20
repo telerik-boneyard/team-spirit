@@ -3,7 +3,7 @@ Everlive.Events.beforeCreate(function(request, context, done) {
     request.data.Resolved = !!request.data.Resolved;
     done();
 });
-/*
+
 Everlive.Events.afterCreate(function(request, response, context, done) {
 	if (response.statusCode !== 201) { // ignore for now
 		return done();
@@ -21,11 +21,10 @@ Everlive.Events.afterCreate(function(request, response, context, done) {
 			}
 
 			var createdReqId = response.result.Id;
-			// TODO: also update
-			return reqsDb.setAcl({ $push: { UsersCanRead: group.Owner } }, response.result);
+			return reqsDb.setAcl({ UsersCanRead: [group.Owner] }, response.result);
 		})
 		.then(function(res) {
-			console.log('acl res: ' + JSON.stringify(res));
+			// console.log('acl res: ' + JSON.stringify(res));
 			done();
 		})
 		.catch(function(err) {
@@ -37,7 +36,6 @@ Everlive.Events.afterCreate(function(request, response, context, done) {
 			done();
 		});
 });
-*/
 
 Everlive.Events.afterUpdate(function(request, response, context, done) {
 	var el = Everlive.Sdk.withMasterKey();
