@@ -25,6 +25,9 @@
   color: #000;
 }
 
+.info-wrapper .info-value.date {
+  font-size: 15;
+}
 .user-image,
 .expandable {
   vertical-align: middle;

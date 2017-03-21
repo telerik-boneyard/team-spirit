@@ -48,10 +48,10 @@
                         <!--<Label class="info-label tbd" *ngIf="!event.EventDate" text="(TBD)" col="1" row="0"></Label>-->
                         <!-- <Label class="info-icon if" text="&#x78;" col="2" row="0"></Label> -->
                     </GridLayout>
-                    <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])">
+                    <StackLayout orientation="horizontal" *ngFor="let date of (event.EventDateChoices || [])" class="p-b-10">
                         <Label *ngIf="alreadyRegistered && userVotedForDate(date)" text="&#x68;" class="vote yes if"></Label>
                         <Label *ngIf="alreadyRegistered && !userVotedForDate(date)" text="&#x67;" class="vote no if"></Label>
-                        <Label class="info-value" [text]="date | date:dateFormat"></Label>
+                        <Label class="info-value date" [text]="date | date:dateFormat"></Label>
                         <Label class="votes-count" *ngIf="countsInitialized()" [text]="getVoteText(date)" textWrap="true"></Label>
                     </StackLayout>
                     <Label class="info-value" *ngIf="event.EventDate" [text]="event.EventDate | date:dateFormat"></Label>
