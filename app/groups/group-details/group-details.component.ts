@@ -191,7 +191,7 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
     }
 
     canResendJoinRequest() {
-        return this.userApplication && this.userApplication.Resolved && !this.userApplication.Approved && (utilities.plusTime(this.userApplication && this.userApplication.ModifiedAt, 1, 'week') <= new Date());
+        return this.userApplication && this.userApplication.Resolved && !this.userApplication.Approved && (utilities.plusTime(this.userApplication && this.userApplication.ModifiedAt, 5, 'minutes') <= new Date());
     }
 
     getApplicationStatusIcon() {
