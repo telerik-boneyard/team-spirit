@@ -1,6 +1,5 @@
 function sendNotification (data) {
-    var rsvp = require('rsvp');
-    return new rsvp.Promise(function(resolve, reject) {
+    return new Promise(function(resolve, reject) {
         var headers = {
             'Content-Type': 'application/json',
             'Authorization': 'MasterKey ' + Everlive.Parameters.masterKey
@@ -55,15 +54,32 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
                                 var requestsDb = el.data('GroupJoinRequests');
                                 requestsDb.get({ GroupId: groupId, ApplicantId: userId })
                                     .then(function(requestsResult) {
-                                        if (requestsResult.count !== 0) {
-                                            var rsvp = require('rsvp');
-                                            return rsvp.Promise.reject({ message: 'You have already applied for ' + group.Name });
+                                        var req = requestsResult.result[0];
+                                        if (requestsResult.count !== 0 && !canReapply(req.ModifiedAt)) {
+                                            var message = 'You have already applied for "' + group.Name + '". You can apply again no sooner than ' + formatDate(getEarliestReapplyDate(req.ModifiedAt)) + '.';
+                                            return Promise.reject({ message: message });
                                         }
                                         var joinRequest = {
                                             ApplicantId: userId,
                                             GroupId: groupId
                                         };
-                                        return requestsDb.create(joinRequest);
+                                        if (requestsResult.count === 1 && canReapply(req.ModifiedAt)) {
+                                            req.Resolved = false;
+                                            req.Approved = false;
+                                            return requestsDb.updateSingle({
+                                                Id: req.Id,
+                                                Resolved: false,
+                                                Approved: false
+                                            }).then(function(resp) {
+                                                if (resp.result === 1) {
+                                                    return { result: req };
+                                                } else {
+                                                    return Promise.reject({ message: 'Unexpected requests count' });
+                                                }
+                                            });
+                                        } else {
+                                            return requestsDb.create(joinRequest);
+                                        }
                                     })
                                     .then(function(createResp){
                                         var notifData = {
@@ -112,6 +128,22 @@ Everlive.CloudFunction.onRequest(function(request, response, done){
     
     );
 });
+
+function canReapply (resolvedOn) {
+    var earliestReapplyDate = getEarliestReapplyDate(resolvedOn);
+    var can = earliestReapplyDate <= new Date();
+    return can;
+}
+
+function getEarliestReapplyDate (resolvedOn) {
+    var moment = require('moment');
+    return moment(resolvedOn).add(1, 'week').toDate();
+}
+
+function formatDate (date) {
+    var moment = require('moment');
+    return moment(date).format('MMM D, YYYY, ddd, hh:mm A') + ' (UTC)';
+}
 
 function onError(response, done) {
     return function(error) {

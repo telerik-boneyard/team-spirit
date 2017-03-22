@@ -110,7 +110,11 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
     }
 
     getJoinBtnText() {
-        return this.group.RequiresApproval ? 'Ask to join' : 'Join';
+        let text = this.group.RequiresApproval ? 'Ask to join' : 'Join';
+        if (this.canResendJoinRequest()) {
+            text = 'Resend join request';
+        }
+        return text;
     }
 
     getDetailsText() {
@@ -186,6 +190,10 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
         return text;
     }
 
+    canResendJoinRequest() {
+        return this.userApplication && this.userApplication.Resolved && !this.userApplication.Approved && (utilities.plusTime(this.userApplication && this.userApplication.ModifiedAt, 1, 'week') <= new Date());
+    }
+
     getApplicationStatusIcon() {
         let icon = '42';
         if (this.userApplication && this.userApplication.Resolved) {
@@ -195,7 +203,8 @@ export class GroupDetailsComponent extends AndroidBackOverrider implements OnIni
     }
 
     showJoinBtn() {
-        return this.hasJoined === false && !this.userApplication;
+        let hasNotJoined = this.hasJoined === false && !this.userApplication;
+        return hasNotJoined || this.canResendJoinRequest();
     }
 
     toggleActions() {

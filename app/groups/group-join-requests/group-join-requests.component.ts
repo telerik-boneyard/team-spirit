@@ -106,7 +106,7 @@ export class GroupJoinRequestsComponent extends AndroidBackOverrider implements 
         let userName = request.Applicant.DisplayName || request.Applicant.Username;
         let text = approval + ` ${userName}'s request to join?`;
         if (!approve) {
-            text += ' They will not be able to send another request.';
+            text += ' They will be able to send another request in one week\'s time.';
         }
         return text;
     }

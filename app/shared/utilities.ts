@@ -144,3 +144,7 @@ export function stringifyValues(data: { [key: string]: any }) {
 export function getRelativeTimeText (dateOrIsoStr: Date|string) {
     return moment(dateOrIsoStr).fromNow();
 }
+
+export function plusTime (fromDate: Date|string|number, count: moment.DurationInputArg1, type: moment.DurationInputArg2 = 'hours') {
+    return moment(fromDate).add(count, type).toDate();
+}

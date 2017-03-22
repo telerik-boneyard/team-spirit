@@ -153,7 +153,8 @@ export class EventsComponent implements OnInit {
     }
 
     goToAllGroups() {
-        this._routerExtensions.navigate(['groups', { selectedTabIndex: 1 }], { clearHistory: true });
+        let transition = utilities.getPageTransition();
+        this._routerExtensions.navigate(['groups', { selectedTabIndex: 1 }], { clearHistory: true, transition });
     }
 
     isInitialized() {
