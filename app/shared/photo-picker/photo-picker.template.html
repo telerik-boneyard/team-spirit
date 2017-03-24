@@ -1,9 +1,9 @@
 <StackLayout *ngIf="!resizedUrl">
-    <StackLayout class="no-image editable" *ngIf="editable" (tap)="onEdit()" [ngClass]="{ 'large': !isSmall }">
+    <StackLayout class="{{type}} no-image editable" *ngIf="editable" (tap)="onEdit()" [ngClass]="{ 'large': !isSmall }">
         <Label class="icon if" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
         <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
     </StackLayout>
-    <StackLayout class="no-image" *ngIf="!editable" [ngClass]="{ 'large': !isSmall }">
+    <StackLayout class="{{type}} no-image" *ngIf="!editable" [ngClass]="{ 'large': !isSmall }">
         <Label class="icon if" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
         <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
     </StackLayout>

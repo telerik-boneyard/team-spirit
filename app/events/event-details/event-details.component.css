@@ -38,18 +38,6 @@
   margin-left: 0;
 }
 
-/* this is angular2 syntax :| */
-.registered-users-wrapper >>> Image,
-.organizer >>> Image,
-.registered-users-wrapper >>> .no-image,
-.organizer >>> .no-image {
-  width: 30;
-  height: 30;
-  margin-right: 5;
-  border-radius: 15;
-  background-color: rgba(0, 0, 0, .35);
-}
-
 .vote,
 .info-label,
 .votes-count,

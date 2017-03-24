@@ -16,7 +16,7 @@
                 <GridLayout columns="*, 75" *ngFor="let req of requests" class="item">
                     <StackLayout col="0" orientation="horizontal">
                         <user-display class="user-display" [users]="req.Applicant" [showNames]="true"></user-display>
-                        <Label class="time-since-creation" [text]="getTimeSinceCreation(req.CreatedAt)"></Label>
+                        <Label class="time-since-creation" [text]="getTimeSinceCreation(req.ModifiedAt)"></Label>
                     </StackLayout>
                     <StackLayout col="1" class="resolve" *ngIf="!req.Resolved" orientation="horizontal">
                         <StackLayout class=" btn-resolve no" (tap)="resolve(req, false)">

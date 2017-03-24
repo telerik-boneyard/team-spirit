@@ -12,7 +12,7 @@ export class UserDisplayComponent implements OnInit {
     private _users: User[] = [];
     
     @Input('withImages') imgCount: number = null;
-    @Input() showNames: boolean = false;
+    @Input() showNames: boolean;
 
     @Input() set users(newValue: User[]) {
         this._users = [].concat(newValue);
@@ -42,6 +42,6 @@ export class UserDisplayComponent implements OnInit {
     }
 
     shouldShowNames() {
-        return this.showNames || this.users.length === 1;
+        return this.showNames || (this.showNames !== false && this.users.length === 1);
     }
 }

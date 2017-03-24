@@ -47,17 +47,17 @@
             </StackLayout>
         </StackLayout>
 
-        <StackLayout *ngIf="currentUser" class="input-field user">
-            <Label class="label" text="Organizer"></Label>
-            <user-display [users]="currentUser" [showNames]="true"></user-display>
-        </StackLayout>
-
         <StackLayout *ngIf="!event.RegistrationCompleted" class="input-field switch-field">
             <Label class="label" text="Visibility"></Label>
             <GridLayout columns="*, 65" class="switch-wrp border-bottom">
                 <Label col="0" text="Visible to group members"></Label>
                 <Switch col="1" class="switch" [(ngModel)]="event.OpenForRegistration"></Switch>
             </GridLayout>
+        </StackLayout>
+
+        <StackLayout *ngIf="currentUser" class="input-field user">
+            <Label class="label" text="Organizer"></Label>
+            <user-display [users]="currentUser" [showNames]="true"></user-display>
         </StackLayout>
     </StackLayout>
 </StackLayout>

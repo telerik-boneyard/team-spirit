@@ -40,6 +40,8 @@ export class EditableEventComponent implements OnInit {
         }
         this._markSelectedGroupIfPresent(this.event, this.userGroups);
         this._handleEventDatesIfPresent(this.event);
+        this._usersService.currentUser()
+            .then(u => this.currentUser = u);
     }
 
     onAddDateOption(date: Date) {

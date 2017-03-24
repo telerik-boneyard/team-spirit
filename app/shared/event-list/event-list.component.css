@@ -76,15 +76,6 @@
   vertical-align: middle;
 }
 
-.event-organiser >>> Image,
-.event-organiser >>> .no-image {
-  width: 30;
-  height: 30;
-  margin-right: 5;
-  border-radius: 15;
-  background-color: rgba(0, 0, 0, .35);
-}
-
 .event-organiser >>> .user-name,
 .user-name,
 .group {

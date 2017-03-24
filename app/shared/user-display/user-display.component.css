@@ -1,12 +1,3 @@
-/* this is angular2 syntax :| */
-.list-wrapper >>> Image {
-  width: 30;
-  height: 30;
-  margin-right: 5;
-  border-radius: 15;
-  background-color: rgba(0, 0, 0, .35);
-}
-
 .user-image,
 .user-name {
   vertical-align: middle;
