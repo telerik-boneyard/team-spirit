@@ -1,9 +1,9 @@
 <StackLayout *ngIf="!resizedUrl">
-    <StackLayout class="{{type}} no-image editable" *ngIf="editable" (tap)="onEdit()" [ngClass]="{ 'large': !isSmall }">
+    <StackLayout class="{{type}}-image no-image editable" *ngIf="editable" (tap)="onEdit()" [ngClass]="{ 'large': !isSmall }">
         <Label class="icon if" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
         <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
     </StackLayout>
-    <StackLayout class="{{type}} no-image" *ngIf="!editable" [ngClass]="{ 'large': !isSmall }">
+    <StackLayout class="{{type}}-image no-image" *ngIf="!editable" [ngClass]="{ 'large': !isSmall }">
         <Label class="icon if" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
         <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
     </StackLayout>
@@ -11,17 +11,17 @@
 <StackLayout class="container" *ngIf="resizedUrl" [ngClass]="{ 'large': !isSmall }">
     <StackLayout class="image-wrp editable" *ngIf="editable" (tap)="onEdit()">
         <AbsoluteLayout *ngIf="noImageText || noImageIcon">
-            <Image top="0" left="0" class="image" [src]="resizedUrl"></Image>
+            <Image top="0" left="0" class="{{type}}-image image" [src]="resizedUrl"></Image>
             <StackLayout top="0" left="0" class="icon-wrp">
                 <Label class="icon if" *ngIf="noImageIcon" [text]="noImageIcon"></Label>
                 <Label class="text" *ngIf="noImageText || !isSmall" [text]="noImageText"></Label>
             </StackLayout>
         </AbsoluteLayout>
         <StackLayout *ngIf="!noImageText && !noImageIcon">
-            <Image class="image" [src]="resizedUrl"></Image>
+            <Image class="{{type}}-image image" [src]="resizedUrl"></Image>
         </StackLayout>
     </StackLayout>
     <StackLayout class="image-wrp" *ngIf="!editable">
-        <Image class="image" [src]="resizedUrl"></Image>
+        <Image class="{{type}}-image image" [src]="resizedUrl"></Image>
     </StackLayout>
 </StackLayout>

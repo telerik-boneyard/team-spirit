@@ -50,10 +50,13 @@
   color: rgba(255, 255, 255, .5);
 }
 
-.user.no-image {
+.user-image {
   width: 30;
   height: 30;
-  margin-right: 5;
   border-radius: 15;
+}
+
+.no-image.user-image {
+  margin-right: 5;
   background-color: rgba(0, 0, 0, .35);
 }
