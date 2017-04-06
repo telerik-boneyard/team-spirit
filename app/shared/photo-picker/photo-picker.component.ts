@@ -60,7 +60,7 @@ export class PhotoPickerComponent implements OnInit {
             })
             .catch(err => {
                 if (err) {
-                    console.log('pick err: ' + err.message);
+                    // console.log('pick err: ' + err.message);
                 }
             });
     }

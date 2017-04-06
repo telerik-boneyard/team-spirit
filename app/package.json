@@ -1,13 +1,13 @@
 {
     "private": false,
     "nativescript": {
-        "id": "org.nativescript.helloworldng"
+        "id": "com.telerik.TeamUP"
     },
-    "name": "tns-template-hello-world-ng",
+    "name": "TeamUP",
     "main": "main.js",
     "version": "2.3.3",
     "author": "Telerik <support@telerik.com>",
-    "description": "Nativescript Angular Hello World template",
+    "description": "App for creating and managing events for groups of people.",
     "license": "BSD",
     "keywords": [
         "telerik",

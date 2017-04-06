@@ -110,9 +110,9 @@ export class ImagePickerService {
 
                 if (saved) {
                     imgItem = { name, uri };
-                } else {
-                    console.log('didnt save!!!');
-                }
+                }/* else {*/
+                    // console.log('didnt save!!!');
+                // }
 
                 return imgItem;
             });

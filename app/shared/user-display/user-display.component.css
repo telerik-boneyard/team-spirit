@@ -11,3 +11,11 @@
 .remaining-users {
   color: #000;
 }
+
+.user-wrapper {
+  margin-left: 3;
+}
+
+.user-wrapper.first {
+  margin-left: 0;
+}

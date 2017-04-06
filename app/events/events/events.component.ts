@@ -118,7 +118,7 @@ export class EventsComponent implements OnInit {
             .catch(err => {
                 this.hasMoreUpcoming = true;
                 this._lockUpcoming = false;
-                console.log(JSON.stringify(err));
+                // console.log(JSON.stringify(err));
             });
     }
 
@@ -138,7 +138,7 @@ export class EventsComponent implements OnInit {
             })
             .catch(err => {
                 this._lockPast = false;
-                console.log(JSON.stringify(err));
+                // console.log(JSON.stringify(err));
             });
     }
 

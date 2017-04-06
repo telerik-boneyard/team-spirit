@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
                 this.loading = false;
             }
         });
-        this._filesService.emptyAppTempFolder()
-            .catch(err => console.log('err while emptying: ' + JSON.stringify(err)));
+        this._filesService.emptyAppTempFolder();
+            // .catch(err => console.log('err while emptying: ' + JSON.stringify(err)));
     }
 }

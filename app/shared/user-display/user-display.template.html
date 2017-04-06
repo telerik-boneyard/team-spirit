@@ -1,5 +1,5 @@
 <WrapLayout class="list-wrapper">
-    <StackLayout orientation="horizontal" *ngFor="let user of users; let ind = index">
+    <StackLayout orientation="horizontal" *ngFor="let user of users; let ind = index" class="user-wrapper" [ngClass]="{ first: !ind }">
         <photo-picker *ngIf="user && showImage(ind)" class="user-image" [url]="user.ImageUrl" [type]="'user'" [small]="true" [noImageIcon]="'&#x46;'"></photo-picker>
         <Label *ngIf="user && shouldShowNames()" class="user-name" [text]="user.DisplayName || user.Username"></Label>
         <Label *ngIf="!user" class="user-name" text="Unknown User"></Label>

@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "246590852129",
-    "firebase_url": "https://teamup-9a6c8.firebaseio.com",
-    "project_id": "teamup-9a6c8",
-    "storage_bucket": "teamup-9a6c8.appspot.com"
+    "project_number": "995326471150",
+    "firebase_url": "https://teamup-a66be.firebaseio.com",
+    "project_id": "teamup-a66be",
+    "storage_bucket": "teamup-a66be.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:246590852129:android:26d8921203cc68d3",
+        "mobilesdk_app_id": "1:995326471150:android:21eb4de93df2b117",
         "android_client_info": {
-          "package_name": "com.telerik.PushNotificationApp"
+          "package_name": "com.telerik.TeamUP"
         }
       },
       "oauth_client": [
         {
-          "client_id": "246590852129-o2j3kqsmoa7f2ud1dubjjbflodpvopgt.apps.googleusercontent.com",
+          "client_id": "995326471150-k0s4dr2fmajbjqg0i5dh37m5j9qpl25g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAYpbH_8fRpWOGR76GY8R3AnMhZJPpcAsw"
+          "current_key": "AIzaSyCATKxIMrygrob5vcAkMoKaW_iGb9p9kiE"
         }
       ],
       "services": {

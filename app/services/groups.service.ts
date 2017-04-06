@@ -213,8 +213,8 @@ export class GroupsService {
                 return true;
             } else {
                 if (r.result > 1) {
-                    console.log('Deleted more than one registration - cant be good');
-                    console.log('resp: ' + JSON.stringify(r));
+                    // console.log('Deleted more than one registration - cant be good');
+                    // console.log('resp: ' + JSON.stringify(r));
                 }
                 return Promise.reject({ message: 'You are not part of this group' });
             }

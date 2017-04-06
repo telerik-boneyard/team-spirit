@@ -8,7 +8,9 @@
 android {
   defaultConfig {
     generatedDensities = []
-    applicationId = "com.telerik.PushNotificationApp"
+    applicationId "com.telerik.TeamUP"
+    minSdkVersion 17
+    targetSdkVersion 25
   }
   aaptOptions {
     additionalParameters "--no-version-vectors"

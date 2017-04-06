@@ -20,7 +20,7 @@ export class PushNotificationsService {
     }
 
     private pushCb(...args) {
-        console.log('args: ' + JSON.stringify(args));
+        // console.log('args: ' + JSON.stringify(args));
         // this._alertsService.showSuccess('got push' + JSON.stringify(args));
     }
 
