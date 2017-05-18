@@ -103,6 +103,7 @@ export class EventDateSelectionComponent implements OnInit {
         this._lockDone = true;
         let selectedDates = this.dateOptions.filter(o => o.selected).map(o => o.date);
         if (!selectedDates.length) {
+            this._lockDone = false;
             return this._alertsService.showError('You must select at least one date');
         }
         let promise = this._userReg ? this._changeVote(selectedDates) : this._register(selectedDates);
