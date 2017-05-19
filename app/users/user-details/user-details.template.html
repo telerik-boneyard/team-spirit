@@ -13,7 +13,7 @@
             </ActionBarExtension>
 
             <StackLayout *ngIf="user">
-                <AbsoluteLayout width="100%" height="130">
+                <AbsoluteLayout width="100%" height="150">
                     <StackLayout left="0" top="60" width="100%" height="90" class="user-pad"></StackLayout>
                     <StackLayout left="0" top="0" width="100%" class="user">
                         <photo-picker [url]="user.ImageUrl" [type]="'user'" [noImageIcon]="'&#x46;'"></photo-picker>
