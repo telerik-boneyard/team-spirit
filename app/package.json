@@ -3,7 +3,7 @@
     "nativescript": {
         "id": "com.telerik.TeamUP"
     },
-    "name": "TeamUP",
+    "name": "#Team UP",
     "main": "main.js",
     "version": "2.3.3",
     "author": "Telerik <support@telerik.com>",

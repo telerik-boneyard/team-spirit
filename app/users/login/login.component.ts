@@ -65,13 +65,16 @@ export class LoginComponent implements OnInit {
         if (errMsg) {
             return this._alertsService.showError(errMsg);
         }
+        let registeredUserId: string;
 
         this._usersService.register(this.user.Username, this.user.Password, this.user.DisplayName)
             .then((res) => {
                 this._alertsService.showSuccess('Welcome to TeamUP!');
+                registeredUserId = res.result.Id;
                 return this._usersService.login(this.user.Username, this.user.Password);
             })
             .then(() => {
+                this._push.subscribe(registeredUserId).catch(err => err);
                 this._goToEvents();
             })
             .catch((err) => {
