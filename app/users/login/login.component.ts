@@ -46,11 +46,7 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this._usersService.login(this.user.Username, this.user.Password)
-            .then((loginResult) => {
-                this._push.subscribe(loginResult.result.principal_id).catch(err => err);
-                this._goToEvents();
-            })
+        this._logInUser(this.user.Username, this.user.Password)
             .catch((e) => {
                 this._alertsService.showError(e && e.message);
             });
@@ -65,17 +61,11 @@ export class LoginComponent implements OnInit {
         if (errMsg) {
             return this._alertsService.showError(errMsg);
         }
-        let registeredUserId: string;
 
         this._usersService.register(this.user.Username, this.user.Password, this.user.DisplayName)
             .then((res) => {
                 this._alertsService.showSuccess('Welcome to TeamUP!');
-                registeredUserId = res.result.Id;
-                return this._usersService.login(this.user.Username, this.user.Password);
-            })
-            .then(() => {
-                this._push.subscribe(registeredUserId).catch(err => err);
-                this._goToEvents();
+                return this._logInUser(this.user.Username, this.user.Password);
             })
             .catch((err) => {
                 if (err) {
@@ -105,5 +95,13 @@ export class LoginComponent implements OnInit {
     private _goToEvents() {
         let transition = utilities.getPageTransition();
         this._routerExtensions.navigate(['events'], { clearHistory: true, transition });
+    }
+
+    private _logInUser(username: string, password: string) {
+        return this._usersService.login(this.user.Username, this.user.Password)
+            .then(() => {
+                this._push.subscribe().catch(e => e); // ignore errors
+                this._goToEvents();
+            });
     }
 }

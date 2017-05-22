@@ -24,7 +24,7 @@ export class PushNotificationsService {
         // this._alertsService.showSuccess('got push' + JSON.stringify(args));
     }
 
-    subscribe(userId: string) {
+    subscribe() {
         let pushRegSettings = {
             iOS: { badge: true, sound: true, alert: true },
             android: { senderID: constants.androidProjNumber },
