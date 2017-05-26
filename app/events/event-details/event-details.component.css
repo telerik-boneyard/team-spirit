@@ -110,5 +110,9 @@
 .going-label {
   color: #000;
   margin-left: 5;
+}
+
+/* TODO: fix this when there is time */
+.to-do-fix-alignment {
   margin-top: 0;
 }

@@ -85,12 +85,13 @@
                     <GridLayout columns="auto, *" *ngIf="registeredUsers.length > 0" (tap)="onParticipantsTap()" class="registered-users-wrapper">
                         <StackLayout orientation="horizontal" col="0" class="user-display-wrp">
                             <user-display [users]="registeredUsers" [withImages]="3" class="user-display"></user-display>
-                            <Label class="info-value going-label" [text]="getParticipantsText()"></Label>
+                            <Label class="info-value going-label" [ngClass]="{ 'to-do-fix-alignment': registeredUsers.length > 1 }" [text]="getParticipantsText()"></Label>
                         </StackLayout>
                         <Label class="info-icon if" text="&#x64;" col="1"></Label>
                     </GridLayout>
 
-                    <Label class="info-value" *ngIf="registeredUsers.length === 0" [text]="'No one has registered for this event.'"></Label>
+                    <Label class="info-value" *ngIf="registeredUsers.length === 0 && !isPastEvent" [text]="'No one has registered for this event.'"></Label>
+                    <Label class="info-value" *ngIf="registeredUsers.length === 0 && isPastEvent" [text]="'No one went to this event.'"></Label>
                 </StackLayout>
             </StackLayout>
         </StackLayout>

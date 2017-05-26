@@ -211,6 +211,10 @@ export class EventDetailsComponent extends AndroidBackOverrider implements OnIni
         } else {
             text = 'voted';
         }
+
+        if (this.isPastEvent) {
+            text = 'went';
+        }
         return text;
     }
 
