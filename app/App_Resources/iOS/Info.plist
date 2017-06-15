@@ -36,5 +36,7 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>NSCalendarsUsageDescription</key>
+	<string>We need access to your calendar, in order to add group events to it.</string>
 </dict>
 </plist>
